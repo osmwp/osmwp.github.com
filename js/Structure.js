@@ -19,7 +19,10 @@ var structure = new Pages (	new Array (
 	new Page ( "first_project", "first project", new Array() ),
 
 	new Page ( "widgets_development", "widgets development", new Array(
-		new Page ( "widgets_development_sdk", "Mobile Widgets SDK", new Array() ),
+		new Page ( "widgets_development_sdk", "Mobile Widgets SDK", new Array(
+			new Page ( "widgets_sdk_manual", "Mobile Widgets SDK manual", new Array() ),
+			new Page ( "widgets_development_vrml_editor", "VRML Editor - User Manual", new Array() )
+		)),
 		new Page ( "widgets_development_languages", "Mobile Widgets languages", new Array(
 			new Page ( "widgets_development_vrml_beginner", "VRML totally beginner's guide", new Array() ),
 			new Page ( "widgets_development_nodes_ref", "VRML nodes reference", new Array(
