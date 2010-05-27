@@ -1,0 +1,184 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Style";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Style node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+Style {
+    MFString url []
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+The Style node gives the list of CSS files<br/>
+Helped by the Style API that read CSS files you can change the appearance of
+your application (skins, preferences...).<br/>
+By convention, there is one CSS file per style. And it is stored into the style
+directory: <b>"MyProject/styles/MyStyle/mystyle.css"</b>.<br/>
+In the <b>app.properties</b> file at root of your project, the line style
+defines which style to use. For example we should set style=MyStyle.<br/>
+To access the CSS file, your main scene does reference a VRML node Style with
+the path to the CSS file (relative to MyProject/styles/MyStyle). For example we
+should write Style { url "mystyle.css" }.
+</p>
+
+<p>
+A default CSS file is already included in the SDK to handle default values that
+you can override in your own CSS file. This file is named <b>"default.css"</b>
+and should always be included as the first CSS file in the Style node.
+</p>
+<p>
+The order of the CSS files in the <b>url</b> is important: the first CSS file is
+the most general. The next CSS files can override values defined by a previous
+CSS file.
+</p>
+
+<p class="note warning">
+<b>Warning:</b><br/>
+if your are developing a widget (not a standalone Memo application), your should
+not include "default.css" as it is already handled by the Mobile Widgets application.
+</p>
+
+<p class="note info">
+<b>Note:</b><br/>
+Before using CSS, read chapter about <a href="widgets_development_css_language.html">CSS support in MeMo</a>.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFString url []</b> :<br/>
+A list of CSS files to configure the appearance of the application. If the list
+contains more than one CSS file, all CSS data will be searched into the CSS file
+most to the right and then, if not found, try the CSS file one step left until
+the first file of the url (that should be <b>default.css</b> for Mobile Widgets
+application).
+</p>
+<br/>
+
+<h1>Our naming conventions for CSS nodes</h1>
+
+<p>
+When the developer specializes a Prototype in another Prototype (for example :
+Alert.wrl specialize Slider.wrl), the CSS file should look like the following :<br/>
+</p>
+<ul>
+<li>Alert {} // CSS Node for Alert prototype</li>
+<li>Alert-title {} // Subset of Alert prototype</li>
+<li>Alert-message {} // Another subset of Alert prototype</li>
+<li>Alert-Slider {} // customization of Slider prototype by Alert prototype</li>
+</ul>
+<p>
+The CSS Node for Alert should show that it specializes the Slider prototype : Node
+Name = "Alert-Slider" and have the same elements that the Slider CSS Node.<br/>
+The difference is made between Specialization (named : "Node-Spe", with first
+letter of specialization in upper case) and Subsets (named "Node-subset", with
+first letter in lower case).
+</p>
+<br/>
+
+<h1>Path to CSS files</h1>
+
+<p>
+MyProject/src/main.wrl:
+</p>
+<textarea wrap="off" readonly="readonly" rows="12" cols="80">
+#VRML V2.0 utf8
+
+# Use the default style in the SDK but use first my own style
+Style { url ["default.css" "myStyle.css"] }
+
+Group {
+  children [
+   Backgnd { }
+   Title { title "Protos tests" }
+   [...]
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Light Mode</h1>
+
+<p>
+In standard MemoSDK, you can use a light mode that is standard MemoSDK without
+background images for title/softkeyx etc). Don't confuse with ultra light mode
+that is not based on the standard MemoSDK but on a ultra light version of MemoSDK.<br/>
+To switch to light mode, use the CSS node Common and set the light boolean to
+true. light attribute is global to one application (per style).<br/>
+Example (into CSS file) :
+</p>
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+Common {
+  light: true;
+}
+</textarea>
+<br/>
+
+<h1>Example</h1>
+
+<p>
+This example shows how to include two CSS files: "default.css" and "myStyle.css".<br/>
+The "myStyle.css" will override values from the "default.css" style.
+</p>
+
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+#VRML V2.0 utf8
+
+Style {
+  url ["default.css" "myStyle.css"]
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

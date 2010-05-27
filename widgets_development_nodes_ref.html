@@ -1,0 +1,192 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "widgets_development_nodes_ref";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">VRML nodes reference</h1>
+
+
+<h1>Introduction</h1>
+<p>
+Below is the list of all supported nodes with the implemented fields and their applicable context.<br/>
+Do not try to use a node in a context it does not support.
+</p>
+
+<p>
+The nodes have been implemented to follow as much as possible the VRML / MPEG-4 specifications.<br/>
+However any deviation, addition or difference with the standards are mentioned or described.
+</p>
+
+<h1>List of nodes</h1>
+
+<h2>General profile</h2>
+<p>
+These nodes are independent or work in both 2D and 3D contexts.
+</p>
+<ul>
+<li><a href="development_node_Anchor.html">Anchor</a></li>
+<li><a href="development_node_Appearance.html">Appearance</a></li>
+<li><a href="development_node_Color.html">Color</a></li>
+<li><a href="development_node_ColorInterpolator.html">ColorInterpolator</a></li>
+<li><a href="development_node_CompositeTexture2D.html">CompositeTexture2D</a></li>
+<li><a href="development_node_Group.html">Group</a></li>
+<li><a href="development_node_ImageTexture.html">ImageTexture</a></li>
+<li><a href="development_node_Inline.html">Inline</a></li>
+<li><a href="development_node_InputSensor.html">InputSensor</a></li>
+<li><a href="development_node_KeySensor.html">KeySensor</a></li>
+<li><a href="development_node_MediaSensor.html">MediaSensor</a></li>
+<li><a href="development_node_Message.html">Message</a></li>
+<li><a href="development_node_MotionSensor.html">MotionSensor</a></li>
+<li><a href="development_node_OrderedGroup.html">OrderedGroup</a></li>
+<li><a href="development_node_ScalarInterpolator.html">ScalarInterpolator</a></li>
+<li><a href="development_node_Script.html">Script</a></li>
+<li><a href="development_node_Shape.html">Shape</a></li>
+<li><a href="development_node_Style.html">Style</a></li>
+<li><a href="development_node_Switch.html">Switch</a></li>
+<li><a href="development_node_TimeSensor.html">TimeSensor</a></li>
+<li><a href="development_node_TouchSensor.html">TouchSensor</a></li>
+</ul>
+<br/>
+
+<h2>2D Profile</h2>
+<p>
+These nodes only work in a 2D context.
+</p>
+<ul>
+<li><a href="development_node_Bitmap.html">Bitmap</a></li>
+<li><a href="development_node_Circle.html">Circle</a></li>
+<li><a href="development_node_Coordinate2D.html">Coordinate2D</a></li>
+<li><a href="development_node_CoordinateInterpolator2D.html">CoordinateInterpolator2D</a></li>
+<li><a href="development_node_FontStyle.html">FontStyle</a></li>
+<li><a href="development_node_IndexedFaceSet2D.html">IndexedFaceSet2D</a></li>
+<li><a href="development_node_Layer2D.html">Layer2D</a></li>
+<li><a href="development_node_Material2D.html">Material2D</a></li>
+<li><a href="development_node_PositionInterpolator2D.html">PositionInterpolator2D</a></li>
+<li><a href="development_node_Rectangle.html">Rectangle</a></li>
+<li><a href="development_node_RichText.html">RichText</a></li>
+<li><a href="development_node_Transform2D.html">Transform2D</a></li>
+<li><a href="development_node_Text.html">Text</a></li>
+<li><a href="development_node_WrapText.html">WrapText</a></li>
+</ul>
+<br/>
+
+<h2>Media Profile</h2>
+<ul>
+<li><a href="development_node_Sound2D.html">Sound2D</a></li>
+<li><a href="development_node_AudioClip.html">AudioClip</a></li>
+<li><a href="development_node_MediaControl.html">MediaControl</a></li>
+<li><a href="development_node_MovieTexture.html">MovieTexture</a></li>
+<li><a href="development_node_RecordTexture.html">RecordTexture</a></li>
+</ul>
+<br/>
+
+<!-- Not 3D nodes in first time
+<h2>3D Profile</h2>
+<p>
+These nodes only work in a 3D context.
+</p>
+<ul>
+<li><a href="development_node_Billboard.html">Billboard</a></li><!-- TODO Node is not documented
+<li><a href="development_node_Box.html">Box</a></li><!-- TODO Node is not documented
+<li><a href="development_node_Coordinate.html">Coordinate</a></li>
+<li><a href="development_node_CoordinateInterpolator.html">CoordinateInterpolator</a></li>
+<li><a href="development_node_DirectionalLight.html">DirectionalLight</a></li><!-- TODO Node is not documented
+<li><a href="development_node_Fog.html">Fog</a></li><!-- TODO Node is not documented
+<li><a href="development_node_IndexedFaceSet.html">IndexedFaceSet</a></li><!-- TODO Node is not documented
+<li><a href="development_node_Layer3D.html">Layer3D</a></li><!-- TODO Node is not documented
+<li><a href="development_node_LOD.html">LOD</a></li><!-- TODO Node is not documented
+<li><a href="development_node_Material.html">Material</a></li><!-- TODO Node is not documented
+<li><a href="development_node_MultiTexture.html">MultiTexture</a></li><!-- TODO Node is not documented
+<li><a href="development_node_Normal.html">Normal</a></li><!-- TODO Node is not documented
+<li><a href="development_node_OrientationInterpolator.html">OrientationInterpolator</a></li>
+<li><a href="development_node_PositionInterpolator.html">PositionInterpolator</a></li>
+<li><a href="development_node_TextureCoordinate.html">TextureCoordinate</a></li><!-- TODO Node is not documented
+<li><a href="development_node_Transform.html">Transform</a></li><!-- TODO Node is not documented
+<li><a href="development_node_Sphere.html">Sphere</a></li><!-- TODO Node is not documented
+<li><a href="development_node_Viewpoint.html">Viewpoint</a></li><!-- TODO Node is not documented
+</ul>
+<br/>
+-->
+
+<!-- Not experimental nodes in first time
+<h2>Experimental profile</h2>
+<p>
+This profile is not contains experimental nodes not ready for production use.
+</p>
+<ul>
+<li><a href="development_node_GeoSensor.html">GeoSensor</a></li><!-- TODO Node is not documented
+<li><a href="development_node_MarkerTexture.html">MarkerTexture</a></li><!-- TODO Node is not documented
+<li><a href="development_node_NavigationInfo.html">NavigationInfo</a></li><!-- TODO Node is not documented
+<li><a href="development_node_ProximitySensor.html">ProximitySensor</a></li><!-- TODO Node is not documented
+<li><a href="development_node_Upload.html">Upload</a></li><!-- TODO Node is not documented
+</ul>
+<br/>
+-->
+
+<h2>Widget profile</h2>
+<p>
+This profile is used by the DjinngoMobile version of the MeMo.
+</p>
+<ul>
+<li><a href="development_node_Namespace.html">Namespace</a></li>
+</ul>
+<br/>
+
+<h2>VRML standard nodes not supported</h2>
+<ul>
+<li>Collision</li>
+<li>Cylinder</li>
+<li>CylinderSensor</li>
+<li>ElevationGrid</li>
+<li>Extrusion</li>
+<li>IndexedLineSet</li>
+<li>PlaneSensor</li>
+<li>PointLight</li>
+<li>PointSet</li>
+<li>SpotLight</li>
+<li>VisibilitySensor</li>
+<li>WorldInfo</li>
+</ul>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_languages','');
+//-->
+</script>
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

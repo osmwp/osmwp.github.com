@@ -1,0 +1,137 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_MovieTexture";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">MovieTexture node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+MovieTexture {
+  MFString url []
+  SFTime   startTime
+  SFTime   stopTime
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Similar to <a href="development_node_ImageTexture.html">ImageTexture</a> with a
+video file. Used to map a video to any geometry in 3D context and to a Rectangle
+or Bitmap in a 2D context.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFString url []</b>:<br/>
+Multiple item urls can be defined, but only the first one is loaded.<br/>
+Items url can be of one of the following types:
+</p>
+<ul>
+<li>Filename of an video (eg simple.mpg). The file will be included in the M4M
+    file and immediately available on scene load.</li>
+<li>An url to an image on the mobile filesystem (eg file://c/file.mpg).</li>
+<li>An HTTP url (eg http://server/file.mpg) to download the file each time the
+    scene is loaded.</li>
+<li>A cache url followed by a source url (eg cache://file.mpg,http://server/file.mpg).
+    File will be downloaded the first time from the source url and loaded from
+    cache for later access.</li>
+</ul>
+
+<p>
+<b>SFTime startTime</b>: Start time
+</p>
+
+<p>
+<b>SFTime stopTime</b>: Stop time
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+# media control
+DEF MEDIACONTROL MediaControl { url IS mediaUrl }
+# media sensor
+DEF MEDIASENSOR MediaSensor { url IS mediaUrl }
+
+Shape {
+    appearance Appearance {# Movie background
+        material Material2D {
+            emissiveColor 0 0 0
+            filled TRUE
+        }
+        # Movie
+        texture DEF MOVIE MovieTexture { url IS mediaUrl }
+    }
+    # Movie display screen
+    geometry DEF MOVIE_REC Rectangle {
+        size 240 240
+    }
+}
+</textarea>
+
+<h2>CONTROLS BY ROUTE</h2>
+<ul>
+<li>ROUTE mediaSensor.mediaCurrentTime =&gt; current playing position in the media</li>
+<li>ROUTE mediaSensor.mediaDuration    =&gt; total time of the media</li>
+<li>ROUTE mediaSensor.status =&gt; status (opening, loading, lecture, stop...)</li>
+</ul>
+
+<h2>CONTROLS BY SCRIPT</h2>
+<ul>
+<li>mediaControl.pause =&gt; pause of player</li>
+<li>mediaControl.volume =&gt; sound volume</li>
+<li>mediaSensor.mediaCurrentTime =&gt; set playing position (if device is compatible)</li>
+</ul>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

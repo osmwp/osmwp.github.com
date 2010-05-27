@@ -1,0 +1,95 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Bitmap";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Bitmap node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+Bitmap {
+  SFVec2f scale 1 1
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Similar to <a href="development_node_Rectangle.html">Rectangle</a> node but for
+images only. It is preferable to use <a href="development_node_Rectangle.html">Rectangle</a>
+when possible.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFVec2f scale 1 1</b>:<br/>
+Scale the texture to the given factor (from 0 to 1 for both width and height).
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+#VRML V2.0 utf8
+
+# Display the myImage.png at half its original size
+Shape {
+  appearance Appearance {
+    texture ImageTexture {
+      url "myImage.png"
+    }
+  }
+  geometry Bitmap { scale 0.5 0.5 }
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

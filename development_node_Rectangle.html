@@ -1,0 +1,137 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Rectangle";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Rectangle node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="4" cols="80">
+Rectangle {
+  SFVec2f size 1 1
+  SFVec2f cornerRadius 0 0
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Display a rectangle centered with the axis and according to the related
+material with the following specificity when appearance is:
+</p>
+<ul>
+<li>a solid color material: scaling, rotation and transparency are fully supported.</li>
+<li>an image texture: scaling and transparency are fully supported.<br/>
+    Rotation is only supported by multiple of 90 degree.</li>
+<li>a movie texture: scaling is supported but transparency is not.<br/>
+    If rotation is not zero, video is displayed in landscape mode if supported by the device.</li>
+</ul>
+<p>
+The field <b>cornerRadius</b> allows to display rounded corners for solid
+rectangle but not with image or video textures.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFVec2f size 1 1</b>:<br/>
+The field <b>size</b> is in pixels and is modified by the above transformations.<br/>
+If any size component is negative, it is replaced by the corresponding image
+dimension (i.e. size -1 -1 uses actual image dimension).
+</p>
+
+<p>
+<b>SFVec2f cornerRadius 0 0</b>:<br/>
+When <b>cornerRadius</b> has non zero values, the rectangle is rendered with
+rounded corners.<br/>
+The above transformations also apply to these values.<br/>
+Rounded corners are only supported with <a href="development_node_Material2D.html">Material2D</a>
+(solid color, transparency and filled properties).
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+#VRML V2.0 utf8
+
+# Shape to draw a simple red rectangle.
+Shape {
+  appearance Appearance {
+    material Material2D { emissiveColor 1 0 0  filled TRUE }
+  }
+  geometry Rectangle { size 150 150 }
+}
+# Shape to draw an icon.
+Shape {
+  appearance  Appearance {
+     texture ImageTexture { url ["icon.png"] }
+  }
+  geometry Rectangle { size 48 48 }
+}
+# Shape to draw a movie.
+Shape {
+  appearance Appearance {# Movie background
+    material Material2D {
+      emissiveColor 0 0 0
+      filled TRUE
+    }
+    # Movie
+    texture DEF MOVIE MovieTexture { url IS mediaUrl }
+  }
+  # Movie display screen
+  geometry DEF MOVIE_REC Rectangle {
+    size 240 240
+  }
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

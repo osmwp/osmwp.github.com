@@ -1,0 +1,239 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_WrapText";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">WrapText node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="11" cols="80">
+WrapText {
+  MFString string []
+  SFNode fontStyle NULL
+  SFVec2f size_changed 0 0
+  SFInt32 maxWidth 0
+  SFInt32 maxLines 0
+  SFVec2f maxSize 0 0
+  SFBool editable FALSE
+  SFInt32 set_cursor 0
+  SFInt32 cursor_changed 0
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Display the text of the <b>string</b> field using automatic wrap to fit in
+<b>maxWidth</b> pixels width and using a maximum of <b>maxLines</b> lines of
+text.<br/>
+If a word is wider than <b>maxWidth</b> (in pixels), it is split it two lines
+(or more) and a '-' character will be added a the end of the line.<br/>
+If the text cannot fit entirely in the <b>maxLines</b> limit, it is cropped and
+"..." is displayed at the end of the text.
+</p>
+
+<p>
+Each time the fields <b>string</b>, <b>fontStyle</b>, <b>maxWidth</b>,
+<b>maxLines</b>, <b>maxSize</b>, <b>editable</b> are changed, the wrap algorithm
+recomputes the text layout.
+</p>
+<br/>
+
+<h2>Editing features</h2>
+
+<p>
+Since the version 1.4.1, the WrapText is able to display a cursor and handle
+multi-line or single-line edition by allowing the text to scroll in a clipped
+box.
+</p>
+
+<p>
+When <b>editable</b> is <b>TRUE</b>, the text will display with the following rules:
+</p>
+<ul>
+<li>The text is not cropped (and no dots '...' will be appended) anymore if the
+    text overflows its <b>maxLines</b> or <b>maxSize</b> limits. The text is
+    simply clipped by in an editing box.</li>
+<li>If the <b>maxLines</b> is <b>1</b> or the <b>maxSize.x</b> is only allows
+    one line of text, the text will scroll horizontally to follow the cursor
+    position.</li>
+<li>If <b>maxLines</b> is greater than <b>1</b> and the <b>maxSize.y</b> allows
+    wrapping on more than one line of text, the text will scroll vertically to
+    follow the cursor position.</li>
+<li>When a word is larger than the maximum width allowed, the word will be split
+    across multiple lines but no dash '-' will be added at each end of line.</li>
+<li>The text is scrolled by following the cursor position that is controlled by
+    the <b>set_cursor</b> field (or touch events).</li>
+</ul>
+
+<p>
+The following animations illustrates how the WrapText handles scrolling based on the cursor position:
+</p>
+<ul>
+<li>WrapText in vertical mode<br/>
+    <img alt="Wrap text" src="images/nodes/WrapTextScrollVertical.gif" />
+    </li>
+<li>WrapText in horizontal mode<br/>
+    <img alt="Wrap text" src="images/nodes/WrapTextScrollHorizontal.gif" />
+    </li>
+</ul>
+<br/>
+
+<h1>Since</h1>
+
+<h2>1.4.1</h2>
+
+<p>Changes:</p>
+<ul>
+<li><b>All</b> spaces characters are taken into account. Previously, having
+    multiple spaces between two words would only display as one and spaces
+    before and after the text that was previously trimmed. This change was
+    mandatory in order to allow the new text editing feature to work properly.</li>
+<li>Added the editing feature (see <b>Editing Features</b> above).</li>
+</ul>
+
+<p>
+New field: <b>maxSize</b>, <b>editable</b>, <b>set_cursor</b>, <b>cursor_changed</b>.
+</p>
+
+<p>
+Deprecated fields: <b>maxWidth</b>.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFString string []</b>:<br/>
+  All string items of the field are concatenated.
+</p>
+
+<p>
+<b>SFNode fontStyle NULL</b>:<br/>
+Same as the <b><a href="development_node_Text.html">Text</a>.fontstyle</b>
+field, this field uses a <a href="development_node_FontStyle.html">FontStyle</a>
+node to customize font appearance.
+</p>
+
+<p>
+<b>SFVec2f size_changed 0 0</b>:<br/>
+Each time the wrap algorithm computes the text layout, this field emits the new
+size of the bounding box of the text.
+</p>
+
+<p>
+<b>SFInt32 maxWidth 0</b>:<br/>
+If greater than 0, limit the width of the text to this value (in pixels).
+Default: 0 (no limit).<br/>
+<b>Deprecated since 1.4.1</b>, use <b>maxSize.x</b>.
+</p>
+
+<p>
+<b>SFInt32 maxLines 0</b>:<br/>
+If greater than 0; limit the max number of lines to this value. Default: 0
+(no limit).
+</p>
+
+<p>
+<b>SFVec2f maxSize 0 0</b>:<br/>
+If <b>maxSize.y</b> is greater than 0, limit the max number of lines to keep
+under the <b>maxSize.y</b> pixel height.<br/>
+If <b>maxSize.x</b> is greater than 0, limit the with of the text to keep
+under the <b>maxSize.x</b> pixel width.<br/>
+Default: 0 0 (no limit).<br/>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>SFBool editable FALSE</b>:<br/>
+If <b>TRUE</b>, a cursor is displayed and text can be scrolled horizontally or
+verticaly (see <b>Editing features</b> section above).<br/>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>SFInt32 set_cursor 0</b>:<br/>
+When <b>editable</b> is <b>TRUE</b>, <b>set_cursor</b> can be set between
+<b>0</b> and the max number of characters given to <b>string</b>.<br/>
+To jump to the next line, use the <b>-2</b> value.<br/>
+To jump to the previous line, use the <b>-1</b> value.<br/>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>SFInt32 cursor_changed 0</b>:<br/>
+When the cursor changes position, either after a <b>set_cursor</b> event, when
+the text is updated (e.g. if the text is shorter than the current cursor
+position) or after a touch event to move the cursor, the <b>cursor_changed</b>
+will fire an event.<br/>
+<b>Since 1.4.1</b>
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+#VRML V2.0 utf8
+
+Shape {
+  appearance Appearance { material Material2D { emissiveColor 0 0 0 } }
+  geometry WrapText {
+    string [
+      "This is a test string to display."
+      "This is a second string that will follow the first one."
+      "This will force a new lines here \n Yep. It works !"
+    ]
+    fontStyle FontStyle { size 18  justify ["MIDDLE" "MIDDLE"] }
+    maxWidth 200
+    maxLines 4
+  }
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

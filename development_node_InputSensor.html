@@ -1,0 +1,124 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_InputSensor";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">InputSensor node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="6" cols="80">
+InputSensor {
+  SFString url ""
+  SFTime  eventTime 0
+  SFBool activate TRUE
+  SFBool grabFocus FALSE
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+If field <b>activate</b> is <b>TRUE</b>, generates a event of the current time
+on field <b>currentTime</b> if one of the keys specified in the field <b>url</b>
+is pressed.
+</p>
+
+<img src="images/widgets_development/keySensorMap.JPG" alt="KeySensor mapping"/>
+
+<p>
+The InputSensor node is somewhat limited: one cannot know when the user released
+the key or what key was pressed when the KeySensor listens multiple keys.<br/>
+The KeySensor node provides such informations.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFString url ""</b> :<br/>
+Multiple keys may be set, and thus sensed. Allowed values are: 
+<b>A B U D L R E C Z X  0 1 2 3 4 5 6 7 8 9 * #</b>.
+</p>
+<p>
+<b>SFTime eventTime 0</b> :<br/>
+This field emits current time when a listened key is pressed.
+</p>
+<p>
+<b>SFBool activate FALSE</b> :<br/>
+If <b>TRUE</b>, the <a href="development_node_KeySensor.html">KeySensor</a> can
+emit events.
+</p>
+<p>
+<b>SFBool grabFocus FALSE</b> :<br/>
+Only the last activated <a href="development_node_KeySensor.html">KeySensor</a>
+node with <b>grabFocus</b> set to <b>TRUE</b> will receive event.<br/>
+This is used to hide events to other activated InputSensors.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+DEF input InputSensor { url "A"  activate TRUE }
+
+DEF script Script {
+  eventIn SFTime keyPressed
+
+  url "javascript:
+    function keyPressed () {
+      Browser.print ('User pressed on the key: A');
+    }
+  "
+}
+
+ROUTE input.eventTime TO script.keyPressed
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

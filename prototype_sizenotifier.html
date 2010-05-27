@@ -1,0 +1,101 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_sizenotifier";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">SizeNotifier prototype</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+Sends a signal when the screen size changes to tell other UI prototypes need to recompute their size / position.
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+PROTO SizeNotifier [
+  eventOut SFVec2f screenSize
+  eventOut SFVec2f textScale
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Event Out</h2>
+
+<ul>
+<li>SFVec2f screenSize - The new screen size</li>
+<li>SFVec2f textScale - The scale to apply to text</li>
+</ul>
+<br/>
+
+<h1>Example</h1>
+
+<p>
+Background is automatically resize to fill all the screen.
+</p>
+<textarea rows="14" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO Backgnd [] "Background.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    DEF BACKGROUND Backgnd {
+  		images ["myBackground.png"]
+  	}
+
+		ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.screenSize
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

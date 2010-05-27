@@ -1,0 +1,385 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "widgets_development_sdk";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Mobile Widgets SDK</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+This part aims to describe the Mobile Widget SDK Plug-in. This plug-in, once
+integrated in the Eclipse platform, provides tools for Mobile Widgets creation,
+compilation, export and emulation.
+</p>
+
+<p>
+The following points will be detailed:
+</p>
+<ul>
+<li>Creation of a Mobile Widget,</li>
+<li>Project Preferences,</li>
+<li>Running a Mobile Widget,</li>
+<li>Exporting a Mobile Widget. </li>
+</ul>
+<br/>
+
+<h1>Prerequisites</h1>
+
+<p>
+Before you install the plug-in, make sure that your development environment fits
+the following requirements:
+</p>
+<ul>
+<li>Java 1.5 or higher is installed. It must be a Java Development Kit (JDK),
+    and can be downloaded here: <a href="http://java.sun.com/javase/downloads/index.jsp">http://java.sun.com/javase/downloads/index.jsp</a><br/>
+    See <a href="installation_java.html">Java installation part</a>.</li>
+<li>The version 3.5 of Eclipse is used. It can be downloaded here:
+    <a href="http://www.eclipse.org/downloads/">http://www.eclipse.org/downloads/</a>.
+    The folder tree where Eclipse is installed must not contain white spaces.<br/>
+    See <a href="installation_eclipse.html">Eclipse installation part</a>.</li>
+<li>Perl 5.10.0 is installed (optional: used for documentation generation only).
+    It can be downloaded here: <a href="http://www.perl.com/download.csp">http://www.perl.com/download.csp</a>.</li>
+</ul>
+<br/>
+
+
+<h1>Mobile Widget Creation</h1>
+
+<p>
+There are two ways to create a new Mobile Widget Project:
+</p>
+
+<h2>From the Toolbar</h2>
+
+<p>
+Click on the New Widget Project icon on the Toolbar (marked in red):
+</p>
+
+<h2>From the New Project menu</h2>
+
+<p>
+Go to <b>File &gt; New &gt; Project</b> in the top menu bar. In the wizards list,
+go into the Mobile Widgets SDK folder and select Widget Project, then click on Next.
+</p>
+
+
+
+
+<h2>The New Mobile Widget Wizard</h2>
+
+<p>
+The new project wizard page is then displayed:
+</p>
+
+<h3>Widget Type</h3>
+
+<p>
+The Widget Type is defined here. As indicated on the wizard page:
+</p>
+<ul>
+<li>Tiny Mobile Widgets are generic widgets which can be deployed on the whole
+    range of handsets, in both widget and standalone modes.</li> 
+<li>Mobile Widgets are also available in both widget and standalone modes. They
+    allow backward compatibility and have less memory constraints than Tiny
+    Mobile Widgets. As a result, they do not support low end handsets.</li>
+</ul>
+<br/>
+	
+<h3>Widget Configuration</h3>
+
+<p>
+First of all, the global parameters fields have to be filled in. Here is a short description of these parameters:
+</p>
+<ul>
+<li>Project name (mandatory): The name of the project, as it will appear in the
+    workspace.</li>
+<li>Widget name (mandatory): The name of the new created Mobile Widget. It must
+    begin with an upper-case alphabetic character, and can contain any
+    alphabetic character or decimal digit.</li>
+<li>Widget version (mandatory): The version number of the Mobile Widget. Default
+    value: 1.0.0.</li>
+<li>Widget description (optional): a short description of the widget.</li>
+<li>Widget category: the widget category, selected in a list.</li>
+</ul>
+<br/>
+
+<h3>VRML Model usage</h3>
+
+<p>
+The new Widget Project is built from an existing VRML model. These models are
+functional and provide sample code. The VRML model to use is selected on the
+second page of the wizard. A short description and a screenshot of the selected
+item are displayed on the right.<br/>
+When a model is selected, the Widget project creation is completed. You can
+click on the Finish button.
+</p>
+
+<p>
+A complete Widget Project is created. It is fully functional, and can be run
+once created by using <b>Run As &gt; Mobile Widget</b>. Its sources can be used
+as a starting point for another application, or just to provide code samples.
+</p>
+
+<h3>Widget Style</h3>
+
+<p>
+The third page of the creation wizard is optional.<br/>
+The widget styles provide different pictures and allow the developer to
+customize the widget design. By default, the style of the new widget will be the
+style of the selected VRML model. However, this can be modified in this page.
+</p>
+
+<p>
+An existing style can be used, or a new style can be created. A new style can be
+derived from an existing style. A screenshot is displayed on this page, allowing
+the developer to see how the selected style will look like.
+</p>
+<br/>
+
+<h2>Project structure</h2>
+
+<p>
+A newly created project has the following structure:
+</p>
+<ul>
+<li>The doc folder contains a screenshot of the widget.</li>
+<li>The exports folder contains the files generated for different export
+    configurations. Each export has its own subfolder.</li>
+<li>The i18n folder contains languages files.</li>
+<li>The SDK folder contains two symbolic links, to the protos and the styles
+    bound to the selected widget type. It must not be modified (only by advanced
+    users).</li>
+<li>The src folder contains the project sources. All the project's source files
+    must be saved in this folder.</li>
+<li>The styles folder contains a subfolder named from the selected style (OWP in
+    our case).</li>
+<li>The tmp folder contains data generated during compilation.</li>
+</ul>
+
+<p>
+Sometimes, a README.txt file is present. It contains a description of the model
+as well as information that can be useful.
+</p>
+
+<p>
+Depending on the selected widget type, the project icon in the Eclipse workspace
+is different: orange if it is a Mobile Widget, cyan if it is a Tiny Mobile Widget.
+</p>
+<br/>
+
+	
+<h1>Preferences</h1>
+
+<h2>Global preferences</h2>
+
+<p>
+In the top menu, go into <b>Window &gt; Preferences...</b> and select Mobile
+Widgets. In this Preferences Page, you can configure the Perl path, and the
+signing of Applets and MIDlets.
+</p>
+
+<p>
+In order to generate the widgets' documentation (task Generate Documentation, see §7), you must provide the path where Perl is installed. Specify the path in the Perl bin directory field. By default, it is set to C:\Perl\bin.
+
+In order to sign Applets and MIDlets, you must provide a keystore and other data, as an alias, a storepass and a keypass. If the checkbox is checked and correct data are entered in the different fields, the Applets and/or the MIDlets will automatically be signed when created.
+
+
+
+<h2>Project preferences (Properties)</h2>
+The project preferences page allows modifying the Widget version and the Widget style after the project creation.
+Right click on the Widget project and select Properties, then select Widget preferences.
+
+
+
+The version and the style of the selected project are displayed, and can be modified. When the OK button is pressed, the modification are submitted and taken in account by the project.
+
+<h1>Running the Mobile Widget</h1>
+
+There are three different ways to run the Mobile Widget:
+-	If you are used to the Eclipse environment, you can run the widget in a standard way, from the Run Configurations dialog.
+-	If you are new to Eclipse, you can configure and launch the widget from the Toolbar.
+-	For a quick launch with default configuration, you can use the Run as… menu.
+
+<h2>Run Configuration</h2>
+
+On the top menu, click on Run > Open Run Dialog…. The following window is displayed:
+
+
+In the configurations list, choose Mobile Widget Application. You can specify a name for this configuration, in the Name field. By default, it will be named New_configuration. Select a project on which the configuration will be applied by clicking on the Browse… button.
+
+In the Task group, select Compile and test. The Emulator group is enabled. There are three configuration items:
+-	Clean: check this box to clean the RMS entries on the emulator.
+-	Current Language: by clicking the Select language button on the right, you can choose one of the available languages in the project (from the i18n folder).
+-	Current Resolution: choose a resolution by clicking the Select size button.
+Click on the Apply button to save your configuration, and then on the Run button to launch it. The WRL sources are compiled for the current language and resolution, and the emulator is launched.
+
+<h2>Run from the Toolbar</h2>
+
+The fourth button of the Toolbar allows configuring Run and Export for the selected widget:
+
+
+In the Test with Emulator group, you can choose to wipe data by checking the box, and you can select the language and the resolution used when the emulator is launched:
+
+Once the setup is done, click on the Finish button to save it.
+
+This configuration will be used when the second button of the Toolbar is clicked:
+
+Then, the emulator is launched.
+
+<h2>Launch shortcut</h2>
+
+For convenience, a launch shortcut is provided. To access it, right click on a Mobile Widget or a Tiny Mobile Project or on one of its elements, and select Run As > Mobile Widget.
+
+
+
+
+This shortcut provides the following configuration:
+-	It wipes the RMS data and runs the widget on the emulator.
+-	The default language and the default resolution are the ones selected in the Toolbar configuration screen. 
+
+
+
+<h1>Exporting the Mobile Widget</h1>
+
+There are three different ways to export the Mobile Widget:
+-	If you are used to the Eclipse environment, you can export the widget from the Run Configurations dialog.
+-	If you are new to Eclipse, you can export the widget from the Toolbar.
+-	For quick single exports, you can use the context menu.
+
+<h2>Run Configuration</h2>
+
+On the top menu, click on Run > Open Run Dialog… to display the Run Configurations dialog:
+
+
+In the Task group, select Export Widget. The Package group is enabled: select one or several packages to create.
+§	Package Applet: generate JAR files (in the exports/applet directory) and launch the applet in browser.
+§	Package for Gallery: create a package (in exports/gallery) that can be uploaded on Djinngo Gallery.
+§	Package for Orange Widgets: create a package (in exports/mmp) for Orange Widgets.
+§	Package for AppShop: create JAR and JAD files (in exports/midlet) that can be uploaded on Orange AppShop.
+§	Package for Android Marketplace: create a package for Android (in exports/android) that can be uploaded on Android Marketplace and on Orange AppShop.
+§	Package for RIM AppWorld (BlackBerry): create a package for BlackBerry (in exports/blackberry) that can be uploaded on RIM App World and on Orange AppShop.
+§	Package for Ulight (available only for Tiny Mobile Widgets): create a package (in exports/ulight) for Ulight.
+
+
+Click on the Apply button to save your configuration, and then on the Run button to launch the export task(s).
+
+
+The Widget Project should contain a screenshot.png file, in a doc/img folder. If this file does not exist, a warning is displayed when the Package for Gallery task is selected:
+
+
+
+
+<h2>Export from the Toolbar</h2>
+
+The fourth button of the Toolbar allows configuring Export for the selected widget:
+
+
+In the Export group, you can choose the packages to generate when the export task is launched:
+
+
+The Package for Ulight option is only available for Tiny Mobile Widgets. For a full description of the different packages, see §6.1. Click on the Finish button to save the configuration.
+
+Once the setup is done, click on the third button of the Toolbar to launch the selected export tasks:
+
+
+<h2>Context Menu</h2>
+
+The context menu can be accessed by right-clicking on the project (or on one of its elements). It allows launching export tasks one by one:
+
+
+The Package for Ulight option is only available for Tiny Mobile Widgets. For a full description of the different packages, see §6.1.
+The Export widget option launches the packages tasks selected in the Toolbar configuration screen (see §6.2).
+ 
+<h1>Generating documentation</h1>
+
+Documentation in HTML can be generated from the comments present in the VRML code of the widget.
+
+<h2>Run Configuration</h2>
+
+On the top menu, click on Run > Open Run Dialog… to display the Run Configurations dialog:
+
+In the Task group, select Generate Documentation, and click on the Run button. The documentation is generated in the doc folder of the project, and open in a web browser.
+
+<h2>Context Menu</h2>
+
+The context menu can be accessed by right-clicking on the project (or on one of its elements). Click on the Generate documentation item.
+
+
+The documentation is generated in the doc folder of the project, and open in a web browser.
+
+
+<h1>Add/remove project nature</h1>
+
+A project obtained from repository check-out which contains all the mandatory elements may not have the required Mobile Widget nature. In this case, the options of the context menus, the Run Configuration and the Toolbar are not available for the project. To convert such a project in a Mobile Widget or a Tiny Mobile Widget project, use the Mobile Widgets SDK Tools:
+
+
+
+Once the project converted, the related actions become available, and the needed symbolic links are created. The project nature is indicated by the following icon:  for Mobile Widget Project,  for Tiny Mobile Widget Project.
+
+If you convert a project that should not have been, the nature can always be removed by using the context menu (last item):
+
+
+
+
+
+
+
+<h1>Annex 1 – Micro Emulator proxy configuration</h1>
+ 
+Add these two lines on your Micro Emulator configuration file:
+ 
+<system-property VALUE="{your proxy host}" NAME="http.proxyHost"/>
+<system-property VALUE="{your proxy name}" NAME="http.proxyPort"/>
+ 
+ 
+The Micro Emulator configuration file is available here:
+·	Windows OS: C:\Documents and Settings\{user name}\.microemulator\config2.xml
+·	Linux OS: /home/{user name}/.microemulator/config2.xml
+
+
+
+
+<!-- TODO add link with SDK documentation -->
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development','widgets_development_languages');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

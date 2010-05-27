@@ -1,0 +1,254 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "widgets_development_css_language";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">CSS language</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+CSS is used to define (or modify) the application style.<br/>
+More information about CSS language:
+<a href="http://en.wikipedia.org/wiki/CSS" target="_blank">http://en.wikipedia.org/wiki/CSS</a>.
+</p>
+<p>
+The <a href="development_javascript_Style.html">Style API</a> uses CSS files to change the appearance of Protypes.
+</p>
+<p>
+To insert CSS file in scene, use the <a href="development_node_Style.html">Style node</a>.
+</p>
+<textarea wrap="off" readonly="readonly" rows="4" cols="80">
+#VRML V2.0 utf8
+Style {
+  url ["default.css" "myStyle.css"]
+}
+</textarea>
+<p>
+See <a href="development_node_Style.html">Style node documentation</a> for more
+information about this node.
+</p>
+
+<br/>
+
+
+<h1>Supported CSS Attributes</h1>
+
+<p>
+Attributes following the standard CSS format:
+</p>
+<ul>
+<li>background-attachement,</li>
+<li>background-color,</li>
+<li>background-image,</li>
+<li>background-position,</li>
+<li>background-repeat,</li>
+<li>border-color,</li>
+<li>border-style,</li>
+<li>border-width,</li>
+<li>color,</li>
+<li>float,</li>
+<li>font-family,</li>
+<li>font-size,</li>
+<li>font-style,</li>
+<li>font-weight,</li>
+<li>height,</li>
+<li>line-height,</li>
+<li>margin-bottom,</li>
+<li>margin-left,</li>
+<li>margin-right,</li>
+<li>margin-top,</li>
+<li>padding-left,</li>
+<li>padding-bottom,</li>
+<li>padding-right,</li>
+<li>padding-top,</li>
+<li>text-align,</li>
+<li>text-decoration,</li>
+<li>text-indent,</li>
+<li>width</li>
+</ul>
+<br/>
+
+<p>
+Attributes added to standard CSS format to ease the VRML development:
+</p>
+<ul>
+<li>animation,</li>
+<li>disabled-color,</li>
+<li>duration,</li>
+<li>filled,</li>
+<li>font-filter,</li>
+<li><i>font-justify (DEPRECATED)</i>,</li>
+<li>horizontal-align,</li>
+<li>image-position,</li>
+<li>image-size,</li>
+<li>light,</li>
+<li>orientation,</li>
+<li>position,</li>
+<li>rectangle-position,</li>
+<li>rectangle-size,</li>
+<li>rotation,</li>
+<li>scale,</li>
+<li>size,</li>
+<li>text-position,</li>
+<li>text-size,</li>
+<li>translation,</li>
+<li>transparency,</li>
+<li>vertical-align</li>
+</ul>
+<br/>
+
+
+<h1>CSS Colors</h1>
+
+<p>
+Colors can be defined by a:
+</p>
+<ul>
+<li>color name: red</li>
+<li>hexa value: #FF0000 for red</li>
+<li>RGB value: rgb(255,0,0) for red</li>
+</ul>
+<br/>
+
+<h2>Colors names</h2>
+
+<ul>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: aqua;"   ></a> &emsp; aqua,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: black;"  ></a> &emsp; black,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: blue;"   ></a> &emsp; blue,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: fuchsia;"></a> &emsp; fuchsia,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: gray;"   ></a> &emsp; gray,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: green;"  ></a> &emsp; green,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: lime;"   ></a> &emsp; lime,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: maroon;" ></a> &emsp; maroon,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: navy;"   ></a> &emsp; navy,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: olive;"  ></a> &emsp; olive,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: purple;" ></a> &emsp; purple,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: red;"    ></a> &emsp; red,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: silver;" ></a> &emsp; silver,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: teal;"   ></a> &emsp; teal,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: white;"  ></a> &emsp; white,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: yellow;" ></a> &emsp; yellow,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: pink;"   ></a> &emsp; pink,</li>
+<li><a style="display: block;float: left; width: 10px;height: 10px;background-color: orange;" ></a> &emsp; orange</li>
+</ul>
+<p class="note info">
+<b>Note:</b><br/>
+The attribute <b>background-color</b> can take the value <b>transparent</b>.
+</p>
+<br/>
+
+<h1>Values of attributes</h1>
+
+<p>
+Some of the previous attributes should take non-trivial values. Here is a list
+of the authorized values:
+</p>
+<ul>
+<li><b>background-attachement</b>: "fixed" (no scrollbar). Default : not fixed</li>
+<li><b>background-position</b>:<br/>
+    vertical position "top", "center", "bottom".
+    Horizontal position "left", "center", "right". Default "center".<br/>
+    Positions can also be set in percentage, pixels or em.<br/>
+    Example background-position: "left" "top"; background-position: 10% 45%; background-position: 24 144; background-position: 3em 12em;</li>
+<li><b>background-repeat</b>: "repeat" (repeath both), "repeat-x", "repeat-y". Default : no repeat</li>
+<li><b>border-style</b>: "none", "hidden", "dotted", "dashed", "solid", "double", "groove", "ridge", "inset", "outset"</li>
+<li><b>border-width</b>: "thin", "medium", "thick". Width can also be set in percentage, pixels or em. Default : no border.</li>
+<li><b>font-family</b>: "times", "serif", "helvetica", "geneva", "sans", "courrier"</li>
+<li><b>font-size</b>: "medium", "small", "large", "larger", "smaller"</li>
+<li><b>font-style</b>: "italic" or "oblique"</li>
+<li><b>font-weight</b>: "bold" or "bolder"</li>
+<li><b>text-align</b>: Uses the first letter of the string passed in parameter.<br/>
+    "c" or "m" for center, "l" for left, "r" for right, "j" for justify.<br/>
+    HTML tag &lt;center&gt; automatically set text-align attribute to center.</li>
+<li><b>text-decoration</b>: "underline" underlines the string. Default : no underline.</li>
+</ul>
+<br/>
+
+<h1>Path to CSS files</h1>
+
+<p>
+By convention, a CSS file should sit in its own style directory:
+"MyProject/styles/MyStyle/mystyle.css".<br/>
+Where <b>MyStyle</b> is the style defined in the project settings with property
+"style" and <b>mystyle.css</b> should be referenced by the Style node in your
+main scene.
+</p>
+
+<p>
+A default CSS file is already included in the SDK to handle default values that
+you can override in your own CSS file.<br/>
+This file is named "default.css" and should always be included as the first CSS
+file in the Style node.
+</p>
+
+<p>
+You can define the style folder via the <b>app.properties</b> file.<br/>
+In <b>app.properties</b> file, change the <b>style</b> property by your style.<br/>
+Example:<br/>
+<b>style=MyPersonalStyle</b> : Path to CSS files is <b>MyProject/styles/MyPersonalStyle</b>
+</p>
+
+<p class="note warning">
+<b>Warning:</b><br/>If your are developing a widget (not a standalone Memo
+application), your should not include "default.css" as it is already handled by
+the Mobile Widgets application.
+</p>
+
+<h1>Light Mode</h1>
+
+<p>
+We add a CSS node named "Common", light is an attribute of this CSS node and is
+global to one application (per style).<br/>
+In CSS we have :
+</p>
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+Common {
+  light true;
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_languages','');
+//-->
+</script>
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_Date";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Date Javascript library</h1>
+
+
+<h1>Description</h1>
+
+<p>
+The Date class provides means to manipulate current date.
+</p>
+
+<h2>Timezones</h2>
+
+<p>
+When the timezone is not defined, the default timezone of the phone will be used.<br/>
+However, the most commonly used timezone for "universal" UTC timestamps is the
+"GMT" (Greenwich Meridian Time) timezone.<br/>
+The "GMT" timezone is guaranteed to work on <i>all</i> phones. Some phones
+<i>may</i> also support the "GTM+X:XX" or "GMT-X:XX" form.<br/>
+A list of supported timezones can also be retrieved from the MeMo console using
+the info command (key '3').
+</p>
+<br/>
+
+<h1>Since</h1>
+
+<h2>1.4.1</h2>
+
+<p>
+Since 1.4.1, all get* and to* methods (<b>Date.getYear()</b>,
+<b>Date.getMonth()</b>, ...) accept two optional arguments a <b>timestamp</b>
+and a <b>timezone</b>.<br/>
+Only exception is <b>getTime()</b> that accepts multiple optional arguments to
+define a timestamp from a list of values (year, month, day, etc.).
+</p>
+
+<p>
+New methods: <b>getWeek()</b>, <b>parseDate()</b> and <b>toString()</b>.<br/>
+New constants: <b>MIN</b>, <b>HOUR</b>, <b>DAY</b>, <b>WEEK</b>.
+</p>
+<br/>
+
+<h1>Methods</h1>
+
+<p>
+<b>int getDay ([int timestamp, [String timezone]])</b>:<br/>
+Returns the current day of the month, or the day of the month corresponding to
+the given <b>timestamp</b>.
+</p>
+
+<p>
+<b>int getDayOfWeek ([int timestamp, [String timezone]])</b>:<br/>
+Returns day of the week (sunday=1).
+</p>
+
+<p>
+<b>int getHour ([int timestamp, [String timezone]])</b>:<br/>
+Returns the current hour, or the hour corresponding to the given <b>timestamp</b>.
+</p>
+
+<p>
+<b>int getMinute ([int timestamp, [String timezone]])</b>:<br/>
+Returns the current minute, or the minute corresponding to the given <b>timestamp</b>.
+</p>
+
+<p>
+<b>int getMonth ([int timestamp, [String timezone]])</b>:<br/>
+Returns the current month number, or the month number corresponding to the given <b>timestamp</b>.
+</p>
+
+<p>
+<b>int getSecond ([int timestamp, [String timezone]])</b>:<br/>
+Returns the current second, or the year corresponding to the given <b>timestamp</b>.
+</p>
+
+<p>
+<b>int getTime ([int year, [int month, [int day, [int hour, [int min, [int sec, [String timezone]]]]]]])</b>:<br/>
+Returns the current time when no parameters are defined.<br/>
+Returns the time given by the optional arguments in seconds since midnight, January 1, 1970 UTC, or 0 on error.<br/>
+Default values of optional args: month is 1, day is 1, hour is 0, min is 0,
+sec is 0 (e.g. timestamp returned for <b>Date.getTime(2009)</b> equals <b>Date.getTime(2009, 1, 1, 0, 0, 0)</b>)<br/>
+Default timezone is the current phone timezone.
+</p>
+
+<p>
+<b>int getWeek ([int timestamp, [String timezone]])</b>:<br/>
+Returns the current week number, or the week number corresponding to the given <b>timestamp</b>.<br/>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>int getYear ([int timestamp, [String timezone]])</b>:<br/>
+  Returns the current year, or the year corresponding to the given <b>timestamp</b>.
+</p>
+
+<p>
+<b>int parseDate (String isoDate, [String timezone])</b>:<br/>
+Returns a timestamp by parsing an <a href="http://wikipedia.org/wiki/ISO_8601" target="_blank">
+ISO-8601 formated string</a>, or 0 on error.<br/>
+Only the following two extended formats are supported:
+</p>
+<ul>
+<li>for GMT/UTC times: YYYY-MM-DDTHH:MM:SSZ (20 chars)</li>
+<li>for local times: YYYY-MM-DDTHH:MM:SS+XX:XX and YYYY-MM-DDTHH:MM:SS-XX:XX (25 chars)</li>
+</ul>
+<p class="note check">
+<b>Note:</b><br/>
+the presence of the separators ('-', 'T' and ':') between the numbers is
+mandatory, but their value be changed (e.g. "2009 11 29 11!57!23Z" is a valid string).<br/>
+If a <b>timezone</b> is given, the returned timestamp will be converted to it.<br/>
+</p>
+<p>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>int time ()</b>:<br/>
+</p>
+<p class="note warning">
+<b>DEPRECATED</b><br/>Use the <b>getTime()</b> method.
+</p>
+
+<p>
+<b>String toString ([int timestamp, [int timezone]])</b>:<br/>
+Returns a <a href="http://wikipedia.org/wiki/ISO_8601" target="_blank">
+ISO-8601 formated string</a> using current time, or the given <b>timestamp</b> time.<br/>
+<b>Since 1.4.1</b>
+</p>
+<br/>
+
+<h1>Constants</h1>
+
+<p>
+<b>int DAY</b>:<br/>
+Number of seconds in a day (86400).<br/>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>int HOUR</b>:<br/>
+Number of seconds in an hour (3600).<br/>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>int MINUTE</b>:<br/>
+Number of seconds in a minute (60).<br/>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>int WEEK</b>:<br/>
+Number of seconds in a week (604800).<br/>
+<b>Since 1.4.1</b>
+</p>
+<br/>
+
+<h1>Examples</h1>
+<!-- TODO complete examples -->
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+function test () {
+  [This shows how the methods of the API work !]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

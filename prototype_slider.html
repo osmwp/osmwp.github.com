@@ -1,0 +1,216 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_slider";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Slider prototype</h1>
+
+
+<img class="right" alt="Slider" src="images/prototypes/proto_slider_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Slides some content and displays a background and title surrounding the content.
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="50" readonly="readonly" wrap="off">
+PROTO Slider [
+
+  # Events
+  eventOut SFVec2f contentPos
+  eventOut SFTime finished
+  exposedField SFBool hide TRUE
+  exposedField SFBool enable TRUE
+
+  # Items
+  field MFString titleLabel	[""]
+  field MFNode content [] # content that is slided  
+
+  # Style
+  field SFVec2f size 0 0
+  field SFVec2f textScale 1 1
+  field MFString style "Slider"
+  field MFString titleStyle "Slider-title"
+  field SFVec2f screenSize 0 0
+  field MFString images ["" ""]
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+ 
+<ul>
+<li>MFString titleLabel - Title in a <a href="prototype_ticker.html">Ticker</a> displayed above content, when empty, title zone will be hidden.</li>
+<li>MFNode content - The content which slides</li>
+</ul>
+<br/>
+
+<h2>Style fields</h2>
+ 
+<ul>
+<li>SFVec2f size - Size of content of slider</li>
+<li>SFVec2f textScale - Used for scaling text if necessary (phone with small fonts)</li>
+<li>MFString style - Style to use for this prototype (Default: Slider)</li>
+<li>MFString titleStyle - Style to use for the title (Default: Slider-title)</li>
+<li>MFSting images - Optional title image &amp; background image for the content</li>
+<li>SFVec2f screenSize - Screen resolution</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h2>Exposed Fields</h2>
+ 
+<ul>
+<li>SFBool hide - Sends FALSE when sliderTrs starts to slide up and sends TRUE when sliderTrs starts to slide down</li>
+<li>SFBool enable - Enable/disable Slider</li>
+</ul>
+<br/>
+
+<h2>Event Out</h2>
+ 
+<ul>
+<li>SFVec2f contentPos - Return position of the content</li>
+<li>SFTime finished - When slide animation is finished</li>
+</ul>
+<br/>
+
+<h1>Extern proto(s)</h1>
+
+<p>
+<a href="prototype_ticker.html">Ticker</a>
+</p>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="14" cols="80" readonly="readonly" wrap="off">
+Slider {
+  background-color: white;
+  margin-bottom: 8.75%; 
+}
+
+Slider-title {
+  background-color: #414141; # dark-gray
+  color: white;
+  height: 8.75%;
+  margin-left: 4%;
+  font-style: bold;
+  vertical-align: middle;
+  font-filter: true;
+}
+</textarea>
+<br/>
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+EXTERNPROTO SimpleList [] "SimpleList.wrl"
+EXTERNPROTO Slider [] "Slider.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+		
+		DEF SLIDER Slider {
+      titleLabel "My List"
+      hide FALSE
+      
+      size 100 50
+      
+      content [
+        DEF LIST SimpleList {
+          elementsLabels [
+            "Element 1"
+            "Element 2"
+            "Element 3"
+            "Element 4"
+            "Element 5"
+          ]
+          nbElements 5
+          
+          focusbarStyle ["FocusBar" "Menu-FocusBar"]
+          images ["listSeparator.png"]
+          
+          enable TRUE
+          
+          size 100 200
+        }
+      ]
+    }
+    
+		
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+      
+    ROUTE SIZE_NOTIFIER.screenSize TO SLIDER.screenSize
+    ROUTE SIZE_NOTIFIER.textScale  TO SLIDER.textScale
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

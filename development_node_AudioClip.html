@@ -1,0 +1,114 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_AudioClip";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">AudioClip node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+AudioClip {
+  MFString url []
+  SFTime   startTime
+  SFTime   stopTime
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Similar to <a href="development_node_ImageTexture.html">ImageTexture</a> (or 
+<a href="development_node_MovieTexture.html">MovieTexture</a>) with an audio
+file. But <b>geometry</b> field is not required (AudioClip display nothing).
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFString url []</b>:<br/>
+Multiple item urls can be defined, but only the first one is loaded.<br/>
+Items url can be of one of the following types:
+</p>
+<ul>
+<li>Filename of an audio file (eg simple.mp3). The file will be included in the
+    M4M file and immediately available on scene load.</li>
+<li>An url to an audio file on the mobile filesystem (eg file://c/file.mp3).</li>
+<li>An HTTP url (eg http://server/file.mp3) to download the file each time the
+    scene is loaded.</li>
+<li>A cache url followed by a source url (eg cache://file.mpg,http://server/file.mp3).
+    File will be downloaded the first time from the source url and loaded from
+    cache for later access.</li>
+</ul>
+
+<p>
+<b>SFTime startTime</b>: Start time
+</p>
+
+<p>
+<b>SFTime stopTime</b>: Stop time
+</p>
+<br/>
+
+<h1>Example</h1>
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+Group {
+  children [
+    Shape {
+      appearance Appearance {
+        texture AudioClip {
+          url "http://myserver/myaudiofile.mp3"
+        }
+      }
+    }
+  ]
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

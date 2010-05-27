@@ -1,0 +1,346 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "widgets_development_guidelines_rules";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">code conventions</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+Code conventions are important to produce a homogeneous code.<br/>
+Many reasons:
+</p>
+<ul>
+<li>Software maintenance is easier (software is rarely maintained by the original author)</li>
+<li>Code conventions improve the readability of the software</li>
+</ul>
+
+<p>
+This chapter present the MeMo application coding standards.
+</p>
+<br/>
+
+<h1>Block Statements</h1>
+
+<p class="note info">
+<b>Indentation:</b><br/>Use 2 spaces for a tabulation.
+</p>
+
+<p>
+In VRML, Nodes should have the following form:
+</p>
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+Node {
+  attribute1 0
+  attribute2 [
+    "toto"
+    "titi"
+    "tata"
+    "tutu"
+  ]
+  attribute3 [0 0.5 1]
+}
+</textarea>
+<br/>
+
+<p>
+In Javascript, a if-else class of statements should have the following form:
+</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+if (condition) {
+  statements;
+}
+
+if (condition) {
+  statements;
+} else {
+  statements;
+}
+
+if (condition) {
+  statements;
+} else if (condition) {
+  statements;
+} else {
+  statements;
+}
+</textarea>
+<br/>
+
+<p>
+In Javascript, a switch statement should have the following form:
+</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+switch (aVariable) {
+case const1:
+  statements;
+  /* falls through */
+
+case const2:
+  statements;
+  break;
+
+case const3:
+  statements;
+  break;
+
+default:
+  statements;
+  break;
+}
+</textarea>
+<br/>
+
+<h1>VRML DEF convention</h1>
+
+<p>
+When you name a node with keyword "<b>DEF</b>" the name of the node should be
+all uppercase with words separated by underscores.<br/>
+It should also contain the function of the node (prefix) and the type of the node (suffix).<br/>
+Example :
+</p>
+<textarea wrap="off" readonly="readonly" rows="7" cols="80">
+Shape {
+  appearance Appearance {
+    material DEF BG_MAT Material2D {
+      emissiveColor 0 0 0
+    }
+  }
+}
+</textarea>
+<br/>
+
+<p>
+In VRML, when defining a node with a "<b>DEF</b>" keyword, you should use the
+following suffixes depending on the type of node:
+</p>
+<table>
+<tr            ><th>Nodes                     </th><th>Suffix</th></tr>
+<tr            ><td>Appearance                </td><td>_APP  </td></tr>
+<tr class="odd"><td>FontStyle                 </td><td>_FS   </td></tr>
+<tr            ><td>ImageTexture, MovieTexture</td><td>_TEX  </td></tr>
+<tr class="odd"><td>Layer2D                   </td><td>_L2D  </td></tr>
+<tr            ><td>Material, Material2D      </td><td>_MAT  </td></tr>
+<tr class="odd"><td>PositionInterpolator      </td><td>_PI   </td></tr>
+<tr            ><td>Rectangle                 </td><td>_REC  </td></tr>
+<tr class="odd"><td>Text                      </td><td>_TXT  </td></tr>
+<tr            ><td>TimerSensor               </td><td>_TIMER</td></tr>
+<tr class="odd"><td>Transform, Transform2D    </td><td>_TRS  </td></tr>
+</table>
+<br/>
+
+<p>Example:</p>
+<textarea wrap="off" readonly="readonly" rows="4" cols="80">
+Shape {
+  appearance Apperance { material DEF LABEL_MAT Material2D { [...] } }
+  geometry DEF LABEL_TXT Text { [...] }
+}
+</textarea>
+<br/>
+
+<h1>Javascript field declaration</h1>
+
+<p>
+Javascript fields should use the Java notation for variables, that mean :
+</p>
+<ul>
+<li>Field names and variables in Javascript should have a lower case first letter.</li>
+<li>Internal words start with capital letters.</li>
+<li>Variable names should not contain underscore _ or dollar sign $ characters.</li>
+<li>Variable names should be short yet meaningful.</li>
+<li>The choice of a variable name should be mnemonic- that is, designed to
+    indicate to the casual observer the intent of its use.</li>
+<li>One-character variable names should be avoided except for temporary "throw away"
+    variables. Common names for temporary variables are i, j, k, m, and n for
+    integers; c, d, and e for characters.</li>
+</ul>
+<br/>
+<p>Example:</p>
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+Script {
+  field SFNode bgMat USE BG_MAT
+  field SFInt32 myInteger 0
+  url"javascript:
+    function initialize(){
+      var w = Browser.getWidth();
+      myInteger = w;
+    }
+  "
+}
+</textarea>
+<br/>
+
+<h1>CSS conventions</h1>
+
+<p>
+When the developer specializes a Prototype in another Prototype (for example :
+Alert.wrl specialize Slider.wrl), the CSS file should look like the following :<br/>
+</p>
+<ul>
+<li>Alert {} // CSS Node for Alert prototype</li>
+<li>Alert-title {} // Subset of Alert prototype</li>
+<li>Alert-message {} // Another subset of Alert prototype</li>
+<li>Alert-Slider {} // customization of Slider prototype by Alert prototype</li>
+</ul>
+<p>
+The CSS Node for Alert should show that it specializes the Slider prototype : Node
+Name = "Alert-Slider" and have the same elements that the Slider CSS Node.<br/>
+The difference is made between Specialization (named : "Node-Spe", with first
+letter of specialization in upper case) and Subsets (named "Node-subset", with
+first letter in lower case).
+</p>
+<br/>
+
+<h1>Prototype code conventions</h1>
+
+<p>
+This pages contains conventions that should be followed when writing VRML prototypes with MemoSDK.
+</p>
+<br/>
+
+<h2>Naming</h2>
+
+<p>
+Use convention for java classes naming (first letter upper case of word, following lower case).<br/>
+Example: <b>ScrollableText</b>, <b>Menu</b>, <b>ProgressBarMenu</b>
+</p>
+<br/>
+
+<h2>Parameters</h2>
+
+<p>
+Every prototype should have the following parameters :
+</p>
+<ul>
+<li><b>field SFVec2f screenSize</b> : to handle changes in screen size</li>
+<li><b>field SFString style</b> : to handle custom CSS styles</li>
+</ul>
+<br/>
+
+<h2>Inner nodes</h2>
+
+<!-- TODO complete this part -->
+
+<h2>Inner script(s)</h2>
+
+<!-- TODO complete this part -->
+
+<h2>Screen size handling</h2>
+
+<p>
+Prototype should support screen resizing via the <b>screenSize</b> field.<br/>
+Example of support of screen resizing: 
+</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+PROTO myScene [
+  field SFVec2f screenSize 0 0
+] {
+  Title {
+    screenSize IS screenSize #Spread screenSize to Title prototype
+    title ["Title of scene"]
+  }
+  Script {
+    field SFVec2f screenSize IS screenSize #Use of screenSize in script for calculation
+    url "javascript:
+      function screenSize() { //position icon at top-middle of the screen
+        icon.translation.y = (screenSize.y/2) – (iconSize.y/2);
+      }
+    "
+  }
+}
+</textarea>
+<br/>
+
+<h2>Style handling</h2>
+
+<p>
+Prototype should support style modification via the <b>style</b> field.<br/>
+See <a href="development_javascript_Style.html">Style</a> for Javascript API and
+<a href="widgets_development_css_language.html">CSS language</a> for the CSS file syntax.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+PROTO myScene [
+  field MFString style ["myScene"]
+] {
+  Title {
+    style IS style #Spread style to Title proto
+    title ["Title of scene"]
+  }
+  Shape {
+    appearance Appearance {
+      material DEF BG_MAT Material2D { emissiveColor 0 0 0 } #background color
+      texture DEF BG_TEX ImageTexture { url ["" "image.png"]} #background texture (for images)
+    }
+    geometry DEF BG_REC Rectangle { } #background rectangle
+  }
+  Script {
+    field MFString style IS style #Use of style in script for customizing
+    field SFNoce bgRec USE BG_REC
+    field SFNoce bgMat USE BG_MAT
+    field SFNoce bgTex USE BG_TEX
+    url "javascript:
+      function initialize() {
+        Style.getCoord(style, 'size', bgRec.size, screenSize.x, screenSize.y); //set size of background depending on the style
+        //a light mode exists for Mobile Widgets low end devices, check if it is activated or not
+        if (Style.getBool('Common', 'light') == false) { //standard mode : load a background image
+          bgTex.url[0] = 'image.png';
+        }
+        else { //light mode : don't load image, just a background color
+          Style.getColor (style, 'color', bgMat.emissiveColor); //set background color depending on the style
+        }
+      }
+    "
+  }
+}
+</textarea>
+<br/>
+
+
+
+<!-- TODO complete rules if necessary... -->
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_guidelines','');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

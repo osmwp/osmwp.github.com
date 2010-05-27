@@ -1,0 +1,186 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_MediaSensor";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">MediaSensor node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="7" cols="80">
+MediaSensor {
+  MFString url ""
+  SFTime mediaCurrentTime 0
+  SFTime mediaDuration 0
+  SFBool isActive FALSE
+  MFString status []
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Report the state of a media currently played (or not).<br/>
+It can also be used to monitor file download in conjunction with the Javascript
+<a href="development_javascript_File.html">File class</a>.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFString url ""</b> :<br/>
+As for MediaControl, the specified <b>url</b> must be also used in a
+<a href="development_node_MovieTexture.html">MovieTexture</a> or an
+<a href="development_node_AudioClip.html">AudioClip</a>.<br/>
+The url can also be the one used for loading a ressource using the Javascript
+<a href="development_javascript_File.html">File class</a>.<br/>
+This can help monitoring the progress of a big file download.See the
+<a href="development_javascript_File.html">File class</a> for more details.
+</p>
+<p>
+<b>SFTime mediaCurrentTime 0</b> :<br/>
+The <b>mediaCurrentTime</b> field returns the timestamp of the last media unit played.
+</p>
+<p>
+<b>SFTime mediaDuration 0</b> :<br/>
+The <b>mediaDuration</b> field contains the duration of the media when available.
+</p>
+<p>
+<b>SFBool isActive FALSE</b> :<br/>
+The <b>isActive</b> field reports the current playing status.
+</p>
+<p>
+<b>MFString status []</b> :<br/>
+The <b>status</b> field is set at index 0 to the last state occured (stopped, playing, buffering, error ...).<br/>
+In case of error, the index 1 is set to the error message, like "Invalid URL", "Connection error" or "unsupported format"
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+Group {
+  children [
+    # Background
+    Shape {
+      appearance Appearance {
+        material Material2D {
+          emissiveColor 1.0 1.0 1.0
+        }
+      }
+      geometry Rectangle { size 300 300}
+    }
+    # Video shape
+    Shape {
+      appearance Appearance {
+        texture MovieTexture {
+          url "http://localhost/arte.mpg"
+        }
+      }
+      geometry Rectangle { size 160 120}
+    }
+    # Video sensor
+    DEF MY_MEDIA_SENSOR MediaSensor {
+      url "http://localhost/arte.mpg"
+    }
+    # Playing status
+    Transform2D {
+      translation 0 -70
+      children [
+        Shape {
+          appearance Appearance {
+            material Material2D {
+              emissiveColor 0.0 0.0 0.0
+            }
+          }
+          geometry DEF PROGRESS_TXT Text {
+            string [ "progression" ]
+            fontStyle FontStyle {
+              size size 16
+              style "italic"
+              justify ["MIDDLE" "MIDDLE"]
+            }
+          }
+        }
+      ]
+    }
+
+    DEF MY_SCRIPT Script {
+      eventIn SFTime updateMediaProgression
+      eventIn MFString updateMediaStatus
+
+      field SFNode mediaSensor USE MY_MEDIA_SENSOR
+      field SFNode progressText USE PROGRESS_TXT
+      url "
+      function updateMediaProgression () {
+        if (mediaSensor.mediaCurrentTime &lt;= 0) {
+          progressText.string [0] = ' - ';
+        } else {
+          var percent = mediaSensor.mediaCurrentTime / mediaSensor.mediaDuration;
+          if (percent &lt; 1.0) {
+            var roundPrecent = Math.ceil(percent * 100);
+            progressText.string [0] = roundPrecent + '%';
+          }
+        }
+
+      }
+      function updateMediaStatus () {
+        progressText.string [0] = updateMediaStatus [0];
+      }
+      "
+    }
+
+    ROUTE MY_MEDIA_SENSOR.mediaCurrentTime TO MY_SCRIPT.updateMediaProgression
+    ROUTE MY_MEDIA_SENSOR.status TO MY_SCRIPT.updateMediaStatus
+  ]
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

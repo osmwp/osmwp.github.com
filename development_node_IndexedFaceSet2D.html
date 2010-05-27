@@ -1,0 +1,121 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_IndexedFaceSet2D";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">IndexedFaceSet2D node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+IndexedFaceSet2D {
+  MFInt32 coordIndex []
+  SFNode coord NULL
+  SFNode color NULL
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Display a polygon. Transparency is not supported. Color is only by triangle
+(not by vertex).
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFInt32 coordIndex []</b>:<br/>
+The order to connect each different point of the indexFaceSet
+</p>
+
+<p>
+<b>SFNode coord NULL</b>:<br/>
+Mandatory <a href="development_node_Coordinate2D.html">Coordinate2D</a> node.
+</p>
+
+<p>
+<b>SFNode color NULL</b>:<br/>
+Mandatory <a href="development_node_Color.html">Color</a> node.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+# Draw an orange triangle
+Group {
+ children [
+  Shape {
+   appearance Appearance {}
+   geometry IndexedFaceSet2D {
+    color  Color { color 1 0.56 0 }
+    coordIndex [
+     0, 1,  # point 0 is connected to point 1
+     1, 2,  # point 1 is connected to point 2
+     2, 0   # point 2 is connected to point 0
+    ]
+    coord Coordinate2D {
+     point [
+      -10,  10,  # point 0
+       10,   0,  # point 1
+      -10, -10,  # point 2
+     ]
+    }
+   }
+  }
+ ]
+}
+</textarea>
+<br/>
+See <a href="development_node_Color.html">Color</a> page for more example
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

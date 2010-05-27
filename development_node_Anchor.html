@@ -1,0 +1,117 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Anchor";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Anchor node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+Anchor {
+    MFString url ""
+    MFString parameter ""
+    SFBool activate FALSE
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>An anchor node can be activated only by setting the activate field to true (no geometry picking supported yet).<br/>
+The behavior then depends of the first item of <b>url</b> field:</p>
+<ul>
+<li>M4M file and parameter is "self": only the Inline part containing this Anchor is replaced.</li>
+<li>M4M file and parameter is NOT "self": the whole scene is replaced.</li>
+<li>anything else: the external html browser is invoked with this url and the parameter (that can be a reference to a frame by instance).<br/>
+    Note: MicroEmulator doesn't open web browser.</li>
+</ul>
+<br/>
+
+<h1>Fields</h1>
+
+<p><b>MFString url ""</b> :<br/>
+The first item of the <b>url</b> field can be either:</p>
+<ul>
+<li>an M4M file (eg 'myScene.m4m') to jump to this file.</li>
+<li>an HTTP url (eg 'http://www.google.com') to invoke the browser on this page.</li>
+<li>an phone number with the "tel:" prefix (eg 'tel:336099034') to ask the user to make a call.</li>
+</ul>
+
+<p><b>MFString parameter ""</b> :<br/>
+If this field contains "self", only the Inline part containing this Anchor is replaced.</p>
+
+<p><b>SFBool activate FALSE</b> :<br/>
+Anchor will be activated when this is set to TRUE (or 1).</p>
+<br/>
+
+<h1>Example</h1>
+
+<p>This example shows how to exit a scene by sending a empty url to an Anchor node.</p>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+DEF exitAnchor { url "" parameter "self" }
+
+DEF input InputSensor { url "A"  activate TRUE }
+
+DEF script Script {
+  eventIn SFTime keyPressed
+  field SFNode exitAnchor USE exitAnchor
+
+  url "javascript:
+    function keyPressed () {
+      exitAnchor.activate = true;
+    }
+  "
+}
+
+ROUTE input.eventTime TO script.keyPressed
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

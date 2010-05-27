@@ -1,0 +1,173 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_bubble";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Bubble prototype</h1>
+
+
+<img class="right" alt="Background" src="images/prototypes/proto_bubble_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Display a short message with a bubble.<br/>
+When the message is modified, the bubble is shown.<br/>
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="50" readonly="readonly" wrap="off">
+PROTO Bubble [
+  # Events
+  exposedField SFTime duration 3
+  exposedField SFTime startTime -1
+  
+  # Data
+  field SFString message ""
+  
+  # Style
+  field MFString images ["bubble.png"]
+  field SFVec2f screenSize -1 -1
+  field SFVec2f textScale 1 1
+  field MFString style "Bubble"
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>SFString message - Message information. If the message is modified, the bubble apears</li>
+</ul>
+<br/>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>MFString images - Image used to display a background</li>
+<li>MFString style - Style for this prototype. Default: "Bubble"</li>
+<li>SFVec2f screenSize - Size of the screen where the application is displayed</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h2>Exposed Fields</h2>
+
+<ul>
+<li>SFTime duration - Duration of display</li>
+<li>SFTime startTime - Force display if startTime is set to now (with async = TRUE)</li>
+</ul>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="11" cols="80" readonly="readonly" wrap="off">
+Bubble {
+  background-color: white;
+  size: 93.3333% 32.5%; // 224x104 for the 240x320 style
+  margin-bottom: 8.75%; // Bubble is above MenuBar
+  color: black;
+  padding-left: 5%; // left and right padding for the text
+  horizontal-align: middle;
+  vertical-align: middle;
+  font-size: 8;
+  font-filter: true;
+}
+</textarea>
+<br/>
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+EXTERNPROTO Bubble [] "Bubble.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+		
+    DEF BUBBLE Bubble {
+      duration 5
+    }
+		
+    Script {
+      field SFNode bubble USE BUBBLE
+      url "
+        function initialize(now) {
+          bubble.message = 'My message in a bubble';
+        }
+      "
+    }
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+      
+    ROUTE SIZE_NOTIFIER.screenSize TO BUBBLE.screenSize
+    ROUTE SIZE_NOTIFIER.textScale  TO BUBBLE.textScale
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

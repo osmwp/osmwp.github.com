@@ -1,0 +1,595 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_prototype";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">write and use a prototype</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+Prototype is an reusable VRML object.<br/>
+A prototype is equivalent to a VRML node but it is create by developers.
+</p>
+
+<p class="note info">
+<b>Note:</b><br/>
+Before write a prototype, see <a href="widgets_development_guidelines_rules.html">prototypes conventions chapter</a>.
+</p>
+<br/>
+
+<h1>Create a prototype</h1>
+
+<p>
+This tutorial present the creation of flower prototype (prototype draw a flower).
+</p>
+
+<p>
+First, we create a new VRML file in <b>src</b> folder: <b>flower.wrl</b>.
+</p>
+
+<p>
+A prototype definition  start with <b>PROTO</b> keyword and the name of prototype.
+</p>
+<p class="note info">
+<b>Note:</b><br/>&lt;name&gt; start by a upper case (by convention).
+</p>
+<p>
+We start the prototype with the following code:
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+PROTO Flower[
+  ...
+] {
+  ...
+}
+</textarea>
+<br/>
+
+<p>
+We define 7 circles to draw the flower.<br/>
+Flower color is configurable via a color field and default color is yellow
+(<b>exposedField SFColor color 0.9 0.9 0.0</b>).<br/>
+We use <b>IS</b> keyword to use the <b>color</b> field (<b>emissiveColor IS color</b>).<br/>
+Flower prototype source code :
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+PROTO Flower [
+  exposedField SFColor color 0.9 0.9 0.0
+]
+{
+  Transform2D {
+    translation 10.00 0.00
+    children [
+      Shape {
+        appearance DEF CIRCLE_APP Appearance {
+          material Material2D { emissiveColor IS color }
+        }
+        geometry Circle { radius 8 }
+      }
+    ]
+  }
+  Transform2D {
+    translation 5.00 8.66
+    children [
+      Shape {
+        appearance USE CIRCLE_APP
+        geometry Circle { radius 8 }
+      }
+    ]
+  }
+  Transform2D {
+    translation -5.00 8.66
+    children [
+      Shape {
+        appearance USE CIRCLE_APP
+        geometry Circle { radius 8 }
+      }
+    ]
+  }
+  Transform2D {
+    translation -10.00 0
+    children [
+      Shape {
+        appearance USE CIRCLE_APP
+        geometry Circle { radius 8 }
+      }
+    ]
+  }
+  Transform2D {
+    translation -5.00 -8.66
+    children [
+      Shape {
+        appearance USE CIRCLE_APP
+        geometry Circle { radius 8 }
+      }
+    ]
+  }
+  Transform2D {
+    translation 5.00 -8.66
+    children [
+      Shape {
+        appearance USE CIRCLE_APP
+        geometry Circle { radius 8 }
+      }
+    ]
+  }
+
+  Transform2D {
+    translation 0.00 0.00
+    children [
+      DEF CIRCLE Shape {
+        appearance Appearance {
+          material Material2D { emissiveColor 1.0 1.0 1.0 }
+        }
+        geometry Circle { radius 8 }
+      }
+    ]
+  }
+}
+</textarea>
+<br/>
+
+<h1>Use prototype</h1>
+
+<p>
+In previous part, we created the Flower prototype. In this part, we use the prototype.
+</p>
+
+<p>
+On main VRML file, we declare and import prototype with <b>EXTERNPROTO</b> keyword:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO Flower [] "flower.wrl"
+</textarea>
+<br/>
+
+<p>
+Prototype is imported. We can use the prototype in current scene like a node.
+</p>
+<p class="note info">
+<b>Note:</b><br/>We can use the <b>color</b> field to modify flower color.
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO Flower [] "flower.wrl"
+
+Group {
+  children [
+    Transform2D {
+      translation 20.00 20.00
+      children [
+        Flower {} # Default flower color
+      ]
+    }
+    Transform2D {
+      translation -20.00 -20.00
+      children [
+        Flower { color 1.0 0.0 0.0 } # Red flower
+      ]
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Events</h1>
+
+<p>
+To add interactivity with the prototype, we can use events.<br/>
+We declare event in fields part with <b>eventIn</b> and <b>eventOut</b> keywords.<br/>
+<b>eventIn</b> receive an event and we can process it. <b>eventOut</b> send an
+event and event can be catch by a <b>ROUTE</b> instruction.
+</p>
+
+<p>
+Example with flower prototype:
+</p>
+<ul>
+<li>Prototype can receive <b>launchAnimation</b> and <b>stopAnimation</b> event
+    (to launch and stop flower rotation).</li>
+<li>When animation start, prototype sends <b>animationStarted</b> event.</li>
+<li>At the end of animation, prototype sends <b>animationStopped</b> event.</li>
+</ul>
+<p>
+All flower events return the current time in second.
+</p>
+
+<p>
+On <b>flower.wrl</b> file, we declare the events:
+</p>
+<textarea rows="10" cols="80" readonly="readonly" wrap="off">
+PROTO Flower [
+  exposedField SFColor color 0.9 0.9 0.0
+  eventIn SFTime launchAnimation
+  eventIn SFTime stopAnimation
+  eventOut SFTime animationStarted
+  eventOut SFTime animationStopped
+]
+{
+  ...
+}
+</textarea>
+<br/>
+
+<p>
+Flower animation require a timer and a scalar interpolator (See
+<a href="tutorial_more_anim.html">animation tutorial</a>).<br/>
+We add <a href="development_node_TimeSensor.html">TimeSensor</a> and
+<a href="development_node_ScalarInterpolator.html">ScalarInterpolator</a> node
+to flower prototype.
+</p>
+<p class="note info">
+<b>Note:</b><br/>
+<b>cycleInterval</b> field value is 0, else animation is started when widget is launched.
+</p>
+<textarea rows="9" cols="80" readonly="readonly" wrap="off">
+DEF ANIM_TIMER TimeSensor {
+  isActive FALSE
+  cycleInterval 0.0
+  loop FALSE
+}
+DEF INTERPOLATOR ScalarInterpolator{
+  key      [0.0,  1.0   ]
+  keyValue [0.0,  3.1415] # 0 to PI (flower is symmetric, turn flower to 180°)
+}
+</textarea>
+<br/>
+
+<p>
+We move flower shapes into a <a href="development_node_Transform2D.html">Transform2D</a>
+node to apply rotation at all circles.
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+DEF FLOWER_TRS Transform2D {
+  children [
+    #Flower shapes
+    ...
+  ]
+}
+</textarea>
+<br/>
+
+<p>
+And link timer to interpolator, and interpolator to flower shapes.
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+ROUTE ANIM_TIMER.fraction_changed TO INTERPOLATOR.set_fraction
+ROUTE INTERPOLATOR.value_changed  TO FLOWER_TRS.rotationAngle
+</textarea>
+<br/>
+
+<p>
+Animation part is created. Now, we create a script node to process events and manage animation.
+</p>
+<textarea rows="3" cols="80" readonly="readonly" wrap="off">
+DEF FLOWER_SCRIPT Script {
+  ...
+}
+</textarea>
+<br/>
+
+<p>
+Into script node, we declare events and fields.<br/>
+We use <b>IS</b> keyword to link script events to prototype events.
+</p>
+<textarea rows="12" cols="80" readonly="readonly" wrap="off">
+#Event received when user launch animation
+eventIn  SFTime launchAnimation  IS launchAnimation
+#Event received when user stop animation
+eventIn  SFTime stopAnimation    IS stopAnimation
+#Event received when animation is stopped (end of animation)
+eventIn  SFTime endOfAnimation
+#Event sent when animation is started
+eventOut SFTime animationStarted IS animationStarted
+#Event sent when animation is stopped (end of animation or user stop the animation)
+eventOut SFTime animationStopped IS animationStopped
+#Timer node (require to start/stop the animation)
+field SFNode timer USE ANIM_TIMER;
+</textarea>
+<br/>
+
+<p>
+We create 3 functions to process events.
+</p>
+
+<p>
+<b>launchAnimation()</b> function is launched when <b>launchAnimation</b> event is received.<br/>
+<b>launchAnimation()</b> function starts the timer (and the animation) also if animation is not already started.
+</p>
+<textarea rows="12" cols="80" readonly="readonly" wrap="off">
+//Launch the animation
+function launchAnimation (time, now) {
+  //Only if animation is not launched
+  if ( timer.isActive == false ) {
+    //Launch timer
+    timer.cycleInterval = 3.0;
+    timer.isActive  = true;
+    timer.startTime = launchAnimation;
+    //Send animationStarted event
+    animationStarted = launchAnimation;
+  }
+}
+</textarea>
+<br/>
+
+<p>
+<b>stopAnimation()</b> function is launched when <b>stopAnimation</b> event is received.<br/>
+<b>stopAnimation()</b> function stops the timer (and the animation) and sends <b>animationStopped</b> event.
+</p>
+<textarea rows="9" cols="80" readonly="readonly" wrap="off">
+//Stop the animation
+function stopAnimation (time, now) {
+  //Launch timer
+  if ( timer.isActive ) {
+    timer.isActive = false;
+  }
+  //Send animationStarted event
+  animationStopped = stopAnimation;
+}
+</textarea>
+<br/>
+
+<p>
+<b>endOfAnimation()</b> function is launched when timer is stopped.<br/>
+<b>endOfAnimation()</b> function sends =animationStopped= event.
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+//End of animation
+function endOfAnimation () {
+  //Send animationStopped event
+  animationStopped = endOfAnimation;
+}
+</textarea>
+<br/>
+
+<p>
+Final prototype source code:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+PROTO Flower [
+  exposedField SFColor color 0.9 0.9 0.0
+  eventIn SFTime launchAnimation
+  eventIn SFTime stopAnimation
+  eventOut SFTime animationStarted
+  eventOut SFTime animationStopped
+]
+{
+  DEF ANIM_TIMER TimeSensor {
+    cycleInterval 0.0
+    isActive FALSE
+    loop FALSE
+  }
+  DEF INTERPOLATOR ScalarInterpolator{
+    key      [0.0,  1.0   ]
+    keyValue [0.0,  3.1415] # 0 to PI (flower is symmetric, turn flower to 180°)
+  }
+  DEF FLOWER_TRS Transform2D {
+    children [
+      Transform2D {
+        translation 10.00 0.00
+        children [
+          Shape {
+            appearance DEF CIRCLE_APP Appearance {
+              material Material2D { emissiveColor IS color }
+            }
+            geometry Circle { radius 8 }
+          }
+        ]
+      }
+      Transform2D {
+        translation 5.00 8.66
+        children [
+          Shape {
+            appearance USE CIRCLE_APP
+            geometry Circle { radius 8 }
+          }
+        ]
+      }
+      Transform2D {
+        translation -5.00 8.66
+        children [
+          Shape {
+            appearance USE CIRCLE_APP
+            geometry Circle { radius 8 }
+          }
+        ]
+      }
+      Transform2D {
+        translation -10.00 0
+        children [
+          Shape {
+            appearance USE CIRCLE_APP
+            geometry Circle { radius 8 }
+          }
+        ]
+      }
+      Transform2D {
+        translation -5.00 -8.66
+        children [
+          Shape {
+            appearance USE CIRCLE_APP
+            geometry Circle { radius 8 }
+          }
+        ]
+      }
+      Transform2D {
+        translation 5.00 -8.66
+        children [
+          Shape {
+            appearance USE CIRCLE_APP
+            geometry Circle { radius 8 }
+          }
+        ]
+      }
+      Transform2D {
+        translation 0.00 0.00
+        children [
+          DEF CIRCLE Shape {
+            appearance Appearance {
+              material Material2D { emissiveColor 1.0 1.0 1.0 }
+            }
+            geometry Circle { radius 8 }
+          }
+        ]
+      }
+    ]
+  }
+  DEF FLOWER_SCRIPT Script {
+    #Event received when user launch animation
+    eventIn  SFTime launchAnimation IS launchAnimation
+    #Event received when user stop animation
+    eventIn  SFTime stopAnimation   IS stopAnimation
+    #Event received when animation is stopped (end of animation)
+    eventIn  SFTime endOfAnimation
+    #Event sent when animation is started
+    eventOut SFTime animationStarted IS animationStarted
+    #Event sent when animation is stopped (end of animation or user stop the animation)
+    eventOut SFTime animationStopped IS animationStopped
+    #Timer node (require to start/stop the animation)
+    field SFNode timer USE ANIM_TIMER
+
+    url "
+    //Launch the animation
+    function launchAnimation() {
+      //Only if animation is not launched
+      if ( timer.isActive == false ) {
+        //Launch timer
+        timer.cycleInterval = 3.0;
+        timer.isActive  = true;
+        timer.startTime = launchAnimation;
+        //Send animationStarted event
+        animationStarted = launchAnimation;
+      }
+    }
+    //Stop the animation
+    function stopAnimation () {
+      //Launch timer
+      if ( timer.isActive ) {
+        timer.isActive = false;
+      }
+      //Send animationStarted event
+      animationStopped = stopAnimation;
+    }
+    //End of animation
+    function endOfAnimation () {
+      //Send animationStopped event
+      animationStopped = endOfAnimation;
+    }
+    "
+  }
+  #At end of animation, send event to script
+  ROUTE ANIM_TIMER.cycleTime TO FLOWER_SCRIPT.endOfAnimation
+  #Animation
+  ROUTE ANIM_TIMER.fraction_changed TO INTERPOLATOR.set_fraction
+  ROUTE INTERPOLATOR.value_changed  TO FLOWER_TRS.rotationAngle
+}
+</textarea>
+<br/>
+
+<p>
+Custom main VRML file to launch prototype animation:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO Flower [] "flower.wrl"
+
+Group {
+  children [
+    #Background
+    Shape {
+      appearance Appearance {
+        material Material2D {
+          emissiveColor 1.0 1.0 1.0
+          filled TRUE
+        }
+      }
+      geometry Rectangle { size 200 200 }
+    }
+
+    #Flower 1
+    Transform2D {
+      translation 20.00 20.00
+      children [
+        DEF FLOWER1 Flower {}
+      ]
+    }
+    #Flower 2
+    Transform2D {
+      translation -20.00 -20.00
+      children [
+        DEF FLOWER2 Flower { color 1.0 0.0 0.0 }
+      ]
+    }
+
+    Script {
+      field SFNode flower1 USE FLOWER1
+
+      url "
+      //Initialization
+      function initialize (now) {
+        flower1.launchAnimation = now;
+      }
+      "
+    }
+
+    ROUTE FLOWER1.animationStopped TO FLOWER2.launchAnimation
+    ROUTE FLOWER2.animationStopped TO FLOWER1.launchAnimation
+  ]
+}
+</textarea>
+<br/>
+<p class="note info">
+<b>Note:</b><br/>Circle shape does not support rotation...
+</p>
+<br/>
+
+<h1>MeMo prototypes</h1>
+
+<p>
+MeMo SDK contains some prototypes.<br/>
+See <a href="widgets_development_prototypes.html">Prototypes chapter</a> to more informations.
+</p>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_http',);
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

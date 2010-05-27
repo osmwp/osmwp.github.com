@@ -1,0 +1,158 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_title";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Title prototype</h1>
+
+
+<img class="right" alt="Title" src="images/prototypes/proto_title_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Display a title bar.<br/>
+Title text scroll if it too long (Title prototype use a <a href="prototype_ticker.html">Ticker</a>). 
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="7" cols="50" readonly="readonly" wrap="off">
+PROTO Title [
+  field MFString title []
+  field MFString images ["titleBg.png"]
+  field SFVec2f screenSize -1 -1
+  field SFVec2f textScale 1 1
+  field MFString style ["Title"]
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>MFString title - Title content, hidden if titleColor field is set</li>
+</ul>
+<br/>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>MFString images - Background image of the title</li>
+<li>SFVec2f screenSize - Size of the screen where the application is displayed</li>
+<li>SFVec2f textScale - Use for scaling text if necessary (phone with small fonts)</li>
+<li>MFString style - Style to use for this prototype (Default: Title)</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="11" cols="50" readonly="readonly" wrap="off">
+Title {
+  size: 100% 9%; 
+  text-size: 100% 9%; 
+  color: black;
+  background-color: orange;
+  font-style: bold;
+  font-size: 12;
+  font-filter: true;
+  horizontal-align: middle;
+  vertical-align: middle;
+}
+</textarea>
+<br/>
+
+<h1>Extern proto(s)</h1>
+
+<p>
+<a href="prototype_ticker.html">Ticker</a>
+</p>
+<br/>
+
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO Title [] "Title.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+    
+    DEF TITLE Title {
+      title [ "Lorem ipsum dolor sit amet, consectetur adipiscing elit." ]
+    }
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+    
+    ROUTE SIZE_NOTIFIER.screenSize TO TITLE.screenSize
+    ROUTE SIZE_NOTIFIER.textScale  TO TITLE.textScale
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

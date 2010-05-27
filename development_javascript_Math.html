@@ -1,0 +1,262 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_Math";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Math Javascript library</h1>
+
+
+<h1>Description</h1>
+
+<p>
+The Math class provides to compute numbers. It returns float type. It takes 32
+bits : 16 bits for integer part and 16 bits for decimal parts.<br/>
+So, we cannot go up to the number 32768. If you need a wider range of number,
+you can use the <b>d-methods</b> (for double).
+</p>
+<br/>
+
+<h1>Methods</h1>
+
+<p>
+<b>float cos (float v)</b>:<br/>
+Returns the cosinus value of v (in radians)
+</p>
+
+<p>
+<b>float sin (float v)</b>:<br/>
+Returns the sinus value of v (in radians)
+</p>
+
+<p>
+<b>float floor (float v)</b>:<br/>
+Returns the closest smaller integer of the param
+</p>
+
+<p>
+<b>float ceil (float v)</b>:<br/>
+Returns the closest bigger integer of the param
+</p>
+
+<p>
+<b>float sqrt (float v)</b>:<br/>
+Returns the square root of the parameter
+</p>
+
+<p>
+<b>float rand (float v)</b>:<br/>
+Returns a random number between 0 and 1
+</p>
+
+<p>
+<b>float abs (float v)</b>:<br/>
+Returns the positive version of the parameter
+</p>
+
+<p>
+<b>float acos (float v)</b>:<br/>
+Returns the arc cosinus of the parameter
+</p>
+
+<p>
+<b>float asin (float v)</b>:<br/>
+Returns the arc sinus of the parameter
+</p>
+
+<p>
+<b>float atan (float v)</b>:<br/>
+Returns the arc tangent of the parameter
+</p>
+<br/>
+
+<h1>Constants</h1>
+
+<p>
+<b>PI</b>:<br/>
+The constant value for PI (3.141592)
+</p>
+
+<p>
+<b>E</b>:<br/>
+The constant value for E (2.71828182)
+</p>
+<br/>
+
+<h1>Examples</h1>
+
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+function test () {
+  Browser.print ('PI: '+ Math.PI); // Displays PI: 3.141592
+  Browser.print ('E: '+ Math.E);   // Displays E: 2.71828182
+}
+
+function test2() {
+  var HA = Math.acos(String.toFloat(HAarg));
+  var cos2l0 = Math.cos(d_l0rad);
+  var sin2l0 = Math.sin(d_l0rad);
+  var result = Math.dadd('999999.5','0.51'); // result is a string with the value of '1000000.1'
+}
+</textarea>
+<br/>
+
+<h1>D-Methods</h1>
+<p>
+Redefines previous function for double type. Double type is not supported by
+Memo so it uses string type instead. It enable to have better range and precision
+than FixFloat.
+</p>
+
+<p>
+<b>String dadd(String d1, Stringd2)</b>:<br/>
+Returns the addition of the double values contained in Strings
+</p>
+
+<p>
+<b>String dsub(String d1, Stringd2)</b>:<br/>
+Returns the subtraction of the double values contained in Strings
+</p>
+
+<p>
+<b>String dmul(String d1, Stringd2)</b>:<br/>
+Returns the multiplication of the double values contained in Strings
+</p>
+
+<p>
+<b>String ddiv(String d1, Stringd2)</b>:<br/>
+Returns the division of the double values contained in Strings
+</p>
+
+<p>
+<b>String dsin(String d1)</b>:<br/>
+Returns the sinus of the double value contained in String
+</p>
+
+<p>
+<b>String dasin(String d1)</b>:<br/>
+Returns the arc sinus of the double value contained in String
+</p>
+
+<p>
+<b>String dcos(String d1)</b>:<br/>
+Returns the cosinus of the double value contained in String
+</p>
+
+<p>
+<b>String dacos(String d1)</b>:<br/>
+Returns the arc cosinus of the double value contained in String
+</p>
+
+<p>
+<b>String dtan(String d1)</b>:<br/>
+Returns the tangent of the double value contained in String
+</p>
+
+<p>
+<b>String datan(String d1)</b>:<br/>
+Returns the arc tangent of the double value contained in String
+</p>
+
+<p>
+<b>String datan2(String d1,String d2)</b>:<br/>
+Returns the arc tangent 2 of the double values contained in Strings
+</p>
+
+<p>
+<b>String dfloor(String d1)</b>:<br/>
+Returns the closest smaller integer of the param
+</p>
+
+<p>
+<b>boolean dsup(String d1,String d2)</b>:<br/>
+Returns the true if value of d1 is greater than the value of d2, else false
+</p>
+
+<p>
+<b>boolean dsupeq(String d1,String d2)</b>:<br/>
+Returns the true if value of d1 is greater or equal than the value of d2, else false
+</p>
+
+<p>
+<b>boolean dinf(String d1,String d2)</b>:<br/>
+Returns the true if value of d1 is smaller than the value of d2, else false
+</p>
+
+<p>
+<b>boolean dinfeq(String d1,String d2)</b>:<br/>
+Returns the true if value of d1 is smaller or equal than the value of d2, else false
+</p>
+
+<p>
+<b>String dabs(String d1)</b>:<br/>
+Returns the positive version of the parameter
+</p>
+<br/>
+
+<h1>Examples</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+function calcGeomMeanLongSun(t) {
+  // var L0 = 280.46646 + t * (36000.76983 + t*(0.0003032))
+  var L0 = Math.dadd('280.46646', Math.dmul( t, Math.dadd( '36000.76983', Math.dmul( t, '0.0003032'))));
+  while( Math.dsup( L0 , '360') ) {
+    L0 = Math.dsub( L0, '360');
+  }
+  while( Math.dinf( L0 , '0') ) {
+    L0 = Math.dadd( L0, '360');
+  }
+  return L0; // in degrees
+}
+function test3() {
+  var alpha = Math.dfloor( Math.ddiv( Math.dsub(z,'1867216.25'), '36524.25'));
+  var result = Math.dadd('999999.5','0.51'); // result is a string with the value of '1000000.1'
+  var E = Math.dfloor(Math.ddiv(Math.dsub(B,D),'30.6001'));
+  var month = String.toInt(E);
+  var mrad = String.toFloat(result);
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

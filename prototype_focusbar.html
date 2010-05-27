@@ -1,0 +1,144 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_focusbar";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">FocusBar prototype</h1>
+
+
+<img class="right" alt="Menu" src="images/prototypes/proto_focusbar_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Highlight the focused element (eg, the current element of a list).
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="10" cols="50" readonly="readonly" wrap="off">
+PROTO FocusBar [
+  # Events
+  eventIn SFInt32 move
+  field SFVec2f translation 0 0
+
+  # Style 
+  field MFString images ["focusBarBg.png" "focusBarOver.png"]
+  field MFString style "FocusBar"
+  field SFVec2f size 0 0
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>MFString images - List of images for background and overlay.</li>
+<li>MFString style - Style for this prototype. Default: "FocusBar"</li>
+<li>SFVec2f size - Focus bar size</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h2>Events</h2>
+
+<ul>
+<li>SFInt32 move - Trigger overlay animation</li>
+<li>SFVec2f translation - Move Focus bar to given position</li>
+</ul>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="6" cols="80" readonly="readonly" wrap="off">
+FocusBar {
+  color: rgb(255, 153, 38); //Orange 1 0.6 0.15
+  size: 100% 21.22%;
+  animation: true;
+  // background-image: true;
+}
+</textarea>
+<br/>
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO FocusBar [] "FocusBar.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+    
+    DEF FOCUS_BAR FocusBar {
+      size 100 25
+    }
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_mosaic";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Mosaic prototype</h1>
+
+
+<img class="right" alt="Mosaic" src="images/prototypes/proto_mosaic_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Display a mosaic of items with icons and labels (multi-pages).
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="50" readonly="readonly" wrap="off">
+PROTO Mosaic [
+  # Events
+  eventIn SFBool update
+  exposedField SFBool startZoom FALSE # Set to TRUE to zoom in and to FALSE to zoom out
+  exposedField SFInt32 index 0
+  exposedField SFBool enable TRUE
+  eventOut SFBool zoomFinished # will be set to TRUE on end of zoom in and to FALSE on end of zoom out
+  eventOut SFString activeKey # Send touchCursor event to upper prototypes  
+  
+  # Data
+  field MFString images []
+  field MFString labels []
+  field MFString defaultImages []
+  
+  # Style
+  field SFVec2f itemsTrs 0 0
+  field SFVec2f containerSize -1 -1
+  field SFVec2f size -1 -1 #the size of each item
+  field SFVec2f textScale 1 1
+  field MFString style ["Mosaic"]
+  field SFInt32 deltaMin 0
+  field SFInt32 focusThickness 2
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>MFString images - Icon of each item of mosaic</li>
+<li>MFString labels - Label of each item of mosaic</li>
+<li>MFString defaultImages - Default icon if it is missing for an item of mosaic</li>
+</ul>
+<br/>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>SFVec2f itemsTrs - General translation of all the mosaic proto (to match with Carrousel itemTrs parameter)</li>
+<li>SFVec2f containerSize - Size of the area where the proto is displayed (containerSize &lt;= screenSize)</li>
+<li>SFVec2f size - Size of the icon in Mosaic (each icon has the same size)</li>
+<li>MFString style - Path to the CSS node associated to Mosaic proto</li>
+<li>SFInt32 deltaMin - Minimum space between two icons (same horizontal and vertical)</li>
+</ul>
+<br/>
+
+<h2>Exposed Fields</h2>
+
+<ul>
+<li>SFBool enable - Enable/disable MenuBar Buttons</li>
+<li>SFInt32 index - The current element in Mosaic</li>
+</ul>
+<br/>
+
+<h2>Event in</h2>
+
+<ul>
+<li>SFBool update - Update the Mosaic and position its index on the given element</li>
+<li>SFBool startZoom - Set to TRUE to zoom in and to FALSE to zoom out. It set to FALSE by default: the mosaic is not visible</li>
+</ul>
+
+<h2>Event Out</h2>
+
+<ul>
+<li>SFBool zoomFinished - Set to TRUE on end of zoom in and to FALSE on end of zoom out</li>
+<li>SFString activeKey - Send touchCursor event to upper prototypes</li>
+</ul>
+
+<h1>CSS</h1>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+Mosaic {
+  color: #ff9933;
+  size: 22% 22%;
+}
+</textarea>
+<br/>
+#
+<h1>Extern proto(s)</h1>
+
+<p>
+MosaicMatrix,
+<a href="prototype_touchcursor.html">TouchCursor</a>
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO Mosaic [] "Mosaic.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+    
+    DEF MOSAIC Mosaic {
+      images [
+        "img_32x32.png" "img_32x32.png" "img_32x32.png" "img_32x32.png" "img_32x32.png"
+        "img_32x32.png" "img_32x32.png" "img_32x32.png" "img_32x32.png" "img_32x32.png"
+      ]
+      labels [
+        "Item 1" "Item 2" "Item 3" "Item 4" "Item 5"
+        "Item 6" "Item 7" "Item 8" "Item 9" "Item 10"
+      ]
+      size 64 64
+      deltaMin 10
+    }
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+    
+    ROUTE SIZE_NOTIFIER.screenSize TO MOSAIC.containerSize
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

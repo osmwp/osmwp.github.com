@@ -1,0 +1,377 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_textfield";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">TextField prototype</h1>
+
+
+<img class="right" alt="TextField" src="images/prototypes/proto_textfield_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Text Field is composed of :
+</p>
+<ul>
+<li>a text layer</li>
+<li>a background (frame or picture) that can be displayed or not according to 'backgndChoice' field - frame or picture have exactly the same size and position</li>
+<li>a window border (around text layer) that can be displayed or not according to 'borderChoice' field</li>
+<li>a letters pad :  window which displays set of T9 chars of the selected key ; letters pad is displayed as soon as key is pressed and for a defined timer (see TIME)</li>
+<li>a Mode window : displays the selected mode ("abc" "ABC" or "123") - mode window can be displayed/Not according to 'displayMODE' boolean eventIn</li>
+</ul>
+<p>
+All these graphical elements constitutes the complete Text Field.
+</p>
+
+<p>
+Prototype provides 2 parameters to the calling scene :
+</p>
+<ul>
+<li>Size of complete Text Field (smaller rectangle all graphical elements of Text Field including background even if not displayed)</li>
+<li>Position of center of TextField</li>
+</ul>
+
+<p>
+Prototype can be  activate/disable through 'isActiveTF' boolean field.
+</p>
+
+<p>
+The text displayed in text layer can be modified at anytime by the calling scene using 'inputText' eventIn.
+</p>
+
+<p>
+An output event ('outputTEXT') providing current value of text is generated each time prototype modify the text (either using text box or layer entering mode or setting a value to inputTEXT).
+</p>
+
+<p>
+Text can be hidden at any time by calling scene (only '****' displayed - for example in case of password) using 'field SFBool displayTEXT' boolean field.
+</p>
+
+<p>
+The native text box can be used to enter text - 2 modes are possible : 'automatic' or 'driven'.
+</p>
+<ul>
+<li>in automatic mode, native text box is automatically open by prototype each time user click on screen in TextField area ,
+   (Touch Sensor must be enabled ) text box is closed when user click on 'OK' or 'CANCEL' soft key, an eventOut is then generated ('backFromTextBox')
+   this mode can be activated/disabled using 'isActiveTextBox' boolean field</li>
+<li>in driven mode , native text box is open/closed by calling scene using 'openTEXTBOX' boolean field</li>
+</ul>
+
+<p>
+When launching prototype, only size (x, y) of layer and number max of char are provided by developer to prototype.<br/>
+Size and center position of complete Text Field is computed by prototype in initialize() from sizes and positions of each element.
+</p>
+
+<p>
+Following sizes and positions are provided as constants in script Node:
+</p>
+<ul>
+<li>mode window Width and X or Y delta/ Background border,</li>
+<li>letters tab Width and X or Y delta/Background border,</li>
+<li>X and Y margins of Background / Layer</li>
+</ul>
+
+<p>
+Height of elements 'mode window' and 'letters pad' are set to height of the used fonts (mode, letters) provided as parameters in proto interface,
+</p>
+
+<p>
+Concerning layerSize :
+</p>
+<ul>
+<li>if parameterized Y value is &lt; to the max of (text font height/cursor font height) Y value is automatically set to height of bigger of the 2 fonts</li>
+</ul>
+
+<p>
+TouchSensor can be activated /disabled using 'isActiveTouchSensor' boolean
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+PROTO TextField [
+
+  # ************** events ***********************
+  field MFString inputTEXT
+  eventOut MFString outputTEXT
+  field SFBool openTEXTBOX false
+  eventOut SFTime backFromTextBox
+  eventOut SFInt32 borderReached
+  field SFString TF_ID ""
+  eventOut SFString requestTouchFocus
+  eventIn SFTime doBackspace
+  
+  # ********** INPUT/OUTPUT PARAMETERS **********
+  exposedField SFBool lockMode FALSE
+  exposedField SFInt32 mode 0
+  exposedField SFInt32 displayMODE 2
+  
+  # ********* OUTPUT PARAMETERS *****************
+  field SFVec2f TFCenterPos
+  
+  # ********* INPUT PARAMETERS *****************
+  
+  # text input mode parameters "abc" "ABC" "123"
+  field SFVec2f modeTranslation  0 0
+  field SFColor modeTextColor    0 0 0
+  field SFColor modeBackgndColor 1 1 1
+  field SFNode modeFont FontStyle {
+    size 12 justify ["MIDDLE" "MIDDLE"]
+  }
+  
+  # text input choice parameters
+  field SFVec2f lettersTranslation  0 0
+  field SFColor lettersBackgndColor 0 0 0
+  field SFColor lettersTextColor    1 1 1
+  field SFNode lettersFont FontStyle {
+    size 12 justify ["MIDDLE" "MIDDLE"]
+  }
+
+  # text background management
+  field SFInt32 backgndChoice -1
+  field MFString backgndPictureUrl [""]
+  field SFColor backgndFrameColor 1 1 1
+  
+  # border management
+  field SFInt32 borderChoice -1
+  field SFColor borderFrameColor 0 0 0
+  field SFBool borderCornerRadius FALSE
+
+  # main text parameters
+  field SFVec2f textLayerSize
+  field SFInt32 maxChar 40
+  field SFInt32 numberOfLines 1
+  field SFBool displayTEXT TRUE
+  field SFBool isActiveTF TRUE
+  field SFColor textColor 0 0 0
+  field SFNode textFont FontStyle {
+    size 12 justify ["LEFT" "TOP"]
+  }
+  
+  #grab focus
+  field SFBool grabFocus FALSE
+  
+  # touch parameter
+  field SFBool  isActiveTouchSensor TRUE
+  
+  #native text box management
+  field SFBool isActiveTextBox  TRUE
+  # text labels used when displaying native text box
+  field SFString nativeTextBoxTitle "Enter your text"
+  field SFString nativeTextBoxOkLabel "OK"
+  field SFString nativeTextBoxCancelLabel "Cancel"
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Events</h2>
+
+<ul>
+<li>MFString inputTEXT - permit to modify text displayed in Text Field</li>
+<li>MFString outputTEXT - event generated each time text of Text field is modified</li>
+<li>SFBool openTEXTBOX false - if true and if displayTEXTBOX = TRUE =&gt; open system text box</li>
+<li>SFTime backFromTextBox - event generated when system text box is closed (OK or CANCEL)</li>
+<li>SFInt32 borderReached - event generated when the user wants to scroll upper the first line or lower the last line<br/>
+    -1 for upper and +1 for lower<br/>
+    -2 for left and +2 for right</li>
+<li>SFString TF_ID - ID to identify the textfield</li>
+<li>SFString requestTouchFocus - event generated when textfield is disable but a touch event has occurred<br/>
+    it contains the ID of the textfield</li>
+<li>SFTime doBackspace - event in to activate backspace/delete</li>
+</ul>
+<br/>
+  
+<h2>Input/Output parameters</h2>
+
+<ul>
+<li>SFBool lockMode FALSE - if TRUE, user can not change mode</li>
+<li>SFInt32 mode - key selection of mode<br/>
+    0 : abc lower case mode<br/>
+    1 : ABC upper case mode<br/>
+    2 : 123 numeric mode<br/>
+    3 : 0.2 decimal mode / lockMode off, displayMode off, '*' to delete and '#' to put the decimal point '.'</li>
+<li>SFInt32 displayMODE 2 - display key selection mode<br/>
+    0 : not displayed<br/>
+    1 : always displayed<br/>
+    2 : displays 1 seconds and disappear</li>
+</ul>
+<br/>
+  
+<h2>Input parameters</h2>
+
+<ul>
+<li>SFVec2f TFCenterPos - provide TF center position TF includes : text layer size + background</li>
+</ul>
+<br/>
+  
+<h2>Input parameters</h2>
+
+<h3>text input mode parameters "abc" "ABC" "123"</h3>
+
+<ul>
+<li>SFVec2f modeTranslation - translation of mode display position ( by default TOP RIGHT )</li>
+<li>SFColor modeTextColor - color of text</li>
+<li>SFColor modeBackgndColor - color of background</li>
+<li>SFNode modeFont FontStyle - font node</li>
+</ul>
+<br/>
+  
+<h3>text input choice parameters</h3>
+
+<ul>
+<li>SFVec2f lettersTranslation - translation of letters choice position ( by default TOP RIGHT )</li>
+<li>SFColor lettersBackgndColor - color of text</li>
+<li>SFColor lettersTextColor - color of background</li>
+<li>SFNode lettersFont (FontStyle) - font node</li>
+</ul>
+<br/>
+
+<h3>text background management</h3>
+
+<ul>
+<li>SFInt32 backgndChoice - -1: nothing displayed / 0 = display background / 1 = display picture</li>
+<li>MFString backgndPictureUrl - url of background picture</li>
+<li>SFColor backgndFrameColor - color of background</li>
+</ul>
+<br/>
+
+<h3>border management</h3>
+
+<ul>
+<li>SFInt32 borderChoice - 0 = display border / -1 hide border</li>
+<li>SFColor borderFrameColor - color of border</li>
+<li>SFBool borderCornerRadius - add round rectangle effect</li>
+</ul>
+<br/>
+
+<h3>main text parameters</h3>
+
+<ul>
+<li>SFVec2f textLayerSize - specify height and width of text layer</li>
+<li>SFInt32 maxChar - max number of characters, 0 for unlimited</li>
+<li>SFInt32 numberOfLines - set the number of line, 1 line by default<br/>
+    - &lt;= 0 for auto-adaptive according to textLayerSize<br/>
+    - &gt; 1 to fix the number of lines</li>
+<li>SFBool displayTEXT - true : text is displayed / false : password mode, only stars '*' are displayed</li>
+<li>SFBool isActiveTF - enable/disable Text field prototype; if true : cursor is flashing and typing is authorized</li>
+<li>SFColor textColor - main text color</li>
+<li>SFNode textFont - main text font node, when using multiline, only use "TOP" "LEFT"</li>
+</ul>
+<br/>
+  
+<h3>grab focus</h3>
+
+<ul>
+<li>SFBool grabFocus</li>
+</ul>
+<br/>
+  
+<h3>touch parameter</h3>
+
+<ul>
+<li>SFBool  isActiveTouchSensor - if true Touch sensor is enabled</li>
+</ul>
+<br/>
+  
+<h3>native text box management</h3>
+
+<ul>
+<li>SFBool isActiveTextBox - if true system text box is active and can be open<br/>
+    -  either by calling scene thru openTEXTBOX eventIn<br/>
+    -  or by click on TSENSOR_AREA if Touch sensor is enabled</li>
+</ul>
+<br/>
+
+<h3>text labels used when displaying native text box</h3>
+<ul>
+<li>SFString nativeTextBoxTitle</li>
+<li>SFString nativeTextBoxOkLabel</li>
+<li>SFString nativeTextBoxCancelLabel</li>
+</ul>
+<br/>
+
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO TextField [] "TextField.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance Appearance {
+        material Material2D {
+          emissiveColor 1 1 1
+        }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+
+    DEF TEXT_INPUT TextField {
+      maxChar 60
+      textLayerSize 100 24
+      isActiveTF TRUE
+    }
+     
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

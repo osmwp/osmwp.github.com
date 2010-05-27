@@ -1,0 +1,139 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_CoordinateInterpolator";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">CoordinateInterpolator node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="6" cols="80">
+CoordinateInterpolator {
+  SFFloat set_fraction 0
+  MFVec3f value_changed []
+  MFFloat key []
+  MFVec3f keyValue []
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+This interpolator is used to interpolate arrays of 3D coordinates.<br/>
+See <a href="development_node_Interpolators.html">Interpolators</a> for a
+detailed explanation on how interpolators work and when to use them.
+</p>
+
+<p class="note check">
+<b>Note:</b><br/>
+The <a href="development_node_CoordinateInterpolator.html">CoordinateInterpolator</a>
+outputs <b>MFVec3f</b> values to the <b>value_changed</b> field, you might want
+to look at the <a href="development_node_PositionInterpolator.html">PositionInterpolator</a>
+if you want <b>SFVec3f</b> values.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFFloat set_fraction 0</b>:<br/>
+Change this <b>set_fraction</b> field (between 0 to 1) to make the interpolator
+compute a new value.<br/>
+Value usually routed from the <a href="development_node_TimeSensor.html">TimeSensor</a>.fraction_changed
+field. See <a href="development_node_Interpolators.html">Interpolators</a>.
+</p>
+
+<p>
+<b>MFVec3f value_changed []</b>:<br/>
+When a new array of coordinates is computed from the
+<a href="development_node_CoordinateInterpolator.html">CoordinateInterpolator</a>,
+it is sent to the <b>value_changed</b> field.
+</p>
+
+<p>
+<b>MFFloat key []</b>:<br/>
+List of float values between 0 and 1. See
+<a href="development_node_Interpolators.html">Interpolators</a>.
+</p>
+
+<p>
+<b>MFVec3f keyValue []</b>:<br/>
+Contains arrays of coordinates for each value of the <b>key</b> list.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+DEF TIMER TimeSensor {
+    cycleInterval 2  # durée de deux secondes
+    startTime 1 # stopTime implicite à 1+2 = 3
+}
+DEF INTERP PositionInterpolator2D {
+    key [ 0, 0.5, 1 ]  # début, milieu et fin d’animation
+    keyValue [ -50 -100, -100 100, 50 100 ] # trois positions
+}
+DEF TRS Transform2D {
+    children [
+        Shape {
+            appearance Appearance {
+                material Material2D { emissiveColor 1 0.4 0 }
+            }
+            geometry Rectangle { size 50 50 }
+        }
+    ]
+}
+
+ROUTE TIMER.fraction_changed TO INTERP.set_fraction
+ROUTE INTERP.value_changed TO TRS.translation
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

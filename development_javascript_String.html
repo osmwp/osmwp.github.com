@@ -1,0 +1,270 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_String";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">String Javascript library</h1>
+
+
+<h1>Description</h1>
+
+<p>
+The String class provides means to manipulate arrays of chars (Strings)
+</p>
+<br/>
+
+<h1>Since</h1>
+
+<h2>1.4.1</h2>
+
+<p>
+New methods: <b>join()</b>, <b>replace()</b>, <b>split()</b>.
+</p>
+<br/>
+
+<h1>Methods</h1>
+
+<p>
+<b>int charAt (String s, int i)</b>:<br/>
+Returns the ASCII/UTF-8 code of the character at index <b>i</b> inside string <b>s</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">String.charAt ("ABCD", 2); // 67</textarea>
+<br/>
+
+<p>
+<b>String decodeBase64 (String s)</b>:<br/>
+Return a string decoded in Base 64 from <b>s</b>.
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>This method might not be available (requires MM.base64).
+</p>
+
+
+<p>
+<b>String decodeUrl (String s)</b>:<br/>
+Returns an URL decoded version of the string <b>s</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="2" cols="80">
+String.makeAscii ("http%3A//myserver.org/myscript%3Fparam1%3Darg1%26param2%3Darg2");
+// "http://myserver.org/myscript?param1=arg1&amp;param2=arg2"
+</textarea>
+<br/>
+
+<p>
+<b>String encodeBase64 (String s)</b>:<br/>
+  Return a string encoded in Base 64 from <b>s</b>.
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>This method might not be available (requires MM.base64).
+</p>
+
+<p>
+<b>String encodeUrl (String s)</b>:<br/>
+Returns an URL encoded version of the string <b>s</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="2" cols="80">
+String.makeAscii ("http://myserver.org/myscript?param1=arg1&amp;param2=arg2");
+// "http%3A//myserver.org/myscript%3Fparam1%3Darg1%26param2%3Darg2"
+</textarea>
+<br/>
+
+<p>
+<b>bool endsWith (String s, String t)</b>:<br/>
+Returns true if <b>s</b> ends with <b>t</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">
+String.endsWith ("ABCDEF", "DEF"); // true
+</textarea>
+<br/>
+
+<p>
+<b>int height (Node fontStyle)</b>:<br/>
+Returns the height (in pixels) of the string rendered using the specified <b>fontstyle</b> node.
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>The <b>fontsyle</b> node must not be switched !
+</p>
+
+<p>
+<b>int indexOf (String s, int char, int index)</b>:<br/>
+Returns the first position of <b>char</b> in <b>s</b>, starting at <b>index</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">
+String.indexOf ("ABCDEFABCDEF", 65, 2); // 6  (65==A)
+</textarea>
+<br/>
+
+<p>
+<b>String join (MFString orig, char sep, int max)</b>:<br/>
+Returns joined strings from <b>orig</b> using the optional <b>sep</b> char. Joining can be limited to the first <b>max</b> strings for <b>orig</b>.<br/>
+Returns empty string on error.<br/>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>int lastIndexOf (String s, int char, int index)</b>:<br/>
+Returns the last position of <b>char</b> in <b>s</b>, starting (backward) at <b>index</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">
+String.indexOf ("ABCDEFABCDEF", 70, 2); // 5  (70==F)
+</textarea>
+<br/>
+
+<p>
+<b>int length (String s)</b>:<br/>
+Returns the number of chars in <b>s</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">String.length ("ABCD"); // 4</textarea>
+<br/>
+
+<p>
+<b>String makeAscii (int i)</b>:<br/>
+Returns a string with a single char made that has the parameter <b>i</b> as ascii code.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">String.makeAscii (65); // "A"</textarea>
+<br/>
+
+<p>
+<b>String replace (String s, String token, String replace)</b>:<br/>
+Returns a string where all sub-strings matching <b>token</b> in <b>s</b> are replaced by the <b>replace</b> string.<br/>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>int split (string orig, MFString dest, [char separator])</b>:<br/>
+Split <b>orig</b> in tokens to fill the <b>dest</b> array.<br/>
+If <b>separator</b> is not defined, comma ',' will be used as the default separator.<br/>
+If no <b>sep</b> is found in <b>orig</b>, the first slot of <b>dest</b> will contain <b>orig</b>.<br/>
+Returns the number of tokens or 0 on error.<br/>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>bool startsWith (String s, string t)</b>:<br/>
+Returns true if <b>s</b> starts with <b>t</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">String.startsWith ("ABCDEF", "AB"); // true</textarea>
+<br/>
+
+<p>
+<b>int strIndexOf (String s, String t, int index)</b>:<br/>
+Returns the first position of <b>t</b> in <b>s</b>, starting at <b>index</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">String.strIndexOf ("ABCDEFABCDE", "CD", 5); // 8</textarea>
+<br/>
+
+<p>
+<b>String substring (String s, int start, int end)</b>:<br/>
+Returns the substring of <b>s</b>, starting at <b>start</b> and ending at <b>end</b>.<br/>
+If <b>end</b> &lt; 0, return up to the end of the string.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">String.substring ("ABCDEF", 2, 4); // "CDE"</textarea>
+<br/>
+
+<p>
+<b>float toFloat (String s)</b>:<br/>
+Returns the float that can be converted from <b>s</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">String.toFloat ("12.345"); // 12.345</textarea>
+<br/>
+
+<p>
+<b>int toInt (String s)</b>:<br/>
+Returns the integer that can be converted from <b>s</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">String.toInt ("12345"); // 12345</textarea>
+<br/>
+
+<p>
+<b>String toLower (String s)</b>:<br/>
+Returns the lower case version of <b>s</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">String.toLower ("AbCD"); // abcd</textarea>
+<br/>
+
+<p>
+<b>String toUpper (String s)</b>:<br/>
+Returns the upper case version of <b>s</b>.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">String.toUpper ("aBcd"); // ABCD</textarea>
+<br/>
+
+<p>
+<b>String trim (String s)</b>:<br/>
+Returns the trimmed version of <b>s</b> (space removed at both ends).<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">String.trim ("   hello   "); // "hello"</textarea>
+<br/>
+
+<p>
+<b>int width (String s, Node fontStyle)</b>:<br/>
+Returns the width (in pixels) of the string rendered using the specified <b>fontstyle</b> node.
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>The <b>fontsyle</b> node must not be switched !
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>The <b>fontsyle</b> node must be defined, otherwise the string itself is returned !
+</p>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

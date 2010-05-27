@@ -1,0 +1,228 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_progressbarmenu";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">ProgressBarMenu prototype</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+Progress bar displayed in a <a href="prototype_slider.html">Slider</a> and
+controlled by a <a href="prototype_menubar.html">MenuBar</a>.<br/>
+It can also display an image and two texts (message and status).<br/>
+The progress bar can also display in an "unknown step" mode where the progress
+bar just bounces from left to right each time the step field is updated.
+<!-- TODO complete this part -->
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+PROTO ProgressBarMenu [
+  
+  # Events
+  exposedField SFFloat step 0
+  eventOut SFBool selection # return TRUE: left soft key, FALSE: right soft key
+  exposedField SFBool hide TRUE
+  
+  # Data
+  field MFString title ""
+  field MFString message ""
+  field MFString status ""
+  field MFString rightLabel	""
+  field MFString leftLabel ""
+  
+  # Style
+  field MFString style "ProgressBarMenu"
+  field MFString images ""
+  field MFString progressbarStyle "ProgressBar"
+  field MFString progressbarImages "progressBg.png"
+  field MFString sliderStyle "Slider"
+  field MFString sliderTitleStyle "Slider-title"
+  field MFString sliderImages ""
+  field SFVec2f screenSize -1 -1
+  field SFVec2f textScale 1 1
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>MFString title - Title text</li>
+<li>MFString message - Message text displayed over the <a href="prototype_progressbar.html">ProgressBar</a></li>
+<li>MFString status - Status text displayed under the <a href="prototype_progressbar.html">ProgressBar</a></li>
+<li>MFString rightLabel	- Menu right label</li>
+<li>MFString leftLabel - Menu left label</li>
+</ul>
+<br/>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>MFString style - Path to the CSS node associated to ProgressBarMenu prototype.</li>
+<li>MFString images - Image of the optional icon.</li>
+<li>SFVec2f screenSize - Size of the screen where the application is displayed</li>
+<li>SFVec2f textScale - Use for scaling text if necessary (phone with small fonts)</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h2>ProgressBar style fields</h2>
+
+<ul>
+<li>MFString progressbarStyle - Path to the CSS node associated to <a href="prototype_progressbar.html">ProgressBar</a> prototype.</li>
+<li>MFString progressbarImages - Image of the <a href="prototype_progressbar.html">ProgressBar</a> prototype.</li>
+</ul>
+<br/>
+
+<h2>Slider style fields</h2>
+
+<ul>
+<li>MFString sliderStyle - Path to the CSS node specific to the <a href="prototype_slider.html">Slider</a> prototype.</li>
+<li>MFString sliderTitleStyle - Path to the CSS node specific to the title of the <a href="prototype_slider.html">Slider</a> prototype.</li>
+<li>MFString sliderImages - Image of the background slider</li>
+</ul>
+<br/>
+
+<h2>Exposed Fields</h2>
+
+<ul>
+<li>SFBool hide - Hide/display progress bar</li>
+<li>SFFloat step - Progress from 0 (0%) to 1 (100%), other values will force the unknown mode.</li>
+</ul>
+<br/>
+
+<h2>Event Out</h2>
+
+<ul>
+<li>SFBool selection - return TRUE: left soft key, FALSE: right soft key</li>
+</ul>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="9" cols="80" readonly="readonly" wrap="off">
+ProgressBarMenu {
+  image-size: 12.5% 12.5%; // size of icon
+  image-position: -40% 8%; // translation of icon 
+  text-position: 8% 8%; // translation of message
+  text-size: 82% 12.5%; // size of message
+  position: 0 -6.5%; // translation of status
+  horizontal-align: left;
+  vertical-align: middle;
+}
+</textarea>
+<br/>
+
+<h1>Extern proto</h1>
+
+<p>
+<a href="prototype_slider.html">Slider</a>,
+<a href="prototype_menubar.html">MenuBar</a>,
+<a href="prototype_progressbar.html">ProgressBar</a>,
+<a href="prototype_ticker.html">Ticker</a>
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+EXTERNPROTO ProgressBar [] "ProgressBarMenu.wrl"
+
+Group {
+  children [
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 0.8 0.8 0.8 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 0 0
+      }
+    }
+    
+    DEF TIMER TimeSensor {
+      loop TRUE
+      cycleInterval 5
+      isActive TRUE
+    }
+    
+    DEF PROGRESSBARMENU ProgressBarMenu {
+      title      ["My title"]
+      message    ["My message"]
+			status     ["My status"]
+			rightLabel ["Right"]
+      leftLabel  ["Left"]
+      
+      hide FALSE
+      
+      step 0
+  	}
+    
+    ROUTE TIMER.fraction_changed TO PROGRESSBARMENU.step
+    
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+    
+    ROUTE SIZE_NOTIFIER.screenSize TO PROGRESSBARMENU.screenSize
+    ROUTE SIZE_NOTIFIER.textScale TO PROGRESSBARMENU.textScale
+    
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

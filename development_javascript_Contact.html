@@ -1,0 +1,152 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_Contact";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Contact Javascript library</h1>
+
+
+<h1>Description</h1>
+
+<p>
+Access to contact of the PIM database.
+</p>
+<br/>
+
+<h1>Methods</h1>
+
+<p>
+<b>bool isAvailable ()</b>:<br/>
+Returns TRUE (1) if PIM contact data is available.
+</p>
+
+<p>
+<b>int open ()</b>:<br/>
+Loads contacts information in memory. Must be called before using all others methods.<br/>
+Returns the number of contacts.
+</p>
+
+<p>
+<b>void close ()</b>:<br/>
+Free contacts information.
+</p>
+
+<p>
+<b>String getInfo (int contactId, int info_constant)</b>:<br/>
+Returns the info for a given a <b>contactId</b> (between 0 and max contacts).<br/>
+The <b>info_constant</b> can be one of the constants.
+</p>
+
+<p>
+<b>int createContact ()</b>:<br/>
+Create a new contact and returns the new number of contacts.<br/>
+This new contact is found in the last of stack and <b>setInfo</b> method must be used to set fields.
+</p>
+
+<p>
+<b>int deleteContact (int contactId)</b>:<br/>
+Delete a contact given by <b>contactId</b> (between 0 and max contacts).<br/>
+Returns 1 if success otherwise returns 0.
+</p>
+
+<p>
+<b>void setInfo (int contactId, int info_constant, String info_string)</b>:<br/>
+Sets <b>info_string</b> in a contact given by <b>contactId</b> (between 0 and max contacts).<br/>
+The <b>info_constant</b> can be one of the constants.<br/>
+This method must be called after a <b>createContact()</b> or if field given by <b>info_contact</b> is already set (even empty value).
+</p>
+
+<p>
+<b>void addInfo (int contactId, int info_constant, String info_string)</b>:<br/>
+Sets <b>info_string</b> in a contact given by <b>contactId</b> (between 0 and max contacts).<br/>
+The <b>info_constant</b> can be one of the constants.<br/>
+Unlike <b>setInfo()</b> method, <b>addInfo()</b> must not called after a <b>createContact()</b> and must be called on empty fields.
+</p>
+<br/>
+
+<h1>Constants</h1>
+
+<p>
+<b>FULL_NAME, FIRST_NAME, LAST_NAME, ADDRESS, MOBILE, MOBILE_HOME, MOBILE_WORK, HOME, WORK, FAX, OTHER, PREFERRED, EMAIL, PHOTO_URL</b>:<br/>
+Contants to use with the <b>Contact.getInfo()</b>, <b>Contact.setInfo()</b> and <b>Contact.addInfo()</b> methods.
+</p>
+<br/>
+
+<h1>Examples</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+function test () {
+  [This shows how the methods of the API work !]
+
+
+          var idCurrentContact=0;
+          var value=' ';
+
+          // Access to contacts
+          var nbContacts = Contact.open();
+
+          // get fields on all contacts
+          for (var i = 0; i &lt; nbContacts; i++) {
+          	value = Contact.getInfo (i, Contact.FIRST_NAME);
+          	Browser.print('Contact:'+i+' first name is:'+value);
+          }
+
+          // creates a new contact
+          nbContacts = Contact.createContact();
+
+          // position of new contact created
+          idCurrentContact = nbContacts-1;
+
+          // add a field on current contact
+          Contact.setInfo(idCurrentContact, Contact.FIRST_NAME, 'Tintin');
+
+          Contact.close();
+
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

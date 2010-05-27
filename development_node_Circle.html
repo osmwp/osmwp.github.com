@@ -1,0 +1,114 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Circle";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Circle node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+Circle {
+  SFFloat radius 1
+  SFFloat startAngle 0
+  SFFloat arcAngle 0
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Draw a circle or an arc circle according to the related material.<br/>
+Transparency is supported (Extra processing power will be used when animating
+radius or angles with transparency &gt; 0).
+</p>
+
+<p>
+When -2*PI &lt; <b>arcAngle</b> &lt; 2*PI, the resulting arc begins at
+<b>startAngle</b> and extends for <b>arcAngle</b> radians.<br/>
+Angles are interpreted such that 0 radians is at the 3 o'clock position.<br/>
+A positive value indicates a counter-clockwise rotation, while a negative value
+indicates a clockwise rotation.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFFloat radius 1</b>:<br/>
+Circle radius in pixels.
+</p>
+
+<p>
+<b>SFFloat startAngle 0</b>:<br/>
+Start angle of the arc in radians. The above rotation transformations also apply
+to this value but only for multiple of PI/2.
+</p>
+
+<p>
+<b>SFFloat arcAngle 0</b>:<br/>
+Angle of the arc in radians.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="9" cols="80">
+#VRML V2.0 utf8
+
+# Display a red circle
+Shape {
+  appearance Appearance {
+    material Material2D { emissiveColor 1 0 0  filled TRUE }
+  }
+  geometry Circle { radius 25 }
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

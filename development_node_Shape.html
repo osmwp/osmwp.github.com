@@ -1,0 +1,115 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Shape";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Shape node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="4" cols="80">
+Shape {
+  SFNode appearance NULL
+  SFNode geometry NULL
+}
+</textarea>
+<br/>
+
+<p class="note warning">
+<b>Warning:</b><br/>Geometry property does <b>NOT</b> support the DEF / USE.
+</p>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Draw a shape with the specified appearance and geometry.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFNode appearance NULL</b> :<br/>
+Mandatory [Appearance] node.
+</p>
+<p>
+<b>SFNode geometry NULL</b> :<br/>
+A geometry node.
+</p>
+<p>List of geometry nodes available in a 2D context:</p>
+<ul>
+<li><a href="development_node_Bitmap.html">Bitmap</a></li>
+<li><a href="development_node_Circle.html">Circle</a></li>
+<li><a href="development_node_IndexedFaceSet2D.html">IndexedFaceSet2D</a></li>
+<li><a href="development_node_Rectangle.html">Rectangle</a></li>
+<li><a href="development_node_RichText.html">RichText</a></li>
+<li><a href="development_node_Text.html">Text</a></li>
+<li><a href="development_node_WrapText.html">WrapText</a></li>
+</ul>
+<p>List of geometry nodes available in a 3D context:</p>
+<ul>
+<li><a href="development_node_Box.html">Box</a></li>
+<li><a href="development_node_Sphere.html">Sphere</a></li>
+<li><a href="development_node_IndexedFaceSet.html">IndexedFaceSet</a></li>
+</ul>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+#VRML V2.0 utf8
+
+# Shape to draw a simple red rectangle.
+Shape {
+  appearance Appearance {
+    material Material2D { emissiveColor 1 0 0  filled TRUE }
+  }
+  geometry Rectangle { size 150 150 }
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_XML";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">XML Javascript library</h1>
+
+
+<h1>Description</h1>
+
+<p>
+The XML class provides means to load, parse, extract and manipulate XML data or BML data (Binary XML).<br/>
+It shares a lot of common feature with the <a href="development_javascript_JSON.html">JSON</a> parser.<br/>
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>indexes start at 1 and not 0 to be more compliant to XPATH.
+</p>
+
+<p>
+The parsed tree (DOM) can be manipulated (changing XML attributes value, or
+content of text nodes) and persisted in RMS for later use.
+</p>
+
+<p>
+When the player is compiled with the BML (Binary XML) parser, the <b>XML.open()</b>
+methods can parse BML streams by passing the <b>XML.BML_ENCODING</b> parameter.
+</p>
+<br/>
+
+<h1>Since</h1>
+
+<h2>1.4.1</h2>
+
+<p>Noteworthy:</p>
+<ul>
+<li>Keep alive support has been removed starting from 1.4.1 versions.</li>
+<li>The parsed tree (DOM) can be edited and saved back in RMS for later use.</li>
+</ul>
+
+<p>
+New methods: <b>XML.open()</b> with callback support, <b>XML.setAttrValue()</b>,
+<b>XML.setValue()</b>, <b>XML.setChildValue()</b>, <b>XML.save()</b>,
+<b>XML.serialize()</b>.
+</p>
+
+<p>
+New constants: <b>XML.BML_ENCODING</b>.
+</p>
+
+<p>
+Deleted constants: <b>XML.KEEP_ALIVE</b>.
+</p>
+<br/>
+
+<h1>Methods</h1>
+
+<p>
+<b>int open (String buffer,int mode)</b>:<br/>
+Read data contained in <b>buffer</b>, build an internal tree (DOM) and return an
+identifier that must be used for all subsequent operations on this DOM. The
+meaning of buffer is given by <b>mode</b>.<br/>
+If <b>XML.URL</b> is used, then data must represent a url to valid XML data.<br/>
+If <b>XML.BUFFER</b> is used, then buffer must contain actual XML data.<br/>
+In addition modifiers can be applied using the "+" operator.<br/>
+<b>XML.DEBUG</b> can be added to display debug information during parsing.<br/>
+If <b>XML.ASYNC</b> is added to XML.URL, then the connection is done
+asynchronously (the function returns immediately) and DOM availability can
+be later checked with the <b>isNewData</b> function.<br/>
+In case of error, returns -1.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="2" cols="80">
+XML.open ("&lt;foo&gt;...&lt;/foo&gt;", XML.BUFFER); // create from data
+XML.open ("~http://server/path/foo.xml", XML.URL+XML.ASYNC); // create from url asynchronously
+</textarea>
+<br/>
+
+<p>
+<b>int open (String buffer,int mode, Function callback)</b>:<br/>
+Same as open (String buffer, int mode), but will call a callback on completion.<br/>
+This will force asynchronous mode (<b>XML.ASYNC</b> is implicitly added to mode).<br/>
+The function will be called on completion of the parsing and must match the following signature:
+</p>
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+function callback (String url, int responseCode, int id, int time) {
+  // some code...
+}
+</textarea>
+<p>
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>void close (int id)</b>:<br/>
+Free all resources associated to a DOM. The value id cannot be used anymore
+after this call. You should use this function when you are done with the XML data.
+</p>
+
+<p>
+<b>bool isNewData (int id)</b>:<br/>
+Returns true when new data just become available (i.e. when ASYNC is used). A
+second call to this function return false if no new data has arrived.
+</p>
+
+<p>
+<b>bool find (int id, String path)</b>:<br/>
+Try to follow the path and keep a marker to the resulting element. return true
+on success and false when the path cannot be matched.<br/>
+Path must follow a specific syntax that is supposed to be closed to XPATH:
+</p>
+<table>
+<tr><td><b>/      </b></td><td>represents a branch in the DOM</td></tr>
+<tr><td><b>foo    </b></td><td>represents a node (tag)</td></tr>
+<tr><td><b>[n]    </b></td><td>represents the n<sup>th</sup> occurrence (the first one is at 1)</td></tr>
+<tr><td><b>*      </b></td><td>represents any node</td></tr>
+<tr><td><b>:root  </b></td><td>represents the root</td></tr>
+<tr><td><b>:parent</b></td><td>represents the parent node of the current node</td></tr>
+<tr><td><b>:next  </b></td><td>represents the next sibling of the current node</td></tr>
+</table>
+<p>
+if path starts with "/" the path is absolute, otherwise the path starts from the
+previous find result. Once a node as been marked, its value, attributes or
+children can me retrieved using dedicated functions<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+  XML.find (id, "/foo/bar[2]/"); // set a marker to the second child named bar of the root node foo.
+                                  (they may be extra children in between)
+  XML.find (id, "*[3]"); // find the third child of the current node
+</textarea>
+
+
+<p>
+<b>String getValue (int id)</b>:<br/>
+Returns the tag name or the CDATA of the current node (marked by a previous find command).
+</p>
+
+<p>
+<b>int getNbAttributes (int id)</b>:<br/>
+Returns the number of attributes of the current node.
+</p>
+
+<p>
+<b>String getAttrName (int id, int n)</b>:<br/>
+Returns the name of the n<sup>th</sup> attribute if the current node is a tag
+(and thus not a CDATA), with at least n attributes.<br/>
+Returns an empty string otherwise.
+</p>
+
+<p>
+<b>String getAttrValue (int id, int n)</b>:<br/>
+Returns the value of the n<sup>th</sup> attribute if the current node is a tag
+(and thus not a CDATA), with at least n attributes.<br/>
+Returns an empty string otherwise.
+</p>
+
+<p>
+<b>String getAttrValue (int id, String name)</b>:<br/>
+Returns the value of the first attribute that has the specified name, if the
+current node is a tag (and thus not a CDATA).<br/>
+Returns an empty string otherwise.
+</p>
+
+<p>
+<b>int getNbChildren (int id)</b>:<br/>
+Returns the number of children of the current node if it is a tag (and thus not a CDATA).<br/>
+Returns 0 otherwise.
+</p>
+
+<p>
+<b>bool isTextChild (int id, int index)</b>:<br/>
+Returns true if the current node has a child of type text (CDATA) at the
+specified index (<b>starting at 1</b>).<br/>
+</p>
+
+<p>
+<b>String getChildValue (int id, int index)</b>:<br/>
+Returns the name of the tag or the CDATA of the child of current node at
+specified index (<b>starting at 1</b>).<br/>
+Returns an empty string otherwise.
+</p>
+
+<p>
+<b>bool isSelfClosing (int id)</b>:<br/>
+Returns true if the current node is self closing (i.e. <b>&lt;selfclosingtag /&gt;</b>).
+</p>
+
+<p>
+<b>bool isSelfClosingChild (int id, int index)</b>:<br/>
+Returns true if the current node has a self closing child at the specified index (<b>starting at 1</b>).
+</p>
+
+<p>
+<b>bool setValue (int id, String value)</b>:<br/>
+Update with <b>value</b>, the content of a CDATA node (or the name of a tag node).<br/>
+Returns true on success.
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>bool setChildValue (int id, int index, String value)</b>:<br/>
+Update with <b>value</b>, the content of a CDATA child (or the name of a tag
+child) at specified index (<b>starting at 1</b>).<br/>
+Returns true on success.
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>bool setAttributeValue (int id, String name, String value)</b>:<br/>
+Update the value of the first attribute that has the specified name (or add as
+new attribute if not found), if the current node is a tag (and thus not a CDATA).<br/>
+Returns true on success.
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>String serialize (int id)</b>:<br/>
+Returns the XML serialization of the current node and its children (when marked
+by a previous <b>XML.find()</b> call), or the entire DOM tree.<br/>
+Returns an empty string on failure.
+<b>Since 1.4.1</b>
+</p>
+
+<p>
+<b>bool save (int id, String record)</b>:<br/>
+Returns true if the current node and its children (when marked by a previous
+<b>XML.find()</b> call) or the entire DOM tree could be serialized and the saved
+in RMS in the give <b>record</b> entry. Previous entry is overwritten.<br/>
+Returns false on failure.<br/>
+<b>Since 1.4.1</b>
+</p>
+<br/>
+
+<h1>Constants</h1>
+
+<p>
+<b>BUFFER</b>:<br/>
+Constant for using direct xml data in open method
+</p>
+
+<p>
+<b>URL</b>:<br/>
+Constant for using url in open method
+</p>
+
+<p>
+<b>BML_ENCODING</b>:<br/>
+Constant to tell the parser that the XML is encoded using BML (Binary XML).
+</p>
+
+<p>
+<b>DEBUG</b>:<br/>
+Constant to display debug information during parsing
+</p>
+
+<p>
+<b>ASYNC</b>:<br/>
+Constant for opening the connection in asynchronous mode
+</p>
+
+<p>
+<b>HTML</b>:<br/>
+Constant to make XML parser less strict and improve support for some HTML tags
+(not closing tags such as &lt;img&gt;, &lt;hr&gt; and &lt;br&gt;).
+</p>
+<br/>
+
+<h1>Examples</h1>
+
+<h2>Example that prints a DOM and some values using direct access</h2>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+function printNode (id, prefix, node) {
+  if (XML.find (id, node)) {
+
+    // get the name of the node
+    var nodeName = XML.getValue (id);
+    var res = prefix+'&lt;'+nodeName;
+
+    //accumulate attributes
+    for (var j = 1; j &lt;= XML.getNbAttributes (id); j++) {
+      res += ' '+XML.getAttrName (id, j)+' = \\\"'+XML.getAttrValue (id, j)+'\\\"';
+    }
+    Browser.print (res+'&gt;');
+
+    // print children
+    var nb = XML.getNbChildren (id);
+    for (var i = 1; i &lt;= nb; i++) {
+      if (XML.isTextChild (id, i) ) {
+        Browser.print (prefix+' '+XML.getChildValue (id, i));
+      } else {
+        printNode (id, prefix+' ', '*['+i+']');
+      }
+    }
+
+    Browser.print(prefix+'&lt;/'+nodeName+'&gt;');
+    XML.find (id, ':parent');
+  }
+}
+
+function testPrintDom () {
+  var fd2 = File.open ('jar://test2.xml', false);
+  data = File.getData (fd2, false);
+  id2 = XML.open (data, XML.BUFFER);
+  XML.find (id2, '/');
+  printNode (id2, '', 'bookshelf');
+
+  if (XML.find (id2, '/bookshelf/book[2]')) {
+    Browser.print ('found book second element with name book');
+    Browser.print ('price:{'+XML.getAttrValue (id2, 'price')+'}');
+    Browser.print ('second attr:{'+XML.getAttrValue (id2, 2)+'}');
+  } else {
+    Browser.print ('cannot find /bookshelf/book[2]');
+  }
+  XML.close (id2);
+}
+</textarea>
+<br/>
+
+<h2>Example that shows the XML.open() using a callback</h2>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+Script {
+  url "javascript:
+
+    function initialize () {
+      testAsyncParseWithCallback();
+    }
+
+    // Launching asynchronous XML retrievial &amp; parsing, will call testXmlCb () on completion
+    // XML.ASYNC is implicit here as we are using a callback, so no need for XML.URL + XML.ASYNC
+    function testAsyncParseWithCallback() {
+      var id = XML.open ('http://server/foo.xml', XML.URL, testXmlCb);
+      Browser.print ('Opening XML async request: '+id);
+    }
+
+    // Callback called on completion
+    function testXmlCb (url, responseCode, id, time) {
+      Browser.print ('Url: '+url);
+      Browser.print ('ResponseCode: '+responseCode);
+      Browser.print ('Id: '+id);
+      Browser.print ('time: '+time);
+      if (responseCode == 200) { // resquest OK
+        if (id != -1) { // parsing OK
+          XML.find (id, '/root');
+          var name = XML.getValue (id);
+          var childs = XML.getNbChildren (id);
+          Browser.print (name+' : '+childs);
+          // Dumping to check (api.domEditing needed in player)
+          var dump = XML.serialize (id);
+          Browser.print ('DUMP: -----------');
+          Browser.print (dump);
+          Browser.print ('DUMP: -----------');
+          XML.close (id);
+        } else {
+          Browser.print ('Error during XML parse');
+        }
+      } else {
+        Browser.print ('Error during XML retrievial: '+responseCode);
+      }
+    }
+  "
+}
+</textarea>
+<br/>
+
+<h2>Example that shows DOM editing</h2>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+Script {
+  field SFString xmlData "
+  &lt;root&gt;
+    &lt;contacts&gt;
+       &lt;contact firstname=\"Jean\" lastname=\"Denis\" /&gt;
+       &lt;test&gt;change me !&lt;/test&gt;
+       &lt;contact firstname=\"Patrick\" lastname=\"Alain\" /&gt;
+       &lt;contact firstname=\"Jean\" lastname=\"Trevo\" /&gt;
+       &lt;contact firstname=\"Jacques\" lastname=\"Bidochon\" /&gt;
+       &lt;contact firstname=\"Ben\" lastname=\"Sadou\" /&gt;
+       &lt;contact firstname=\"Henri\" lastname=\"Monier\" /&gt;
+    &lt;/contacts&gt;
+  &lt;/root&gt;
+  "
+
+  url "javascript:
+
+    function initialize () {
+      testDomEditing();
+    }
+
+    function testDomEditing () {
+      Browser.print ('Xml: Parsing buffer XML...');
+      var id = XML.open (xmlData, XML.BUFFER);
+      if (id != -1) {
+        XML.find (id, '/root/contacts');
+        var childs = XML.getNbChildren (id);
+        Browser.print ('/root/contacts childs:'+childs);
+        // Testing XML.setValue ()
+        XML.find (id, 'contact[1]'); // jumping to first contact
+        Browser.print ('Tag name BEFORE: '+XML.getValue (id));
+        XML.setValue (id, 'contactzzzzz');
+        Browser.print ('Tag name AFTER: '+XML.getValue (id));
+        // Testing XML.setAttrValue ()
+        Browser.print ('Contact attribute BEFORE: '+XML.getAttrValue (id, 'firstname'));
+        XML.setAttrValue (id, 'firstname', 'Paul');
+        Browser.print ('Contact attribute AFTER: '+XML.getAttrValue (id, 'firstname'));
+        // Testing XML.setChildValue ()
+        XML.find (id, '/root/contacts/test');
+        Browser.print ('Tag content BEFORE: '+XML.getChildValue (id, 1));
+        XML.setChildValue (id, 1, 'Wow !!!');
+        Browser.print ('Tag name AFTER: '+XML.getChildValue (id, 1));
+        // Testing XML.serialize ()
+        XML.find (id, '/root');
+        var contacts = XML.serialize (id);
+        Browser.print ('DUMP: -----------');
+        Browser.print (contacts);
+        Browser.print ('DUMP: -----------');
+        XML.close (id);
+      } else {
+        Browser.print ('Error parsing XML buffer.');
+      }
+    }
+  "
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

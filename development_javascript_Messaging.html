@@ -1,0 +1,98 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_Messaging";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Messaging Javascript library</h1>
+
+
+<h1>Description</h1>
+
+<p>
+The Messaging class provides means to send an SMS or an MMS with a picture.
+</p>
+<br/>
+
+<h1>Methods</h1>
+
+<p>
+<b>bool isAvailable ()</b>:<br/>
+Returns True if mobile sending SMS and MMS is supported.
+</p>
+
+<p>
+<b>bool sendSMS (String phoneNumber, String message)</b>:<br/>
+Send a SMS. Returns true if successful, false on error.
+</p>
+
+<p>
+<b>bool sendMMS (String phoneNumber, String subject, String message, String imageUrl)</b>:<br/>
+Send a MMS.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+function test(phoneNumber, SMSContent) {
+  //SMSContent = String.URLdecode(SMSContent); //check that no special character is send in SMS content
+  if (Messaging.isAvailable()) {
+    var resp = Messaging.sendSMS(phoneNumber, SMSContent);  //phoneNumber example: +33123456789
+    if (resp == 1) {
+      Browser.print('SMS was sent');
+    }
+    else {
+      Browser.print('Error occured while sending SMS, resp = '+resp+', phone = '+phoneNumber+', SMSContent = '+phoneNumber);
+    }
+  }
+  else {
+    Browser.print('Error occured while sending SMS');
+  }
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

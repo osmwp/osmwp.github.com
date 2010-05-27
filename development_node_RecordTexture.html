@@ -1,0 +1,126 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_RecordTexture";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">RecordTexture node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="8" cols="80">
+RecordTexture {
+  MFString url "" (not accessible - internal field)
+  SFTime   startTime -1
+  SFTime   stopTime -1
+  SFBool   singleShot FALSE
+  SFVec2f  size 320 240
+  SFBool   enabled TRUE
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Similar to <a href="development_node_RecordTexture.html">RecordTexture</a> with
+the camera input. Display the camera input as an <a href="development_node_ImageTexture.html">ImageTexture</a>
+and record its content according to <b>startTime</b> and <b>stopTime</b> (only
+for photo). The resulting file is stored in a file called
+"c:/pictures/cadrephoto.jpg" for picture (video can not be recorded).
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFTime startTime -1</b>:<br/>
+Video capture start time (in second)
+</p>
+
+<p>
+<b>SFTime stopTime -1</b>:<br/>
+Video capture stop time (in second)
+</p>
+
+<p>
+<b>SFBool singleShot FALSE</b>:<br/>
+Capture a photo (<b>TRUE</b>) or a video (<b>FALSE</b>).
+</p>
+
+<p>
+<b>SFVec2f size 320 240</b>:<br/>
+<b>size</b> field define the output video (or photo) size.
+</p>
+
+<p>
+<b>SFBool enabled TRUE</b>:
+<a href="development_node_Recordtexture.html">Recordtexture</a> node is enabled
+(and it displays the camera input) or disabled.
+</p>
+<br/>
+
+<h1>Example</h1>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+Group
+{
+	children
+	[
+		Shape {
+			appearance Appearance {
+				texture DEF REC	RecordTexture {
+					startTime 0
+					stopTime 0
+				}
+			}
+			geometry Rectangle { size 176 220}
+		}
+
+	]
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

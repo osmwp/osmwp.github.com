@@ -1,0 +1,108 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_Http";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">HTTP Javascript library</h1>
+
+
+<h1>Description</h1>
+
+<p>
+Asynchronous HTTP(S) request API.
+</p>
+<br/>
+
+<h1>Methods</h1>
+
+<p>
+<b>void get (String url, Function callback, String encoding)</b>:<br/>
+Send an HTTP GET request using url, the callback is called on response. Encoding
+is optional (Default: UTF-8).
+</p>
+
+<p>
+<b>void post (String url, String postData, Function callback, String encoding)</b>:<br/>
+Send an HTTP POST request using url and the postData, the callback is called on
+response. Encoding is optional (Default: UTF-8).
+</p>
+<br/>
+
+<h1>Examples</h1>
+
+<h2>HTTP GET example</h2>
+
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+function test () {
+  Http.get ('http://google.com/', onGoogleLoad);
+}
+
+function onGoogleLoad (url, responseCode, responseData, now) {
+  Browser.print ('HTTP GET url: '+url);
+  Browser.print ('HTTP GET responseCode: '+responseCode);
+  Browser.print ('HTTP GET responseData: '+responseData);
+  Browser.print ('Time in scene is : '+now);
+}
+</textarea>
+<br/>
+
+<h2>HTTP POST example</h2>
+
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+function test () {
+  Http.post ('http://google.com/', 'this is not a correct POST data for Google', onGoogleLoad);
+}
+
+function onGoogleLoad (url, responseCode, responseData, now) {
+  Browser.print ('HTTP POST url: '+url);
+  Browser.print ('HTTP POST responseCode: '+responseCode);
+  Browser.print ('HTTP POST responseData: '+responseData);
+  Browser.print ('Time in scene is : '+now);
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

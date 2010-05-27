@@ -1,0 +1,143 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_PositionInterpolator2D";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">PositionInterpolator2D node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="6" cols="80">
+PositionInterpolator2D {
+  SFFloat set_fraction 0
+  SFVec2f value_changed 0 0
+  MFFloat key []
+  MFVec2f keyValue []
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+This interpolator is used to interpolate 2D coordinates (pair of float values).
+</p>
+
+<p class="note check">
+<b>Note:</b><br/>
+Do not mistake with <a href="development_node_CoordinateInterpolator2D.html">CoordinateInterpolator2D</a>
+which has its <b>value_changed</b> field typed <b>MFVec2f</b>.<br/>
+See <a href="development_node_Interpolators.html">Interpolators</a> for a
+detailed explanation on how interpolators work and when to use them.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFFloat set_fraction 0</b>:<br/>
+Change this <b>set_fraction</b> field (between 0 to 1) to make the interpolator
+compute a new value.<br/>
+Value usually routed from the <a href="development_node_TimeSensor.html">TimeSensor</a>.fraction_changed
+field. See <a href="development_node_Interpolators.html">Interpolators</a>.
+</p>
+
+<p>
+<b>SFVec2f value_changed 0 0</b>:<br/>
+When a new coordinate is computed form the
+<a href="development_node_PositionInterpolator2D.html">PositionInterpolator2D</a>,
+it is sent to the <b>value_changed</b> field.
+</p>
+
+<p>
+<b>MFFloat key []</b>:<br/>
+List of float values between 0 and 1. See
+<a href="development_node_Interpolators.html">Interpolators</a>.
+</p>
+
+<p>
+<b>MFVec2f keyValue []</b>:<br/>
+Contains a coordinate (pair of float values) for each value of the <b>key</b> list.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+Group {
+  children [
+    DEF ANIM_TIMER TimeSensor {
+      isActive TRUE
+      cycleInterval 4.0
+      loop TRUE
+    }
+
+    DEF MY_SHAPE_TRS Transform2D {
+      children [
+        Shape {
+          appearance Appearance {
+            material Material2D { emissiveColor 1 0 0 }
+          }
+          geometry Rectangle { size 20 20 }
+        }
+      ]
+    }
+
+    DEF ANIMATION_PI PositionInterpolator2D {
+      key      [0.0,       0.25,     0.5,     0.75,     1.0    ]
+      keyValue [-10 -10,   -10 10,   10 10,   10 -10,   -10 -10]
+    }
+
+    ROUTE ANIM_TIMER.fraction_changed TO ANIMATION_PI.set_fraction
+    ROUTE ANIMATION_PI.value_changed TO MY_SHAPE_TRS.translation
+  ]
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

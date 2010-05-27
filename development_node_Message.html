@@ -1,0 +1,134 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Message";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Message node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+Message {
+    MFString url []
+    MFString set_data []
+    MFString data_changed []
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Message nodes allow inter-scene communication using strings.
+</p>
+
+<p>
+Message nodes using the same <b>url</b> can communicate with each other.<br/>
+Message are broadcasted: multiple Message nodes matching the same url will all
+receive the messages).<br/>
+String arrays messages can be sent using <b>set_data</b> field or by using the
+<b>Browser.sendMessage (url, string1, ..., stringN)</b> method (see the [Browser]<!-- Add link with the Javascript browser API -->
+API for more details).
+</p>
+
+<p>
+Receiving data can done by routing <b>data_changed</b> field to a script.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFString url []</b> :<br/>
+The first item of the url defines the string that <a href="development_node_Message.html">Message</a>
+nodes must have in common in order to communicate with each other.
+</p>
+<p>
+<b>MFString set_data []</b> :<br/>
+When this field is modified, the Message node will broadcast a message
+containing all the items of the <b>set_data</b> field.<br/>
+Note: Only one message can be sent at a time. Modifying multiple times in the
+same Javascript function, the <b>set_data</b> field will only send one message.
+<b>Browser.sendMessage()</b> must be used to send multiple message to the same
+<b>url</b> in the same Javascript function.
+</p>
+<p>
+<b>MFString data_changed []</b> :<br/>
+Will emit a the received message, when a broadcasted message matches the url of
+the <a href="development_node_Message.html">Message</a> node.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+# Send a message on scene initialization
+# and receive it in the same scene (yes, this is totaly useless !).
+# This should print the following message in console:
+# &gt; Message received: Hello, world ! with This is great !
+
+DEF message Message { url "MY_KEY" }
+
+DEF script Script {
+  eventIn MFString messageReceived
+
+  url "javascript:
+    function initialize () {
+      Browser.sendMessage ('MY_KEY','Hello, world !','This is great !');
+    }
+
+    function messageReceived () {
+      Browser.print ('Message received: '+messageReceived[0]+' with '+messageReceived[1]);
+    }
+  "
+}
+
+ROUTE message.data_changed TO script.messageReceived
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

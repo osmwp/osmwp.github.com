@@ -1,0 +1,485 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_text";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">draw text</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+<a href="development_node_Shape.html">Shape node</a> is used to draw a text.<br/>
+Use <b>geometry</b> field of <a href="development_node_Shape.html">Shape node</a> with values:
+</p>
+<ul>
+<li><a href="development_node_RichText.html">RichText node</a></li>
+<li><a href="development_node_Text.html">Text node</a></li>
+<li><a href="development_node_WrapText.html">WrapText node</a></li>
+</ul>
+<br/>
+
+<h1>Draw simple text</h1>
+
+<p>
+Draw a simple text with <a href="development_node_Text.html">Text node</a>.
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+Text {
+  MFString string []
+  SFNode fontStyle NULL
+}
+</textarea>
+<ul>
+<li><b>string</b> define the text (array of SFString).</li>
+<li><b>fontStyle</b> define the font style (size, style,... See
+    <a href="development_node_FontStyle.html">FontStyle node</a>)</li>
+</ul>
+<p class="note info">
+<b>Note:</b><br/> Use internationalization functions for all text.
+</p>
+
+<p>
+Example, display "Hello world" text:
+</p>
+<textarea rows="10" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 0 0 0 }
+      }
+      geometry Text { string ["Hello world"] }
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<p>
+We can draw a multi line text with <a href="development_node_Text.html">Text node</a>.<br/>
+Replace <b>"geometry Text { string ["Hello world"] }"</b> by <b>"geometry Text { string ["Hello world" "Line 2" "Line3"] }"</b>.
+</p>
+
+<p>
+But a long text is not fully visible.<br/>
+For example, replace text node by <b>"Text { string ["too long string. End of text is not visible."]"</b>.<br/>
+<img alt="Too long text" src="images/tutorials/tuto_text_01.jpg" />
+</p>
+<br/>
+
+<h1>Automatic fit text</h1>
+
+<p>
+<a href="development_node_Text.html">Text node</a> is easy to use, but, it is restricted.<br/>
+We can use <a href="development_node_WrapText.html">WrapText node</a> to advanced features.<br/>
+<a href="development_node_WrapText.html">WrapText node</a> display text using automatic wrap
+to fit in <b>maxWidth</b> pixels width and using a maximum of <b>maxLines</b> lines of text.
+</p>
+<p>
+<a href="development_node_WrapText.html">WrapText node</a> interface:<br/>
+</p>
+<textarea rows="11" cols="80" readonly="readonly" wrap="off">
+WrapText {
+  MFString string []
+  SFNode fontStyle NULL
+  SFVec2f size_changed 0 0
+  SFInt32 maxWidth 0
+  SFInt32 maxLines 0
+  SFVec2f maxSize 0 0
+  SFBool editable FALSE
+  SFInt32 set_cursor 0
+  SFInt32 cursor_changed 0
+}
+</textarea>
+<p>
+See <a href="development_node_WrapText.html">WrapText node</a> documentation for more information about fields.
+</p>
+
+<p>
+We can display previous text with the <a href="development_node_WrapText.html">WrapText node</a>.
+</p>
+<textarea rows="14" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 0 0 0 }
+      }
+      geometry WrapText {
+        string ["too long string. End of text is not visible."]
+        maxWidth 62
+        maxLines 3
+      }
+    }
+  ]
+}
+</textarea>
+<br/>
+
+
+<h1>Font style</h1>
+
+<p>
+We can define the font style for <a href="development_node_Text.html">Text node</a> and
+<a href="development_node_WrapText.html">WrapText node</a> via the <b>fontStyle</b> field.<br/>
+<a href="development_node_FontStyle.html">FontStyle node</a> interface:
+</p>
+<textarea rows="6" cols="80" readonly="readonly" wrap="off">
+FontStyle {
+  SFFloat size 12
+  SFString style ""
+  MFString justify ["LEFT" "TOP"]
+  MFString family ["SYSTEM"]
+}
+</textarea>
+<p>
+See <a href="development_node_FontStyle.html">FontStyle node</a> documentation for more information about fields.
+</p>
+
+<p>
+Example of <a href="development_node_FontStyle.html">FontStyle node</a>:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 0 0 0 }
+      }
+      geometry Text {
+        string [ "Example of text"]
+        fontStyle FontStyle {
+          size size 16
+          style "italic"
+          justify ["MIDDLE" "MIDDLE"]
+          family ["SANS"]
+        }
+      }
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<p>
+Text alignment examples (<b>justify</b> field):<br/>
+<img alt="Too long text" src="images/tutorials/tuto_text_02.jpg" />
+</p>
+<p>
+Text style examples (<b>style</b> field):<br/>
+<img alt="Too long text" src="images/tutorials/tuto_text_03.jpg" />
+</p>
+<p>
+Text size examples (<b>size</b> field):<br/>
+<img alt="Too long text" src="images/tutorials/tuto_text_04.jpg" />
+</p>
+<p>
+Text font examples (<b>family</b> field):<br/>
+<img alt="Too long text" src="images/tutorials/tuto_text_05.jpg" />
+</p>
+<br/>
+
+<h1>Rich text</h1>
+
+<p>
+<a href="development_node_RichText.html">RichText node</a> is a XHTML renderer (with CSS support).<br/>
+We can display complex document (style, color, picture, ...).<br/>
+See <a href="development_node_RichText.html">RichText node</a> documentation for more information about this node.
+</p>
+
+<p>
+Example of RichText node :<br/>
+<img alt="Too long text" src="images/tutorials/tuto_text_06.jpg" />
+</p>
+<p>
+Source code:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 0 0 0 }
+      }
+      geometry RichText {
+        size 128 100
+        style "h1 { text-align:center; color: red } h2 {color: blue}"
+        string [
+          "&lt;html&gt;"
+          "&lt;body&gt;"
+          "    &lt;h1&gt;RichText example&lt;/h1&gt;&lt;br/&gt;"
+          "    &lt;h2&gt;XHTM and CSS renderer node.&lt;/h2&gt;&lt;br/&gt;"
+          "    &lt;b&gt;Bold, &lt;/b&gt; &lt;i&gt;Italic, &lt;/i&gt;...&lt;br/&gt;"
+          "    Image: &lt;img src=\"http://i5.woopic.com/I/Header/loupe.gif\" /&gt;"
+          "&lt;/body&gt;"
+          "&lt;/html&gt;"
+        ]
+      }
+    }
+  ]
+}
+</textarea>
+<p>
+We use <b>style</b> field to define CSS style.<br/>
+We use <b>string</b> field to define document (XHTML).
+</p>
+<br/>
+
+<h1>Advanced text component</h1>
+
+<p>
+Mobile Widgets implement text components (via prototypes).
+</p>
+<ul>
+<li><a href="prototype_textfield.html">TextField prototype</a></li>
+<li><a href="prototype_scrollabletext.html">ScrollableText prototype</a></li>
+</ul>
+
+<p class="note check">
+<b>Note:</b><br/>Prototypes can change between Mobile Widgets and Tiny Mobile Widgets versions.
+</p>
+<br/>
+
+<h2>TextField prototype</h2>
+
+<p>
+TextField prototype interface:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+TextField {
+  MFString inputTEXT
+  MFString outputTEXT
+  SFBool lockMode FALSE
+  SFInt32 mode 0
+  SFInt32 displayMODE 2
+  SFInt32 maxChar 40
+  SFInt32 numberOfLines 1                                      
+  SFBool displayTEXT TRUE
+  SFBool isActiveTF TRUE
+  SFColor textColor 0 0 0
+  SFNode textFont FontStyle { size 12 justify ["LEFT" "TOP"] }
+  ...
+}
+</textarea>
+<ul>
+<li><b>inputTEXT</b>: permit to modify text displayed in Text Field</li>
+<li><b>outputTEXT</b>: event generated each time text of Text field is modified</li>
+<li><b>lockMode</b>: if TRUE, user can not change mode</li>
+<li><b>mode</b>: key selection of mode</li>
+<li class="lvl2">0 : abc lower case mode</li>
+<li class="lvl2">1 : ABC upper case mode</li>
+<li class="lvl2">2 : 123 numeric mode</li>
+<li class="lvl2">3 : 0.2 decimal mode / lockMode off, displayMode off, '*' to delete and '#' to put the decimal point '.'</li>
+<li><b>displayMODE</b>: display key selection mode</li>
+<li class="lvl2">0 : not displayed</li>
+<li class="lvl2">1 : always displayed</li>
+<li class="lvl2">2 : displays 1 seconds and disappear</li>
+<li><b>maxChar</b>: max number of characters, 0 for unlimited</li>
+<li><b>numberOfLines</b>: set the number of line, 1 line by default</li>
+<li class="lvl2">&lt;= 0 for auto-adaptative according to textLayerSize</li>
+<li class="lvl2">&gt; 1 to fix the number of lines</li>
+<li><b>displayTEXT</b>: true : text is displayed / false : password mode, only stars '*' are displayed</li>
+<li><b>isActiveTF</b>: enable/disable Text field proto; if true : cursor is flashing and typing is authorized</li>
+<li><b>textColor</b>: main text color</li>
+<li><b>textFont</b>: main text font node, when using multiline, only use "TOP" "LEFT"</li>
+<li>And other attributes (see <a href="prototype_textfield.html">TextField prototype</a> documentation).</li>
+</ul>
+<br/>
+
+<p>
+Example with TextField prototype:<br/>
+<img alt="TextField example" src="images/tutorials/tuto_text_07.jpg" />
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO TextField [] "TextField.wrl"
+
+Group {
+  children [
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry Rectangle {
+        size 256 256
+      }
+    }
+    
+    DEF TEXT_INPUT TextField {
+      maxChar 60
+      textLayerSize 100 24
+
+      borderChoice 0
+      borderCornerRadius TRUE
+
+      backgndChoice 0
+      backgndFrameColor 0.8 0.9 0.9
+
+      isActiveTF TRUE
+    }
+  ]
+}
+</textarea>
+<br/>
+<br/>
+
+<h2>ScrollableText prototype</h2>
+
+<p>
+ScrollableText prototype interface:
+</p>
+<textarea rows="13" cols="80" readonly="readonly" wrap="off">
+ScrollableText {
+  MFString title []
+  MFString images []
+  MFString content []
+  MFString style ["ScrollableText"]  
+  MFString contentStyle ["ScrollableText-content"]
+  MFString titleStyle ["ScrollableText-title"]
+  SFVec2f size -1 -1
+  SFVec2f textScale 1 1
+  SFInt32 titleMaxLines 5
+  SFInt32 contentMaxLines 30
+  SFBool enable TRUE
+}
+</textarea>
+<p>
+See <a href="prototype_scrollabletext.html">ScrollableText prototype</a> documentation.
+</p>
+<br/>
+
+<h1>Create personal font</h1>
+
+<p>
+To create font, use <b>fontExtractor</b> utility (present in SDK folder,
+<b>/tools/compiler/win</b> for Windows, <b>/tools/compiler/lin</b> for Linux
+and <b>/tools/compiler/mac</b> for Mac).<br/>
+usage:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+fontExtractor [-d] fontname fontsize mapname charList
+</textarea>
+<ul>
+<li>-d: dump metrics</li>
+<li>fontname: Font name (require font file)</li>
+<li>fontsize: Size of font</li>
+<li>mapname: Map file name (name for png and desc file)</li>
+<li>charList: List of extracted characters</li>
+</ul>
+<p>
+Example:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+fontExtractor times.ttf 16 times16 abcdefABCDEF123
+</textarea>
+<br/>
+
+<p>
+The TFD file (textual font description) describe the font mapping.<br/>
+Format:
+</p>
+<ul>
+<li>x y  : Max size of characters</li>
+<li>nb   : Number of characters</li>
+<li>Characters list:</li>
+<li class="lvl2">c   :ASCII code</li>
+<li class="lvl2">x y : top left corner position</li>
+<li class="lvl2">w h : Character size (width / height)</li>
+<li class="lvl2">d1  : Delta to draw character</li>
+<li class="lvl2">d2  : Delta to draw next character</li>
+</ul>
+<p>
+example:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+# textual font description
+14 14
+19
+32 126 0 14 14 0 14
+49 0 0   14 14 0 14
+50 14 0  14 14 0 14
+51 28 0  14 14 0 14
+52 42 0  14 14 0 14
+53 56 0  14 14 0 14
+54 70 0  14 14 0 14
+55 84 0  14 14 0 14
+56 98 0  14 14 0 14
+57 112 0 14 14 0 14
+65 0 14   14 14 0 14
+66 14 14  14 14 0 14
+67 28 14  14 14 0 14
+68 42 14  14 14 0 14
+69 56 14  14 14 0 14
+70 70 14  14 14 0 14
+71 84 14  14 14 0 14
+72 98 14  14 14 0 14
+73 112 14 14 14 0 14
+</textarea>
+<br/>
+
+<p>
+To use the personal font, we use the =family= attribute of FontStyle node:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Shape {
+        appearance Appearance {
+            material Material2D { emissiveColor 0 0 0 }
+        }
+        geometry Text {
+            string "AZEaze"
+            fontStyle FontStyle {
+                family "times16"
+                size 16
+                justify ["MIDDLE" "MIDDLE"]
+            }
+        }
+    }
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_picture','tutorial_key_sensor');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

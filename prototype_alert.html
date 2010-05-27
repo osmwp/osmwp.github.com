@@ -1,0 +1,240 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_alert";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Alert prototype</h1>
+
+<img class="right" alt="Alert" src="images/prototypes/proto_alert_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+This VRML prototype is a two choice popup style message controlled by left and
+right soft key of the mobile phone.
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="50" readonly="readonly" wrap="off">
+PROTO Alert [
+  # Events
+  eventOut SFBool selection
+  exposedField SFBool hide TRUE
+
+  # Data
+  field MFString title ""
+  field MFString message ""
+  field MFString rightLabel	""
+  field MFString leftLabel ""
+  field SFInt32 contextValue 0
+
+  # Style
+  field MFString style "Alert"
+  field MFString images ""
+  field MFString sliderStyle ["Slider" "Alert-Slider"]
+  field MFString sliderTitleStyle ["Slider-title" "Alert-Slider-title"]
+  field MFString sliderImages ""
+  field MFString menubarStyle "Menubar"
+  field MFString menubarLabelStyle "Menubar-label"
+  field MFString menuBarImages ["menubarBg.png" "menubarLeftPressed.png" "menubarRightPressed.png"]
+  field SFVec2f screenSize 0 0
+  field SFVec2f textScale 1 1
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>MFString title - Alert title (placed in a &lt;Ticker&gt;)</li>
+<li>MFString message - Alert message (placed in a &lt;Ticker&gt;)</li>
+<li>MFString rightLabel - Usually set to cancel</li>
+<li>MFString leftLabel - Usually set to Ok</li>
+<li>SFInt32 contextValue - unused value to let user associate data to this alert</li>
+</ul>
+<br/>
+
+<h2>General Style fields</h2>
+
+<ul>
+<li>MFString style - Path to the CSS node associated to Alert proto</li>
+<li>MFString images - Icon associate to the alert (default: '!')</li>
+</ul>
+<br/>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+
+<h2>Slider style fields</h2>
+
+<ul>
+<li>MFString sliderStyle - Path to the CSS node specific to the slider in Alert proto</li>
+<li>MFString sliderTitleStyle - Path to the CSS node specific to the title of the slider in Alert proto</li>
+<li>MFString sliderImages - Image of the background slider</li>
+</ul>
+<br/>
+
+<h2>Menubar style fields</h2>
+
+<ul>
+<li>MFString menubarStyle - Path to the CSS node specific to the menubar in Alert proto</li>
+<li>MFString menubarLabelStyle - Path to the CSS node specific to the label of the menubar in Alert proto</li>
+<li>MFString menuBarImages - Images of menubar (background, keypressed)</li>
+</ul>
+<br/>
+
+<h2>Scalability field</h2>
+
+<ul>
+<li>SFVec2f screenSize - Size of the screen where the application is displayed</li>
+</ul>
+<br/>
+
+<h2>Exposed Fields</h2>
+
+<ul>
+<li>SFBool hide - Boolean to hide/show the alert</li>
+</ul>
+<br/>
+
+<h2>Event Out</h2>
+
+<ul>
+<li>SFBool selection - returns TRUE: left soft key, FALSE: right soft key. A selection launch the hide event</li>
+</ul>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Alert {
+  size: 90% 37.5%;
+  background-color: white;
+  border-width: 2px; // border color will be the color of the Alert-Slider.background-color
+  // Icon properties
+  image-size: 15% 18%;
+  image-position: 0% 8%;
+  // Message properties
+  text-size: 80% 16;
+  text-position: 0% -8%;
+  color: black;
+//  font-size: 12;
+  font-filter: true;
+  vertical-align: MIDDLE;
+  horizontal-align: MIDDLE;
+}
+Alert-Slider {
+  background-color: black;
+  margin-bottom: 8.75%; 
+}
+Alert-Slider-title {
+  background-color: black;
+}
+</textarea>
+<br/>
+
+<h1>Extern proto(s)</h1>
+
+<p>
+<a href="prototype_slider.html">Slider</a>, 
+<a href="prototype_menubar.html">MenuBar</a>, 
+<a href="prototype_ticker.html">Ticker</a>
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO Alert [] "Alert.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+  
+    DEF SIZE_NOTIFIER SizeNotifier {}
+
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+    
+    DEF ALERT Alert {
+  		hide       TRUE
+	  	title      ["My alert"]
+			message    ["This is my alert message"]
+      rightLabel ["Cancel"]
+      leftLabel  ["Ok"]
+  	}
+
+    Script {
+      field SFNode alert USE ALERT
+      url "
+        function initialize() {
+          alert.hide = false;
+        }
+      "
+    }
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+    ROUTE SIZE_NOTIFIER.screenSize TO ALERT.screenSize
+    ROUTE SIZE_NOTIFIER.textScale TO ALERT.textScale
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

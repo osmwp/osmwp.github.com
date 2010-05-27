@@ -1,0 +1,355 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "widgets_development_javascript_language";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Javascript language</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+Javascript is used by VRML to add more interactivity in VRML scene.<br/>
+More information about Javascript language:
+<a href="http://en.wikipedia.org/wiki/Javascript" target="_blank">http://en.wikipedia.org/wiki/Javascript</a>.
+</p>
+<br/>
+
+<h1>Script node</h1>
+
+<p>
+Javascript is supported by VRML via the <a href="development_node_Script.html">Script node</a>.<br/>
+The <b>url</b> property contains Javascript code.<br/>
+Script node interface:
+</p>
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+Script {
+  SFString url ""
+}
+</textarea>
+<br/>
+<p>Example:</p>
+<textarea wrap="off" readonly="readonly" rows="9" cols="80">
+#VRML V2.0 utf8
+
+DEF script Script {
+  url "javascript:
+    function myFunction (value) {
+      Browser.print ('value = ' + value);
+    }
+  "
+}
+</textarea>
+<br/>
+
+<p class="note check">
+<b>Note:</b><br/>
+Javascript code starts by <b>javascript:</b> (but it is not required).
+</p>
+
+<p class="note warning">
+<b>Warning:</b><br/>
+Don't use <b>"</b> (quotation mark) character in Javascript part (functions, comments, ...).<br/>
+This character is used to close the <b>url</b> property of <b>Script</b> node.<br/>
+Example:<br/>
+<b>Browser.print("hello world");</b> <i>// Syntax error</i><br/>
+<b>Browser.print('hello world');</b> <i>// Valid code</i>
+</p>
+<br/>
+
+<h1>Script node fields</h1>
+
+<p>Fields are used to:</p>
+<ul>
+<li>declare global variable (Javascript code cannot contain global variable).</li>
+<li>access to scene node (access to scene node require a field).</li>
+</ul>
+<br/>
+
+<p>Field declaration syntax:</p>
+<textarea wrap="off" readonly="readonly" rows="4" cols="80">
+# Field declaration
+field &lt;type&gt; &lt;name&gt; &lt;default_value&gt;
+# Node declaration
+field SFNode &lt;name&gt; USE &lt;node_name&gt;
+</textarea>
+
+<p>
+<b>&lt;type&gt;</b>:<br/>
+Field type (<b>SFString</b>, <b>MFString</b>, <b>SFInt32</b>, <b>MFInt32</b>,
+<b>SFFloat</b>, <b>MFFloat</b>, <b>SFBool</b>, <b>SFTime</b>, ...).
+</p>
+<p class="note check">
+<b>Note:</b><br/>Use <b>SFNode</b> to link a node with a script variable.
+</p>
+
+<p>
+<b>&lt;name&gt;</b>:<br/>
+Field name. This name is use in Javascript.
+</p>
+
+<p>
+<b>&lt;default_value&gt;</b>:<br/>
+Default field value. Default value is not required.
+</p>
+
+<p>
+<b>&lt;node_name&gt;</b>:<br/>
+Node name (define by DEF &lt;node name&gt; in VRML scene).<br/>
+To use a VRML node in Javascript function.
+</p>
+<br/>
+
+<p>Example:</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+Shape {
+  appearance Appearance { material Material2D { emissiveColor 0 0 0 } }
+  geometry DEF TEXT WrapText { string [ "initial text" ] }
+}
+DEF script Script {
+  field SFNode textNode USE TEXT
+  field SFString globalVar ""
+  url "javascript:
+    function myFunction (value) {
+      textNode.string[0] = value;
+      globalVar = value;
+    }
+  "
+}
+</textarea>
+<br/>
+
+<h1>Javascript syntax</h1>
+
+<h2>Comments</h2>
+
+<p>
+MeMo use <b>//</b> to introduce a line of comment.
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>Multi-line comments are not supported by MeMo.
+</p>
+
+<p class="note check">
+<b>Note:</b><br/>
+Comments are removed during M4M compilation. Feel free to comment your code!<br/>
+</p>
+
+<p>Comments syntax:</p>
+<textarea wrap="off" readonly="readonly" rows="2" cols="80">
+// my comment
+</textarea>
+<br/>
+
+<h2>Functions</h2>
+
+<p>
+MeMo use the same syntax than Javascript to declare and use a function.<br/>
+Use <b>return</b> keyword to return a value.<br/>
+Function declaration syntax:
+</p>
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+function &lt;function_name&gt; (&lt;params&gt;) {
+  //Function
+}
+</textarea>
+<ul>
+<li><b>&lt;function_name&gt;</b>:<br/>
+    Name of function.</li>
+<li><b>&lt;params&gt;</b>:<br/>
+    List of function parameters with comma separator.</li>
+</ul>
+<br/>
+
+<p>Example:</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+function functionWithoutParameter () {
+  //Do nothing
+}
+function functionWith3Parameters (param1, param2, param3) {
+  //Write parameters on output
+  Browser.print('parameters : ' + param1 + ' / ' + param2 + ' / ' + param3);
+}
+function functionWithReturn () {
+  //Return PI
+  return 3.1415;
+}
+function add (value1, value2) {
+  //Return addition of parameters
+  return value1 + value2;
+}
+</textarea>
+<br/>
+
+<h2>initialize() function</h2>
+
+<p>
+<b>initialize()</b> function is called we scene is loaded.<br/>
+We use this function to initialize VRML scene.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+function initialize () {
+  Browser.print('Scene initialization...');
+}
+</textarea>
+<br/>
+
+<h2>Local variables</h2>
+
+<p>
+Variables are declared only in function (local variable).<br/>
+We cannot declare global variable (use field if global variables are required).<br/>
+Function declaration syntax:
+</p>
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+var &lt;var_name&gt;;
+var &lt;var_name&gt; = &lt;value&gt;;
+</textarea>
+<ul>
+<li><b>&lt;var_name&gt;</b>:<br/>
+    Variable name.</li>
+<li><b>&lt;value&gt;</b>:<br/>
+    Variable value.</li>
+</ul>
+<br/>
+
+<h2>Process events in Javascript</h2>
+
+<p>
+VRML use <b>ROUTE</b> keyword to manage events.<br/>
+We can use Javascript to send an event or receive and process this event.<br/>
+Events declaration syntax is same than field declarations. We use <b>eventIn</b>
+and <b>eventOut</b> keyword to replace <b>field</b> keyword.
+</p>
+<p>
+To receive and process an event:
+</p>
+<ul>
+<li>declare an <b>eventIn</b> field in <a href="development_node_Script.html">Script node</a>.</li>
+<li>declare a function with the same event name.</li>
+<li>we receive data in function parameters or in function name.</li>
+</ul>
+<br/>
+
+<p>Example:</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+DEF MYSCRIPT Script {
+  #Define event in with integer type
+  eventIn SFInt32 myEvent
+  url "javascript:
+    //Process event when myEvent is received
+    function myEvent(value) {
+      //value contains an integer
+      Browser.print ( 'Receive value :' + value);
+    }
+  "
+}
+#Route an event on OTHER node to myEvent function
+ROUTE OTHER.valueChange TO MYSCRIPT.myEvent
+</textarea>
+<br/>
+
+<p>To send an event:</p>
+<ul>
+<li>declare an <b>eventOut</b> field in <a href="development_node_Script.html">Script node</a>.</li>
+<li>change eventOut value in a function.</li>
+</ul>
+<br/>
+
+<p>Example:</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+DEF MYSCRIPT Script {
+  #Define event out with integer type
+  eventOut SFInt32 myEvent 0
+  url "javascript:
+    //Initialize the scene
+    //Send event during initialization
+    function initialize () {
+      //Send myEvent (change the value)
+      myEvent = 1;
+    }
+  "
+}
+#Route myEvent function to another node value
+ROUTE MYSCRIPT.myEvent TO OTHER.scriptIsInitialized
+</textarea>
+<br/>
+
+<h2>Javascript libraries</h2>
+
+<p>
+To advanced use, we can use Javascript libraries.<br/>
+See <a href="widgets_development_javascript_ref.html">Javascript reference</a> chapter.
+</p>
+<br/>
+
+<h1>Javascript restrictions</h1>
+
+<h2>Class declarations</h2>
+
+<p>
+MeMo doesn't support class declaration.<br/>
+We cannot describe and use personal classes.<br/>
+Solution: Use a VRML prototype.
+</p>
+<p class="note info">
+<b>Note:</b><br/>We cannot create VRML nodes dynamically with MeMo.
+</p>
+<br/>
+
+<h2>Create a node with Javascript</h2>
+
+<p>
+We cannot create VRML nodes dynamically with MeMo.<br/>
+</p>
+<br/>
+
+<h2>Other</h2>
+
+<p class="note info">
+<b>More:</b><br/>See <a href="faq.html">FAQ</a> for more restrictions.
+</p>
+<br/>
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_languages','');
+//-->
+</script>
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

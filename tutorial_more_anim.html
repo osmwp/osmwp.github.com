@@ -1,0 +1,275 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_more_anim";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">more animations</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+This tutorial is a continuation of the <a href="tutorial_move_shape.html">move shape tutorial</a>.<br/>
+We use:
+</p>
+<ul>
+<li><a href="development_node_Shape">Shape</a> node (see <a href="tutorial_shape.html">shape tutorial</a>)</li>
+<li><a href="development_node_TimeSensor">TimeSensor</a> node (see <a href="tutorial_other_sensor.html">time sensor tutorial</a>)</li>
+</ul>
+<br/>
+
+<p>
+We start with the following code:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    DEF ANIM_TIMER TimeSensor {
+      isActive TRUE
+      cycleInterval 4.0
+      loop TRUE
+    }
+
+    DEF MY_SHAPE_TRS Transform2D {
+      children [
+        Shape {
+          appearance Appearance {
+            material DEF MY_SHAPE_COLOR Material2D { emissiveColor 1 0 0 }
+          }
+          geometry DEF MY_SHAPE Rectangle { size 100 100 }
+        }
+      ]
+    }
+
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Color animation</h1>
+
+<p>
+We use <a href="development_node_ColorInterpolator.html">ColorInterpolator</a>
+node to change shape color.<br/>
+The operation of <a href="development_node_ColorInterpolator.html">ColorInterpolator</a>
+is the same as <a href="development_node_CoordinateInterpolator2D.html">CoordinateInterpolator2D</a>.<br/>
+<a href="development_node_ColorInterpolator.html">ColorInterpolator</a> use
+<b>key</b> and <b>keyValue</b> fields to compute and return a color when node
+receive <b>set_fraction</b> event.
+</p>
+
+<p>
+Define the <a href="development_node_ColorInterpolator.html">ColorInterpolator</a> node:
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+DEF INTERPOLATOR ColorInterpolator {
+      key      [0,      0.33,   0.66,  1    ]
+      keyValue [1 0 0,  0 1 0,  0 0 1, 1 0 0]
+}
+</textarea>
+<br/>
+
+<p>
+Link <a href="development_node_ColorInterpolator.html">ColorInterpolator</a>
+node with timer and shape color:
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+ROUTE ANIM_TIMER.fraction_changed TO INTERPOLATOR.set_fraction
+ROUTE INTERPOLATOR.value_changed  TO MY_SHAPE_COLOR.emissiveColor
+</textarea>
+<br/>
+
+<p>
+Final code for color animation:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    DEF ANIM_TIMER TimeSensor {
+      isActive TRUE
+      cycleInterval 4.0
+      loop TRUE
+    }
+
+    DEF MY_SHAPE_TRS Transform2D {
+      children [
+        Shape {
+          appearance Appearance {
+            material DEF MY_SHAPE_COLOR Material2D { emissiveColor 1 0 0 }
+          }
+          geometry DEF MY_SHAPE Rectangle { size 100 100 }
+        }
+      ]
+    }
+
+    DEF INTERPOLATOR ColorInterpolator {
+      key      [0,      0.33,   0.66,  1    ]
+      keyValue [1 0 0,  0 1 0,  0 0 1, 1 0 0]
+    }
+    ROUTE ANIM_TIMER.fraction_changed TO INTERPOLATOR.set_fraction
+    ROUTE INTERPOLATOR.value_changed  TO MY_SHAPE_COLOR.emissiveColor
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Transparency</h1>
+
+<p>
+<a href="development_node_ScalarInterpolator.html">ScalarInterpolator</a> is
+used if animation change only one simple value (example: angle, transparency,
+radius, ...).<br/>
+The operation of <a href="development_node_ScalarInterpolator.html">ScalarInterpolator</a>
+is the same as <a href="development_node_CoordinateInterpolator2D.html">CoordinateInterpolator2D</a>.<br/>
+<a href="development_node_ScalarInterpolator.html">ScalarInterpolator</a> use
+<b>key</b> and <b>keyValue</b> fields to compute and return a float value when
+node receive <b>set_fraction</b> event.<br/>
+We can change shape transparency with this interpolator.
+</p>
+
+<p>
+Define the <a href="development_node_ScalarInterpolator.html">ScalarInterpolator</a> node:
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+DEF INTERPOLATOR ScalarInterpolator{
+  key      [0.0,  0.5,   1.0]
+  keyValue [0.0,  1.0,   0.0]
+}
+</textarea>
+<br/>
+
+<p>
+Link <a href="development_node_ScalarInterpolator.html">ScalarInterpolator</a> node with timer and shape transparency:
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+ROUTE ANIM_TIMER.fraction_changed TO INTERPOLATOR.set_fraction
+ROUTE INTERPOLATOR.value_changed  TO MY_SHAPE_COLOR.transparency
+</textarea>
+<br/>
+
+<p>
+Final code for transparency animation:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    DEF ANIM_TIMER TimeSensor {
+      isActive TRUE
+      cycleInterval 4.0
+      loop TRUE
+    }
+
+    DEF MY_SHAPE_TRS Transform2D {
+      rotationAngle 0
+      children [
+        Shape {
+          appearance Appearance {
+            material DEF MY_SHAPE_COLOR Material2D { emissiveColor 1 0 0 }
+          }
+          geometry DEF MY_SHAPE Rectangle { size 50 50 }
+        }
+      ]
+    }
+
+    DEF INTERPOLATOR ScalarInterpolator{
+      key      [0.0,  0.5,   1.0]
+      keyValue [0.0,  1.0,   0.0]
+    }
+    ROUTE ANIM_TIMER.fraction_changed TO INTERPOLATOR.set_fraction
+    ROUTE INTERPOLATOR.value_changed  TO MY_SHAPE_COLOR.transparency
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Rotation</h1>
+
+<p>
+Same tutorial than transparency. A <a href="development_node_ScalarInterpolator.html">ScalarInterpolator</a>
+generate angles and change shape.
+</p>
+<p class="note info">
+<b>Note:</b><br/>
+Rotation increases processing and memory consumption.<br/>
+Rectangle shape does not rotate. We use an <a href="development_node_IndexedFaceSet2D.html">IndexedFaceSet2D</a>
+node in this tutorial.
+</p>
+
+<p>
+Final code for rotation animation:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    DEF ANIM_TIMER TimeSensor {
+      isActive TRUE
+      cycleInterval 4.0
+      loop TRUE
+    }
+
+    DEF MY_SHAPE_TRS Transform2D {
+      children [
+        Shape {
+          geometry IndexedFaceSet2D {
+            color Color { color 1.0 0.0 0.0 }
+            coordIndex [ 0 1,  1 2,  2 3,  3 0 ]
+            coord Coordinate2D {
+              point [ -50 -50,  50 -50,  50 50,  -50 50 ]
+            }
+          }
+        }
+      ]
+    }
+
+    DEF INTERPOLATOR ScalarInterpolator{
+      key      [0.0,  1.0   ]
+      keyValue [0.0,  6.2830] # 0 to 2PI
+    }
+    ROUTE ANIM_TIMER.fraction_changed TO INTERPOLATOR.set_fraction
+    ROUTE INTERPOLATOR.value_changed  TO MY_SHAPE_TRS.rotationAngle
+  ]
+}
+</textarea>
+<br/>
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_launch_anim','tutorial_basic_audio_video');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

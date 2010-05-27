@@ -1,0 +1,177 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_tabcarrousel";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title"><!-- TODO complete this part --> prototype</h1>
+
+
+<img class="right" alt="TabCarrousel" src="images/prototypes/proto_tabcarrousel_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Displays multiple carousel sliding one after the others.<br/>
+Content of each carousel is loaded during transition.<br/>
+The fields are the same as the <a href="prototype_carrousel">Carrousel</a> and <a href="prototype_subtitle.html">SubTitle</a> prototypes except for the ones listed here.<br/>
+To prevent confusion, some fields have been renamed with a prefix of the prototype it is assigned to (e.g. carrouselStyle for the style field of the <a href="prototype_carrousel.html">Carrousel prototype</a>).
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="50" readonly="readonly" wrap="off">
+PROTO TabCarrousel [
+  # Events
+  eventIn SFBool update
+  exposedField SFBool startZoom FALSE # Set to TRUE to zoom in and to FALSE to zoom out
+  exposedField SFInt32 index 0
+  exposedField SFBool enable TRUE
+  exposedField SFBool available TRUE   # will be set to FALSE when a scroll animation is ongoing
+  eventOut SFBool zoomFinished # will be set to TRUE on end of zoom in and to FALSE on end of zoom out
+  eventOut SFString activeKey # Send touchCursor event to upper prototypes
+
+  # Data
+  field MFString images []
+  field MFString labels []
+  field MFString notifs []
+  field MFString bgIcons []
+  field MFString notifIcons []
+  field MFString defaultIcons []
+  field MFString errorIcons []
+
+  # Common fields
+  field SFVec2f screenSize 0 0
+  field SFVec2f textScale 1 1
+
+  # Carrousel style fields
+  field SFBool cycle TRUE # if TRUE, at display carrousel as a circle
+  field MFString style "TabCarrousel"
+  field MFString carrouselStyle "Carrousel"
+  field MFString carrouselItemStyle "Carrousel-item"
+  field MFString carrouselNotifStyle "Carrousel-notif"
+  field MFString carrouselPanelStyle "Carrousel-panel"
+  field MFString carrouselImages ["" "carrouselArrowLeft.png" "carrouselArrowLeft_over.png" "carrouselArrowRight.png" "carrouselArrowRight_over.png"]
+
+  # Subtitle fields
+  field MFString subtitleStyle ["Subtitle" "TabCarrousel-Subtitle"]
+  field MFString subtitleImages ""
+  field MFString subtitleTitle ""
+  
+  # TabCarrousel specific fields
+  exposedField SFInt32 tabIndex 0 # On tabIndex change, the content of the tab at index must be loaded,
+                                  # then the update eventIn must then be changed to notify completion of loading
+  field SFInt32 maxTabs 1
+]
+</textarea>
+<br/>
+
+<!--
+<h1>Fields description</h1>
+
+TODO Add all fields documentation
+
+<ul>
+<li>SFInt32 tabIndex - On tabIndex change, the content of the tab at index must be loaded,
+    then the update eventIn must then be changed to notify completion of loading.</li>
+<li>SFInt32 maxTabs - Maximum numbers of tabs</li>
+</ul>
+<br/>
+-->
+
+<h1>Extern proto</h1>
+
+<p>
+<a href="prototype_carrousel.html">Carrousel</a>,
+<a href="prototype_subtitle.html">SubTitle</a>
+</p>
+<br/>
+
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO TabCarrousel [] "TabCarrousel.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+    
+    DEF TAB TabCarrousel {
+      images [
+        "img2_32x32.jpg" "img2_32x32.jpg" "img_32x32.png" "img_32x32.png" "img_32x32.png"
+        "img2_32x32.jpg" "img_32x32.png" "img2_32x32.jpg" "img_32x32.png" "img_32x32.png"
+      ]
+      labels [
+        "Item 1" "Item 2" "Item 3" "Item 4" "Item 5"
+        "Item 6" "Item 7" "Item 8" "Item 9" "Item 10"
+      ]
+      maxTabs 1
+    }
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+    
+    ROUTE SIZE_NOTIFIER.screenSize TO TAB.screenSize
+    ROUTE SIZE_NOTIFIER.textScale  TO TAB.textScale
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

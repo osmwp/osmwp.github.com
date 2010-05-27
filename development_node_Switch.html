@@ -1,0 +1,129 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Switch";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Switch node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="4" cols="80">
+Switch {
+  SFInt32 whichChoice 0
+  MFNode choice NULL
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+This node allows to render only one node in a list of nodes.<br/>
+This is useful to hide elements.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFInt32 whichChoice 0</b> :<br/>
+The index of the node in <b>choice</b> to be drawn.<br/>
+Value can be set to -1 so no node will be drawn.<br/>
+By default, the first node is rendered.
+</p>
+<p>
+<b>MFNode choice NULL</b> :<br/>
+The list of nodes. Only one of the nodes can be rendered at a time.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<p>
+This example shows how display a node by modifying whichChoice field.
+</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+DEF mySwitch Switch {
+  whichChoice -1      # initialized to display none
+  choice [
+
+    # choice 0: display text
+    Shape {
+      appearance Appearance {material Material2D {emissiveColor 0 0 0 }}
+      geometry Text {
+        string "Switch Test"
+        fontStyle FontStyle {size 8 style "bold" justify ["TOP" "LEFT"]}
+      }
+    }
+
+    # choice 1: display ImageTexture
+     Shape {
+      appearance Appearance { texture ImageTexture { url "smile.png" } }
+      geometry Bitmap { }
+    }
+
+    # choice n
+    # ...
+  ]
+}
+
+Script {
+  field SFNode mySwitch USE mySwitch
+  url"javascript:
+    function displayText(){
+      mySwitch.whichChoice = 0;
+    }
+    function displayImage(){
+      mySwitch.whichChoice = 1;
+    }
+    function displayNothing(){
+      mySwitch.whichChoice = -1;
+    }
+  "
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

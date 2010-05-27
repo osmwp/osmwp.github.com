@@ -1,0 +1,264 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_scrollablelist";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">ScrollableList prototype</h1>
+
+<img class="right" alt="ScrollableList" src="images/prototypes/proto_scrollablelist_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Scrollable list with an image and a text per item.
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="50" readonly="readonly" wrap="off">
+PROTO ScrollableList [
+  exposedField SFBool enableCycle TRUE
+  field MFString elementsTitles [] 
+  field MFString elementsLabels []
+  field MFString elementsIcons []
+  field MFInt32 elementsStates [] #to enable one state per item of the list (for example multi-selection : 'checked', 'not checked')
+  field MFString stateIcons [] #to enable one state per item of the list (for example multi-selection : 'checked', 'not checked')
+  field SFInt32 nbElements 0 #total number of element in the list (different of list.nbItems : number of elements shown with the current screenSize)
+  
+  # Events
+  eventOut SFTime selection
+  exposedField SFInt32 update 0 #update all elements
+  exposedField SFInt32 updateElement 0 #used to update only one element
+  exposedField SFInt32 currentElement 0
+  exposedField SFBool enable TRUE
+  eventIn SFInt32 goToElement
+  
+  # Styles
+  field MFString style ["ScrollableList"]
+  field MFString titleStyle ["ScrollableList-title"]
+  field MFString scrollbarStyle ["Scrollbar"]
+  field MFString focusbarStyle ["FocusBar" "ScrollableList-FocusBar"]
+  field MFString focusbarImages ["focusBarBg.png" "focusBarOver.png"]
+  field SFVec2f size -1 -1
+  field SFVec2f textScale 1 1
+  field SFVec2f titlePos 0 0
+  field SFVec2f labelPos 0 0
+  field SFVec2f separatorSize 0 0
+  
+  field SFInt32 itemHeight -1
+  
+  # Focus bar images
+  field MFString images ["focusBarBg.png" "reflet.png"]
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>MFString elementsTitles - Elements titles</li>
+<li>MFString elementsLabels - Elements labels</li>
+<li>MFString elementsIcons - Elements icons</li>
+<li>MFInt32  elementsStates - Elements states to enable one state per item of the list (for example multi-selection : 'checked', 'not checked')</li>
+<li>MFString stateIcons - Icons state to enable one state per item of the list (for example multi-selection : 'checked', 'not checked')</li>
+<li>SFInt32 nbElements - Total number of element in the list (different of list.nbItems : number of elements shown with the current screenSize)</li>
+</ul>
+<br/>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>MFString style - Style for this prototype</li>
+<li>MFString titleStyle - Style for the title of the item</li>
+<li>MFString scrollbarStyle - Style for the ScrollBar</li>
+<li>MFString focusbarStyle - Style for the FocusBar</li>
+<li>MFString focusbarImages - Images for the FocusBar</li>
+<li>SFVec2f size - Size of the prototype</li>
+<li>SFVec2f textScale - Use for scaling text if necessary (phone with small fonts)</li>
+<li>SFVec2f titlePos - Title position</li>
+<li>SFVec2f labelPos  - Label position</li>
+<li>SFInt32 itemHeight - Item height</li>
+<li>MFString images - Images of the focusbar (background and reflect)</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h2>Exposed Fields</h2>
+
+<ul>
+<li>SFInt32 update - Update list. Call update is needed if Styles fields are modified</li>
+<li>SFInt32 updateElement - Update an element in particular</li>
+<li>SFInt32 currentElement - Current element</li>
+<li>SFBool enable - Enable / disable</li>
+<li>SFBool enableCycle - Allows focus bar to jump from first to last position when using the keyboard</li>
+</ul>
+<br/>
+
+<h2>Event Out</h2>
+
+<ul>
+<li>SFTime selection - The time when an item is selected in the list</li>
+</ul>
+<br/>
+
+<h2>Event In</h2>
+
+<ul>
+<li>SFInt32 goToElement - Force list to focus a given element</li>
+</ul>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+ScrollableList {
+  font-filter: true;
+  font-size: 10;
+  font-style: plain;
+  horizontal-align: left;
+  vertical-align: middle;
+  background-color: gray;
+  color: black;
+  rectangle-size: 100% 2px; 
+  image-size: 11.667% 10.77%; 
+  image-position: -11.667% 0%; 
+  text-position: 0px 0px; 
+  rectangle-position: 29.167% -8.46%; //-11.15%; 
+  position: 70.833% 0%;
+  size: 100% 16.92%; 
+}
+
+ScrollableList-FocusBar {
+  size: 100% 16.92%; 
+}
+
+ScrollableList-title {
+  font-filter: true;
+  font-size: 10;
+  font-style: bold;
+  horizontal-align: left;
+  vertical-align: middle;
+  color: black;
+  text-position: 0px 0px;
+}
+</textarea>
+<br/>
+
+<h1>Extern proto(s)</h1>
+
+<p>
+<a href="prototype_list.html">List</a>
+</p>
+<br/>
+
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+EXTERNPROTO ScrollableHor [] "ScrollableList.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance Appearance {
+        material Material2D {
+          emissiveColor 1.0 1.0 1.0
+        }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 20 20
+      }
+    }
+    
+    DEF LIST ScrollableList {
+      enableCycle TRUE
+      nbElements 7
+      elementsTitles [
+        "Item 1"
+        "Item 2"
+        "Item 3"
+        "Item 4"
+        "Item 5"
+        "Item 6"
+        "Item 7"
+      ] 
+      elementsLabels [
+        "Description of item 1"
+        "Description of item 2"
+        "Description of item 3"
+        "Description of item 4"
+        "Description of item 5"
+        "Description of item 6"
+        "Description of item 7"
+      ]
+      stateIcons [
+        "img_32x32.png"
+        "img_32x32.png"
+      ]
+    }
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+    ROUTE SIZE_NOTIFIER.screenSize TO LIST.size
+    ROUTE SIZE_NOTIFIER.textScale TO LIST.textScale
+    
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

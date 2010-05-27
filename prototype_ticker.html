@@ -1,0 +1,167 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_ticker";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Ticker prototype</h1>
+
+
+<img class="right" alt="Ticker" src="images/prototypes/proto_ticker_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Text looping animation.<br/>
+Animation can be either horizontal or vertical, and will only start if text is larger than the size of the Ticker.
+</p>
+<p class="note info">
+<b>Note:</b><br/>
+Text alignment (with CSS vertical-align and horizontal-align properties) is relative to the size of the Ticker.
+</p>
+<p class="note warning">
+<b>Limitation:</b><br/>
+BASELINE is not supported for vertical alignment (MIDDLE will be used).
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="10" cols="50" readonly="readonly" wrap="off">
+PROTO Ticker [
+  field MFString string []
+  field MFString style ["Ticker"]
+  field SFVec2f size -1 -1
+  field SFVec2f textScale 1 1
+  field SFInt32 speed 50
+  field SFBool cycle FALSE
+  field SFBool vertical FALSE
+  field SFInt32 maxLines 0
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>MFString string - Text content</li>
+<li>SFVec2f size - Content box size.</li>
+</ul>
+<br/>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>SFVec2f textScale - Used for scaling text if necessary (phone with small fonts)</li>
+<li>MFString style - Path to the CSS node associated to Ticker prototype</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h2>Control fields</h2>
+
+<ul>
+<li>SFInt32 speed - Speed of animation (pixels per second). Animation can be stopped with a value less or equal to 0. Default: 50</li>
+<li>SFBool cycle - If TRUE, text will cycle, if FALSE, text will bounce. Default: FALSE</li>
+<li>SFBool vertical - If TRUE, animation will be vertical and text is wrapped to the size of the ticker. Default: FALSE</li>
+<li>SFInt32 maxLines - Max number of lines to display in vertical mode, 0 for no limit. Default: 0</li>
+</ul>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="7" cols="80" readonly="readonly" wrap="off">
+Ticker {
+  font-filter: true;
+  color: black;
+  horizontal-align: middle;
+  vertical-align: middle;
+  text-indent: 4px; // space between text and the size of the Ticker's box
+}
+</textarea>
+<br/>
+
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO TextField [] "Ticker.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+    
+    DEF TICKER Ticker {
+      size 100 24
+      string [ "Lorem ipsum dolor sit amet, consectetur adipiscing elit." ]
+    }
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+    
+    ROUTE SIZE_NOTIFIER.textScale TO TICKER.textScale
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

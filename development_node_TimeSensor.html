@@ -1,0 +1,168 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_TimeSensor";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">TimeSensor node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+TimeSensor {
+    SFTime  startTime 0
+    SFTime  stopTime 0
+    SFBool  loop FALSE
+    SFTime  cycleInterval 1
+    SFFloat fraction_changed 0
+    SFBool  isActive FALSE
+    SFTime  cycleTime 0
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Generates periodic values. Basis of most animations. Should work exactly as
+defined in VRML.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFTime  startTime 0</b> :<br/>
+Time to start the timer (in second since application start).
+</p>
+<p>
+<b>SFTime  stopTime 0</b> :<br/>
+Time to stop the timer, ignored if set below startTime. Timer can be restarted
+at any time by setting startTime and stopTime at the same values (in second
+since application start).
+</p>
+<p>
+<b>SFBool  loop FALSE</b> :<br/>
+If loop is <b>TRUE</b>, it will restart timer when it
+</p>
+<p>
+<b>SFTime  cycleInterval 1</b> :<br/>
+Duration of the timer (in second).
+</p>
+<p>
+<b>SFFloat fraction_changed 0</b> :<br/>
+This field will generate linear values from 0 to 1.
+</p>
+<p>
+<b>SFBool  isActive FALSE</b> :<br/>
+Timer will be activated when this is set to <b>TRUE</b> (or 1).
+</p>
+<p>
+<b>SFTime  cycleTime 0</b> :<br/>
+Called when timer is stopped or on each end of loop (every cycleInterval
+interval in second).
+</p>
+<br/>
+
+<h1>Example</h1>
+<p>
+Example display a progress bar and close the widget after 5 seconds.<br/>
+</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+Group {
+    children [
+        # Time sensor (timer cycle : 5 seconds)
+        DEF TIMER_HIDE TimeSensor { cycleInterval 5 isActive FALSE }
+
+        # Script
+        DEF SCRIPT Script {
+            # Event to move progress bar
+            eventIn SFFloat moveProgressBar
+            # Event to close widget when at the end of time
+            eventIn SFTime close
+
+            field SFNode TIMER_HIDE USE TIMER_HIDE
+            url "
+            // Widget initialization
+            function initialize (now) {
+              // Initialize widget
+              Browser.sendMessage ('Board', 'INIT', 'My Widget', '', 'Quit');
+              // Display popup
+              Browser.sendMessage ('Board', 'POPUP', 'Progress popup', 'Progression', '', '');
+              // Launch timer
+              // - Activate timer
+              TIMER_HIDE.isActive = true;
+              // - Define start time
+              TIMER_HIDE.startTime = now;
+            }
+
+            //Close widget function
+            function close() {
+              //Close popup
+              Browser.sendMessage ('Board', 'POPUP_AUTO_HIDE');
+              //Close widget
+              Browser.sendMessage ('Board', 'RESET');
+            }
+
+            //Move progress bar function
+            function moveProgressBar() {
+              //Move progress bar
+              //Convert timer progression value (between 0 and 1) to progress bar value (between 0 and 100)
+              var pos = (moveProgressBar * 100);
+              Browser.sendMessage ('Board', 'PROGRESS', pos);
+            }
+            "
+        }
+
+        # Link SensorTime and Javascript functions
+        # - fraction_changed return SFFloat value between 0 and 1
+        ROUTE TIMER_HIDE.fraction_changed to SCRIPT.moveProgressBar
+        # - cycleTime event is launch at the end of cycle
+        ROUTE TIMER_HIDE.cycleTime TO SCRIPT.close
+    ]
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

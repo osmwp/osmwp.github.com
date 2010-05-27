@@ -1,0 +1,133 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Transform2D";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Transform2D node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="6" cols="80">
+Transform2D {
+  MFNode children NULL
+  SFVec2f translation 0 0
+  SFVec2f scale 1 1
+  SFFloat rotationAngle 0
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Apply a 2D transformation to the current axis for all nodes in the
+<b>children</b> field.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFNode children NULL</b>:<br/>
+List of nodes to apply the transformation.
+</p>
+
+<p>
+<b>SFVec2f translation 0 0</b>:<br/>
+Apply translation transformation.
+</p>
+
+<p>
+<b>SFVec2f scale 1 1</b>:<br/>
+Apply scale transformation.
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>
+Increases processing and memory consumption for values != 1 with images and texts.
+</p>
+
+<p>
+<b>SFFloat rotationAngle 0</b>:<br/>
+Apply rotation transformation in radians.<br/>
+Arbitrary rotations may not be supported by all geometry nodes.
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>
+Increases processing and memory consumption for values != 0 with images and texts.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+# Display the "Hello world !" text upside down.
+Transform2D {
+  rotationAngle 3.1415 # PI == 180° rotation
+  children [
+    Shape {
+      appearance Appearance { }
+      geometry Text { string "Hello world !" }
+    }
+  ]
+}
+
+# Display the circle at two times it original size under the text
+Transform2D {
+  translation 0 -40
+  scale 2 2
+  children [
+    Shape {
+      appearance Appearance { }
+      geometry Circle { radius 10 }
+    }
+  ]
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

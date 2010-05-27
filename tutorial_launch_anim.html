@@ -1,0 +1,387 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_launch_anim";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">launch animation after user action</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+In this tutorial, we will animate a shape after a user action.<br/>
+We use a timer to animate the shape and a key sensor to capture user action.
+</p>
+
+<h1>Timer</h1>
+
+<p>
+See <a href="tutorial_move_shape.html">Move shape tutorial</a> for example about this node.<br/>
+We use <a href="development_node_TimeSensor.html">TimeSensor</a> node to animate the widget.
+</p>
+
+<p>
+We define a <b>"ANIM_TIMER"</b> timer (a TimeSensor node).<br/>
+When widget is launch, timer is not activated (<b>"isActive FALSE"</b>).<br/>
+Timer is activated after a user action.<br/>
+At end of time interval (after 1 seconds), timer is stopped (<b>"loop FALSE"</b>).<br/>
+Time sensor declaration:
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+DEF ANIM_TIMER TimeSensor {
+  isActive FALSE
+  cycleInterval 1.0
+  loop FALSE
+}
+</textarea>
+<br/>
+
+<p>
+We catch timer pulse with <b>fraction_changed</b> (SFFloat - value between 0.0
+(animation start) and 1.0 (end of animation))<br/>
+We catch end of loop with <b>cycleTime</b> (SFTime - current time)
+</p>
+<br/>
+
+<h1>Key sensor</h1>
+
+<p>
+<a href="development_node_KeySensor.html">KeySensor</a> node send event when user press a key.<br/>
+We use <a href="development_node_KeySensor.html">KeySensor</a> node to catch user
+action and launch animation (activate the timer).
+</p>
+<p class="note info">
+<b>Note:</b><br/>if animation is already launched, not re-launch animation.
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+DEF KEY_SENSOR KeySensor {
+  # We catch only numeric key
+  url            "1234567890"
+  activate       TRUE
+}
+DEF SCRIPT Script {
+  eventIn SFTime keyPressed
+  field timer USE ANIM_TIMER
+  url "
+  function keyPressed () {
+    if (! ANIM_TIMER.isActive) {
+      timer.isActive = true;
+      timer.startTime = keyPressed;
+    }
+  }
+  "
+}
+ROUTE KEY_SENSOR.pressTime TO SCRIPT.keyPressed
+</textarea>
+<br/>
+
+<h1>Shape</h1>
+
+<p>
+We define a shape (a simple rectangle).<br/>
+To move rectangle, we use a <a href="development_node_Transform2D.html">Transform2D</a> node.
+</p>
+<textarea rows="10" cols="80" readonly="readonly" wrap="off">
+DEF SHAPE_TRS Transform2D {
+  children [
+    Shape {
+      appearance Appearance {
+        material Material2D { emissiveColor 1 0 0 }
+      }
+      geometry Rectangle { size 20 20 }
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Shape animation</h1>
+
+<p>
+To create animation, we use <a href="development_node_PositionInterpolator2D.html">PositionInterpolator2D</a> node.<br/>
+In first time, we create a simple animation.
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+DEF ANIMATION_PI PositionInterpolator2D {
+  key      [0.0, 1.0]
+  keyValue [0 0, 10 10]
+}
+</textarea>
+<br/>
+
+<p>
+Link the Interpolator with the timer:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+ROUTE ANIM_TIMER.fraction_changed TO ANIMATION_PI.set_fraction
+</textarea>
+<br/>
+
+<p>
+Link the Interpolator with the shape:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+ROUTE ANIMATION_PI.value_changed TO SHAPE_TRS.translation
+</textarea>
+<br/>
+
+<h1>First example code</h1>
+
+<p>
+Final code for the first example:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    DEF ANIM_TIMER TimeSensor {
+      isActive FALSE
+      cycleInterval 1.0
+      loop FALSE
+    }
+
+    DEF SHAPE_TRS Transform2D {
+      children [
+        Shape {
+          appearance Appearance {
+            material Material2D { emissiveColor 1 0 0 }
+          }
+          geometry Rectangle { size 20 20 }
+        }
+      ]
+    }
+
+    DEF KEY_SENSOR KeySensor {
+      # We catch only numeric key
+      url            "1234567890"
+      activate       TRUE
+    }
+
+    DEF ANIMATION_PI PositionInterpolator2D {
+      key      [0.0, 1.0]
+      keyValue [0 0, 10 10]
+    }
+
+    DEF SCRIPT Script {
+      eventIn SFTime keyPressed
+      field SFNode timer USE ANIM_TIMER
+      field SFNode input USE KEY_SENSOR
+      url "
+      function keyPressed () {
+        Browser.print('Key pressed : ' + input.activeKey + ' / anim active ? ' + timer.isActive);
+        if (! timer.isActive) {
+          timer.isActive  = true;
+          timer.startTime = keyPressed;
+        }
+      }
+      "
+    }
+
+    ROUTE KEY_SENSOR.pressTime TO SCRIPT.keyPressed
+    ROUTE ANIM_TIMER.fraction_changed TO ANIMATION_PI.set_fraction
+    ROUTE ANIMATION_PI.value_changed TO SHAPE_TRS.translation
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Move shape via the mobile joypad</h1>
+
+<p>
+We want to move shape when user press joypad key.<br/>
+We listen joypad keys with the KeySensor:
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+DEF KEY_SENSOR KeySensor {
+  url            "EUDLR"
+  activate       TRUE
+}
+</textarea>
+<br/>
+
+<p>
+Define function to move shape when user press a key.<br/>
+This function:
+</p>
+<ul>
+<li>define the start position for animation (the previous end position).</li>
+<li>define the end position (read key to choose the direction).</li>
+<li>launch the animation (Active the timer).</li>
+</ul>
+<br/>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+function keyPressed () {
+  if (! timer.isActive) {
+    initX = finalX;
+    initY = finalY;
+    if (input.activeKey == 'U') {
+      finalY = initY + 10;
+    } else if (input.activeKey == 'D') {
+            finalY = initY - 10;
+    } else if (input.activeKey == 'L') {
+            finalX = initX - 10;
+    } else if (input.activeKey == 'R') {
+            finalX = initX + 10;
+    } else if (input.activeKey == 'E') {
+            finalX = 0;
+            finalY = 0;
+    }
+    timer.isActive  = true;
+    timer.startTime = keyPressed;
+  }
+}
+</textarea>
+<br/>
+
+<p>
+PositionInterpolator2D cannot be use (we cannot redefine animation...).<br/>
+We use a JavaScript function to compute all positions of animation.<br/>
+This function use <b>fraction_changed</b> field of timer and return a position
+(<b>SFVec2f</b> type).
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+function timerPulse () {
+  posChanged.x = initX + ((finalX - initX) * timerPulse);
+  posChanged.y = initY + ((finalY - initY) * timerPulse);
+}
+</textarea>
+<br/>
+
+<p>
+We define in/out event for animation:
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+eventIn SFFloat timerPulse
+eventOut SFVec2f posChanged
+</textarea>
+<br/>
+
+<p>
+And we link animation event with the timer and the shape:
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+ROUTE ANIM_TIMER.fraction_changed TO SCRIPT.timerPulse
+ROUTE SCRIPT.posChanged TO SHAPE_TRS.translation
+</textarea>
+<br/>
+
+<h1>Second example code</h1>
+
+<p>
+Final code for the second example:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    DEF ANIM_TIMER TimeSensor {
+      isActive FALSE
+      cycleInterval 0.25
+      loop FALSE
+    }
+
+    DEF SHAPE_TRS Transform2D {
+      children [
+        Shape {
+          appearance Appearance {
+            material Material2D { emissiveColor 1 0 0 }
+          }
+          geometry Rectangle { size 20 20 }
+        }
+      ]
+    }
+
+    DEF KEY_SENSOR KeySensor {
+      url            "EUDLR"
+      activate       TRUE
+    }
+
+    DEF SCRIPT Script {
+      eventIn SFTime  keyPressed
+      eventIn SFFloat timerPulse
+      eventOut SFVec2f posChanged
+
+      field SFNode timer USE ANIM_TIMER
+      field SFNode input USE KEY_SENSOR
+
+      field SFFloat initX 0
+      field SFFloat initY 0
+      field SFFloat finalX 0
+      field SFFloat finalY 0
+
+      url "
+      function keyPressed () {
+        if (! timer.isActive) {
+          initX = finalX;
+          initY = finalY;
+          if (input.activeKey == 'U') {
+            finalY = initY + 10;
+          } else if (input.activeKey == 'D') {
+            finalY = initY - 10;
+          } else if (input.activeKey == 'L') {
+            finalX = initX - 10;
+          } else if (input.activeKey == 'R') {
+            finalX = initX + 10;
+          } else if (input.activeKey == 'E') {
+            finalX = 0;
+            finalY = 0;
+          }
+          timer.isActive  = true;
+          timer.startTime = keyPressed;
+        }
+      }
+      function timerPulse () {
+        posChanged.x = initX + ((finalX - initX) * timerPulse);
+        posChanged.y = initY + ((finalY - initY) * timerPulse);
+      }
+      "
+    }
+
+    ROUTE KEY_SENSOR.pressTime  TO SCRIPT.keyPressed
+    ROUTE ANIM_TIMER.fraction_changed TO SCRIPT.timerPulse
+    ROUTE SCRIPT.posChanged TO SHAPE_TRS.translation
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_move_shape','tutorial_more_anim');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

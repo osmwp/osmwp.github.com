@@ -1,0 +1,1252 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "widgets_development_vrml_beginner";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">VRML totally beginner's guide</h1>
+
+
+<h1>Introduction</h1>
+
+This section describes the basic concepts of VRML and must be understood before
+going further in the content creation process.
+<br/>
+
+<p>The main concepts you have to learn are:</p>
+<ul>
+<li>The VRML notion of scene graph, nodes and fields</li>
+<li>Notion of local axis and recursive geometric transformation</li>
+<li>Basic shape drawing with texturing</li>
+<li>Animation through timers and interpolators</li>
+<li>How to write scripts</li>
+<li>Why and how to create prototypes</li>
+<li>Which special features has MeMo to simplify your developer life</li>
+</ul>
+<br/>
+
+<p class="note warning">
+<b>Warning</b><br/> do not try to display 3D shapes at first. This is tempting
+because you can find a lot of examples over the Internet but this is misleading
+because MeMo is not a pure VRML browser, despite it is based on VRML you need a
+special way to declare 3D objects. This is a very simple process but this will
+come later in this document to keep things simple and avoid confusion.
+</p><br/>
+
+
+
+
+
+
+
+<h1>Your First Scene</h1>
+
+<p>
+To write your first scene, just open your favorite text editor, enter (or copy)
+the sample code below and save it as a pure text file. Choose any name you want
+as long as you use a <span class="highlight">wrl</span> extension (like in
+<span class="highlight">example1.wrl</span>).
+</p>
+<br/>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+Group {
+    children [
+        Shape {
+            appearance Appearance {
+                material Material2D {
+                    emissiveColor 1 0 0
+                }
+            }
+            geometry Rectangle {
+                size 240 320
+            }
+        }
+    ]
+}
+</textarea>
+<br/>
+
+<p>
+Use M4MCompiler to compile and test this first scene as describe in the previous
+chapter.
+</p>
+<p>
+You should have the following output:
+</p>
+<br/>
+
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+MeMo Compiler v1.0b6
+compile examples -&lt; ./example1.m4m
+&gt;&gt; Compiling scene example1.wrl
+   ++ include tmpexample1.m4m.bin / example1.m4m size: 34 magic: AAAA]
+&lt;&lt; End of scene example1.wrl [34 B]
+</textarea>
+<br/>
+
+<p>
+If you run this scene, you should see a red, solid rectangle covering the whole
+screen. Do not go further until you can compile and run successfully this scene.
+</p>
+<br/>
+
+
+
+
+
+
+
+
+<h1>Scene graph</h1>
+
+<p>
+VRML provides a simple formalism to describe a rich media, interactive, scene by
+giving a formal description of the graphical objects, animations and
+interactivity instead of providing a list of drawing instructions. In
+consequence a scene is a <b>graph</b> made of <b>nodes</b>, like the diagram on the right.
+</p>
+<br/>
+
+<img alt="Scene graph" src="images/widgets_development/beginner_guide_1.jpg" />
+<br/>
+
+<p>
+Each <b>node</b> represent a <b>functionality</b>, like drawing an object, specifying a
+color or an image, defining an animation or a geometric transformation,
+describing a complex interaction (script)...
+</p>
+<br/>
+
+<p>
+By assembling nodes together you semantically combined nodes to create complex
+objects that can be drawn on the screen or that an effect on other objects
+(interactivity, animations, ...). There is a fixed number of predefined nodes
+because there is a fixed number of implemented functionality. You cannot create
+a brand new node with a brand new functionality. However you can group a
+combination of existing nodes under a new name and use it as a new node.<br/>
+Among the most commonly used nodes there are: <a href="development_node_Transform2D.html">Transform2D</a>,
+<a href="development_node_Shape.html">Shape</a>,
+<a href="development_node_Appearance.html">Appearance</a>,
+<a href="development_node_Material2D.html">Material2D</a>,
+<a href="development_node_Rectangle.html">Rectangle</a>,
+<a href="development_node_ImageTexture.html">ImageTexture</a>,
+<a href="development_node_TimeSensor.html">TimeSensor</a>, ...
+</p>
+<br/>
+
+<p>
+The functionality achieved by a node can be usually changed or specialized using
+some properties, specific to this node, called <b>fields</b>.<br/>
+A field has a name and a value, and this association is a very convenient,
+declarative way to specialize the node behavior because the name is often self
+expressive: a Rectangle has a size, a Material2D has a transparency level, a
+Shape has both a geometry and an appearance.
+</p>
+<br/>
+
+<p>
+For instance, to display an image, you first create a Texture node with its url
+field set to the name of an image file. Then you create a Rectangle with the
+appropriate size.<br/>
+Finally you associate Texture and Rectangle by using them a in Shape containing
+a green color.<br/>
+Finally you and associate it to a rectangle. Field values can be numbers
+representing colors or transparency levels, strings for urls or other nodes. In
+the figure below, nodes are in black and fields in orange. The value of the
+field size of the node Rectangle is 10 20, while the value of the field
+appearance of Node Shape is another node: Texture.<br/>
+This tree of nodes can be textually described using a formalism called VRML and
+would look like below:
+</p>
+<textarea wrap="off" readonly="readonly" rows="8" cols="80">
+Shape {
+    geometry Rectangle {
+        size 10 20
+    }
+    appearance Texture {
+        url "img.jpg"
+    }
+}
+</textarea>
+<br/>
+
+<p>
+A VRML player reads a file containing a scene description like the one above and
+creates an internal internal representation of this graph. You do not need to
+know how this is done, you just have to provide the textual description. Then
+the player navigates through this graph and interprets the meaning of each node
+according to both the value of its fields and user interactions. This is called
+the composition phase. Then according to these computations all geometric
+nodes are rendered. A player loops forever between these steps:
+</p>
+<ul>
+<li>User interaction checking</li>
+<li>Scene graph composition</li>
+<li>Nodes rendering</li>
+</ul>
+<br/>
+
+
+
+
+
+
+
+
+<h1>Nodes and Fields</h1>
+
+<p>
+A node is defined by its type followed by the list of its properties (also
+called fields), enclosed in curly brackets (?{? and ?}'). A property consists in
+a name followed by an associated value. The type of a node is obviously
+describing the associated functionality.
+</p>
+<br/>
+
+<p>
+Similarly, the name of the fields are supposed to describe themselves. However
+do not hesitate to check the official VRML documentation as some terms can be
+misleading, especially to beginners. Nevertheless, nodes are always defined
+using the following syntax:
+</p>
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+NodeType {
+    fieldName fieldValue
+    fieldName fieldValue
+    ...
+}
+</textarea>
+<br/>
+
+<p>
+For instance to define a rectangle of size 10 25, just write the following code
+will instantiate a new Rectangle node and set its size to 10 x 25:
+</p>
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+Rectangle {
+    size 10 25
+}
+</textarea>
+<br/>
+
+<p class="note check">
+<b>TIP</b><br/> in VRML space, tab and newline are just blank separators, use the indentation that
+make the code clearer for you.
+</p><br/>
+
+<p>
+When the VRML player reads this description in a file, it will create a new
+instance of node, created from a model called Rectangle and set the value of its
+field size to 10 35. When evaluated later on, the new instance will have to
+provide the functionality of drawing a rectangle of the specified size,
+according to a current color, texture and geometric transformation. But this is
+the job of the player, you just have to provide the node type and the value of
+its fields.
+</p>
+<br/>
+
+<p>
+For programmers, especially those used to Java or C++, it is always misleading
+at first to read something like:
+</p>
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+Shape {
+  geometry Rectangle { size 10 25 }
+}
+</textarea>
+<br/>
+
+<p>
+This code means that a new Shape object has to be created, and that its field
+(or member) geometry is affected to a new node of type Rectangle. A Java style
+pseudo code could be something like:
+</p>
+<textarea wrap="off" readonly="readonly" rows="6" cols="80">
+Shape shape = new Shape ();
+Rectangle rectangle = new Rectangle ();
+rectangle.size.x = 10;
+rectangle.size.y = 25;
+shape.geometry = rectangle;
+return shape;
+</textarea>
+<br/>
+
+<p>
+However, as in languages like Java or C++, fields are strongly typed. This means
+that you cannot specify any kind of value for a field, you must strictly follow
+its type, which is a good thing because this detects a lot of errors when the
+graph is initially read by the VRML player (or the MeMo compiler).
+</p>
+<br/>
+
+<p>
+The following table lists all the VRML types with an example. An element with a
+single elementary value starts with SF (Single Field), an array starts with MF
+(Multiple Field). You will note that an array by providing a list of elements,
+enclosed by square brackets ('[' and ']').
+</p>
+<br/>
+
+
+<table>
+	<tr><th>Type		</th><th>Value							</th><th>Example							</th></tr>
+	<tr><td>SFBool		</td><td>boolean						</td><td>TRUE/FALSE							</td></tr>
+	<tr class="odd"><td>SFInt32		</td><td>integer						</td><td>3									</td></tr>
+	<tr><td>MFInt32		</td><td>array of integers				</td><td>[ 12, 4, 7 ]						</td></tr>
+	<tr class="odd"><td>SFFloat		</td><td>float							</td><td>3.1416								</td></tr>
+	<tr><td>MFFloat		</td><td>array of float					</td><td>[ 12.5 23.2 ]						</td></tr>
+	<tr class="odd"><td>SFVec2F		</td><td>couple of floats				</td><td>12.5 23.2							</td></tr>
+	<tr><td>MFVec2F		</td><td>array of couples				</td><td>[ 12.5 23.2, 0.7 11.9, 0 0 ]		</td></tr>
+	<tr class="odd"><td>SFVec3F		</td><td>triplet of floats				</td><td>12.1 23.5 0.4						</td></tr>
+	<tr><td>MFVec3F		</td><td>array of triplets				</td><td>[ 12.1 23.2 35.6, 0.7 0.11, 0.34 ]	</td></tr>
+	<tr class="odd"><td>SFNode		</td><td>node							</td><td>Transform { ... }					</td></tr>
+	<tr><td>MFNode		</td><td>array of node					</td><td>[ Shape { ... }, Group { ... } ]	</td></tr>
+	<tr class="odd"><td>SFColor		</td><td>triplet of floats,in [0..1]	</td><td>1 0.4 0.1							</td></tr>
+	<tr><td>MFColor		</td><td>array of colors				</td><td>[ 1 0 0, 0 1 1, 1 1 1 ]			</td></tr>
+</table>
+<br/>
+
+
+<p class="note check">
+<b>TIP</b><br/> the comma (,) is also a blank char like space. You can use it to visually
+separate values in your array.
+</p><br/>
+
+<p>
+VRLM designers wanted to keep VRML simple that's why they defined a single type
+for node: SFnode.<br/>
+But you will save a lot of time if you understand that nodes can be split in
+several, specialized, sub categories (for instance <a href="development_node_Rectangle.html">Rectangle</a>,
+<a href="development_node_Circle">Circle</a>, <a href="development_node_IndexedFaceSet.html">IndexedFaceSet</a>,
+<a href="development_node_Box.html">Box</a> are all geometry nodes).<br/>
+This notion of node categories is mandatory to understand because the syntax
+would allow to set a SFNode with any node.
+</p>
+<br/>
+
+<p>
+However, regarding of the field, you can set only a small subset of nodes. So
+semantically speaking, consider that nodes are typed and it will be easier to
+select which node can be set to a field.
+</p>
+<br/>
+
+<img alt="Scene graph" src="images/widgets_development/beginner_guide_2.jpg" />
+<br/>
+
+<p>
+A common mistake is to mix between node types and field names.<br/>
+A node type always starts with an uppercase letter and a field name always start
+with a lowercase letter. This is specially useful when you will see for the
+first time: <b>appearance Appearance { ... }</b>.<br/>
+This simply means that you affect a node of type Appearance to a field named
+appearance.<br/>
+This seems also strange because Appearance is the only node that can be set to
+an appearance field.
+</p>
+<br/>
+
+<p class="note check">
+<b>TIP</b><br/> fields have default values, so you only have to specify fields that you
+want to change this default value.
+</p><br/>
+
+<p>
+In the above diagram on the right, a scene is defined by a first geometric
+transformation (Transform), defined by a translation and a scale factor. This
+transformation will apply to several nodes (here two nodes: Shape and
+Transform), defined through the MFNode field called <b>children</b>.
+</p>
+<br/>
+
+
+
+
+
+
+<h1>2D Drawing axis</h1>
+
+<p>
+Before creating fancy 3D graphics, you first have to learn how to draw 2D
+objects, like background, buttons, text, ...
+</p>
+<br/>
+
+<p>
+MPEG-4 specifications contain a 2D counterpart to VRML
+that was only 3D at the time it was defined (it became an
+ISO standard in 1997, and thus is also referred as
+VRML97). In MPEG-4, and thus in MeMo player, 2D objects
+dimensions (like radius, size, coordinates) are expressed in
+pixels. Those pixels are referenced in a 2D coordinate
+system by two axis centered at the exact middle of the
+screen. The X axis goes from left to right while the Y axis
+goes from bottom to top. This numbering of 2D axis is rather
+non conventional because it has been inherited from VRML
+and the way this format is dealing with 3D axis. However,
+the unit of an axis is fortunately a pixel. For instance, if your
+screen is 240x320, the X axis coordinates will go from -120
+to 120, the Y axis from -160 to 160.
+</p>
+<br/>
+
+<img alt="Axis" src="images/widgets_development/beginner_guide_3.jpg" />
+<br/>
+
+<p>
+Each graphic objects (rectangle, circle) are drawn relatively to their center,
+co-incident with the axis center. In other words, each object is drawn centered
+to the point (0, 0) of the coordinate system. Hopefully, if you draw a rectangle
+of size 240 320 at the center of the screen, it will cover all the pixels. If
+you specify a circle with a radius of 60 you will get the above result. Despite
+many people prefer a (0, 0) point at the top left corner, this is relatively
+easy to get used to this system.
+</p>
+<br/>
+
+
+
+
+
+<h1>Geometric Transformations</h1>
+
+<p>
+The first thing you will probably want to do is to draw shapes at a different
+places in the screen and not only at the center! This is here that a new concept
+appears: instead of specifying an offset between the shape and the coordinate
+system center, you move the coordinate system and continue to draw the Shape
+centered. There is no way to move a shape. This coordinate system transformation
+is done using a node called Transform. This is very important to understand that
+this node will modify the axis and there is no other way to move object in VRML:
+you move the axis while the object has still its center co-incident with the
+axis center. You can use the same mechanism when you want to shrink or expand a
+shape: you just change the scale of the axis, using the scale field is like
+changing the size of pixels, like shown on the figure below. Note that this axis
+transformation will affect only the children of the Transform node. Transform
+nodes can obviously nested. In this case the resulting axis is the cumulation of
+all transformations.<br/>
+The figure below shows the effect of the translation and
+scale fields of transform on a circle (centered 0, 0 and of constant radius)
+</p>
+<br/>
+
+<img alt="Geometric Transformations" src="images/widgets_development/beginner_guide_4.jpg" />
+<br/>
+
+
+<p class="note check">
+<b>TIP</b><br/> there is a simple formula to place an object from conventional image reference (the
+top left corner is 0, 0): if W is the width of the screen, w the width of the object, and x the
+conventional coordinate, then the VRML coordinate <span class="highline">x' = (w/2 - W/2) + x</span>
+</p><br/>
+
+<p>
+When you want to draw multiple shapes at the same position, you can specify them
+inside the same Transform. If they are both children of a transform, their will
+be affected by the same axis transformation. The shape defined first will be
+drawn first, the second defined will be draw afterwards (More generally, shapes
+that appear first in the VRML scene will be drawn first). This can be useful if
+you want to draw some text on top of a picture (i.e. a button label). If you
+want to draw shapes at different position, use different Transform nodes, one
+per Shape. Whether you have to imbricate them depends on their spatial
+relationship: if they are imbricated, moving the top one will affect all the
+children.
+</p>
+<br/>
+
+
+
+
+
+
+
+
+<h1>Shape, Appearance, Material and Geometry</h1>
+
+<p>
+A shape in an assembling of nodes to define graphically an object. In the
+examples above we saw a shape defining an orange circle. To define a shape we
+use a <a href="development_node_Shape.html">Shape</a> node, which is very simple as it has only two SFNode fields. The
+first field, <b>appearance</b>, can only receive an <a href="development_node_Appearance.html">Appearance</a> node. The second,
+<b>geometry</b>, can receive any geometry node:<br/>
+<a href="development_node_Rectangle.html">Rectangle</a>,
+<a href="development_node_Circle.html">Circle</a>,
+<a href="development_node_Text.html">Text</a>,
+<a href="development_node_IndexedFaceSet2D.html">IndexedFaceSet2D</a>.<br/>
+Shape makes the association between an appearance and a geometry.
+</p>
+<br/>
+
+<p>
+An <a href="development_node_Appearance.html">Appearance</a> node can have two parts defined by corresponding fields, a
+<b>material</b> and a <b>texture</b>. You usually only define one at a time. The
+<b>material</b> field typically receives a <a href="development_node_Material2D.html">Material2D</a> node, the <b>texture</b> field can
+receives an <a href="development_node_ImageTexture">ImageTexture</a> or a <a href="development_node_MovieTexture.html">MovieTexture</a>.<br/>
+<a href="development_node_Material2D.html">Material2D</a> defines the shape color (emissiveColor), whether it is filled or
+hollow (filled) and the transparency level (transparency).
+</p>
+<br/>
+
+<p>
+<a href="development_node_ImageTexture.html">ImageTexture</a> is used to refer to an image through its path specified in the <b>url</b> field.<br/>
+<a href="development_node_MovieTexture.html">MovieTexture</a> does the same but refer to movie clip. The supported media type depend of
+the phone, but commonly image formats supported are JPEG, GIF and PNG. For movie
+clips, H263, MPEG-4 SP are very common with H264 starting to spread. the maximum
+movie format is usually 176x144 (some phones support 240x320 for MPEG-4 SP).
+</p>
+<br/>
+
+
+
+
+
+
+
+
+
+
+<h1>Altogether to create a first scene</h1>
+
+<p>
+You should have now enough knowledge to write (at least understand) the following scene
+that displays an hollow orange square of 50 pixels shifted by 10 15 from the center of the
+screen.
+</p>
+<br/>
+
+<textarea wrap="off" readonly="readonly" rows="14" cols="80">
+Transform2D {
+    translation 10 15
+    children [
+        Shape {
+            appearance Appearance {
+                material Material2D {
+                    emissiveColor 1 0.4 0 # orange in RGB format
+                    filled FALSE
+                }
+            }
+            geometry Rectangle { size 50 50 }
+        }
+    ]
+}
+</textarea>
+<br/>
+
+<p class="note check">
+<b>TIP</b><br/> you can put comments starting by # and ending at the end of the line. This will help
+you (or someone else) reading this code later one.
+</p><br/>
+
+<p>
+If you want to display an icon instead of a solid color, you just have to change
+the definition of Appearance:
+</p>
+<br/>
+
+<textarea wrap="off" readonly="readonly" rows="13" cols="80">
+Transform2D {
+    translation 10 15
+    children [
+        Shape {
+            appearance Appearance {
+                texture ImageTexture {
+                    url "myPict.png"
+                }
+            }
+            geometry Rectangle { size 50 50 }
+        }
+    ]
+}
+</textarea>
+<br/>
+
+<p>
+An example of cumulated transformation used to display two objects at the top of the
+screen. Note the the third Transform is only affected by the first one, the second one
+affecting only its own children. The resulting translation is <span class="highline">-50 95</span> for the second Transform
+and <span class="highline">50 95</span> for the third one. This mechanism is specially useful with animation, as you can
+define an animation independently of an absolute position and use it anywhere on the
+screen by just putting it inside a Transform with the right translation.
+</p>
+<br/>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+Transform2D {
+    translation 0 95
+    children [
+        Transform2D {
+            translation -50 0
+            children [
+                Shape {
+                     appearance Appearance {
+                         texture ImageTexture { url "myPict1.png" }
+                     }
+                     geometry Rectangle { size 50 50 }
+                }
+            ]
+        }
+        Transform2D {
+            translation 50 0
+            children [
+                Shape {
+                     appearance Appearance {
+                         texture ImageTexture { url "myPict2.png" }
+                     }
+                     geometry Rectangle { size 50 50 }
+                }
+            ]
+        }
+    ]
+}
+</textarea>
+<br/>
+
+<p>
+In addition to translating and scaling you can also rotate the axis, but there are some
+incompatibilities with J2ME and you may only see your objects rotated by p/2 steps. This is
+especially true for text and images. You have more freedom with IndexedFaceSet2D.
+</p>
+<br/>
+
+
+
+
+
+
+
+
+<h1>Definition and Routing</h1>
+
+<p>
+To understand the concepts involved in animations, you first have to learn two other
+concepts DEF/USE and ROUTE. The first one is a way of giving a label to a node. This
+label can be anything you want but as its goal is to identify a particular node, it is usually a
+good idea to set a meaningful label (e.g. BUTTON_APPEARANCE, MAIN_TRANSFORM).
+</p>
+<br/>
+
+<p class="note warning">
+<b>Warning:</b> MeMo limitation<br/>Geometry property (Shape node) does <b>NOT</b> support the DEF / USE.
+</p>
+<br/>
+
+<p>
+You can use any combination of letters and numbers but a handy practice consists in
+using only uppercase letters and numbers to distinguish quickly these labels. You can but
+a label to any SFNode, you just have to precede the node type by <span class="highline">DEF label</span>, like in
+<span class="highline">DEF MAIN_TRS Transform { ... }</span>
+</p>
+<br/>
+
+<p>
+Once a node has been DEFined, you can reuse it in numerous ways. You can reuse the
+same node several times in your scene, this save typing but also memory. To reuse a
+name just put <span class="highline">USE label</span> in place of a node definition. For instance if you use the same
+shape for a button background in several places, you can <b>DEF</b> the first one and replace
+the others by <span class="highline">USE label</span>, like in the example below:
+</p>
+<br/>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+Transform2D {
+    translation 0 95
+    children [
+        Transform2D {
+            translation -50 0
+            children [
+                DEF MY_SHAPE Shape {
+                     appearance Appearance {
+                         texture ImageTexture { url "myPict.png" }
+                     }
+                     geometry Rectangle { size 50 50 }
+                }
+            ]
+        }
+        Transform2D {
+            translation 50 0
+            children [
+                USE MY_SHAPE
+            ]
+        }
+    ]
+}
+</textarea>
+<br/>
+
+<p>
+Another mechanism involving DEF nodes is called ROUTE and consist in establishing a
+pipe between two fields of two different nodes. The pipe is acting as a value transporter
+between two fields: a soon as the value of the first field is modified, it is copied to the
+second one. This involves that the two fields have obviously the same type, non
+conversion is performed (but if you do need to convert values, this can be easily done
+using a script node). The declaration syntax is simple (do not forget the '.' between label
+and field names):
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">
+ROUTE label1.fieldName1 TO label2.fieldName2
+</textarea>
+<br/>
+
+<p>
+The routing mechanism works forever, as a background task; each time the left field is
+modified, its value is copied to the right field.
+</p>
+<br/>
+
+<p>
+You can write your route virtually anywhere in the VRML file, the only limitation is that the
+nodes to be connected must have been defined BEFORE you declare the ROUTE.
+</p>
+<br/>
+
+<p class="note check">
+<b>TIP</b><br/> you can read the line above as: automatic copy of fieldName1 of node referenced by
+label1 to fieldName2 of node referenced by label2
+</p><br/>
+
+<p>
+For instance you can set a pipe between the radius of two circle by writing:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">
+ROUTE CIRCLE1.radius TO CIRCLE2.radius
+</textarea>
+<br/>
+
+<p>
+As soon as the radius of CIRCLE1 is modified (e.g. by a script), the radius of CIRCLE2
+takes the same value.
+</p>
+<br/>
+
+<p class="note check">
+<b>TIP</b><br/> labels are encoded by MeMo compiler, so you do not have to care of the memory they
+can use. A very long label will use as memory as a very short one, so use long labels to
+enhance readability of your VRML source.<br/><br/>
+<strong>Do not under estimate the power and usefulness of ROUTE mechanism
+(despite the previous example is not very useful). ROUTE is the basis of all the
+VRML animation framework as you will see in the next lines.</strong>
+</p><br/>
+
+
+
+
+
+
+
+
+
+
+<h1>Animation</h1>
+
+<p>
+The VRML animation framework is also used in MPEG-4 and thus in MeMo. It is based on
+a pulse generator connected to interpolators that, in turn, are connected with fields of
+nodes. The connections are obviously done using ROUTEs.
+</p>
+<br/>
+
+<p>
+The heart of the animation is a node called TimeSensor. It gives the beat of the animation
+by generating pulses and outputting values that will be used to animate fields. In a
+TimeSensor you can specify the length of the animation, when it starts and stops and
+whether the animation should loop or not.
+</p>
+<br/>
+
+<p>
+Times in VRML are expressed in seconds and the origin of the main clock (when time is 0)
+is 1970, January the first at 0h00. This is not very handy in practice so MPEG-4 and thus
+MeMo statued that the <b>clock starts with the scene</b>. So when the scene is started by the
+player, time equals 0 second.
+The length of the animation is specified in a field called <b>cycleInterval</b>, the time to start in
+<b>startTime</b> and the time to stop the animation in <b>stopTime</b>. When the main clock reaches
+the value of <b>startTime</b>, the TimeSensor begins to run and output a zero. The next time the
+time sensor is activated in the composition loop, the output value is equals to
+<span class="highline">cycleInterval / (currentTime - startTime)</span>. This formula means that the output will grow
+linearly from 0 at startTime to 1 at startTime+cycleInterval as described in the following
+figure. The field that receives this computer value is named <b>fraction_changed</b>. You must
+use it later on to access the computed value. And of course ROUTE will be the mean to do
+that.
+</p>
+<br/>
+
+<img alt="Interpolation" src="images/widgets_development/beginner_guide_5.jpg" />
+<br/>
+
+<p>
+The big advantage of this method is that you are sure that something will be zero at the
+beginning, one at the end and something linear in between. Whatever the speed of the
+machine your player is running on you will be "exact time", with potentially just a few
+frames, but you will be in time. Imagine you want to make a square cross the screen in 3
+seconds, you can compute a left position at zero, a right position at cycleInterval and
+position in between based on the TimeSensor output value.
+</p>
+<br/>
+
+This computation can be automatically done using an interpolator. You have a lot of
+interpolators defined in VRML because they have to interpolate each a specific type:
+ScalarInterpolator interpolates scalar (floats), PositionInterpolator2D interpolates SFVec2f,
+ColorInterpolator interpolates colors, ...
+<br/>
+
+<p>
+An interpolator is specified with list of pairs. A pair associates a <b>key</b> with a <b>keyValue</b>. When
+you enter a number, a fraction (the exact field name is set_fraction), to the interpolator, it
+compares this fraction to the keys and outputs a value (the exact field name is
+<b>value_changed</b>). If the fraction matches exactly a key, the corresponding keyValue is used
+as value, if the fraction is in between two keys, a value is interpolated linearly according to
+the corresponding keyValues and the distance between the fraction and the keys. If we
+take the following example:
+</p>
+<br/>
+
+<img alt="Interpolation" src="images/widgets_development/beginner_guide_6.jpg" />
+<br/>
+
+<p>
+The intuitive result you would expect is ... right: as shown on the above figure, at the
+middle of the animation you will get 0, at 1/4, you will get -60 and at 3/4 you will get 60. The
+exact formula is, considering that fraction is in between k1 and k2 and the corresponding
+key values are kv1 and kv2:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">
+value = kv1 + (kv2 - kv1) * (fraction - k1) / (k2 - k1)
+</textarea>
+<br/>
+
+<p>
+Further you are not limited nor in the number of keys, neither in the key values as shown in
+the figure below. The only thing that you cannot control is the interpolation is LINEAR
+between two key values.
+</p>
+<br/>
+
+<img alt="Interpolation" src="images/widgets_development/beginner_guide_7.jpg" />
+<br/>
+
+<p class="note check">
+<b>TIP</b><br/> always specify a key at 0 and a key at 1. Most of the
+time this is enough to specify a simple animation but your
+are free to put whatever you need in between: for instance,
+by adding keys at the right places, you can simulate
+acceleration, slow down, rebounds, springs, fade in or
+fade out, back and forth effects ...
+</p><br/>
+
+<p>
+Other sensors work exactly the same way except that not only a single value is
+interpolated but a color, a vector, a 3D angle ... Refer to the VRML documentation for
+exact details but in essence they are all working the same, including the way you connect
+them to TimeSensor and other nodes.
+</p>
+<br/>
+
+<p>
+Putting everything together is now really simple. We have to define a TimeSensor, an
+interpolator and a node with a property to be animated. For instance, if we want to animate
+the color of a rectangle from orange to black in 2 seconds starting one second after the
+beginning of the scene, we must write the following code:
+</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+Transform2D {
+    children [
+        Shape {
+            appearance Appearance {
+                material DEF MATERIAL Material2D {
+                    emissiveColor 1 0.4 0
+                }
+            }
+            geometry Rectangle { size 50 50 }
+        }
+        DEF TIMER TimeSensor {
+            cycleInterval 2
+            startTime 1
+        }
+        DEF INTERPOLATOR ColorInterpolator {
+            key [0, 1]
+            keyValue [1 0.4 0, 0 0 0]
+        }
+        ROUTE TIMER.fraction_changed TO INTERPOLATOR.set_fraction
+        ROUTE INTERPOLATOR.value_changed TO MATERIAL.emissiveColor
+    ]
+}
+</textarea>
+<br/>
+
+
+
+
+
+
+
+
+
+<h1>Scripting</h1>
+
+<p>
+The main concept behind the script node is that some javascript code is interpreted when
+an event occurred, i.e. a value is carried on by a ROUTE to the script. For that, a Script
+node allows you to define your own, new fields and associate a javascript function that is
+automatically triggered when a ROUTE copy a value to the new field.
+</p>
+<br/>
+
+
+
+
+
+
+
+
+
+
+<h1>Prototyping</h1>
+
+<p>
+There is a very convenient way to simplify your VRML application: reducing your code by
+using prototypes. A PROTO is a way to group a small sub-scene as it was a new node
+with its own fields. For instance, if you want to display some fancy text with a show-like
+effect, you would prefer to write:
+</p>
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+MyText {
+    translation 10 20
+    string "a message here"
+    color 1 1 1
+}
+</textarea>
+<br/>
+
+<p>
+instead of writing the following code each time you want your fancy text:
+</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+Transform2D {
+    translation 10 20
+    children [
+        Transform2D {
+            translation 1 -1
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material2D { emissiveColor 0 0 0 }
+                    }
+                    geometry DEF TEXT Text { string "a message here" }
+                }
+            ]
+        }
+        Shape {
+            appearance Appearance {
+                material Material2D { emissiveColor 1 1 1 }
+            }
+            geometry USE TEXT
+        }
+    ]
+}
+</textarea>
+<br/>
+
+<p>
+The PROTO is the answer! To define a proto you have to give its name, the list of its
+parameters (the new fields) and its body. the only trick to understand is how to link
+parameters to fields inside a body. This is done by using the IS keyword. It is acting like
+the USE keyword but work with any field. This means that the field used in the body will be
+the exactly same as the one in the parameter section. Exactly means that they will all
+share the same memory. If one is modified (using a script) all the others are also
+instantaneously modified. In the same way, if you route a value to a field of your proto, all
+internals fields ISed to the modified parameter will be also modified. Once you have a
+piece of code that you want to modify, just wrap it with the proto definition like below:
+</p>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+PROTO MyText [
+    exposedField translation 0 0
+    exposedField string ""
+    exposedField color 1 1 1
+] {
+  Transform2D {
+      translation IS translation
+      children [
+          Transform2D {
+              translation 1 -1
+              children [
+                  Shape {
+                      appearance Appearance {
+                          material Material2D { emissiveColor 0 0 0 }
+                      }
+                      geometry DEF TEXT Text { string IS string }
+                  }
+              ]
+          }
+          Shape {
+              appearance Appearance {
+                  material Material2D { emissiveColor IS color }
+              }
+              geometry USE TEXT
+          }
+      ]
+   }
+}
+</textarea>
+<br/>
+
+<p>
+You can notice that as with the Script node, you have to specify the scope of the
+parameter fields. The value is also important and acts as a default value. If you do not set
+a new value for a field when using a proto, the default value is used.
+</p>
+<br/>
+
+<p class="note check">
+<b>TIP</b><br/> you can use the same name in the parameter and in the body, the compiler will not be
+confused and this will help you to remember the name of your proto fields, by calling a
+translation "translation".
+</p><br/>
+
+<p>
+You can create protos libraries by defining your protos in a separate file. For instance you
+can save the above proto in a file named MyText.wrl. If you want to use it in you scene,
+just declare it at the beginning of the file with the EXTERNPROTO keyword, specifying the
+name of the proto, its parameter fields and the name of the file containing the actual
+definition of the proto. This was needed in VRML but as the MeMo compiler reads the file
+to get the definition at compile time, you do not need to specify the parameters, they are
+automatically extracted. So instead of writing this:
+</p>
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+EXTERNPROTO MyText [
+    exposedField translation 0 0
+    exposedField string ""
+    exposedField color 1 1 1
+] "MyText.wrl"
+</textarea>
+<br/>
+
+<p>
+Just write that:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">
+EXTERNPROTO MyText [] "MyText.wrl"
+</textarea>
+<br/>
+
+<p class="note check">
+<b>TIP</b><br/> If it appears that you inline several scenes that share the same proto, using
+EXTERNPROTO will save space because the proto definition is stored only once in the
+phone memory.
+</p><br/>
+
+
+
+
+
+
+<h1>Switch, Inline and Anchor</h1>
+
+<h2>Switch and resource saving</h2>
+
+<p>
+<a href="development_node_Switch.html">Switch node</a> allows to render only
+one node in a list of nodes. It is useful to display or hide elements.<br/>
+It can be used to manage different panels in a scene (with tabs, menu, ...).<br/>
+</p>
+<br/>
+
+<p>
+<a href="development_node_Switch.html">Switch node</a> contains an array of
+nodes (<b>choice</b> attribute) and the displayed node (<b>whichChoice</b> attribute).<br/>
+<b>whichChoice</b> contains the index of current displayed node in <b>choice</b>
+array. First node index is 0. <a href="development_node_Switch.html">Switch node</a>
+doesn't display node if <b>whichChoice = -1</b>.<br/>
+<b>whichChoice</b> value is modifiable via script (Script node and javascript language).
+</p>
+<br/>
+
+<p>
+See <a href="development_node_Switch.html">Switch node documentation</a> for
+more information about Swith node and example.
+</p>
+
+
+<h2>Inlining mechanism</h2>
+
+<p>
+Goal: separate the application into multiple sub scene.
+</p>
+<ul>
+<li>facilitate the creation of the application (logical parts)</li>
+<li>memory benefits (only a sub part of scene is loaded in memory</li>
+</ul>
+<br/>
+
+<p>
+Two nodes used for the implementation, <a href="development_node_Inline.html">Inline</a>
+and <a href="development_node_Anchor.html">Anchor</a>.
+</p>
+<ul>
+<li><a href="development_node_Inline.html">Inline</a> shows a sub scene with na external reference</li>
+<li><a href="development_node_Anchor.html">Anchor</a> replace the current scene (or sub scene)</li>
+</ul>
+<br/> 
+<p class="note info">
+<b>Note:</b><br/>
+The inlined scene can be replaced by another sub scene via Anchor.<br/>
+Inline and Anchor are complementary
+</p>
+
+<p>
+<a href="development_node_Inline.html">Inline node</a> can be use with the
+<a href="development_node_Switch.html">Switch node</a>.<br/>
+Avantage, only the displayed node is loaded in memory. Other subscenes are not
+loader.<br/>
+Inconvenience, change the subscene is slower (when <b>whichChoice</b> attribute 
+of Swith node change). Inline node must load and construct the new subscene.
+</p>
+
+<p>Example:</p>
+<p>The Main scene (<b>main.wrl</b> file):</p>
+<textarea rows="7" cols="80" readonly="readonly" wrap="off">
+# Main scene (main.wrl)
+Transform2D {
+  translation -100 100
+  children [
+    Inline { url "square.m4m" } # Draw a square at position -100 100
+  ]
+}
+</textarea>
+<br/>
+<p>The sub scene (<b>square.wrl</b> file):</p>
+<textarea rows="12" cols="80" readonly="readonly" wrap="off">
+#Square sub scene (square.wrl)
+Transform2D {
+  translation 0 0
+  children [
+    Shape { 
+      appearance Appearance { 
+        material Material2D { emissiveColor 1 1 0 } 
+      }
+      geometry Rectangle { size 10 10 }
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<p>
+For informations about inlining, see <a href="advanced_inline.html">advanced development part</a>. 
+</p>
+<br/>
+
+<h2>Anchor</h2>
+
+<p>
+The <a href="development_node_Anchor.html">Anchor node</a> has two roles:
+</p>
+<ul>
+<li>Call the phone browser and display a web page.<br/>
+<p class="note info">
+<b>Note:</b><br/>MicroEmulator doesn't open web browser.
+</p>
+</li>
+<li>Open another VRML scene.<br/>
+<a href="development_node_Anchor.html">Anchor node</a> can change all the scene
+or only the Inline part containing the Anchor.</li>
+</ul>
+<p>Example:</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Transform2D {
+  translation 0 100
+  children [
+    DEF ANCHOR Anchor { 
+      url "suite.m4m"  # Move to next step 
+      parameter "self" 
+    }
+    DEF KEY_E KeySensor { url "E" }
+    DEF MON_SCRIPT Script {
+      eventIn SFTime in 
+      eventIn SFNode anchor USE ANCHOR
+      url "javascript:
+        function in (val) {
+          anchor.activate = true;
+        }
+      "
+    }
+  ]
+}
+ROUTE KEY_E.releaseTime TO MON_SCRIPT.in
+</textarea>
+<br/>
+
+<h2>Suicide and ancestor notification</h2>
+<!-- TODO Complete this part -->
+<br/>
+
+
+
+
+
+
+<h1>MeMo particularities</h1>
+<!-- TODO Complete this part -->
+
+<h2>Layer2D</h2>
+<h2>Per scenes parameters</h2>
+<h2>Persistent cookies</h2>
+<h2>Images and sub scenes wrapping</h2>
+<h2>Scripting limitations</h2>
+<br/>
+
+
+
+
+
+
+
+
+<h1>Sample code</h1>
+
+<p>
+For code example, see <a href="tutorials.html">tutorials chapter</a>.
+</p>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_languages','');
+//-->
+</script>
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

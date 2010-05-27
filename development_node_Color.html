@@ -1,0 +1,155 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Color";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Color node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+Color {
+  MFColor color []
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+<p>
+Utility class for <a href="development_node_IndexedFaceSet.html">IndexedFaceSet</a>
+and <a href="development_node_IndexedFaceSet2D.html">IndexedFaceSet2D</a> nodes.
+</p>
+<br/>
+
+<h1>Fields</h1>
+<p>
+<b>MFColor color []</b> :
+A set of colors for the faces or vertices of an IndexedFaceSet
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+# PROTO to draw the return carriage symbol
+#    |
+#    |
+# &lt;--|
+#
+PROTO CR_LF [
+  field SFColor color 1 1 1
+  field SFColor bgColor 0 0 0
+  field SFVec2f size 10 20
+  field MFColor lineColor [ 1 0 0 0 1 0 ]
+] {
+  Shape {
+    appearance Appearance {
+      material Material2D { emissiveColor IS bgColor filled TRUE }
+    }
+    geometry Rectangle { size IS size }
+  }
+
+  DEF TRS Transform2D {
+    children [
+      Shape {
+        appearance Appearance { }
+        geometry IndexedFaceSet2D {
+          color Color { color IS lineColor }
+          coordIndex [ 0, 1, 1, 2, 2, 3, 3, 0 ]
+          coord Coordinate2D { point [ 2 6, 2 -4, 4, -4, 4, 6 ] }
+        }
+      }
+      Shape {
+        appearance Appearance { }
+        geometry IndexedFaceSet2D {
+          color Color { color IS lineColor }
+          coordIndex [ 0, 1, 1, 2, 2, 3, 3, 0 ]
+          coord Coordinate2D { point [ 4 -4, -4 -4, -4 -2, 4 -2 ] }
+        }
+      }
+      Shape {
+        appearance Appearance { }
+        geometry IndexedFaceSet2D {
+          color Color { color IS lineColor }
+          coordIndex [ 0 1, 1 2, 2 0 ]
+          coord Coordinate2D { point [ 0 3, 0 -7, -6 -3 ] }
+        }
+      }
+     ]
+  }
+  Script {
+    field SFColor changeColor IS color
+    field MFColor lineColor IS lineColor
+    field SFVec2f scale 1 1
+    field SFVec2f sizeChanged IS size
+    field SFNode trs USE TRS
+
+    url "javascript:
+      function initialize() {
+        changeColor();
+        sizeChanged();
+      }
+      function changeColor() {
+        lineColor[0].r = changeColor.r;
+        lineColor[0].g = changeColor.g;
+        lineColor[0].b = changeColor.b;
+      }
+      function sizeChanged() {
+        scale.x = sizeChanged.x/10;
+        scale.y = sizeChanged.y/25;
+        trs.scale = scale;
+      }
+    "
+  }
+}
+</textarea>
+<p>
+See <a href="development_node_IndexedFaceSet2D.html">IndexedFaceSet2D</a> for
+more examples.
+</p>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

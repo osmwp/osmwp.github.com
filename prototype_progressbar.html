@@ -1,0 +1,150 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_progressbar";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">ProgressBar prototype</h1>
+
+<img class="right" alt="Background" src="images/prototypes/proto_progressbar_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Progress bar that display proportionnaly to the value of the step field.<br/>
+The progress bar can also display in an "unknown step" mode where the progress bar
+just bounces from left to right each time the step field is updated.
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="7" cols="50" readonly="readonly" wrap="off">
+PROTO ProgressBar [
+  exposedField SFFloat step 0  
+  # Style
+  field MFString style ["ProgressBar"]
+  field MFString images ["progressBg.png"]
+  field SFVec2f size 160 10
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>MFString images - Background image</li>
+<li>SFVec2f size - Size of the area where the ProgressBar proto is displayed</li>
+<li>MFString style - Path to the CSS node associated to ProgressBar proto</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h2>Exposed Fields:</h2>
+
+<ul>
+<li>SFFloat step - Progress from 0 (0%) to 1 (100%), other values will force the unkown mode.</li>
+</ul>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="4" cols="50" readonly="readonly" wrap="off">
+ProgressBar {
+  color: orange;
+  background-color: rgb(229,229,229);
+}
+</textarea>
+<br/>
+
+<h1>See also</h1>
+
+<p>
+<a href="prototype_progressbarmenu.html">ProgressBarMenu</a>
+</p>
+<br/>
+
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+EXTERNPROTO ProgressBar [] "ProgressBar.wrl"
+
+Group {
+  children [
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 0.8 0.8 0.8 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 0 0
+      }
+    }
+    
+    DEF TIMER TimeSensor {
+      loop TRUE
+      cycleInterval 5
+      isActive TRUE
+    }
+    
+    DEF PROGRESSBAR ProgressBar {
+      step 0
+  	}
+    
+    ROUTE TIMER.fraction_changed TO PROGRESSBAR.step
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

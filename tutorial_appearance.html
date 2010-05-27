@@ -1,0 +1,244 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_appearance";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">shape appearance</h1>
+
+<h1>Introduction</h1>
+
+<p>
+This tutorial present the shape <b>appearance</b> property.<br/>
+<b>appearance</b> property define the shape color, texture, ...
+</p>
+
+<textarea rows="9" cols="80" readonly="readonly" wrap="off">
+Shape {
+  SFNode appearance NULL
+  SFNode geometry NULL
+}
+
+Appearance {
+  SFNode material NULL
+  SFNode texture NULL
+}
+</textarea>
+<br/>
+<p class="note check">
+<b>Note:</b><br/>
+See <a href="tutorial_shape.html">Draw shapes tutorial</a> to draw a shape.<br/>
+See <a href="development_node_Appearance.html">Appearance</a> node documentation.
+</p>
+<br/>
+
+<h1>Color and Material2D</h1>
+
+<p>
+In 2D scene, material is define via a <a href="development_node_Material2D.html">Material2D</a> node.
+</p>
+
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+Material2D {
+  SFColor emissiveColor 1 1 1
+  SFFloat transparency 0
+  SFBool filled TRUE
+}
+</textarea>
+<p>With:</p>
+<ul>
+<li><b>emissiveColor</b>: Color (with red/green/blue float component)</li>
+<li><b>transparency</b>: Transparency. Float value between 0.0 (opaque) and 1.0 (transparent)</li>
+<li><b>filled</b>: Filled shape... or not filled shape.</li>
+</ul>
+
+<p>
+We try to draw 2 shapes.<br/>
+1st shape: rectangle / blue / opaque / not filled.<br/>
+2nd shape: circle / green / transparent (10%) / filled / over the 1st shape.<br/>
+<img alt="Final result" src="images/tutorials/tuto_appearance_01.jpg" />
+</p>
+<br/>
+
+<h2>1st shape</h2>
+
+<textarea rows="10" cols="80" readonly="readonly" wrap="off">
+Shape {
+  appearance Appearance {
+    material Material2D {
+      emissiveColor 0.0 0.0 1.0
+      transparency 0.0
+      filled FALSE
+    }
+  }
+  geometry Rectangle { size 40 40 }
+}
+</textarea>
+<br/>
+
+<h2>2nd shape</h2>
+
+<textarea rows="10" cols="80" readonly="readonly" wrap="off">
+Shape {
+  appearance Appearance {
+    material Material2D {
+      emissiveColor 0.0 1.0 0.0
+      transparency 0.1
+      filled TRUE
+    }
+  }
+  geometry Circle { radius 20 }
+}
+</textarea>
+<br/>
+
+<p>Final code:</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Transform2D {
+      translation 10 10
+      children [
+        Shape {
+          appearance Appearance {
+            material Material2D {
+              emissiveColor 0.0 0.0 1.0
+              transparency 0.0
+              filled FALSE
+            }
+          }
+          geometry Rectangle { size 40 40 }
+        }
+      ]
+    }
+    Transform2D {
+      translation -10 -10
+      children [
+        Shape {
+          appearance Appearance {
+            material Material2D {
+              emissiveColor 0.0 1.0 0.0
+              transparency 0.1
+              filled TRUE
+            }
+          }
+          geometry Circle { radius 20 }
+        }
+      ]
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Picture and video</h1>
+
+<p>
+With MeMo, we can apply a image (or a video) on shape.<br/>
+<b>texture</b> field can be set to an <a href="development_node_ImageTexture.html">ImageTexture</a>
+or a <a href="development_node_MovieTexture.html">MovieTexture</a>.<br/>
+See <a href="development_node_ImageTexture.html">ImageTexture</a> node and
+<a href="development_node_MovieTexture.html">MovieTexture</a> node documentation.
+</p>
+
+<p>
+Following example draw a square with a picture:<br/>
+</p>
+<p class="note info">
+<b>Note:</b><br/>Picture file is in <b>"src"</b> folder.
+</p>
+<p>
+<img alt="Final result" src="images/tutorials/tuto_appearance_02.jpg" />
+</p>
+<textarea rows="12" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Shape {
+      appearance Appearance {
+        texture ImageTexture {
+          url ["img_32x32.png"]
+        }
+      }
+      geometry Rectangle { size 32 32 }
+    }
+  ]
+}
+</textarea>
+<br/>
+<p>
+See <a href="tutorial_picture.html">Draw picture tutorial</a> for more examples.
+</p>
+<br/>
+
+<p>
+And, an <a href="development_node_MovieTexture.html">MovieTexture</a> example:
+</p>
+<textarea rows="12" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Shape {
+      appearance Appearance {
+        texture MovieTexture {
+          url "http://localhost/arte.mpg"
+        }
+      }
+      geometry Rectangle { size 160 120 }
+    }
+  ]
+}
+</textarea>
+
+<p class="note check">
+<b>Note:</b><br/>
+<a href="development_node_MovieTexture.html">MovieTexture</a> node is not
+supported by the micro emulator (default SDK emulator).<br/>
+<a href="install_sun_wtk.html">Install the Sun Wireless ToolKit</a> to test
+video (MPEG video only).
+</p>
+
+<p>
+See <a href="tutorial_basic_audio_video.html">video tutorials</a> for more informations.<br/>
+</p>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_shape','tutorial_picture');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

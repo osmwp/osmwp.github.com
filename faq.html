@@ -1,0 +1,428 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "faq";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">faq</h1>
+
+<h1>Internet</h1>
+
+<p>
+There are a lot of documentation for VRML but not so much for MPEG-4. In addition to a
+google search, the following site can be read first: Tutorial on MPEG-4 extensions:
+<a href="http://gpac.sourceforge.net/tutorial/bifs_part1.htm">ENST Tutorial</a>.<br/>
+The second is a must have reference you should put in your bookmarks VRML reference:
+<a href="http://www.cs.vu.nl/~eliens/documents/vrml/reference/BOOK.HTM">Annotated VRML Book</a>.
+</p>
+<br/>
+
+<h1>General FAQ</h1>
+
+<!--
+<h2>Why is M4M different from VRML or MPEG-4 and how do they differ ?</h2>
+
+<p>
+The format used by MeMo is very close to BIFS from MPEG-4, which includes VRML and
+add new functionalities. An M4M file is more or less a container that includes binarised
+VRML descriptions or protos, images and compiled scripts, all together.
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>
+ENST, in the tutorial above, uses .bt as extension instead of wrl.
+</p>
+<br/>
+-->
+
+<!--
+<h2>Why does the compiler complain about missing cygwin1.dll</h2>
+
+<p>
+because it has been compiled in this environment. Just copy the Cygwin1.dll provided in
+the package along with compiler.exe
+</p>
+<br/>
+-->
+
+<!--
+<h2>how can I get rid of post copying the M4M file after compilation ?</h2>
+
+<p>
+Just use the "-o directory" option of the compiler like in:<br/>
+<b>./compiler -o C:\SonyEricsson\JavaME_SDK_CLDC\PC_Emulation\WTK2\appdb\SonyEricsson_JP7_176x220_Emu\filesystem\e%3A helloWorld.wrl</b>
+</p>
+<br/>
+-->
+
+<h2>Is there a console?</h2>
+
+<p>
+Yes. The console can be accessed using keys or touch screen shortcuts.<br/>
+The console gives access to error messages from the player but also output from
+your scripts using <b><a href="javascript_Browser.html">Browser</a>.print ('mymessage');</b>.
+</p>
+
+<p>
+Press the three keys <b># * #</b> or touch 4 times the upper-left corner of the screen to display it.<br/>
+A black screen with green text should appear.<br/>
+To navigate, just use the keypad or touch the screen near the borders.<br/>
+To get some help press <b>#</b>.<br/>
+You can hide the console pressing <b>*</b> or by touching the center of the screen.<br/>
+</p>
+<br/>
+
+<h1>Content Creation FAQ</h1>
+
+<h2>Why cannot I see any pure VRML examples</h2>
+
+<p>
+this is because BIFS (and thus MeMo) suppose an implicit
+<a href="development_node_Layer2D.html">Layer2D</a> at the beginning of the
+scene and therefore an implicit 2D context. To open a 3D context, enclose your
+VRML source with a <a href="development_node_Layer3D.html">Layer3D</a> like below:
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+Layer3D {
+      size 120 120
+      children[
+            &lt;VRML SOURCE&gt;
+      ]
+}
+</textarea>
+<br/>
+
+<h2>Why doesn't the background refresh ?</h2>
+
+<p>
+because there is no automatic background management (for optimization purposes).<br/>
+Instead use a shape with a size identical to the screen one like in <b>helloWorl.wrl</b>.
+</p>
+<br/>
+
+<h2>Where can I find helloWorld.wrl and what does it do ?</h2>
+
+<p>
+Just here:
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+# by default, a Layer2D is used with a size identical to the screen one
+Group { # will group two shapes at the same level
+    children [
+        Shape { # this shape will act as a background
+            appearance Appearance {
+                material Material2D { emissiveColor 0 0 0 } # draw in black
+            }
+            geometry Rectangle { size 240 320 } # a rectangle that covers the
+                                                # whole screen
+        }
+        Shape {
+            appearance Appearance {
+                material Material2D { emissiveColor 1 1 1 } # draw in white
+            }
+            geometry Text { # a simple string
+                string "Hello World"
+            }
+        }
+    ]
+}
+</textarea>
+<br/>
+
+<h2>How do I include a sub scene?</h2>
+
+<p>
+Just specify the name of the scene you want to include in the url field of an
+<a href="development_node_Inline.html">Inline</a> (or
+<a href="development_node_Anchor.html">Anchor</a>) node like: Inline { url “subScene1.m4m” }
+</p>
+<p>
+The compiler will automatically look for <b>subScene1.wrl</b> and will compile
+it. This is a recursive process and you can have as many levels of inclusion as
+you want.
+</p>
+<br/>
+
+<!--
+<h2>What is the difference between Transform and Transform2D?</h2>
+
+<p>
+<a href="development_node_Transform.html">Transform</a> works in a 3D space
+(behind a <a href="development_node_Layer3D.html">Layer3D</a>) and
+<a href="development_node_Transform2D.html">Transform2D</a> in a 2D space
+(behing a <a href="development_node_Layer2D.html">Layer2D</a>).
+</p>
+<br/>
+-->
+
+<h2>How to get the keys from the keyboard?</h2>
+
+<p>
+Use <a href="development_node_InputSensor.html">InputSensor</a> or
+<a href="development_node_KeySensor.html">KeySensor</a>. They both use the same
+syntax: specify the key you want to sense in the URL field with the following meaning:
+</p>
+<ul>
+<li>'A': left soft key</li>
+<li>'B': right soft key</li>
+<li>'E': Enter of fire key</li>
+<li>'U': Up directional key</li>
+<li>'D': Down directional key</li>
+<li>'L': Left directional key</li>
+<li>'R': Right directional key</li>
+<li>'0', '1', '2', ... '9', '*', '#' : the corresponding keys</li>
+</ul>
+<p>
+You can specify more than one char in the URL field.
+</p>
+<br/>
+
+<h2>Ok, I know how to force inclusion of an image, but what is it for?</h2>
+
+<p>
+when you want to change dynamically an image by script, you can call:<br/>
+<b>imageTexture.url[0] = imageTexture.url[1];</b> to assign <b>image1.jpg</b> as
+the current texture to use.
+</p>
+<br/>
+
+<h2>how to force inclusion of a M4M scene for further use?</h2>
+
+<p>
+This works like for images but for <a href="development_node_Inline.html">Inline</a>
+or <a href="development_node_Anchor.html">Anchor</a>, just specify the scene
+name in the url field. If you do not want the <a href="development_node_Inline.html">Inline</a>
+to be active from the beginning, just leave the first item blank (ex: <b>Inline { url [ "" "scene1.m4m" ] }</b>).
+</p>
+<br/>
+
+<h2>What are the benefits to use included M4M scenes?</h2>
+
+<p>
+You can split a big application in several sub scenes to save memory and creation time.
+This may be mandatory if you use a lot of images. This can be done using a big Switch
+containing a lot of <a href="development_node_Inline.html">Inline</a> nodes
+or by setting, in a script, the url field of a unique <a href="development_node_Inline.html">Inline</a>.
+</p>
+<br/>
+
+<h2>Why are PROTO reducing code size?</h2>
+
+<p>
+It is first because it uses less lines to call a PROTO than re-defining the code itself and
+also because PROTO definition are included only once even if you reuse the PROTO in
+multiple sub-scenes.
+</p>
+<br/>
+
+<h2>How do I include sub-scenes and images when they are PROTO parameters?</h2>
+
+<p>
+It is true that in this case the image or wrl names are not directly assigned to
+ImageTexture, <a href="development_node_Inline.html">Inline</a> or
+<a href="development_node_Anchor.html">Anchor</a>. However, all String
+parameters to PROTO are automatically scanned for inclusion so everything is
+automatic for you.
+</p>
+<br/>
+
+<h2>How can a sub-scene kill itself (and thus free resources)?</h2>
+
+<p>
+By using an <a href="development_node_Anchor.html">Anchor</a> node with an
+empty ("") scene and "self" as parameter.
+</p>
+<br/>
+
+<h2>How can a parent scene know that a scene just suicided ?</h2>
+
+<p>
+By listening to the url field of the <a href="development_node_Inline.html">Inline</a>
+that referenced the suicided scene. In this case, the (parent) <b>url</b> field
+is modified to the value set by the (child)
+<a href="development_node_Anchor.html">Anchor</a>. This can be done by
+routing the url field to a script (ex: <b>ROUTE INLINE.url TO SCRIPT.listenUrl</b>)
+</p>
+<br/>
+
+<h2>What is exactly the memory used by an image?</h2>
+
+<p>
+This size may vary upon the way the image is used. First, the encoded version of the
+image is stored inside the M4M. Then when an image is used it is expanded in video
+memory and the memory needed is width*height*4 bytes. This may be much more than
+the encoded image. Further, in 2D mode, if you scale or rotate the image a copy of the
+image is created to store the modified pixels.
+</p>
+<br/>
+
+<h2>What are the supported formats for images?</h2>
+
+<p>
+PNG, including translucent and GIF (but not animated).
+</p>
+<br/>
+
+<h2>How to open a 2D context for rendering 2D Nodes?</h2>
+
+<p>
+By default a 2D context is opened, you can open another one (for clipping purposes by
+example) using <a href="development_node_Layer2D.html">Layer2D</a>.
+</p>
+<br/>
+
+<!--
+<h2>How to open a 3D context for rendering 3D Nodes?</h2>
+
+<p>
+You must explicitly use a <a href="development_node_Layer3D.html">Layer3D</a>.
+</p>
+<br/>
+-->
+
+<!--
+<h2>How to include a VRML scene generated by an exported (i.e. 3DS Max)?</h2>
+
+<p>
+Just set the name of the file in an <a href="development_node_Inline.html">Inline</a>
+node inside a <a href="development_node_Layer3D.html">Layer3D</a>.
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+Layer3D { # Opens a 3D context
+    children [
+         Inline { # Includes an external 3D scenes
+              url "3DScene.wrl"
+         }
+    ]
+}
+</textarea>
+<br/>
+-->
+
+<h2>What are the main restriction of the <a href="development_node_Script.html">Script</a> node?</h2>
+
+<p>
+First the number of fields (and thus functions) is limited to 250. Further, the script
+functions are compiled during the M4M creation process. The biggest limitation is that, for
+efficiency reasons, you cannot use on the fly discovery of fields, everything must be
+resolved at compile time. This means that you cannot directly iterate through an array
+Nodes (see trick below).
+</p>
+<br/>
+
+<h2>How to iterate through an MFNode?</h2>
+
+<p>
+This can be done only when all nodes inside the MFnode have the same type that is
+known at compile time. The trick is to use an SFNode set to the target type and set this
+SFNode to be an element of the MFNode:
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+field MFNode array [ USE MATERIAL0 USE MATERIAL1 USE MATERIAL2 ]
+field SFNode elem USE MATERIAL0
+...
+# set the red component value to 1 for all elements of array
+for (var i = 0; i &lt; array.length; i++) {
+    elem = array[i]; # elem must be set to an element of the same initial type
+    elem.emissiveColor.r = 1;
+}
+</textarea>
+<br/>
+
+<h2>How do I specify quote or double quotes in a script?</h2>
+
+<p>
+This is a trap because the string is evaluated twice: one at the VRML level and one at
+the javascript level, so you have to double-backslash your quote like this: "a \\\' b" is first
+evaluated to "a \' b" and passed to the javascript compiler that evaluate it in "a ' b"
+</p>
+<br/>
+
+<h2>When I using the emulator, what's describes the mouse's wheel actions?</h2>
+
+<p>
+There are the same than the up/down keys, defines with the KeySensor node.<br/>
+However, mouse click events can be used thanks to the touchSensor node or the TouchCursor prototype.
+</p>
+<br/>
+
+
+<h2>What is the floating point?</h2>
+
+<p>
+It is limited to 5 digits ( 1 / 2^17 ). Math.floor(float f) could be useful to manipulate big values.
+</p>
+<br/>
+
+<h2>How can I test my widget offline?</h2> 
+
+<p>
+Modify your micro emulator setting during tests : Option &gt; MIDlet network access
+</p>
+<br/>
+
+<h1> Eclipse Plugin FAQ</h1>
+
+<h2>What is "Error starting modern compiler" ?</h2>
+
+<p>
+Check that JARs referenced in <b>Windows &gt; Preferences &gt; Ant &gt; Runtime
+and Windows &gt; Preferences &gt; Java &gt; Installed JREs</b> are the same.
+<a href="http://www.pitr.net/index.php/2006/12/17/error-starting-modern-compiler/">More info...</a>
+</p>
+<br/>
+
+<h2>How can I configure proxy settings for the micro emulator</h2>
+
+<p>
+The Micro Emulator configuration file is available here:<br/>
+Windows OS: C:\Documents and Settings\{user name}\.microemulator\config2.xml<br/>
+Linux OS: /home/{user name}/.microemulator/config2.xml<br/>
+Add these two lines on your Micro Emulator configuration file:
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+&lt;system-property VALUE="{your proxy host}" NAME="http.proxyHost"/&gt;
+&lt;system-property VALUE="{your proxy name}" NAME="http.proxyPort"/&gt;
+</textarea>
+<br/>
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('deployment', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

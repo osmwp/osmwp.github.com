@@ -1,0 +1,174 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "widgets_development_i18n";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">internationalization</h1>
+
+
+<h1>Internationalization</h1>
+
+<p>
+Mobile Widgets offers a mechanism for internationalized your applications.
+</p>
+
+<h1>Write language files</h1>
+
+<p>
+Internationalization files are store in <b>i18n</b> folder.<br/>
+By convention, we use <b>&lt;language&gt;.lng</b> name for language files.<br/>
+Example: <b>english.lng</b>, <b>french.lng</b>, ...
+</p>
+
+<p>
+<img src="images/first_project/first_project_structure_1.jpg" alt="Project tree"/><br/>
+</p>
+<ul> 
+<li><b>i18n</b> folder: Internationalization folder. It contains all language files.</li>
+<li class="lvl2"><b>english.lng</b> file: English translation.</li> 
+<li class="lvl2"><b>french.lng</b> file: French translation.</li> 
+<li class="lvl2">And all other language files...</li> 
+</ul>
+<br/> 
+
+<p>
+Language files contain pairs of <b>&lt;labelId&gt;:&lt;labelValue&gt;</b>.
+</p>
+<ul>
+<li><b>&lt;labelId&gt;</b> is the label identity.</li>
+<li><b>&lt;labelValue&gt;</b> is the label value.</li>
+</ul>
+<br/>
+
+<p>Example:</p>
+<textarea wrap="off" readonly="readonly" rows="7" cols="80">
+about:about
+aboutCopyright:Copyright (C) 2010 Orange
+aboutReservedRights:All rights reserved.
+accept:accept
+close:close
+message:this is my application
+title:my application
+</textarea>
+<br/>
+<p class="note info">
+<b>Note:</b><br/>By convention, lines are ordered by label identity. 
+</p>
+
+<h1>Define language files in the widget</h1>
+
+<p>
+In main scene file (<b>main.wrl</b> file), we add information about language
+files in <b>languages</b> properties of <a href="development_node_Inline.html">Inline node</a>.<br/>
+<b>languages</b> property contains an array of language prefix and language files for all supported languages.<br/>
+<b>use</b> property define the default language (if current language is not supported by widget).<br/>
+<b>url</b> property define the child scene. This child scene use the language preferences.<br/>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="13" cols="80">
+#VRML V2.0 utf8
+Inline {
+  #Scene file
+  url "helloworld.wrl"
+  #For English, use the english.lng file
+  #For French, use the french.lng file
+  languages [
+    "EN" "english.lng"
+    "FR" "french.lng"
+  ]
+  #By default, we use the English language
+  use ["auto", "EN"]
+}
+</textarea>
+<br/>
+
+<h1>Use i18n in VRML scene</h1>
+
+<p>
+In widget, we can use the internationalized label via <b>@[&lt;labelId&gt;:]</b>.<br/>
+<b>&lt;labelId&gt;</b> is the label identity define in language files.<br/>
+Example, to display the _Message_ label define in language file:
+</p>
+<textarea wrap="off" readonly="readonly" rows="6" cols="80">
+Shape {
+  appearance Appearance { material Material2D { emissiveColor 0 0 0 } }
+  geometry WrapText {
+    string [ "@[Message:]" ]
+  }
+}
+</textarea>
+<br/>
+
+<h1>Use i18n in Javascript</h1>
+
+<p>
+We cannot use directly internationalized label in Javascript code.<br/>
+To use internationalized label, we define a field in Script node.<br/>
+Syntax:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">
+field SFString &lt;myLabel&gt; "@[&lt;labelId&gt;:]"
+</textarea>
+<ul>
+<li><b>&lt;myLabel&gt;</b> is a script field. It contains the internationalized label.</li>
+<li><b>&lt;labelId&gt;</b> is the label identity define in language files.</li>
+</ul>
+<p>
+Example:
+</p>
+<textarea wrap="off" readonly="readonly" rows="11" cols="80">
+Script {
+  #Store Message label in i18nLabel field
+  field SFString i18nLabel "@[Message:]"
+  url "javascript:
+    function initialize() {
+      #Display i18nLabel label in console
+      Browser.print('message: ' + i18nLabel);
+    }
+  "
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_guidelines','');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

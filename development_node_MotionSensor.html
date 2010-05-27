@@ -1,0 +1,115 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_MotionSensor";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">MotionSensor node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+MotionSensor {
+  SFBool enabled TRUE
+  SFVec3f acceleration 0 0 0
+  SFInt32 rotation 0
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Gives access to accelerometer data if available. If you want to provide a
+landscape mode in your application, prefer the use of SizeNotifier prototype
+from the SDK.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFBool enabled TRUE</b> :<br/>
+The MotionSensor node will only output data if <b>enabled</b> is set to <b>TRUE</b>.
+</p>
+<p>
+<b>SFVec3f acceleration 0 0 0</b> :<br/>
+Output the accelerometers values (from -1 to 1 in each direction), if data is
+available and <b>enabled</b> field is set to <b>TRUE</b>.
+</p>
+<p>
+<b>SFInt32 rotation 0</b> :<br/>
+Output rotation (range from 0 to 360).
+</p>
+<p>
+<b>SFBool isAvailable false</b> :<br/>
+Defines if API sensor is set in compilation option. (#ifdef api.sensor).
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+DEF MS MotionSensor { enabled TRUE }
+DEF script Script {
+   eventIn SFInt32 sensorRot
+   field SFNode ms USE MS
+   url "javascript:
+
+      function sensorRot(val) { // From Portrait To Landscape
+	if (ms.rotation==90) {
+	   Browser.print ('From Portrait To Landscape');
+	}
+	else if (ms.rotation==0) { // From Landscape To Portrait
+	   Browser.print ('From Landscape To Portrait');
+	}
+      }
+   "
+}
+ROUTE MS.rotation TO script.sensorRot
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

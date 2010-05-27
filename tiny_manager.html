@@ -1,0 +1,115 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tiny_manager";
+beginPage();
+//-->
+</script>
+
+
+
+<h1 class="title">Tiny Mobile Widgets - Manager</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+This page describes the Manager VRML scene used on Tiny Mobile Widgets project.
+</p>
+
+<p>
+For optimization reasons Manager scene centralizes title and softkeys treatments
+that would have been done on each scene otherwise.<br/>
+To communicate with each scene that wants a title or softkeys or whatever,
+Manager use <a href="development_node_Message.html">Message</a> node.
+</p>
+
+<h1>Message for Tiny Mobile Widgets project</h1>
+
+<p>
+Softkeys, titles, popups and menus are usually managed in each VRML scene that need them.<br/>
+In Tiny Mobile Widgets project, we knew that each scene will need at least a title
+and softkeys. And the goal of this project was to optimize the VRML source code.
+So we decided to put title and softkeys once and for all on a scene dedicated to
+manage them. It is called <b>Manager.wrl</b> and it communicates with the other
+scenes by <a href="development_node_Message.html">Message</a> (to display the
+title/softkeys and to spread click events).
+</p>
+<p>
+For same reasons, we also add popups (Alert, ProgressBar) and menus to Manager
+abilities.
+</p>
+
+<p>
+An application can use different types of Messages for different events/features.
+It is like TV channel. The scene that shall receive the message set a key as url
+parameter of <a href="development_node_Message.html">Message</a> Node. In manager,
+the key is 'Board'. So, all scene that want to communicate with Manager (matters
+of title, softkeys, popups, menu or loading scene) use the
+<a href="tiny_message_board.html">'Board' channel</a>.
+</p>
+
+<p>
+This is the standard use of Message with manager : <br/>
+<img alt"" src="images/tiny/manager_standard.PNG"/><br/>
+Browser.sendMessage ('Board', 'INIT', 'Mobile Widgets', 'Menu', 'Quit');
+</p>
+<p>
+Respectively : Alert, ProgressBar and Menu :
+</p>
+<p>
+<img alt"" src="images/tiny/manager_alert.PNG"/><br/>
+Browser.sendMessage ('Board', 'POPUP', 'Remove Widget ?', 'Please confirm', 'Yes', 'Cancel', 'warning');<br/>
+</p>
+<p>
+<img alt"" src="images/tiny/manager_progressbar.PNG"/><br/>
+Browser.sendMessage ('Board', 'PROGRESS', progress);
+</p>
+<p>
+<img alt"" src="images/tiny/manager_menu.PNG"/><br/>
+Browser.sendMessage ('Board', 'MENU', 'Menu', 'Ok', 'Cancel', 'Add widget', 'Remove', 'Options', '');
+</p>
+<br/>
+
+<p>
+Read <a href="tiny_message_board.html">'Board' channel chapter for more information</a>.
+</p>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('','');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

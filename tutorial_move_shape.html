@@ -1,0 +1,312 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_move_shape";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">move shape</h1>
+
+
+<h1>Introduction</h1>
+<p>
+In this tutorial, we will move a shape.<br/>
+We use a timer to animate the shape.
+</p>
+
+<h1>Timer</h1>
+
+<p>
+<a href="development_node_TimeSensor.html">TimeSensor</a> node generate periodic values.<br/>
+We use it to animate the node.
+</p>
+<p class="note info">
+<b>Note:</b><br/>
+See <a href="development_node_TimeSensor.html">TimeSensor</a> node documentation to more information.
+</p>
+
+<p>
+We define a <b>"ANIM_TIMER"</b> timer (a TimeSensor node).<br/>
+When widget is launch, timer is activated (<b>"isActive TRUE"</b>) and timer cycle
+interval is 4 seconds.<br/>
+At end of time interval (after 4 seconds), timer is relaunched (<b>"loop TRUE"</b>).<br/>
+Time sensor declaration:
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+DEF ANIM_TIMER TimeSensor {
+  isActive TRUE
+  cycleInterval 4.0
+  loop TRUE
+}
+</textarea>
+<br/>
+
+<p>
+We catch timer pulse with <b>fraction_changed</b> (SFFloat - value between 0.0
+(animation start) and 1.0 (end of animation)).<br/>
+We catch end of loop with <b>cycleTime</b> (SFTime - current time).
+</p>
+<br/>
+
+<h1>Shape</h1>
+
+<p>
+We have the timer.<br/>
+We define a shape (a simple rectangle):
+</p>
+<textarea rows="6" cols="80" readonly="readonly" wrap="off">
+Shape {
+  appearance Appearance {
+    material Material2D { emissiveColor 1 0 0 }
+  }
+  geometry Rectangle { size 20 20 }
+}
+</textarea>
+<br/>
+
+<p>
+To move rectangle, we use a <a href="development_node_Transform2D.html">Transform2D</a> node:
+</p>
+<textarea rows="7" cols="80" readonly="readonly" wrap="off">
+DEF MY_SHAPE_TRS Transform2D {
+  children [
+    Shape {
+      ...
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<p>
+We have the timer, the shape... We will now animate the shape.
+</p>
+<br/>
+
+<h1>Shape animation via Interpolator node</h1>
+
+<p>
+To create animation, we can use <a href="development_node_Interpolators.html">Interpolators</a>
+nodes (<a href="development_node_CoordinateInterpolator.html">CoordinateInterpolator</a>,
+<a href="development_node_ColorInterpolator.html">ColorInterpolator</a>, ...).<br/>
+To move a shape, we use <a href="development_node_PositionInterpolator2D.html">PositionInterpolator2D</a> node.<br/>
+See other <a href="development_node_Interpolators.html">Interpolators</a>
+documentation to rotate, change color, ...
+</p>
+
+<p>
+We define 4 positions for animations: (-10, -10), (-10, 10), (10, 10) and (10, -10).<br/>
+Shape move between this points.<br/>
+When timer faction is 0.00, shape is at (-10,-10) position.<br/>
+When timer faction is 0.25, shape is at (-10,10) position.<br/>
+When timer faction is 0.50, shape is at (10,10) position.<br/>
+When timer faction is 0.75, shape is at (10,-10) position.<br/>
+And when timer faction is 1.00, shape is return at (-10,-10) position.<br/>
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+DEF ANIMATION_PI PositionInterpolator2D {
+  key      [0.0,       0.25,     0.5,     0.75,     1.0    ]
+  keyValue [-10 -10,   -10 10,   10 10,   10 -10,   -10 -10]
+}
+</textarea>
+<br/>
+
+<p>
+Link the Interpolator with the timer:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+ROUTE ANIM_TIMER.fraction_changed TO ANIMATION_PI.set_fraction
+</textarea>
+<br/>
+
+<p>
+Link the Interpolator with the shape:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+ROUTE ANIMATION_PI.value_changed TO MY_SHAPE_TRS.translation
+</textarea>
+<br/>
+
+<h1>First example code</h1>
+
+<p>
+Final code for the first example:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    DEF ANIM_TIMER TimeSensor {
+      isActive TRUE
+      cycleInterval 4.0
+      loop TRUE
+    }
+
+    DEF MY_SHAPE_TRS Transform2D {
+      children [
+        Shape {
+          appearance Appearance {
+            material Material2D { emissiveColor 1 0 0 }
+          }
+          geometry Rectangle { size 20 20 }
+        }
+      ]
+    }
+
+    DEF ANIMATION_PI PositionInterpolator2D {
+      key      [0.0,       0.25,     0.5,     0.75,     1.0    ]
+      keyValue [-10 -10,   -10 10,   10 10,   10 -10,   -10 -10]
+    }
+
+    ROUTE ANIM_TIMER.fraction_changed TO ANIMATION_PI.set_fraction
+    ROUTE ANIMATION_PI.value_changed TO MY_SHAPE_TRS.translation
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Shape animation via Javascript</h1>
+
+<p>
+Interpolators node are easy to used. But for complex animation, we can use a
+JavaScript function.<br/>
+Example, if the shape moves on a circle.
+</p>
+
+<p>
+Create a script node to the animation.
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+#Animation  script
+DEF ANIMATION_CIRCLE_SCRIPT Script {
+  ...
+}
+</textarea>
+<br/>
+
+<p>
+This script receive timer event <b>fraction_changed</b> (<b>SFFloat</b> type)
+and return the shape position (<b>SFVec2f</b> type).<br/>
+Event in/out declaration:
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+eventIn  SFFloat setFraction
+eventOut SFVec2f value_change
+</textarea>
+<br/>
+
+<p>
+Animation function transform a data between 0.0 and 1.0 in shape position (position on a circle).<br/>
+We convert timer data in angle between 0 and 2PI. And we convert angle in position with cosine and sinus.
+</p>
+<textarea rows="9" cols="80" readonly="readonly" wrap="off">
+function setFraction () {
+  //Compute the new shape position
+  var angle;
+  angle = (3.1415 * 2) * setFraction;
+  var x = Math.cos (angle);
+  var y = Math.sin (angle);
+  value_change.x = x * radius;
+  value_change.y = y * radius;
+}
+</textarea>
+<br/>
+
+<p>
+And we link script with the timer and the shape.
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+ROUTE ANIM_TIMER.fraction_changed TO ANIMATION_CIRCLE_SCRIPT.setFraction
+ROUTE ANIMATION_CIRCLE_SCRIPT.value_changed TO MY_SHAPE_TRS.translation
+</textarea>
+<br/>
+
+<h1>Second example code</h1>
+
+<p>
+Final code for the second example:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    DEF ANIM_TIMER TimeSensor {
+      isActive TRUE
+      cycleInterval 4.0
+      loop TRUE
+    }
+
+    DEF MY_SHAPE_TRS Transform2D {
+      children [
+        Shape {
+          appearance Appearance {
+            material Material2D { emissiveColor 1 0 0 }
+          }
+          geometry Rectangle { size 20 20 }
+        }
+      ]
+    }
+
+    #Animation  script
+    DEF ANIMATION_CIRCLE_SCRIPT Script {
+      eventIn  SFFloat setFraction
+      eventOut SFVec2f value_change
+      field SFFloat radius 20
+      url "
+      function setFraction () {
+        //Compute the new shape position
+        var angle;
+        angle = (3.1415 * 2) * setFraction;
+        var x = Math.cos (angle);
+        var y = Math.sin (angle);
+        value_change.x = x * radius;
+        value_change.y = y * radius;
+      }
+      "
+    }
+
+    ROUTE ANIM_TIMER.fraction_changed TO ANIMATION_CIRCLE_SCRIPT.setFraction
+    ROUTE ANIMATION_CIRCLE_SCRIPT.value_changed TO MY_SHAPE_TRS.translation
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_other_sensor','tutorial_launch_anim');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

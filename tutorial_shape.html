@@ -1,0 +1,300 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_shape";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">draw shapes</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+<a href="development_node_Shape.html">Shape node</a> is used to draw a shape (rectangle or circle).<br/>
+Shape contains 2 properties:
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+Shape {
+  SFNode appearance NULL
+  SFNode geometry NULL
+}
+</textarea>
+<ul>
+<li><b>appearance</b> define the shape style (color, texture, ...).</li>
+<li><b>geometry</b> define the shape type (rectangle, circle, ...)</li>
+</ul>
+<p>
+See <a href="development_node_Shape.html">Shape node</a> chapter for more information about shape properties.
+</p>
+<br/>
+
+<h1>Draw shape</h1>
+
+<p>
+The following example draw a red rectangle at center of the screen.
+</p>
+<textarea rows="10" cols="80" readonly="readonly" wrap="off">
+Group {
+    children [
+        Shape {
+            appearance  Appearance {
+                material Material2D { emissiveColor 1 0 0 }
+            }
+            geometry Rectangle { size 50 50 }
+        }
+    ]
+}
+</textarea>
+<p>
+<img alt="Rectangle shape" src="images/tutorials/tuto_shape_01.jpg" />
+</p>
+<p>
+We can draw:
+</p>
+<ul>
+<li>a rectangle: <b>geometry Rectangle { size 50 50 }</b></li>
+<li>a circle: <b>geometry Circle { radius 25 }</b></li>
+<li>a custom shape with <a href="development_node_IndexedFaceSet2D.html">IndexedFaceSet2D node</a></li>
+<li>a picture (see <a href="tutorial_picture.html">picture tutorial</a>)</li>
+<li>a text (see <a href="tutorial_text.html">text tutorial</a>)</li>
+</ul>
+<br/>
+
+<h1>Custom shape</h1>
+
+<p>
+We can define custom shape with the <a href="development_node_IndexedFaceSet2D.html">IndexedFaceSet2D</a> node.
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+IndexedFaceSet2D {
+  MFInt32 coordIndex []
+  SFNode coord NULL
+  SFNode color NULL
+}
+</textarea>
+<ul>
+<li><b>coordIndex</b>: Array of coordinate index.</li>
+<li><b>coord</b>: <a href="development_node_Coordinate2D.html">Coordinate2D node</a> (array of coordinates).</li>
+<li><b>color</b>: <a href="development_node_Color.html">Color node</a></li>
+</ul>
+<br/>
+
+<p>
+To illustrate this node, we'll draw this shape:<br/>
+<img alt="Rectangle shape" src="images/tutorials/tuto_shape_02.jpg" />
+</p>
+<p>5 points :</p>
+<ul>
+<li>(-10,-10): bottom / left point</li>
+<li>( 10,-10): bottom / right point</li>
+<li>( 10, 10): top / right point</li>
+<li>(-10, 10): top / left point</li>
+<li>(-15,  0): center / left point (arrowhead).</li>
+</ul>
+<p>
+The final coordinate array:
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+coord Coordinate2D {
+  point [
+    -10, -10,  # point 0
+     10, -10,  # point 1
+     10,  10,  # point 2
+    -10,  10,  # point 3
+    -15,   0   # point 4
+  ]
+}
+</textarea>
+<br/>
+<p>
+<a href="development_node_IndexedFaceSet2D.html">IndexedFaceSet2D</a> use an
+array of index to connect points and draw the shape.<br/>
+Array of coordinates (using points index):
+</p>
+<ul>
+<li>0, 1 - connect (-10,-10) point to ( 10,-10) point</li>
+<li>1, 2 - connect ( 10,-10) point to ( 10, 10) point</li>
+<li>2, 3 - connect ( 10, 10) point to (-10, 10) point</li>
+<li>3, 4 - connect (-10, 10) point to (-15,  0) point</li>
+<li>4, 0 - connect (-15,  0) point to (-10,-10) point</li>
+</ul>
+<textarea rows="7" cols="80" readonly="readonly" wrap="off">
+coordIndex [
+  0, 1,
+  1, 2,
+  2, 3,
+  3, 4,
+  4, 0
+]
+</textarea>
+<br/>
+<p>
+Shape color: Green
+</p>
+<p class="note info">
+<b>Note:</b><br/> An array of color can be used, but only first color is used by MeMo.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+color Color { color 0.0 1.0 0.0 }
+</textarea>
+<br/>
+<p>
+Final code:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+    children [
+        Shape {
+          appearance Appearance {}
+          geometry IndexedFaceSet2D {
+            color Color { color 0.0 1.0 0.0 }
+            coordIndex [
+              0, 1,
+              1, 2,
+              2, 3,
+              3, 4,
+              4, 0
+            ]
+            coord Coordinate2D {
+              point [
+                -10, -10,  # point 0
+                 10, -10,  # point 1
+                 10,  10,  # point 2
+                -10,  10,  # point 3
+                -15,   0   # point 4
+               ]
+            }
+          }
+        }
+    ]
+}
+</textarea>
+<br/>
+
+<h1>Shape position and transformation</h1>
+
+<p>
+By default, the shape is draw at center of the screen (The origin of the coordinate is the center of the screen).<br/>
+To move shape, use the <a href="development_node_Transform2D.html">Transform2D node</a>.
+</p>
+<textarea rows="6" cols="80" readonly="readonly" wrap="off">
+Transform2D {
+  MFNode children NULL
+  SFVec2f translation 0 0
+  SFVec2f scale 1 1
+  SFFloat rotationAngle 0
+}
+</textarea>
+<ul>
+<li><b>children</b>: Array of nodes (shapes).</li>
+<li><b>translation</b>: New position (relative to the previous position).</li>
+<li><b>scale</b>: Scale.</li>
+<li><b>rotationAngle</b>: Rotation (radians).</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>
+scale and rotationAngle increase processing and memory consumption.
+</p>
+<p>
+See <a href="development_node_Transform2D.html">Transform2D node</a> chapter for more information about transformation.
+</p>
+<p>
+We try to move and rotate the previous shape.<br/>
+<img alt="Shape transformation" src="images/tutorials/tuto_shape_03.jpg" />
+</p>
+<p>
+We move the previous shape at (30,30) position.<br/>
+Previous position is (0,0). To move at position (30,30), use the (30,30) translation vector.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+translation 30 30
+</textarea>
+
+<p>
+And rotate the shape (angle: 45°).
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+rotationAngle 0.785398 # == (3,141592 * 45) / 180
+</textarea>
+<br/>
+
+<p>
+Final example source code:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Transform2D {
+      translation 30 30
+      rotationAngle 0.785398
+      children [
+        Shape {
+          appearance Appearance {}
+          geometry IndexedFaceSet2D {
+            color Color { color 0.0 1.0 0.0 }
+            coordIndex [
+              0, 1,
+              1, 2,
+              2, 3,
+              3, 4,
+              4, 0
+            ]
+            coord Coordinate2D {
+              point [
+                -10, -10,  # point 0
+                 10, -10,  # point 1
+                 10,  10,  # point 2
+                -10,  10,  # point 3
+                -15,   0   # point 4
+               ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorials','tutorial_appearance');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

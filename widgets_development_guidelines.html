@@ -1,0 +1,139 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "widgets_development_guidelines";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">development guidelines</h1>
+
+
+<h1>Application structure</h1>
+
+<p>
+<img src="images/first_project/first_project_structure_1.jpg" alt="Project tree"/>
+</p>
+<ul> 
+<li><b>i18n</b> folder: Internationalization folder. It contains all language files.</li>
+<li class="lvl2"><b>english.lng</b> file: English translation.</li> 
+<li class="lvl2"><b>french.lng</b> file: French translation.</li> 
+<li class="lvl2">And all other language files...</li> 
+<li><b>src</b> folder: Source folder (contains VRML files).</li> 
+<li class="lvl2"><b>main.wrl</b> file: Main widget source file.
+    By default, main file is <b>main.wrl</b> (we can use the name of the application).
+    <p class="note warning">
+    <b>Warning:</b><br/>
+    For Tiny Mobile Widgets project, don't use <b>main.wrl</b> file name. <span class="highlight"><b>main.wrl</b> file name is reserved.</span> 
+	</p>
+</li> 
+<li class="lvl2">And all other source files...</li> 
+<li><b>style</b> folder: Application style folder. It contains CSS files and pictures.</li>
+<li class="lvl2"><b>OWP</b> folder: OWP style folder. It contains pictures and CSS files for Mobile Widgets applications.</li>
+<li class="lvl2"><b>djinngo</b> folder: djinngo style folder. It contains pictures and CSS files for applications with a Djinngo style.</li>
+<li class="lvl2">And all other style (you can define your style).</li>
+</ul> 
+<br/>
+
+<h1>Code conventions / code rules (VRML and JavaScript)</h1>
+
+<p>
+Code conventions are important to produce a homogeneous source code.<br/>
+The <a href="widgets_development_guidelines_rules.html">code conventions chapter</a>
+present the MeMo application coding standards.
+</p>
+<br/>
+
+<h1>Internationalization</h1>
+
+<p>
+Mobile Widgets offers a mechanism for internationalized your applications.<br/>
+See <a href="widgets_development_i18n.html">internationalization chapter</a>.
+</p>
+<br/>
+
+<h1>Scalability of application</h1>
+
+<p>
+<a href="widgets_development_scalability.html">Scalability guidelines.</a>
+</p>
+<p>
+Mobile Widgets provide a prototype to notify application when screen size change.<br/>
+See <a href="prototype_sizenotifier.html">SizeNotifier prototype</a> for more informations.
+</p>
+<br/>
+
+<h1>Application style</h1>
+
+<p>
+Like a HTML site, MeMo use CSS to define application style.<br/>
+You can define the style for your application.<br/>
+Style is supported by Mobile Widgets prototypes (see Prototypes part).<br/>
+See <a href="widgets_development_css_language.html">CSS chapter</a> for more information about CSS in MeMo.
+</p>
+<br/>
+
+<h1>Prototypes</h1>
+
+<p>
+To reuse code, you can create prototypes. 
+</p>
+<p>
+Prototypes allow the set of VRML node types to be extended by the user.<br/>
+Prototype definitions can be included in the file in which they are used or defined externally.<br/>
+Prototypes may be defined in terms of other VRML nodes.
+</p>
+<p>
+Mobile Widgets offers many reusable components via a VRML prototypes library.<br/>
+See <a href="widgets_development_prototypes.html">prototypes chapter</a>.
+</p>
+<br/>
+
+<h1>Limitation</h1>
+
+<!-- TODO complete this part -->
+<p>
+ * 256 nodes by scene
+ * XX Fields in Script node (??)
+</p>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_languages','widgets_development_advanced');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

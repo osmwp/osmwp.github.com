@@ -1,0 +1,118 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_OrientationInterpolator";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">OrientationInterpolator node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="6" cols="80">
+OrientationInterpolator {
+  SFFloat set_fraction 0
+  SFRotation value_changed 0 0 0
+  MFFloat key []
+  MFRotation keyValue []
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+This interpolator is used to interpolate 3D rotations (3 float values).
+</p>
+
+<p>
+See <a href="development_node_Interpolators.html">Interpolators</a> for a
+detailed explanation on how interpolators work and when to use them.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFFloat set_fraction 0</b>:<br/>
+Change this <b>set_fraction</b> field (between 0 to 1) to make the interpolator
+compute a new value.<br/>
+Value usually routed from the <a href="development_node_TimeSensor.html">TimeSensor</a>.fraction_changed
+field. See <a href="development_node_Interpolators.html">Interpolators</a>.
+</p>
+
+<p>
+<b>SFRotation value_changed 0 0 0</b>:<br/>
+When a new rotation is computed form the
+<a href="development_node_OrientationInterpolator.html">OrientationInterpolator</a>,
+it is sent to the <b>value_changed</b> field.
+</p>
+
+<p>
+<b>MFFloat key []</b>:<br/>
+List of float values between 0 and 1. See
+<a href="development_node_Interpolators.html">Interpolators</a>.
+</p>
+
+<p>
+<b>MFRotation keyValue []</b>:<br/>
+  Contains a rotation (3 float values) for each value of the <b>key</b> list.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="6" cols="80">
+#VRML V2.0 utf8
+
+OrientationInterpolator {
+  key      [0      0.2        1       ]
+  keyValue [0 0 0  10 12 13   40 70 90]
+}
+</textarea>
+
+<!-- TODO complete this example -->
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

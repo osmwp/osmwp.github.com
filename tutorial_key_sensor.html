@@ -1,0 +1,278 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_key_sensor";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">input and key sensor</h1>
+
+
+<h1>InputSensor and KeySensor nodes</h1>
+
+<p>
+<a href="development_node_InputSensor.html">InputSensor</a> and
+<a href="development_node_KeySensor.html">KeySensor</a> nodes are used to catch
+keys event.
+</p>
+
+<p>
+The <a href="development_node_InputSensor.html">InputSensor</a> node is somewhat
+limited: one cannot know when the user released the key or what key was pressed
+when the KeySensor listens multiple keys.<br/>
+The KeySensor node provides such informations:
+</p>
+<ul>
+<li>Handle press/release events (see <b>pressTime</b> and <b>releaseTime</b> fields).</li>
+<li>Identify key is pressed when multiple keys are sensed (see the <b>activeKey</b>
+    field). This is useful to prevent using a lot of InputSensor nodes.</li>
+<li>Handle repetition automatically (see <b>repeatInterval</b>, <b>repeatTime</b>
+    and <b>repeatDelay</b> fields).</li>
+<li>Handle keyboard keys (since 1.4.1).</li>
+</ul>
+<br/>
+
+<p>
+InputSensor interface:
+</p>
+<textarea rows="6" cols="80" readonly="readonly" wrap="off">
+InputSensor {
+  SFString url ""
+  SFTime  eventTime 0
+  SFBool activate TRUE
+  SFBool grabFocus FALSE
+}
+</textarea>
+<br/>
+<ul>
+<li><b>url</b> field define sensed keys. Multiple keys may be set, and thus
+    sensed. Allowed values are: A B U D L R E C Z X 0 1 2 3 4 5 6 7 8 9 * # (see
+    keys map part).</li>
+<li><b>eventTime</b> field return an event when a key is pressed.</li>
+<li><b>activate</b> field indicate if sensor is active (or not).</li>
+<li><b>grabFocus</b> field indicate if sensor block (or not) the event.</li>
+</ul>
+<br/>
+
+<p>
+See <a href="development_node_InputSensor.html">InputSensor</a> documentation
+for more information about this node.
+</p>
+<br/>
+
+<p>
+KeySensor interface:
+</p>
+<textarea rows="11" cols="80" readonly="readonly" wrap="off">
+KeySensor {
+    SFString url ""
+    SFTime  pressTime 0
+    SFBool activate TRUE
+    SFBool grabFocus FALSE
+    SFTime releaseTime 0
+    SFString activeKey ""
+    SFTime repeatInterval 0
+    SFTime repeatTime 0
+    SFTime repeatDelay 0
+}
+</textarea>
+<br/>
+
+<p>
+KeySensor interface is same than InputSensor.<br/>
+But KeySensor introduce more information about release key, last active key and
+repeat event.
+</p>
+<p>
+See <a href="development_node_KeySensor.html">KeySensor</a> documentation for
+more information about this node.
+</p>
+<br/>
+
+<h1>Keys map</h1>
+
+<p>
+<img src="images/widgets_development/keySensorMap.JPG" alt="KeySensor mapping"/>
+</p>
+<br/>
+
+<h1>InputSensor example</h1>
+
+<p>
+We start tutorial with a simple InputSensor example.<br/>
+In example, a message is displayed on screen. Message say "Press a key".<br/>
+When user press a key, message change and say "Key is pressed".
+</p>
+
+<p>
+Example require a text node (see <a href="tutorial_text.html">text tutorial</a>).
+</p>
+<textarea rows="9" cols="80" readonly="readonly" wrap="off">
+Shape {
+  appearance Appearance { material Material2D { emissiveColor 0 0 0 } }
+  geometry DEF MY_MESSAGE_TXT Text {
+    string [ "Press a key" ]
+    fontStyle FontStyle {
+      justify [ "MIDDLE" "MIDDLE" ]
+    }
+  }
+}
+</textarea>
+<br/>
+
+<p>
+Add an InputSensor node. Node read all mobile keys and it is activated.
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+DEF MY_SENSOR InputSensor {
+  url            "ABUDLRECZX0123456789*#"
+  activate       TRUE
+}
+</textarea>
+<br/>
+
+<p>
+We write a function to process key event (and an <b>eventIn</b> point to listen events).<br/>
+This function require an access to text node.
+</p>
+<textarea rows="9" cols="80" readonly="readonly" wrap="off">
+DEF SCRIPT Script {
+  eventIn SFTime keyPressed
+  field SFNode myMessage USE MY_MESSAGE_TXT
+  url "
+    function keyPressed () {
+      myMessage.string[0] = 'Key is pressed';
+    }
+  "
+}
+</textarea>
+<br/>
+
+<p>
+Finally, we link javaScript function and InputSensor.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+ROUTE MY_SENSOR.eventTime TO SCRIPT.keyPressed
+</textarea>
+<br/>
+
+<p>
+We can test. When a key is pressed, the message change.
+</p>
+<br/>
+<p>
+First example code:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Shape {
+      appearance Appearance { material Material2D { emissiveColor 0 0 0 } }
+      geometry DEF MY_MESSAGE_TXT Text {
+        string [ "Press a key" ]
+        fontStyle FontStyle {
+          justify [ "MIDDLE" "MIDDLE" ]
+        }
+      }
+    }
+    DEF MY_SENSOR InputSensor {
+      url            "ABUDLRECZX0123456789*#"
+      activate       TRUE
+    }
+    DEF SCRIPT Script {
+      eventIn SFTime keyPressed
+      field SFNode myMessage USE MY_MESSAGE_TXT
+      url "
+      function keyPressed () {
+        myMessage.string[0] = 'Key is pressed';
+      }
+      "
+    }
+    ROUTE MY_SENSOR.eventTime TO SCRIPT.keyPressed
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Display pressed key</h1>
+
+<p>
+We would extend the first example to display the pressed key.<br/>
+But we cannot easily know the pressed key with InputSensor node (a solution is
+create one InputSensor by key... It is not an optimized solution).<br/>
+<b>Solution:</b> Replace InputSensor with KeySensor.<br/>
+We only change the node type (replace <b>InputSensor</b> with <b>KeySensor</b>)
+and ROUTE event (replace <b>eventTime</b> with <b>pressTime</b>):
+</p>
+<textarea rows="6" cols="80" readonly="readonly" wrap="off">
+DEF MY_SENSOR KeySensor {
+      url            "ABUDLRECZX0123456789*#"
+      activate       TRUE
+}
+...
+ROUTE MY_SENSOR.pressTime TO SCRIPT.keyPressed
+</textarea>
+<br/>
+
+<p>
+Finally, we would display pressed key.<br/>
+To read and display pressed key, we use the <b>activeKey</b> field.
+</p>
+<p>
+We define an access to KeySensor in script part:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+field SFNode myInput   USE MY_SENSOR
+</textarea>
+<br/>
+<p>
+And we read and display the key:
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+function keyPressed () {
+  var key = myInput.activeKey;
+  myMessage.string[0] = key +' key is pressed';
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_text','tutorial_other_sensor');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

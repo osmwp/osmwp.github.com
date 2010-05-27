@@ -1,0 +1,179 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_KeySensor";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">KeySensor node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="11" cols="80">
+KeySensor {
+    SFString url ""
+    SFTime  pressTime 0
+    SFBool activate TRUE
+    SFBool grabFocus FALSE
+    SFTime releaseTime 0
+    SFString activeKey ""
+    SFTime repeatInterval 0
+    SFTime repeatTime 0
+    SFTime repeatDelay 0
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>Same functionality as InputSensor but</p>
+<ul>
+<li>Handle press/release events (see <b>pressTime</b> and <b>releaseTime</b>
+    fields).</li>
+<li>Identify wich key is pressed when multiple keys are sensed (see the
+    <b>activeKey</b> field).<br/>
+    This is useful to prevent using a lot of InputSensor nodes.</li>
+<li>Handle repetition automatically (see <b>repeatInterval</b>,
+    <b>repeatTime</b> and <b>repeatDelay</b> fields).</li>
+<li>Handle keyboard keys (since 1.4.1).</li>
+</ul>
+<br/>
+
+<h1>Since</h1>
+
+<h2>1.4.1</h2>
+<p>
+Setting '@' in the <b>url</b> field will allow to listen to all native keyboard
+keys.<br/>
+Classic cursor and soft keys events (U/D/L/R/E/A/B/C/Z) will not be fired.<br/>
+The corresponding character will be exposed on the <b>activeKey</b> field.<br/>
+Therefore, when the <b>activeKey</b> fires an 'A' event, it will be the keyboard
+'A' key and not the classic Left Soft Key (LSK) event.
+</p>
+
+<img src="images/widgets_development/keySensorMap.JPG" alt="KeySensor mapping"/>
+<br/>
+
+<h1>Fields</h1>
+<p>
+<b>SFString url ""</b> :<br/>
+List of sensed keys. Same as <a href="development_node_InputSensor.html">InputSensor</a>.url.<br/>
+<b>Since 1.4.1</b>, use '@' to listen to keyboard keys (except for the cursor
+and soft key U/D/L/R/E/A/B/C/Z events).
+</p>
+<p>
+<b>SFTime  pressTime 0</b> :<br/>
+Will emit current time when one of the sensed keys is <b>pressed</b>.
+</p>
+<p>
+<b>SFBool activate TRUE</b> :<br/>
+If <b>TRUE</b>, the KeySensor can emit events. Default: <b>TRUE</b>.
+</p>
+<p>
+<b>SFTime releaseTime 0</b> :<br/>
+Will emit current time when one of the sensed keys is <b>released</b>.
+</p>
+<p>
+<b>SFString activeKey ""</b> :<br/>
+Will emit the current key being pressed.
+</p>
+<p>
+<b>SFTime repeatInterval 0</b> :<br/>
+If greater than 0, will set how often the <b>repeatTime</b> field emits the
+current time while a sensed key is pressed.
+</p>
+<p>
+<b>SFTime repeatTime 0</b> :<br/>
+Will emit current time when <b>repeatInterval</b> is greater than 0 and a sensed
+key is pressed.
+</p>
+<p>
+<b>SFTime repeatDelay 0</b> :<br/>
+If greater than 0, will delay the <b>first</b> time when <b>repeatTime</b> emits
+the current time.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+# Listens to all keys and print when key is pressed, released and during repetition.
+
+DEF input KeySensor {
+  url            "ABEUDLRC*#1234567890"
+  activate       TRUE
+  repeatInterval 0.25
+  repeatDelay    1
+}
+
+DEF script Script {
+  eventIn SFTime keyPressed
+  eventIn SFTime keyReleased
+  eventIn SFTime keyRepeated
+
+  field SFNode input IS input
+
+  url "javascript:
+    function keyPressed () {
+      Browser.print ('User pressed on the key: '+input.activeKey);
+    }
+
+    function keyReleased () {
+      Browser.print ('User released on the key: '+input.activeKey);
+    }
+
+    function keyRepeated () {
+      Browser.print ('User maintains the key: '+input.activeKey);
+    }
+  "
+}
+
+ROUTE input.pressTime TO script.keyPressed
+ROUTE input.releaseTime TO script.keyReleased
+ROUTE input.repeatTime TO script.keyRepeated
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

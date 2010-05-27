@@ -1,0 +1,115 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "advanced_cache";
+beginPage();
+//-->
+</script>
+
+
+
+<h1 class="title">caching features</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+Cache used to store temporary data on mobile (RSS feed, news, ...). Data are
+stored in RMS or in memory.
+</p>
+<p>
+Advantages: 
+</p>
+<ul>
+<li>data are loaded only at first access. After, we use the cached data.</li>
+<li>cache access are quickly than HTTP or file access.</li>
+</ul>
+<br/>
+<p class="note warning">
+<b>Warning:</b><br/>
+The cache does not know whether the data are outdated.<br/>
+The lifetime of the data must be managed by the developer.
+</p>
+<br/>
+
+<h1>Cache access</h1>
+
+<p>
+The cache access is done through Javacript APIs.
+</p>
+<ul>
+<li><a href="development_javascript_File.html">File</a></li>
+<li><a href="development_javascript_Http.html">Http</a></li>
+<li><a href="development_javascript_JSON.html">JSON</a></li>
+<li><a href="development_javascript_XML.html">XML</a></li>
+</ul>
+<br/>
+
+<p>
+To use cache, use an URL in two part, separated by a comma.
+</p>
+<ul>
+<li>first part, the cache resource URL (<b>cache://...</b>)</li>
+<li>second part, the resource URL (<b>file://...</b>, <b>http://...</b> or other URL)</li>
+<li>third part (optional), asynchronous access (a boolean - true = synchronous / false = asynchronous)</li>
+</ul>
+<br/>
+
+<p>
+example:
+</p>
+<textarea rows="6" cols="80" readonly="readonly" wrap="off">
+//File access
+File.open ('cache://mypicture.png,file://mypicture.png');
+//HTTP loading
+Http.get ('cache://mypicture.png,http://server/mypicture.png', on PictureLoaded);
+//XML loading
+XML.open ('cache://myXmlFile.xml,http://server/myXmlFile.xml', XML.URL, onXmlLoaded);
+</textarea>
+<br/>
+
+<h1>Cache scope</h1>
+
+<p>
+The cache is dependent on the widget. A widget cannot read another widget cache.<br/>
+The cache scope is the current widget.
+</p>
+<p>
+We cannot reuse data in cache between two widgets.  
+</p>
+<br/>
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_advanced','advanced_inline');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

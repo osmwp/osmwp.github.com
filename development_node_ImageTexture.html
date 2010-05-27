@@ -1,0 +1,167 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_ImageTexture";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">ImageTexture node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="6" cols="80">
+ImageTexture {
+  MFString url []
+  SFVec2f newSize 0 0
+  SFVec2f size_changed 0 0
+  MFString alternateUrl []
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+<p>
+Used to map a texture to any geometry in 3D context and to a <a href="development_node_Rectangle.html">Rectangle</a>
+or <a href="development_node_Bitmap.html">Bitmap</a> in a 2D context.
+</p>
+<br/>
+
+<h1>Since</h1>
+
+<h2>1.4.2</h2>
+<p>
+The <b>newSize</b> field can keep the image aspect-ratio while downscaling a texture.
+</p>
+<br/>
+
+<h1>Fields</h1>
+<p>
+<b>MFString url []</b> :<br/>
+Multiple item urls can be defined, but only the first one is loaded as a texture.<br/>
+If the first one is empty (eg <b>url ["" "image1.jpg"]</b>), no image is displayed.<br/>
+Items url can be of one of the following types:
+</p>
+<ul>
+<li>Filename of an image (eg simple.png). The file will be included in the M4M
+    file and immediately available on scene load.</li>
+<li>An url to an image on the mobile filesystem (eg file://c/file.png).</li>
+<li>An HTTP url (eg http://server/file.png) to download the file each time the
+    scene is loaded.</li>
+<li>A cache url followed by a source url (eg cache://file.png,http://server/file.png).<br/>
+    File will be downloaded the first time from the source url and loaded from
+    cache for later access.</li>
+</ul>
+<p>
+<b>SFVec2f newSize 0 0</b> :<br/>
+The size of the texture can be modified permanently during its first load.<br/>
+This allows to use images smaller or bigger than the targeted texture size and
+scale them once at loading time and free resource associated to the original image.
+</p>
+<ul>
+<li>If <b>newSize</b> is set to (0, 0), no transformation will occur (default
+    behavior).</li>
+<li>If <b>newSize</b> is set to positive values like (100, 100), the texture will
+    be scaled to this new size (eg. a file of 20x20 will be upscaled to 100x100,
+    a file of 200x200 will be downscaled to 100x100).</li>
+<li><b>Since 1.4.2:</b> If <b>newSize</b> is set to negative values like (-100,
+    -100), the texture will <b>fit</b> in the 100x100 size <b>but keeping its
+    original aspect ratio</b> and will never be upscaled (eg. a texture of 20x20
+    will still be 20x20, while a texture of 150x200 will be downscaled to
+    75x100).</li>
+</ul>
+<p>
+<b>SFVec2f size_changed 0 0</b> :<br/>
+Once the image is loaded (on first display), the size of the texture (after
+transformation done by <b>newSize</b>) is given on this field.<br/>
+When no texture is loaded, it has [0 0] values.
+</p>
+<p>
+<b>MFString alternateUrl []</b> :<br/>
+The <b>alternateUrl</b> is used to display an image while the main image (the
+one defined in the <b>url</b> field) is loading or when an error occurs during
+load.<br/>
+The two first items can be used to handle these two events separately (eg
+<b>alternateUrl ["loading.png" "error.png"]</b>).<br/>
+If only the first image is defined, it will be used for both loading and error
+cases.<br/>
+</p>
+<p class="note check">
+<b>Note:</b><br/> the <b>alternateUrl</b> only supports "local" images available
+in the M4M file.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+# Display an image downloaded from a HTTP server.
+# During download, the loading.png image is displayed.
+# If the download fails, the error.png image is displayed.
+# Script will print the image size.
+Shape {
+  appearance Appearance {
+    texture DEF IT ImageTexture {
+      url "http://myserver.com/myservice/myicon.png"
+      alternateUrl ["loading.png" "error.png"]
+    }
+  }
+  geometry Bitmap { }
+}
+
+DEF script Script {
+  eventIn SFVec2f sizeOfImage
+
+  url "javascript:
+    function sizeOfImage () {
+      Browser.print ('Size of image: '+sizeOfImage.x+'x'+sizeOfImage.y);
+    }
+  "
+}
+
+ROUTE IT.size_changed TO script.sizeOfImage
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

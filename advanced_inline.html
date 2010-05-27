@@ -1,0 +1,128 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "advanced_inline";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">inlining</h1>
+
+
+
+<h1>Inline mechanism and memory benefits</h1>
+
+<p>
+<a href="development_node_Inline.html">Inline node</a> dynamically load and
+display a subscene file.<br/>
+</p>
+<p>
+<a href="development_node_Inline.html">Inline node</a> can be use with the
+<a href="development_node_Switch.html">Switch node</a>.<br/>
+Advantage, only the displayed node is loaded in memory. Other subscenes are not
+loader.<br/>
+Inconvenience, change the subscene is slower (when <b>whichChoice</b> attribute 
+of Swith node change). Inline node must load and construct the new subscene.
+</p>
+<p>
+The other possibility to define and display subscene: create and use a prototype
+by sub scene.<br/>
+Advantage, change the subscene is fast (subscene is already loaded).<br/> 
+Inconvenience, all subscene are loaded in memory.<br/>
+</p>
+<p>
+The best solution, between use prototype or Inline node, depends on the material
+constraints (memory, processor, ...) and the complexity of the scene.
+</p>
+<br/>
+
+<p class="note info">
+<b>Note:</b><br/>
+MeMo extends <a href="development_node_Inline.html">Inline node</a> specification.<br/>
+In addition, <a href="development_node_Inline.html">Inline node</a> gives you the opportunity to select a language pack for the
+scene that is inlined.
+</p>
+<br/>
+
+<h1>Anchor</h1>
+
+<p>
+The <a href="development_node_Anchor.html">Anchor node</a> has two roles:
+</p>
+<ul>
+<li>Call the phone browser and display a web page.<br/>
+<p class="note info">
+<b>Note:</b><br/>MicroEmulator doesn't open web browser.
+</p>
+</li>
+<li>Open another VRML scene.<br/>
+<a href="development_node_Anchor.html">Anchor node</a> can change all the scene
+or only the Inline part containing the Anchor.</li>
+</ul>
+<br/>
+
+
+<h1>Switch and resource saving</h1>
+
+<p>
+<a href="development_node_Switch.html">Switch node</a> allows to render only
+one node in a list of nodes. It is useful to display or hide elements.<br/>
+It can be used to manage different panels in a scene (with tabs, menu, ...).<br/>
+</p>
+<br/>
+
+<p>
+<a href="development_node_Switch.html">Switch node</a> contains an array of
+nodes (<b>choice</b> attribute) and the displayed node (<b>whichChoice</b> attribute).<br/>
+<b>whichChoice</b> contains the index of current displayed node in <b>choice</b>
+array. First node index is 0. <a href="development_node_Switch.html">Switch node</a>
+doesn't display node if <b>whichChoice = -1</b>.<br/>
+<b>whichChoice</b> value is modifiable via script (Script node and javascript language).
+</p>
+<br/>
+
+<p>
+See <a href="development_node_Switch.html">Switch node documentation</a> for
+more information about Swith node and example.
+</p>
+
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('advanced_cache','advanced_memory_tips');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

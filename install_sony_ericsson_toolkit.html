@@ -1,0 +1,124 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "install_sony_ericsson_toolkit";
+beginPage();
+//-->
+</script>
+
+
+
+<h1 class="title">Install and use the Sony Ericsson ToolKit</h1>
+
+<h1>Download</h1>
+
+<p>
+Sony Ericsson Toolkit is accessible on the Sony Ericsson web site.<br/>
+URL: <a href="http://developer.sonyericsson.com/cws/devworld/downloads">http://developer.sonyericsson.com/cws/devworld/downloads</a><br/>
+Select Java / SDK link.<br/>
+<img alt="Download Sony Ericsson Toolkit" src="images/installation/ULDownloadSonySDK1.png" />
+</p>
+<p>
+Download the last SDK for Java ME platform.<br/>
+<img alt="Download Sony Ericsson Toolkit" src="images/installation/ULDownloadSonySDK2.png" />
+</p>
+<br/>
+
+<h1>Installation</h1>
+
+<p>
+Execute the downloaded file and follow the default installation.
+</p>
+<br/>
+
+<h1>Proxy configuration</h1>
+
+<p>
+Open the ToolKit preferences (via the <b>Start</b> menu of MS Windows).<br/>
+<img alt="ToolKit preferences" src="images/installation/SonyEricssonToolkit_OpenConfig.png" />
+</p>
+<p>
+Select network configuration page.<br/>
+Enter proxy configuration and valid.<br/>
+<img alt="network configuration page" src="images/installation/SonyEricssonToolkit_ConfigProxy.png" />
+</p>
+<br/>
+
+<h1>Launch a widget (JAR/JAD files) via toolkit interface</h1>
+
+<p>
+Via the MS Windows <b>Start</b> menu, launch <b>Run MIDP Application...</b>
+shortcut (<b>Programs &gt; Programs &gt; Sony Ericsson &gt; Java ME SDK for CLDC
+&gt; WTK2 &gt; Run MIDP Application...</b>).<br/>
+Select your widget JAD file and launch it.<br/>
+Emulator is launched and we can use the widget.<br/>
+</p>
+<br/>
+
+<h1>Launch a widget (JAR/JAD files) via command line</h1>
+
+<p>
+Open console.<br/>
+Move to toolkit folder (Windows command: <b>cd C:\SonyEricsson\JavaME_SDK_CLDC\WTK2\bin</b>).<br/>
+Use emulator application to launch widget (Windows command: <b>emulator -Xdescriptor:&lt;MyWidget&gt;.jad</b>).<br/>
+Example to launch Bluegammon toolkit example:<br/>
+<b>emulator -Xdescriptor:C:\SonyEricsson\JavaME_SDK_CLDC\WTK2\apps\Bluegammon\bin\Bluegammon.jad</b>.
+</p>
+<br/>
+
+<h1>Configure widgets</h1>
+
+<p>
+All widgets can be configure independently.<br/>
+On Eclipse, open <b>app.properties</b> file on root folder for a widget project
+(<b>/MyWidget/app.properties</b>).<br/>
+Add following lines (change <b>yourAccount</b> by your Windows account):
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+emulator.bin.sonytk=C:/SonyEricsson/JavaME_SDK_CLDC/WTK2/bin/emulator.exe
+emulator.skin.sonytk=SonyEricsson_JP8_240x320_Emu
+emulator.rms.sonytk=C:/SonyEricsson/JavaME_SDK_CLDC/WTK2/appdb
+emulator=sonytk
+</textarea>
+<p>
+Launch Widget: The Sun WTK emulator is launched.
+</p>
+<br/>
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

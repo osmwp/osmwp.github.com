@@ -1,0 +1,273 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_carrousel";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Carrousel prototype</h1>
+
+
+<img class="right" alt="MenuBar" src="images/prototypes/proto_carrousel_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+This prototype displays any number of items in a zoom effect on the item which is selected.<br/>
+Each item is composed of:
+</p>
+<ul>
+<li>a label</li>
+<li>an icon and its optional background image</li>
+<li>a notification and its optional icon image</li>
+</ul>
+<p>
+In case the images use online resources, default images and error images can be defined for each item to handle failure properly.<br/>
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="50" readonly="readonly" wrap="off">
+PROTO Carrousel [
+
+  # Events
+  eventIn SFBool update
+  exposedField SFBool startZoom FALSE # Set to TRUE to zoom in and to FALSE to zoom out
+  exposedField SFInt32 index 0
+  exposedField SFBool enable TRUE
+  exposedField SFBool available TRUE   # will be set to FALSE when a scroll animation is ongoing
+  eventOut SFBool zoomFinished # will be set to TRUE on end of zoom in and to FALSE on end of zoom out
+  eventOut SFString activeKey # Send touchCursor event to upper prototypes
+
+  # Data
+  field MFString images []
+  field MFString labels []
+  field MFString notifs []
+  field MFString bgIcons []
+  field MFString notifIcons []
+  field MFString defaultIcons []
+  field MFString errorIcons []
+
+  # Style
+  field SFBool cycle TRUE # if TRUE, at display carrousel as a circle
+  field SFVec2f screenSize 0 0
+  field SFVec2f textScale 1 1
+  field MFString style "Carrousel"
+  field MFString itemStyle "Carrousel-item"
+  field MFString notifStyle "Carrousel-notif"
+  field MFString panelStyle "Carrousel-panel"
+  field MFString imagesStyle ["" "carrouselArrowLeft.png" "carrouselArrowLeft_over.png" "carrouselArrowRight.png" "carrouselArrowRight_over.png"]
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+ 
+<ul>
+<li>MFString images - Icons of each item</li>
+<li>MFString labels - Labels of each item</li>
+<li>MFString notifs - Labels of the notifications</li>
+<li>MFString bgIcons - Background images placed behind the icons of each item</li>
+<li>MFString notifIcons - Icons of the notifications, can be used as a background image to the notification labels</li>
+<li>MFString defaultIcons - Default icons, displayed while the icon is loading</li>
+<li>MFString errorIcons - Error icons, displayed if the icon loading fails</li>
+</ul>
+<br/>         
+
+<h2>Style fields</h2>
+
+<ul>
+<li>SFBool cycle - If TRUE, at display carrousel as circle</li>
+<li>SFVec2f screenSize - Size of the screen where the application is displayed</li>
+<li>SFVec2f textScale - Use for scaling text if necessary (phone with small fonts)</li>
+<li>MFString style - Path to the CSS node associated to Carrousel proto</li>
+<li>MFString itemStyle - Path to the specific CSS node Carrousel Item</li>
+<li>MFString notifStyle - Path to the specific CSS node Carrousel Notification</li>
+<li>MFString panelStyle - Path to the specific CSS node Carrousel Panel</li>
+<li>MFString imagesStyle - Images used to display the panel background and both panel arrows (and their pressed states)</li>
+</ul>
+<br/>         
+
+<h2>Exposed Fields</h2>
+
+<ul>
+<li>SFBool available - Set to FALSE when a scroll animation is ongoing</li>
+<li>SFBool enable - Enable/disable Carrousel</li>
+<li>SFInt32 index - Index of the current element</li>
+</ul>
+<br/>         
+
+<h2>Event in</h2>
+
+<ul>
+<li>SFBool update - Update the Carrousel and position its index on the given element</li>
+<li>SFBool startZoom - Set to TRUE to zoom in and to FALSE to zoom out. It set to FALSE by default: the carrousel is not visible !</li>
+</ul>
+<br/>         
+
+<h2>Event Out</h2>
+
+<ul>
+<li>SFBool zoomFinished - Set to TRUE on end of zoom in and to FALSE on end of zoom out</li>
+<li>SFString activeKey - Send touchCursor event to upper prototypes</li>
+</ul>
+<br/>         
+
+<h1>CSS</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Carrousel {
+  position: 0% 20%;
+  size: 100% 75%;
+}
+
+Carrousel-item {
+  size: 30% 30%;  // size of the main icon (keeping aspect ratio)
+  scale: 70%; // ratio between size of main and second items, ignored when on light mode 
+  image-position: 0% -15%; // position of the image background (relative to Carrousel-item.size)
+  image-size: 34.5% 44%; // size of the image background (keeping aspect ratio)
+  text-position: 50% -50%; // position of the notification, (relative to Carrousel-item.size)
+  text-size: 12.5% 16.666%; // size of the image notification (keeping aspect ratio)
+  vertical-align: BASELINE;
+  horizontal-align: MIDDLE;
+  color: white;
+}
+
+Carrousel-panel {
+  // panel properties
+  position: 0% -25%;
+  size: 90% 20%;
+  background-color: #e9e9e9; // light-gray
+  // controls properties
+  image-position: 40% 0%; // position of the right arrow
+  image-size: 4.58% 8.75%; // size of the left/right arrows
+  // label properties
+  text-size: 70% 2px; // width is relative to screen, height is the number of lines to wrap
+  color: black;
+  vertical-align: MIDDLE;
+  horizontal-align: MIDDLE;
+  font-size: 18;
+  font-filter: true;
+}
+</textarea>
+<br/>
+
+<h1>Extern proto(s)</h1>
+
+<p>
+CarrouselIcon, TouchCursor
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO Carrousel [] "Carrousel.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+    
+    DEF KEY_SENSOR KeySensor {
+      url            "LR"
+      activate       TRUE
+      repeatInterval 0.25
+      repeatDelay    1
+    }
+    
+    DEF CAROUSEL Carrousel {
+      labels [ "Item 1" "Item 2" "Item 3" "Item 4" "Item 5" ]
+    }
+
+		DEF SCRIPT Script {
+		  eventIn SFTime keyPressed
+		  
+		  field SFNode carousel USE CAROUSEL
+		  field SFNode input    USE KEY_SENSOR
+		  
+		  url "
+		  	function keyPressed () {
+		  	  Browser.print('Key pressed: ' + input.activeKey);
+		  	  if (input.activeKey == 'R') {
+          	carousel.index = carousel.index + 1;
+          	if (carousel.index &gt; 4) carousel.index = 0;
+          	carousel.update = true;
+		  	  } else {
+		  	    carousel.index = carousel.index - 1;
+		  	    if (carousel.index &lt; 0) carousel.index = 4;
+		  	    carousel.update = true;
+		  	  }
+        }
+		  "
+		}
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+    
+    ROUTE SIZE_NOTIFIER.screenSize TO CAROUSEL.screenSize
+    ROUTE SIZE_NOTIFIER.textScale  TO CAROUSEL.textScale
+    
+    ROUTE KEY_SENSOR.pressTime TO SCRIPT.keyPressed
+  ]
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

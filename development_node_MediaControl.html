@@ -1,0 +1,134 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_MediaControl";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">MediaControl node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+MediaControl {
+  MFString url ""
+  SFTime   mediaStartTime 0
+  SFTime   mediaStopTime 0
+  SFBool   loop FALSE
+  SFBool   preRoll TRUE
+  SFBool   isPreRolled FALSE
+  SFInt32  volume 50
+  SFBool   pause FALSE
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Control the state of a media (audio or video) currently played.
+It can also be used to:
+</p>
+<ul>
+<li>configure sound volume (<b>volume</b> field),</li>
+<li>start / stop media playing (<b>pause</b> and <b>mediaStartTime</b> fields),</li>
+<li>navigate into media file (<b>mediaStartTime</b> field),</li>
+<li>play media in loop (<b>loop</b> field).</li>
+</ul>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFString url ""</b>:<br/>
+As for MediaSensor, the specified <b>url</b> must be also used in a MovieTexture or an AudioClip.
+</p>
+
+<p>
+<b>SFTime mediaStartTime 0</b>:<br/>
+  The <b>mediaStartTime</b> field defines the start time into in media currently played.
+</p>
+
+<p>
+<b>SFTime mediaStopTime 0</b>:<br/>
+  The <b>mediaStopTime</b> field define the stop time into in media currently played.
+</p>
+<p class="note warning"><b>Note:</b><br/>currently, field is not implemented.</p>
+
+<p>
+<b>SFBool loop FALSE</b>:<br/>
+  The <b>loop</b> field defines if the media is played in loop.
+</p>
+<p class="note warning"><b>Note:</b><br/>currently, field is not implemented.</p>
+
+<p>
+<b>SFBool preRoll TRUE</b>:<br/>
+</p>
+<p class="note warning"><b>Note:</b><br/>currently, field is not implemented.</p>
+
+<p>
+<b>SFBool isPreRolled FALSE</b>:<br/>
+</p>
+<p class="note warning"><b>Note:</b><br/>currently, field is not implemented.</p>
+
+<p>
+<b>SFInt32 volume 50</b>:<br/>
+  The <b>volume</b> field defines the sound volume in percent.
+</p>
+
+<p>
+<b>SFBool pause FALSE</b>:<br/>
+The <b>pause</b> field (de)activates pause.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80"> <!-- TODO complete this example -->
+#VRML V2.0 utf8
+...
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_Style";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Style Javascript library</h1>
+
+
+<h1>Description</h1>
+
+<p>
+This class is used to customize appearance of Prototypes by using
+<a href="http://wikipedia.org/wiki/Css" target="_blank">CSS</a>.<br/>
+The following methods enables CSS parsing depending on the type of the data to be parsed.<br/>
+For more information about CSS file selection and inclusion into VRML scene, see
+<a href="development_node_Style.html">Style node</a>.
+</p>
+<br/>
+
+
+<h1>Methods</h1>
+
+<p>
+<b>int getInt (MFString classes, SFString attribute, int length)</b>:<br/>
+Return an integer matching the given selector. The length parameter is used in
+case of relative value (depending on screen size).
+</p>
+
+<p>
+<b>float getFloat (MFString classes, SFString attribute, int length)</b>:<br/>
+Return a float matching the given selector. The length parameter is used in case
+of relative value  (depending on screen size).
+</p>
+
+<p>
+<b>String getString (MFString classes, SFString attribute)</b>:<br/>
+Return a string matching the given selector.
+</p>
+
+<p>
+<b>bool getBool (MFString classes, SFString attribute)</b>:<br/>
+Return a bool matching the given selector(classes.attributes).
+</p>
+
+<p>
+<b>void getFontStyle (MFString classes, SFNode fontStyle)</b>:<br/>
+Set <b>fontStyle</b> found in the classes selector. The fontStyle node is
+constructed from the following CSS attributes :
+</p>
+<ul>
+<li>font-family: one of "sherif", "sans", "typewriter", or any available bitmap
+    font (see <a href="development_node_FontStyle.html">FontStyle</a>).
+    Default: "typewriter".</li>
+<li>font-size: size of the font. System fonts only support 3 sizes
+    (small &lt; 10 &lt; medium &lt; 14 &lt; big). Default: "12".</li>
+<li>font-style: one of "bold", "italic", "bolditalic", "plain". Default: "plain".</li>
+<li>font-filter: set to "true" to filter text when scaled. Default: "false".</li>
+<li>horizontal-align: one of "left", "middle", "right". Default: "left".</li>
+<li>vertical-align: one of "top", "middle", "bottom", "baseline". Default: "top".</li>
+</ul>
+
+<p>
+<b>void getColor (MFString classes, SFString attribute, SFColor field)</b>:<br/>
+Set <b>field</b> to the corresponding color selected by selectors.
+</p>
+
+<p>
+<b>void getCoord (MFString classes, SFString attribute, SFVec2f field, int width, int height)</b>:<br/>
+Set <b>field</b> to the corresponding 2D-coordinates selected by the
+selector. Width and Height parameters are used in case of relative coordinates.<br/>
+Returns a (0, 0) SFVec2f if the selector is not found in the CSS.
+</p>
+<br/>
+
+<h1>Selectors</h1>
+
+<p>
+The classes parameter of each method from Style API is the way to select the CSS
+node to be used.
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>
+<a href="development_node_Style.html">Style node</a> enables to select the CSS
+file whereas classes parameter enables to select the CSS node into CSS file.
+As with the <a href="development_node_Style.html">Style node</a>, the most right
+CSS node declared into classes parameter is the most specialized. If informations
+are not found into it, it will be search into the CSS node declared one step left
+etc until the default CSS node placed at first position of classes String table.
+</p>
+<br/>
+
+<h1>Examples</h1>
+
+<p>
+Into CSS file:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Alert {
+  size: 90% 37.5%;
+  background-color: white;
+  border-width: 2px; // border color will be the color of the Alert-Slider.background-color
+  // Icon properties
+  image-size: 15% 18%;
+  image-position: 0% 8%;
+  // Message properties
+  text-size: 80% 16;
+  text-position: 0% -8%;
+  color: black;
+  font-filter: true;
+  vertical-align: MIDDLE;
+  horizontal-align: MIDDLE;
+}
+Alert-Slider {
+  background-color: black;
+  margin-bottom: 8.75%;
+}
+Alert-Slider-title {
+  background-color: black;
+}
+
+MenuBar {
+  size: 100% 8.75%;
+  background-color: gray;
+  color: orange;
+}
+MenuBar-label {
+  disabled-color: gray;
+  color: black;
+  margin-left: 4%;
+  vertical-align: middle;
+  font-style: bold;
+  font-size: 14;
+  font-filter: true;
+}
+
+Slider {
+  background-color: white;
+  margin-bottom: 8.75%;
+}
+
+Slider-title {
+  background-color: #414141; # dark-gray
+  color: white;
+  height: 8.75%;
+  margin-left: 4%;
+  font-style: bold;
+  vertical-align: middle;
+  font-filter: true;
+}
+</textarea>
+<br/>
+
+<p>
+Into <b>Alert.wrl</b> file (an alert pop up):
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+PROTO Alert [
+...
+  field MFString sliderStyle ["Slider" "Alert-Slider"]
+  field MFString sliderTitleStyle ["Slider-title" "Alert-Slider-title"]
+  field MFString sliderImages ""
+  field MFString menubarStyle "Menubar"
+  field MFString menubarLabelStyle "Menubar-label"
+...
+] {
+DEF SLIDER Slider {
+    titleLabel IS title
+    screenSize IS screenSize
+    style IS sliderStyle
+    titleStyle IS sliderTitleStyle
+    images IS sliderImages
+    textScale IS textScale
+    content [ whatever...]
+}
+...
+  DEF MENUBAR MenuBar {
+        rightLabel IS rightLabel
+        leftLabel IS leftLabel
+        screenSize IS screenSize
+        style IS menubarStyle
+        labelStyle IS menubarLabelStyle
+        images IS menuBarImages
+        textScale IS textScale
+      }
+
+DEF SCRIPT Script {
+...
+   field MFString style "Alert"
+   field MFString sliderStyle ["Slider" "Alert-Slider"]
+   field MFString sliderTitleStyle ["Slider-title" "Alert-Slider-title"]
+
+   function initialize () {
+     Style.getColor (style, 'background-color', bgMat.emissiveColor);
+     screenSize ();
+   }
+
+      function screenSize () {
+        var h = screenSize.y;
+        var w = screenSize.x;
+        var min = w; if (h &lt; w) min = h; // min (h, w)
+        Style.getCoord (style, 'size', slider.size, w, h);
+        // Create a black border by having a smaller white Rectangle
+        // in front of the black Rectangle of the Slider's background
+        var width = Style.getFloat (style, 'border-width', w) * 2;
+        bgRec.size.x = slider.size.x - width;
+        bgRec.size.y = slider.size.y - width;
+        // Size and position of the icon and message
+        Style.getCoord (style, 'image-position', iconTrs.translation, w, h);
+        Style.getCoord (style, 'image-size', iconRec.size, min, min); // keep aspect ratio
+        Style.getCoord (style, 'text-position', messageTrs.translation, w, h);
+        Style.getCoord (style, 'text-size', messageTicker.size, w, h);
+      }
+ }
+}
+</textarea>
+<br/>
+<p>
+Into <b>slider.wrl</b>:
+</p>
+<textarea rows="13" cols="80" readonly="readonly" wrap="off">
+function initialize () {
+  light = Style.getBool('Common', 'light');
+  if(light == false) light = Style.getBool('Slider', 'light');
+
+  if (light == false) titleBgTex.url[0] = images[0];
+  Style.getColor (titleStyle, 'background-color', titleBgMat.emissiveColor);
+  // Set content style
+  Style.getColor (style, 'background-color', contentBgMat.emissiveColor);
+  // Check sliderTrs orientation
+  if (Style.getString (style, 'orientation') == 'horizontal') {
+    vertical = false;
+  }
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

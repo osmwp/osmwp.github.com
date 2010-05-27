@@ -1,0 +1,213 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_basic_audio_video";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">basic audio and video tutorial</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+This part presents how to play audio and video contents.<br/>
+</p>
+<br/>
+
+<h1>Required configuration</h1>
+
+<p>
+Audio and video nodes require a Java ME including JSR135 and 
+MeMo player build with audio and video options.<br/>
+Supported formats (for audio and video) depend of mobile phone.
+</p>
+
+<p class="note info">
+<b>Note:</b><br/>
+Many MeMoPlayer versions does not support audio and video nodes.<br/>
+To change the MeMo Player, add following line in your <b>app.properties</b> file.<br/>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+player.name=OWP
+</textarea>
+<br/>
+<a href="development_node_MovieTexture.html">MovieTexture</a> node is not supported by MicroEmulator.<br/>
+<a href="install_sun_wtk.html">Install the Sun Wireless ToolKit</a>
+to test video on PC (MPEG video only).
+</p>
+<br/>
+
+<h1>MovieTexture and AudioClip nodes</h1>
+
+<p>
+[MovieTexture] can display a video file or a video stream.<br/>
+[AudioClip] can play an audio file or an audio stream.<br/>
+They are the same interface:
+</p>
+<textarea rows="3" cols="80" readonly="readonly" wrap="off">
+  MFString url
+  SFTime   startTime
+  SFTime   stopTime
+</textarea>
+<br/>
+<ul>
+<li><b>url</b> field define the file name or the stream url.</li>
+<li><b>startTime</b> field define the start time.</li>
+<li><b>stopTime</b> field define the stop time.</li>
+</ul>
+<p>
+See <a href="development_node_MovieTexture.html">MovieTexture</a> and
+<a href="development_node_AudioClip.html">AudioClip</a> documentation for more
+informations.
+</p>
+<br/>
+
+<h1>Video example</h1>
+
+<p>
+We use <a href="development_node_MovieTexture.html">MovieTexture</a> like a
+<a href="development_node_ImageTexture.html">ImageTexture</a>.<br/>
+<a href="development_node_Rectangle.html">Rectangle</a> node define the video
+size on mobile phone.
+</p>
+<textarea rows="12" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Shape {
+      appearance Appearance {
+        texture MovieTexture {
+          url "http://myserver/myvideofile.mpg"
+        }
+      }
+      geometry Rectangle { size 160 120 }
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Audio example</h1>
+
+<p>
+We use <a href="development_node_AudioClip.html">AudioClip</a> like a 
+<a href="development_node_ImageTexture.html">ImageTexture</a>... In Shape node
+without <b>geometry</b> field.
+</p>
+<textarea rows="11" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Shape {
+      appearance Appearance {
+        texture AudioClip {
+          url "http://myserver/myaudiofile.mp3"
+        }
+      }
+    }
+  ]
+}
+</textarea>
+<br/>
+<p>
+we can also use a <a href="development_node_Sound2D.html">Sound2D</a> node.<br/>
+<a href="development_node_Sound2D.html">Sound2D</a> node replace Shape node and
+offer control to sound intensity (volume).
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Sound2D {
+      source AudioClip {
+        url "http://myserver/myaudiofile.mp3"
+      }
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Control audio and video playing</h1>
+
+<p>
+To control media playing, see <a href="tutorial_media_sensor.html">MediaSensor and MediaControl tutorial</a>.
+</p>
+<br/>
+
+<h1>Errors</h1>
+
+<h2>MeMo Player doesn't support MovieTexture and AudioClip nodes</h2>
+
+<p><b>Error:</b></p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+     [java] MyCanvas:run exception during scene start: java.lang.NullPointerException
+     [java] error MIDlet caught java.lang.NullPointerException
+     [java] java.lang.NullPointerException
+     [java] 	at memoplayer.Group.start(Unknown Source)
+     [java] 	at memoplayer.Scene.start(Unknown Source)
+     [java] 	at memoplayer.MyCanvas.play(Unknown Source)
+     [java] 	at memoplayer.MyCanvas.run(Unknown Source)
+     [java] 	at java.lang.Thread.run(Thread.java:619)
+     [java] 	at org.microemu.app.util.MIDletThread.run(MIDletThread.java:99)
+     [java] error MIDlet caught java.lang.NullPointerException
+     [java] java.lang.NullPointerException
+     [java] 	at memoplayer.Group.compose(Unknown Source)
+     [java] 	at memoplayer.Scene.innerCompose(Unknown Source)
+     [java] 	at memoplayer.Scene.compose(Unknown Source)
+     [java] 	at memoplayer.MyCanvas.play(Unknown Source)
+     [java] 	at memoplayer.MyCanvas.run(Unknown Source)
+     [java] 	at java.lang.Thread.run(Thread.java:619)
+     [java] 	at org.microemu.app.util.MIDletThread.run(MIDletThread.java:99)
+     [java] Main loop: Exception caught: java.lang.NullPointerException
+</textarea>
+<p>
+<b>Solution:</b> Change the MeMoPlayer.<br/>
+To change the MeMo Player, add following line in your <b>app.properties</b> file.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+player.name=OWP
+</textarea>
+<br/>
+
+<!-- TODO complete with errors -->
+
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_more_anim','tutorial_media_sensor');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_menubar";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">MenuBar prototype</h1>
+
+
+<img class="right" alt="MenuBar" src="images/prototypes/proto_menubar_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Display a menu with two elements associate to softkeys.<br/>  
+Set an empty label disable the <a href="development_node_InputSensor.html">InputSensor</a>, then, the key associated action.<br/>
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="50" readonly="readonly" wrap="off">
+PROTO MenuBar [
+  # Button labels
+  field MFString leftLabel ""
+  field MFString rightLabel ""
+  field SFBool enable TRUE
+
+  # Events
+  eventOut SFTime leftButtonClicked
+  eventOut SFTime rightButtonClicked
+
+  # Style
+  field SFVec2f screenSize 0 0
+  field SFVec2f textScale 1 1
+  field MFString images ["menubarBg.png" "menubarLeftPressed.png" "menubarRightPressed.png"]
+  field MFString style ["MenuBar"]
+  field MFString labelStyle ["MenuBar-label"]
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>MFString leftLabel - Left label</li>
+<li>MFString rightLabel - Right label</li>
+<li>SFBool enable - enable/disable MenuBar Buttons</li>
+</ul>
+<br/>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>SFVec2f screenSize - Size of the screen where the application is displayed</li>
+<li>SFVec2f textScale - Use for scaling text if necessary (phone with small fonts)</li>
+<li>MFString images - List of images for background, left overlay, right overlay</li>
+<li>MFString style - Style to use for this prototype (Default: MenuBar)</li>
+<li>MFString labelStyle - Style to use for the labels (Default: MenuBar-label)</li>
+</ul>
+<br/>
+
+<h2>Event Out</h2>
+
+<ul>
+<li>SFTime leftButtonClicked - time when push left button</li>
+<li>SFTime rightButtonClicked - time when push right button</li>
+</ul>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+MenuBar {
+  size: 100% 8.75%;
+  background-color: gray;
+  color: orange; 
+}
+ 
+MenuBar-label {
+  disabled-color: gray;
+  color: black;
+  margin-left: 4%;
+  vertical-align: middle;
+  font-style: bold;
+  font-size: 14;
+  font-filter: true;
+}
+</textarea>
+<br/>
+
+<h1>See Also</h1>
+
+<p>
+<a href="prototype_menu.html">Menu</a>
+</p>
+<br/>
+
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO MenuBar [] "MenuBar.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+    
+    DEF MENU_BAR MenuBar {
+      leftLabel "Left"
+      rightLabel "Right"
+    }
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+    
+    ROUTE SIZE_NOTIFIER.screenSize TO MENU_BAR.screenSize
+    ROUTE SIZE_NOTIFIER.textScale  TO MENU_BAR.textScale
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

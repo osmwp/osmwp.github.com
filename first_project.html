@@ -1,0 +1,149 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "first_project";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">First project</h1>
+
+<h1>The "Hello world!" project</h1>
+
+<p>We start with a very simply project: The "Hello world!" project.</p>
+<p>"Hello world" project display "Hello world" message.</p>
+<br/>
+
+<h1>Creation project</h1>
+
+<p>To create a new project on Eclipse use the <b>File &gt; New &gt; Project...</b> menu.<br/>
+<img alt="New project menu" src="images/first_project/first_project_wizard_1.jpg" /></p>
+<br/>
+
+<p>Select a new widget project for Mobile Widgets (<b>Mobile Widgets &gt; Widget Project</b> item in project tree).<br/>
+<img alt="New project type" src="images/first_project/first_project_wizard_2.jpg" /></p>
+<br/>
+
+<p>Complete new project wizard.</p>
+<ul>
+<li>Project name: HelloWorld</li>
+<li>Widget name: HelloWorld</li>
+<li>Widget version: 1.0.0</li>
+<li>Widget category: Fun &amp; Game</li>
+</ul>
+<p>
+<img alt="New project wizard" src="images/first_project/first_project_wizard_3.jpg" /><br/>
+Go to next wizard page (<b>Next</b> button).
+</p>
+<br/>
+
+<p>The next page is the selection of project template. Keep the default configuration (don't use template).<br/>
+<img alt="New project wizard template" src="images/first_project/first_project_wizard_4.jpg" /><br/>
+Go to last wizard page (<b>Next</b> button).</p>
+<br/>
+
+<p>On last page, complete information about application style. Keep the default configuration.<br/>
+<img alt="New project wizard template" src="images/first_project/first_project_wizard_5.jpg" /><br/>
+Finish the project creation (<b>Finish</b> button).</p>
+<br/>
+
+<!-- TODO complete with final wizard documentation / screen -->
+<p>Your project is created.</p>
+<br/>
+
+
+
+<h1>Project structure</h1>
+
+<p>Your new project have the following structure:<br/>
+<img alt="New project wizard template" src="images/first_project/first_project_structure_1.jpg" /></p>
+<br/>
+
+<p>Details of project structure:</p>
+<ul>
+<li><b>i18n</b> folder: Internationalization folder. It contains all language files.</li>
+<li><b>src</b> folder: Source folder (contains VRML files).</li>
+<li class="lvl2"><b>main.wrl</b> file: Main widget source file.</li>
+<li><b>style</b> folder: Contains styles for widget.</li>
+<li><b>WidgetSDK</b> folder: Link to the widget SDK (MeMo SDK) folder.</li>
+<li><b>app.properties</b> file: widget configuration.</li>
+</ul>
+<br/>
+
+
+<h1>Complete project</h1>
+
+<p>Open <b>main.wrl</b> file (in <b>src</b> folder) and copy/paste following VRML code in Eclipse editor.</p>
+<textarea readonly="readonly" rows="13" cols="80">
+#VRML V2.0 utf8
+
+# hello world text
+Shape {
+  appearance Appearance {
+    material Material2D {
+      emissiveColor 0 0 0
+    }
+  }
+  geometry WrapText {
+    string [ "Hello world!" ]
+  }
+}
+</textarea>
+<br/>
+
+<p>Save the <b>main.wrl</b> file (use <b>Ctrl + S</b> shortcut).</p>
+<br/>
+
+
+
+<h1>Launch project</h1>
+
+<p>Select your project on Eclipse.</p>
+<p>Open <b>Run</b> menu and select <b>Run</b> item into menu (or press <b>Ctrl + F11</b>, or use the toolbar button).<br/>
+<img alt="Launch project" src="images/first_project/first_project_launch_1.jpg" /></p>
+<br/>
+
+<p>Congratulation! Your project is launched.<br/>
+<img alt="Project is launched" src="images/first_project/first_project_launch_2.jpg" /></p>
+<br/>
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('installation', 'widgets_development');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

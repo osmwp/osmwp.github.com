@@ -1,0 +1,158 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_scrollbar";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">ScrollBar prototype</h1>
+
+
+<img class="right" alt="ScrollBar" src="images/prototypes/proto_scrollbar_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Show a scroll bar to the right of the screen.<br/>
+Set the bar height (sizeBar), the number of elements (eltTotal) and the shown elements (eltShown).<br/>
+The cursor size (sizeCursor.y) would be calculate function of the number of elements.
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="11" cols="50" readonly="readonly" wrap="off">
+PROTO ScrollBar [
+  eventIn SFInt32 move
+  eventIn SFInt32 moveTo
+  eventIn SFInt32 update
+  
+  field MFString style ["Scrollbar"]
+  
+  field SFVec2f size 0 0
+  
+  field SFFloat eltShown 10
+  field SFFloat eltTotal 20
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>SFFloat eltShown - Number of shown elements</li>
+<li>SFFloat eltTotal - Number of total elements</li>
+<li>SFVec2f size - Size of the area where the ScrollBar proto is displayed</li>
+</ul>
+<br/>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>MFString style - Path to the CSS node associated to Scrollbar proto</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h2>Event In</h2>
+
+<ul>
+<li>SFInt32 move - Move scroll bar using an increment: up = -1, down = +1</li>
+<li>SFInt32 moveTo - Move scroll bar to a given element/position (min=0, max=eltTotal)</li>
+<li>SFInt32 update - Update scroll bar y position</li>
+</ul>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="6" cols="80" readonly="readonly" wrap="off">
+Scrollbar {
+  background-color: gray; 
+  color: #e9e9e9; // light-gray
+  rectangle-size: 1.6% 28%; //cursor size
+  size: 2.5% 100%;
+}
+</textarea>
+<br/>
+
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+EXTERNPROTO Scrollbar [] "Scrollbar.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+		
+    DEF SCROLLBAR Scrollbar {
+    }
+		
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+      
+    ROUTE SIZE_NOTIFIER.screenSize TO SCROLLBAR.size
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_tiny_progressbar";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">progress bar tutorial</h1>
+
+
+<p class="note warning">
+<b>Warning:</b><br/>
+This tutorial covers only Tiny Mobile Widgets versions.<br/>
+On Mobile Widgets, use <a href="prototype_loader.html">Loader</a>,
+<a href="prototype_loadermini.html">LoaderMini</a> or
+<a href="prototype_progressbar.html">ProgressBar</a> prototype.
+</p>
+
+
+<h1>Introduction</h1>
+
+<p>
+This chapter present the Tiny Mobile Widgets propress bar.<br/>
+Tiny Mobile Widgets provide a progress bar component. Developer can display this progress bar into popup.
+</p>
+<p>
+<img alt="example" src="images/tutorials/tuto_tiny_progressbar_01.png" />
+</p>
+
+<p class="note info">
+<b>Note:</b><br/>
+Progress bar require popup.<br/>
+See <a href="tutorial_tiny_popup.html">popup tutorial</a> to display and use popup.
+</p>
+<br/>
+
+<h1>How to display Tiny Mobile Widgets progress bar</h1>
+
+<p>
+Tiny Mobile Widgets progress bar is displayed via a <a href="development_node_Message.html">Message</a>
+on the <a href="tiny_message_board.html">"Board" channel</a>.
+</p>
+<br/>
+
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'PROGRESS', progress);
+</textarea>
+<ul>
+<li>progress: progression value (between 0 and 100)<br/>
+    See <a href="tiny_message_board.html">"Board" channel</a> chapter for more information about parameters.</li>
+</ul>
+<br/>
+
+<p class="note info">
+<b>Note:</b><br/>
+Popup is required to display progress bar (see <a href="tutorial_tiny_popup.html">popup tutorial</a>).
+</p>
+<br/>
+
+<p>
+We create a popup to ask if user would quit widget.<br/>
+We close popup after 5 seconds.<br/>
+A progress bar displays the time left before closing popup.
+</p>
+
+<p class="note info">
+<b>Note:</b><br/>
+We use a <a href="development_node_TimeSensor.html">TimeSensor</a> node.
+</p>
+<br/>
+
+<h1>Use a TimeSensor node</h1>
+
+<h2>Add TimeSensor node</h2>
+
+<p>
+Define <a href="development_node_TimeSensor.html">TimeSensor</a> node. TimeSensor
+interval is 5 secondes.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+DEF TIMER_HIDE TimeSensor { cycleInterval 5 isActive FALSE }
+</textarea>
+<br/>
+<p>
+And declare <a href="development_node_TimeSensor.html">TimeSensor</a> node in script node.
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+DEF SCRIPT Script {
+  ...
+  field SFNode TIMER_HIDE USE TIMER_HIDE
+  ..
+}
+</textarea>
+<br/>
+
+<h2>Use TimeSensor to close the popup</h2>
+
+<p>
+Link <a href="development_node_TimeSensor.html">TimeSensor</a> node and hide
+popup function.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+ROUTE TIMER_HIDE.cycleTime TO SCRIPT.hidePopup
+</textarea>
+<br/>
+
+<h2>Modify hide popup function to use the time sensor</h2>
+
+<p>
+"cycleTime" event return a SFTime value.<br/>
+Change hidePopup event type to SFTime.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+eventIn SFTime hidePopup
+</textarea>
+<br/>
+
+<h2>Start TimeSensor</h2>
+
+<p>
+Launch TimeSensor when popup is opened.<br/>
+To launch <a href="development_node_TimeSensor.html">TimeSensor</a>, we active
+the <a href="development_node_TimeSensor.html">TimeSensor</a> and we define the
+start time to current time.
+</p>
+
+<p class="note info">
+<b>Note:</b><br/>
+current time is a "data_changed" function parameter
+</p>
+
+<textarea rows="12" cols="80" readonly="readonly" wrap="off">
+//Function of 'data changed' event
+function data_changed (val,now) {
+  ...
+  if (key == 'RSK') {
+    //Right softkey: Close widget, display confirmation popup
+    Browser.sendMessage ('Board', 'POPUP', 'Quit', 'Close the widget?', 'Yes', 'No', 'warning');
+    //Wait for 5000ms (5 secondes) before hide popup
+    TIMER_HIDE.isActive = true;
+    TIMER_HIDE.startTime = now;
+  }
+  ...
+}
+</textarea>
+<br/>
+
+<h1>Display progress bar</h1>
+
+<h2>Create event to catch progression</h2>
+
+<p>
+TimeSensor return progression with fraction_changed event (return a SFFloat value).<br/>
+In JavaScript, we add an event to catch fraction_changed.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+eventIn SFFloat moveProgressBar
+</textarea>
+<br/>
+
+<h2>Create function to process event</h2>
+
+<p>
+We would change progress bar when TimeSensor send fraction_changed event.
+</p>
+
+<p class="note info">
+<b>Note:</b><br/>
+fraction_changed return a value between 0 and 1. Progress bar use value between 0 and 100.
+</p>
+
+<textarea rows="6" cols="80" readonly="readonly" wrap="off">
+//Move progress bar function
+function moveProgressBar() {
+  //Move progress bar
+  var pos = (moveProgressBar * 100);
+  Browser.sendMessage ('Board', 'PROGRESS', pos);
+}
+</textarea>
+<br/>
+
+<h2>Link fraction_changed event and moveProgressBar() function</h2>
+
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+ROUTE TIMER_HIDE.fraction_changed to SCRIPT.moveProgressBar
+</textarea>
+<br/>
+
+<h1>Final tutorial code</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+    children [
+
+        # Node to read messages on "Board" channel
+        DEF MESSAGE Message { url "Board" }
+
+        # Time sensor (to hide the popup)
+        DEF TIMER_HIDE TimeSensor { cycleInterval 5 isActive FALSE }
+
+        # Script
+        DEF SCRIPT Script {
+            # Define 'data changed' event
+            eventIn MFString data_changed
+            eventIn SFTime hidePopup
+            eventIn SFFloat moveProgressBar
+            field SFNode TIMER_HIDE USE TIMER_HIDE
+            url "
+            // Widget initialization
+            function initialize () {
+              // Initialize widget
+              Browser.sendMessage ('Board', 'INIT', 'My Widget', '', 'Quit');
+            }
+
+            //Function of 'data changed' event
+            function data_changed (val,now) {
+              //Read event key
+              var key = data_changed[0];
+              //Message data are stored in 'data_changed'
+              if (key == 'RSK') {
+                 //Right softkey: Close widget, display confirmation popup
+                 Browser.sendMessage ('Board', 'POPUP', 'Quit', 'Close the widget?', 'Yes', 'No', 'warning');
+                 //Wait for 5000ms (5 secondes) before hide popup
+                 TIMER_HIDE.isActive = true;
+                 TIMER_HIDE.startTime = now;
+              } else if (key == 'ANSWER') {
+                //Popup response
+                var popupResult = data_changed[1];
+                if (popupResult == 'LSK') {
+                  //'Yes' (left softkey) : Close widget
+                  Browser.print('YES - Close the widget');
+                  Browser.sendMessage ('Board', 'RESET');
+                } else if (popupResult == 'RSK') {
+                  //'No' (Right softkey) : Do nothing
+                  Browser.print('NO - Do nothing');
+                }
+              }
+            }
+            //Hide popup function
+            function hidePopup() {
+              //Send hide popup message to Manager
+              Browser.print ('hidePopup '+hidePopup);
+              Browser.sendMessage ('Board', 'POPUP_AUTO_HIDE');
+            }
+            //Move progress bar function
+            function moveProgressBar() {
+              //Move progress bar
+              var pos = (moveProgressBar * 100);
+              Browser.sendMessage ('Board', 'PROGRESS', pos);
+            }
+            "
+        }
+
+        # Link "Board" channel and Javascript event
+        ROUTE MESSAGE.data_changed TO SCRIPT.data_changed
+
+        # Link SensorTime and Javascript functions
+        ROUTE TIMER_HIDE.fraction_changed to SCRIPT.moveProgressBar
+        ROUTE TIMER_HIDE.cycleTime TO SCRIPT.hidePopup
+
+    ]
+}
+</textarea>
+<br/>
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_tiny_popup','tutorials');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

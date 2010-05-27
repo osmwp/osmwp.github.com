@@ -1,0 +1,123 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_ColorInterpolator";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">ColorInterpolator node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="6" cols="80">
+ColorInterpolator {
+  SFFloat set_fraction 0
+  SFColor value_changed 0 0
+  MFFloat key []
+  MFColor keyValue []
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+<p>
+This interpolator is used to interpolate colors.
+</p>
+<p>
+See <a href="development_node_Interpolators.html">Interpolators</a> for a
+detailed explanation on how interpolators work and when to use them.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFFloat set_fraction 0</b> :<br/>
+Value usaly routed from the <a href="development_node_TimeSensor.html">TimeSensor</a>.fraction_changed
+field. See <a href="development_node_Interpolators.html">Interpolators</a>.
+</p>
+<p>
+<b>SFColor value_changed 0 0</b> :<br/>
+When a new color is computed form the ColorInterpolator, it is sent to the <b>value_changed</b> field.
+</p>
+<p>
+<b>MFFloat key []</b> :<br/>
+List of float values between 0 and 1. See
+<a href="development_node_Interpolators.html">Interpolators</a>.
+</p>
+<p>
+<b>MFColor keyValue []</b> :<br/>
+Contains a color (the 3 RGB components) for each value of the <b>key</b> list.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+DEF TIMER TimeSensor {
+    cycleInterval 2  # two seconds
+    startTime 1 # timer starts at one sec after application launch, implicit stopTime set to 1+2 = 3 seconds after application launch
+}
+DEF INTERP ColorInterpolator {
+    key [ 0, 0.3, 0.6, 1 ]  # 4 equidistant keys
+    keyValue [ 0 0 0, 1 0 0, 0 1 0, 0 0 1 ] # rainbow
+}
+Transform2D {
+    children [
+        Shape {
+            appearance Appearance {
+                material DEF MAT Material2D { emissiveColor 1 0.4 0 }
+            }
+            geometry Rectangle { size 50 50 }
+        }
+    ]
+}
+
+ROUTE TIMER.fraction_changed TO INTERP.set_fraction
+ROUTE INTERP.value_changed TO MAT.emissiveColor
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

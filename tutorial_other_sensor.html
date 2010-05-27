@@ -1,0 +1,179 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_other_sensor";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">other sensors</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+This part presents <a href="development_node_TimeSensor.html">TimeSensor</a>,
+<a href="development_node_MotionSensor.html">MotionSensor</a>,
+<a href="development_node_TouchSensor.html">TouchSensor</a> and
+<a href="development_node_MediaSensor.html">MediaSensor</a>.<br/>
+KeySensor and InputSensor are already presented in <a href="tutorial_key_sensor.html">previous tutorial</a>.
+</p>
+<br/>
+
+<h1>TimeSensor node</h1>
+
+<p>
+<a href="development_node_TimeSensor.html">TimeSensor</a> node generates
+periodic values. It's a 'timer' and it is basis of most animations.<br/>
+See <a href="development_node_TimeSensor.html">TimeSensor</a> documentation for
+more informations about it.
+</p>
+
+<p>
+In this tutorial, we would create a timer.<br/>
+Timer displays time since the launch of the widget.
+</p>
+
+<p>
+This tutorial require:
+</p>
+<ul>
+<li>A text node</li>
+<li>A TimeSensor node</li>
+<li>A function to convert time values into displayable information.</li>
+</ul>
+<br/>
+
+<p>
+The text node:
+</p>
+<textarea rows="9" cols="80" readonly="readonly" wrap="off">
+Shape {
+  appearance Appearance { material Material2D { emissiveColor 0 0 0 } }
+  geometry DEF CURRENT_TIME_TXT Text {
+    string [ "0" ]
+    fontStyle FontStyle {
+      justify [ "MIDDLE" "MIDDLE" ]
+    }
+  }
+}
+</textarea>
+<br/>
+
+<p>
+The <a href="development_node_TimeSensor.html">TimeSensor</a> node:
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+DEF MY_TIMER TimeSensor {
+  cycleInterval 1 # Refresh timer all seconds
+  loop TRUE
+  isActive TRUE
+}
+</textarea>
+<br/>
+
+<p>
+Script to receive timer event and convert time in displayable value.<br/>
+We use <b>Math.floor()</b> function to convert float value to integer value (See
+<a href="development_javascript_Math.html">Math class documentation</a>).
+</p>
+<textarea rows="10" cols="80" readonly="readonly" wrap="off">
+DEF SCRIPT Script {
+  eventIn  SFTime   cycleTime
+  eventOut MFString displayValue
+  url "
+  function cycleTime () {
+    # cycleTime return time to start the timer (in second since application start)
+    displayValue [ 0 ] = Math.floor(cycleTime);
+  }
+  "
+}
+</textarea>
+<br/>
+
+<p>
+Finally, link <a href="development_node_TimeSensor.html">TimeSensor</a> node
+and Script node, and link Script node and Text node:
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+ROUTE MY_TIMER.cycleTime  TO SCRIPT.cycleTime
+ROUTE SCRIPT.displayValue TO CURRENT_TIME_TXT.string
+</textarea>
+<br/>
+<p class="note info">
+<b>Note:</b><br/>
+See <a href="tutorial_move_shape.html">animation tutorials</a> for more examples
+about <a href="development_node_TimeSensor.html">TimeSensor</a>.
+</p>
+<br/>
+
+<h1>MediaSensor node</h1>
+<p class="note info">
+<b>Note:</b><br/>
+Audio and video functionalities depend of your mobile phone.
+</p>
+<!-- TODO complete this tutorial -->
+<br/>
+
+<h1>TouchSensor node</h1>
+
+<p class="note info">
+<b>Note:</b><br/>
+<a href="development_node_TouchSensor.html">TouchSensor</a> node requires
+mobile phone with touchscreen.<br/>
+Detects touch screen events on all Shapes included in the same Group in which
+the <a href="development_node_TouchSensor.html">TouchSensor</a> is declared.
+</p>
+<!-- TODO complete this tutorial -->
+<br/>
+
+<h1>MotionSensor node</h1>
+
+<p class="note info">
+<b>Note:</b><br/>
+<a href="development_node_MotionSensor.html">MotionSensor</a> node requires
+mobile phone with accelerometer.<br/>
+Gives access to accelerometer data if available.
+</p>
+<!-- TODO complete this tutorial -->
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_key_sensor','tutorial_move_shape');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

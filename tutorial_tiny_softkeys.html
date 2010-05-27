@@ -1,0 +1,216 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_tiny_softkeys";
+beginPage();
+//-->
+</script>
+
+
+<h1 class="title">softkeys tutorial</h1>
+
+
+<p class="note warning">
+<b>Warning:</b><br/>
+This tutorial covers only Tiny Mobile Widgets versions.<br/>
+On Mobile Widgets, use <a href="prototype_menubar.html">MenuBar</a> or
+<a href="prototype_menu.html">Menu</a> prototype.
+</p>
+
+<h1>Introduction</h1>
+
+<p>
+This chapter present the Tiny Mobile Widgets softkeys.<br/>
+Tiny Mobile Widgets widget can use 2 softkeys:
+</p>
+<ul>
+<li>Left softkeys</li>
+<li>Right softkeys</li>
+</ul>
+<p>
+<img alt="example" src="images/tutorials/tuto_tiny_softkeys_01.png" />
+</p>
+<br/>
+
+<h1>Initialize Tiny Mobile Widgets softkeys</h1>
+
+<p>
+Tiny Mobile Widgets softkeys are initialized via a <a href="development_node_Message.html">Message</a>
+on the <a href="tiny_message_board.html">"Board" channel</a>.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'INIT', 'My Widget', lsk, rsk);
+</textarea>
+<ul>
+<li>lsk : the left softkey label.</li>
+<li>rsk : the right softkey label.</li>
+</ul>
+<br/>
+
+<p class="note info">
+<b>Notes:</b><br/>
+Use the <b>initialize()</b> JavaScript function to initialize left and right softkeys on widget startup.<br/>
+Use <a href="widgets_development_i18n.html">internationalization</a> functions to define the softkeys label.
+</p>
+<p>
+Current widget code :
+</p>
+<textarea rows="13" cols="80" readonly="readonly" wrap="off">
+Group {
+    children [
+        # Script
+        DEF SCRIPT Script {
+            url "
+            // Widget initialization
+            function initialize () {
+                // Initialize widget
+                Browser.sendMessage ('Board', 'INIT', 'My Widget', 'Left', 'Right');
+            }
+            "
+        }
+    ]
+}
+</textarea>
+<br/>
+
+<h1>Catch events on the softkeys</h1>
+
+<p>
+We can change softkeys label, but the softkeys do nothing when pressed.<br/>
+This part explains how to listen events on the softkeys.
+</p>
+
+<p>
+<a href="tiny_manager.html">Manager</a> send message on
+<a href="tiny_message_board.html">"Board" channel</a> when softkeys are pressed.<br/>
+Define the <a href="development_node_Message.html">Message</a> to read message
+on <a href="tiny_message_board.html">"Board" channel</a>.
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+# Node to read messages on "Board" channel
+DEF MESSAGE Message { url "Board" }
+</textarea>
+<br/>
+
+<p>
+Create a JavaScript event and the function to process messages on
+<a href="tiny_message_board.html">"Board" channel</a>.<br/>
+This function read message and verify if message is a left or right softkeys
+event.
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+# Script
+DEF SCRIPT Script {
+  # Define 'data changed' event
+  eventIn MFString data_changed
+  url "
+    //Initialization...
+    //...
+
+    //Function of 'data changed' event
+    function data_changed (val, time) {
+      //Message data are stored in 'data_changed'
+      if (data_changed[0] == 'RSK') {
+        //Right softkey
+      } else if (data_changed[0] == 'LSK') {
+        //Left softkey
+      }
+    }
+  "
+}
+</textarea>
+<br/>
+<p>
+Link <a href="tiny_message_board.html">"Board" channel</a> and <b>data_changed</b> event.
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+# Link "Board" channel and ~JavaScript event
+ROUTE MESSAGE.data_changed TO SCRIPT.data_changed
+</textarea>
+<br/>
+<p>
+We can add code into <b>data_changed(...)</b> function to trace event.
+</p>
+<br/>
+
+<p>
+The final widget code :
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+    children [
+
+        # Node to read messages on "Board" channel
+        DEF MESSAGE Message { url "Board" }
+
+        # Script
+        DEF SCRIPT Script {
+            # Define 'data changed' event
+            eventIn MFString data_changed
+            url "
+            // Widget initialization
+            function initialize () {
+              // Initialize widget
+              Browser.sendMessage ('Board', 'INIT', 'My Widget', 'Left', 'Right');
+            }
+
+            //Function of 'data changed' event
+            function data_changed (val, time) {
+              //Read event key
+              var key = data_changed[0];
+              //Message data are stored in 'data_changed'
+              if (key == 'RSK') {
+                //Right softkey
+                Browser.print('Right');
+              } else if (key == 'LSK') {
+                //Left softkey
+                Browser.print('Left');
+              }
+            }
+            "
+        }
+
+        # Link "Board" channel and ~JavaScript event
+        ROUTE MESSAGE.data_changed TO SCRIPT.data_changed
+
+    ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorials','tutorial_tiny_menu');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

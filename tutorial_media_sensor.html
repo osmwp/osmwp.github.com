@@ -1,0 +1,343 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_media_sensor";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">MediaSensor and MediaControl</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+This part presents how to control audio and video playing.<br/>
+<a href="development_node_MediaSensor.html">MediaSensor</a> and
+<a href="development_node_MediaControl.html">MediaControl</a> nodes can be used
+with audio and video nodes (MovieTexture and AudioClip).
+</p>
+<p class="note warning">
+<b>Important:</b><br/>
+Before, read <a href="tutorial_basic_audio_video.html">basic audio/video tutorial</a>.
+</p>
+<br/>
+
+<h1>Audio and video support</h1>
+
+<p>
+Use a MeMo Player with audio and video support.<br/>
+See <a href="tutorial_basic_audio_video.html">basic audio/video tutorial</a> for more informations.
+</p>
+
+
+<h1>Display playing progression</h1>
+
+<p>
+<a href="development_node_MediaSensor.html">MediaSensor</a> node return
+information about playing progression.<br/>
+<a href="development_node_MediaSensor.html">MediaSensor</a> interface:
+</p>
+<textarea rows="7" cols="80" readonly="readonly" wrap="off">
+MediaSensor {
+  MFString url ""
+  SFTime   mediaCurrentTime 0
+  SFTime   mediaDuration 0
+  SFBool   isActive FALSE
+  MFString status []
+}
+</textarea>
+<br/>
+
+<p>
+See <a href="development_node_MediaSensor.html">MediaSensor</a> documentation
+for more informations about fields.
+</p>
+<br/>
+
+<p>
+In first time we create a text node to display status and progression.<br/>
+</p>
+<p class="note info">
+<b>Note:</b><br/>
+in a real widget, we can use a progress bar. See <a href="tutorial_prototype.html">prototype tutorial</a>.
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Transform2D {
+  translation 0 -70
+  children [
+    Shape {
+      appearance Appearance {
+        material Material2D {
+          emissiveColor 0.0 0.0 0.0
+        }
+      }
+      geometry DEF PROGRESS_TXT Text {
+        string [ "progression" ]
+        fontStyle FontStyle {
+          size size 16
+          style "italic"
+          justify ["MIDDLE" "MIDDLE"]
+        }
+      }
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<p>
+We add a <a href="development_node_MovieTexture.html">MovieTexture</a> node to display video.
+</p>
+<p class="note info">
+<b>Note:</b><br/>Add video nodes before previous text nodes.
+</p>
+<textarea rows="8" cols="80" readonly="readonly" wrap="off">
+Shape {
+  appearance Appearance {
+    texture MovieTexture {
+      url "http://localhost/arte.mpg"
+    }
+  }
+  geometry Rectangle { size 160 120}
+}
+</textarea>
+<br/>
+
+<p>
+And we add the [MediaSensor].<br/>
+<a href="development_node_MediaSensor.html">MediaSensor</a> and
+<a href="development_node_MovieTexture.html">MovieTexture</a> have the same URL.
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+DEF MY_MEDIA_SENSOR MediaSensor {
+  url "http://localhost/arte.mpg"
+}
+</textarea>
+<br/>
+
+<p>
+We add a <a href="development_node_MovieTexture.html">MovieTexture</a> node to display video.
+</p>
+<p class="note info">
+<b>Note:</b><br/>Add video nodes before previous text nodes.
+</p>
+<textarea rows="8" cols="80" readonly="readonly" wrap="off">
+Shape {
+  appearance Appearance {
+    texture MovieTexture {
+      url "http://localhost/arte.mpg"
+    }
+  }
+  geometry Rectangle { size 160 120}
+}
+</textarea>
+<br/>
+
+<p>
+And we add the <a href="development_node_MediaSensor.html">MediaSensor</a>.<br/>
+<a href="development_node_MediaSensor.html">MediaSensor</a> and
+<a href="development_node_MovieTexture.html">MovieTexture</a> have the same URL.
+</p>
+<textarea rows="3" cols="80" readonly="readonly" wrap="off">
+DEF MY_MEDIA_SENSOR MediaSensor {
+  url "http://localhost/arte.mpg"
+}
+</textarea>
+<br/>
+
+<p>
+We create JavaScript node to display <a href="development_node_MediaSensor.html">MediaSensor</a> event.<br/>
+We listen two events:
+</p>
+<ul>
+<li><b>mediaCurrentTime</b> event (send during video playing): We display current position into media file (in percent).</li>
+<li><b>status</b> event (send media node state): We display current media state (stop, play, ...).</li>
+</ul>
+<p>
+<b>updateMediaProgression()</b> function convert current time into percent value and display it.<br/>
+<b>updateMediaStatus()</b> function display current media status.
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+DEF MY_SCRIPT Script {
+  eventIn SFTime updateMediaProgression
+  eventIn MFString updateMediaStatus
+  field SFNode mediaSensor USE MY_MEDIA_SENSOR
+  field SFNode progressText USE PROGRESS_TXT
+  url "
+    function updateMediaProgression () {
+      if (mediaSensor.mediaCurrentTime &lt;= 0) {
+        progressText.string [0] = ' - ';
+      } else {
+        var percent = mediaSensor.mediaCurrentTime / mediaSensor.mediaDuration;
+        if (percent &lt; 1.0) {
+          var roundPrecent = Math.ceil(percent * 100);
+          progressText.string [0] = roundPrecent + '%';
+        }
+      }
+    }
+    function updateMediaStatus () {
+      progressText.string [0] = updateMediaStatus [0];
+    }
+  "
+}
+</textarea>
+<br/>
+<p>
+Finally, route MediaSensor events to script functions:
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+ROUTE MY_MEDIA_SENSOR.mediaCurrentTime TO MY_SCRIPT.updateMediaProgression
+ROUTE MY_MEDIA_SENSOR.status TO MY_SCRIPT.updateMediaStatus
+</textarea>
+<br/>
+
+<p>
+Complete source code for this example:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    # Background
+    Shape {
+      appearance Appearance {
+        material Material2D {
+          emissiveColor 1.0 1.0 1.0
+        }
+      }
+      geometry Rectangle { size 300 300}
+    }
+    # Video shape
+    Shape {
+      appearance Appearance {
+        texture MovieTexture {
+          url "http://localhost/arte.mpg"
+        }
+      }
+      geometry Rectangle { size 160 120}
+    }
+    # Video sensor
+    DEF MY_MEDIA_SENSOR MediaSensor {
+      url "http://localhost/arte.mpg"
+    }
+    # Playing status
+    Transform2D {
+      translation 0 -70
+      children [
+        Shape {
+          appearance Appearance {
+            material Material2D {
+              emissiveColor 0.0 0.0 0.0
+            }
+          }
+          geometry DEF PROGRESS_TXT Text {
+            string [ "progression" ]
+            fontStyle FontStyle {
+              size size 16
+              style "italic"
+              justify ["MIDDLE" "MIDDLE"]
+            }
+          }
+        }
+      ]
+    }
+
+    DEF MY_SCRIPT Script {
+      eventIn SFTime updateMediaProgression
+      eventIn MFString updateMediaStatus
+
+      field SFNode mediaSensor USE MY_MEDIA_SENSOR
+      field SFNode progressText USE PROGRESS_TXT
+      url "
+      function updateMediaProgression () {
+        if (mediaSensor.mediaCurrentTime &lt;= 0) {
+          progressText.string [0] = ' - ';
+        } else {
+          var percent = mediaSensor.mediaCurrentTime / mediaSensor.mediaDuration;
+          if (percent &lt; 1.0) {
+            var roundPrecent = Math.ceil(percent * 100);
+            progressText.string [0] = roundPrecent + '%';
+          }
+        }
+
+      }
+      function updateMediaStatus () {
+        progressText.string [0] = updateMediaStatus [0];
+      }
+      "
+    }
+
+    ROUTE MY_MEDIA_SENSOR.mediaCurrentTime TO MY_SCRIPT.updateMediaProgression
+    ROUTE MY_MEDIA_SENSOR.status TO MY_SCRIPT.updateMediaStatus
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Control audio and video playing</h1>
+
+<p>
+<a href="development_node_MediaControl.html">MediaControl</a> node control media playing.<br/>
+<a href="development_node_MediaControl.html">MediaControl</a> interface:
+</p>
+<textarea rows="10" cols="80" readonly="readonly" wrap="off">
+MediaControl {
+  MFString url ""
+  SFTime   mediaStartTime 0
+  SFTime   mediaStopTime 0
+  SFBool   loop FALSE
+  SFBool   preRoll TRUE
+  SFBool   isPreRolled FALSE
+  SFInt32  volume 50
+  SFBool   pause FALSE
+}
+</textarea>
+<br/>
+
+<p>
+See <a href="development_node_MediaControl.html">MediaControl</a> documentation
+for more informations about fields.
+</p>
+<!-- TODO complete this tutorial -->
+
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_basic_audio_video','tutorial_record_texture');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

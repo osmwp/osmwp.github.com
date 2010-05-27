@@ -1,0 +1,230 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_File";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">File Javascript library</h1>
+
+
+<h1>Description</h1>
+
+<p>
+The File class provides means to read data from the file system and from an HTTP connection.
+</p>
+<br/>
+
+<h1>Methods</h1>
+
+<p>
+<b>int list (String path)</b>:<br/>
+Returns the number of files residing in the phone local file system and located
+at <b>path</b>, considered as a directory. Path must start with "file://".<br/>
+The file system often define root partitions to differentiate the phone memory
+from an extension card.<br/>
+These roots are automatically managed by this function and are treated as sub
+directories of "file://".
+</p>
+
+<p>
+<b>String getName (int n)</b>:<br/>
+Returns the name of the file at position <b>n</b> inside path (list() must have
+been called before).
+</p>
+
+<p>
+<b>bool isDir (int n)</b>:<br/>
+Returns true if the entry at position <b>n</b> in the directory referenced by
+the last list command is also a directory (so list() must have been obviously
+called before).
+</p>
+
+<p>
+<b>String getFullPath (int n)</b>:<br/>
+Returns the full path of the entry <b>n</b>.
+</p>
+
+<p>
+<b>int open (String path, bool async)</b>:<br/>
+Open the file referenced by the path parameter for reading and return an
+identifier for future reference (close, getLine, oef, getStatus, ...).<br/>
+If path starts with "http://" an HTTP connection is opened.<br/>
+If path starts with "file:///" a file connection with the file system is created.<br/>
+Otherwise, the content is read from the midlet resource.<br/>
+If async is true the function returns immediately and the script must call
+getStatus periodically to check whether getLine or getData can be called.
+</p>
+
+<p>
+<b>void close (int i)</b>:<br/>
+Close the stream associated with identifier <b>i</b>.
+</p>
+
+<p>
+<b>String getLine (int i)</b>:<br/>
+Returns the next line (chars up to "\n") in stream associated with identifier <b>i</b>.
+</p>
+
+<p>
+<b>bool eof (int i)</b>:<br/>
+Returns whether the stream associated with <b>i</b> reached end of file.
+</p>
+
+<p>
+<b>int getData (int i, bool async, String encoding)</b>:<br/>
+Starts reading data. If <b>async</b> is true returns immediately "", otherwise
+returns all available data. <b>encoding</b> is optional (Default: UTF-8).
+</p>
+
+<p>
+<b>int getStatus (int i)</b>:<br/>
+Returns the current status, see Constants below.
+</p>
+
+<p>
+<b>bool isAvailable ()</b>:<br/>
+Returns true (1) if the device supports file system methods (<b>list, getName,
+isDir, getFullPath</b>).
+</p>
+
+<p>
+<b>void clean ()</b>:<br/>
+Close all opened at once files.
+</p>
+<br/>
+
+<h1>Constants</h1>
+
+<p>
+<b>ERROR</b>:<br/>
+An error occurred (e.g. file does not exists).
+</p>
+
+<p>
+<b>READY</b>:<br/>
+File is open and ready for starting data transfer.
+</p>
+
+<p>
+<b>OPENING</b>:<br/>
+File is being open (i.e. communication in progress) .
+</p>
+
+<p>
+<b>LOADING</b>:<br/>
+Data is loading (transferring).
+</p>
+
+<p>
+<b>LOADED</b>:<br/>
+Data is fully loaded but not read yet.
+</p>
+
+<p>
+<b>CLOSED</b>:<br/>
+Data has been read.
+</p>
+<br/>
+
+<h1>Widget SDK</h1>
+
+<p>
+In a widget context, the access to files on the file system is not available and
+the following methods will not work : <b>list, getName, isDir, getFullPath</b>.<br/>
+The 'file://' scheme is not supported in the <b>open()</b> method.
+</p>
+<br/>
+
+<h1>Examples</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+       function path (p) {
+            downloadFile = File.open (url, true);
+            Browser.setTimeout (downloadData, 200);
+       }
+
+       function downloadData () {
+            if (downloadFile != -1) {
+                switch (File.getStatus (downloadFile)) {
+                  case File.LOADING:
+                    // most frequent state (prevents useless tests)
+                    break;
+                  case File.OPENING:
+                    Browser.sendMessage ('Board', 'PROGRESS', -1);
+                    break;
+                  case File.READY:
+                    // connection is ready, trigger async download to cache
+                    if (showProgress) {
+                      Browser.sendMessage ('Board', 'PROGRESS', 10);
+                    }
+                    File.getData (downloadFile, true);
+                    break;
+                  case File.LOADED:
+                    cleanDownload ();
+                    XML.open ('cache://'+ident+dataRecord, XML.URL+XML.BML_ENCODING, onNewDataParsed);
+                    return;
+                  case File.ERROR:
+                    cleanDownload ();
+                    // try to reuse previous data if any
+                    onNewDataParsed ('', 400, -1);
+                    return;
+                }
+                Browser.setTimeout (downloadData, 500); // Call this method again in 500ms
+            }
+        }
+
+        function cleanDownload () {
+            if (downloadFile != -1) {
+                File.close (downloadFile);
+                downloadFile = -1;
+            }
+        }
+</textarea>
+<p>
+Find the entire source code into the DataLoader prototype.
+</p>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

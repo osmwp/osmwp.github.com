@@ -1,0 +1,188 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_list";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">List prototype</h1>
+
+<!-- TODO complete this part -->
+
+<h1>Introduction</h1>
+
+<p>
+Manage graphical list.<br/>
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+PROTO List [
+  # Events Out
+  eventOut SFInt32 currentElement 
+  eventOut SFInt32 scroll 
+  eventOut SFVec2f focusPos
+  eventOut SFVec2f itemsPos
+  eventOut SFInt32 setItem
+  eventOut SFTime selection
+
+  exposedField SFInt32 firstItem 0 # Index of the element that must be associated to the first item
+  exposedField SFBool enable FALSE
+   
+  # Events in
+  eventIn SFInt32 update  
+  eventIn SFInt32 goToElement
+  eventIn SFInt32 updateElement
+
+  # Data
+  field SFVec2f size -1 -1
+  field SFInt32 nbElements 0
+  field SFInt32 nbItems    0
+  field SFInt32 nbMaxItems 0
+  field SFInt32 itemHeight 0
+  field MFInt32 elementsStates []
+  field MFNode items NULL
+  field SFTime repeatInterval 0.25
+  field SFTime repeatDelay 0.5
+  field SFInt32 atElement 0 
+  field SFInt32 atPosition 0 
+  
+  # Style
+  field MFString focusbarStyle []
+  field MFString focusbarImages []
+  field MFString scrollbarStyle []
+  field SFBool useAnimation TRUE
+  exposedField SFBool enableCycle TRUE
+  field SFBool topAlign TRUE
+
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>SFVec2f size - Size of the list</li>
+<li>SFInt32 nbElements - Number of elements</li>
+<li>SFInt32 nbItems - Number of visible items</li>
+<li>SFInt32 nbMaxItems - Number of items used for transitions (should be nbItems + 1)</li>
+<li>SFInt32 itemHeight - Item height</li>
+<li>MFInt32 elementsStates - Elements states; enable&gt;=0, disable=-1</li>
+<li>MFNode items - Must contain the items that will be used to display the list</li>
+<li>SFInt32 atElement - Element to load in the item given by the setItem field</li>
+<li>SFInt32 atPosition - Pixel position of the item given by the setItem field</li>
+</ul>
+<br/>
+
+<h2>Exposed Fields</h2>
+
+<ul>
+<li>SFBool enable - Enable/disable SimpleList focus</li>
+<li><i>SFInt32 firstItem - Index of the element that must be associated to the first item (DEPRECATED)</i></li>
+</ul>
+<br/>
+
+<h2>Event In</h2>
+
+<ul>
+<li>SFInt32 update - Force refresh of all displayable items and check parameters (like number of elements, their size)</li>
+<li>SFInt32 gotoElement - Force list to focus a given element</li>
+<li>SFInt32 updateElement - Update only the content of one element and refresh the corresponding displayable item</li>
+</ul>
+<br/>
+
+<h2>Event Out</h2>
+
+<ul>
+<li>SFInt32 currentElement - Index of currently focused element</li>
+<li><i>SFInt32 scroll - Scrolling position in pixel, to route to the ScrollBar.moveTo (DEPRECATED)</i></li>
+<li><i>SFVec2f focusPos - Focus position, to route to the focus bar proto (DEPRECATED)</i></li>
+<li><i>SFVec2f itemsPos - Items position, to route to the Transform2D containing all the items (DEPRECATED)</i></li>
+<li>SFInt32 setItem - Next item to load, to route to a Script function handling items update</li>
+<li>SFTime selection - The time when an item is selected</li>
+</ul>
+<br/>
+
+<h2>Style</h2>
+
+<ul>
+<li>MFString focusbarStyle - Style for the FocusBar</li>
+<li>MFString focusbarImages - Images for the FocusBar</li>
+<li>MFString scrollbarStyle - Style for the ScrollBar</li>
+<li>SFBool useAnimation - Use animation when scrolling (default: TRUE)</li>
+<li>SFBool enableCycle - Allows focus bar to jump from first to last position when using the keyboard</li>
+<li>SFBool topAlign - Controls vertical alignment: top or middle</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h1>CSS</h1>
+<textarea rows="3" cols="80" readonly="readonly" wrap="off">
+List {
+  size: 100% 81%;  
+}
+</textarea>
+<br/>
+
+<h1>Extern proto(s)</h1>
+
+<p>
+FocusBar, ScrollBar
+</p>
+<br/>
+
+<!--
+<h1>Example</h1>
+
+<!-- TODO add an example for this prototype
+
+<br/>
+-->
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

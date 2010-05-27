@@ -1,0 +1,159 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Script";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Script node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="3" cols="80">
+Script {
+  SFString url ""
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Implements scripting facility with some limitations (see <a href="faq.html">FAQ</a>).
+</p>
+<p>
+Script node enable to define complex interactions. Modifying script field
+call/launch function of the same name in the script. You can access to each VRML
+node of the scene from the script, based on a DOM system.
+</p>
+<br/>
+
+<h1>Principles</h1>
+
+<ul>
+<li>define an internal field in Script node</li>
+<li>define a function which has the same name than the field</li>
+<li>define a ROUTE TO this field</li>
+<li>the function is launched when field if modified</li>
+</ul>
+<br/>
+
+<h1>Scope</h1>
+
+<ul>
+<li>eventIn, exposedField : a function can be linked to the field</li>
+<li>eventOut : output from a function (can be used by ROUTE)</li>
+<li>field : local variable</li>
+</ul>
+<p>Example :</p>
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+eventIn SFTime keyPressed
+eventOut SFVec2f newValue
+exposedField SFColor currentColor 1 1 1
+field SFFloat  coefficient 3.5
+</textarea>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFString url ""</b> :<br/>
+The content of the script.
+</p>
+<br/>
+
+<h1>Syntax</h1>
+
+<p>
+A function is written in javascript. You can use global or local variables. You
+can use internal functions (not linked to a field). <b>initialize()</b> is a
+special function launched at Script creation.<br/>
+DOM access possible by positioning keyword <b>USE</b> after field. The node is
+accessible by pointed syntax.
+</p>
+
+<h1>Limitations</h1>
+<p>
+The script is compiled =&gt; everything should be known before execution.<br/>
+Our implementation doesn't include the "object" part of javascript BUT you can use protos and DOM.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+DEF input InputSensor { url "A"  activate FALSE }
+
+DEF script Script {
+  eventIn SFTime keyPressed
+
+  field SFTime aTimeValue 0
+  field SFInt32 anIntValue 13
+  field SFFloat aFloatValue 3.1415
+  field SFBool aBooleanValue TRUE
+  field MFInt32 anIntArray [1 2 3 4 5 6]
+  field MFFloat aFloatArray [1.1 2.2 3.3 4.4 5.5 6.6]
+
+  field SFNode input IS input
+
+  url "javascript:
+
+    function initialize () {
+      Browser.print ('Hello world !');
+      # Activate the InputSensor
+      input.activate = true;
+    }
+
+    function keyPressed () {
+      Browser.print ('User pressed on the key: A');
+    }
+  "
+}
+
+ROUTE input.eventTime TO script.keyPressed
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

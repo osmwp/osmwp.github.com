@@ -1,0 +1,199 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_tabs";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Tabs prototype</h1>
+
+
+<img class="right" alt="Tabs" src="images/prototypes/proto_tabs_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Display a bar of tabs.
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="50" readonly="readonly" wrap="off">
+PROTO Tabs [
+  # Proto Parameters
+  field SFBool 		enableCycle FALSE
+  field MFString 	elementsLabels []
+  field MFString 	elementsIcons []
+  field MFInt32 	elementsStates []
+  field MFColor 	elementsColors []
+  field SFInt32 	nbElements 0
+  field SFFloat 	nbVisibleItems 4
+  field SFBool 		animationEnable TRUE
+  
+  # Events
+  exposedField SFInt32 update 0
+  eventOut SFInt32 currentElement
+  exposedField SFBool enable TRUE
+  
+  # Styles
+  field MFString style ["Tabs"]
+  field SFVec2f size -1 -1
+  field SFVec2f textScale 1 1
+  field SFTime repeatInterval 0.25
+  field SFTime repeatDelay 0.5
+  
+  # Left and right filler images
+  field MFString fillerImage [ "tabsFiller.png" ]
+  field SFFloat  fillerImageRatio 	0.117
+  field MFString fillerLeftArrows 	[ "" "arrowLeft.png" "arrowLeft_over.png" ]
+  field MFString fillerRightArrows 	[ "" "arrowRight.png" "arrowRight_over.png" ]
+  field SFFloat  fillerArrowsRatio 	0.524
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Proto Parameters</h2>
+
+<ul>
+<li>SFBool enableCycle - this allow user to go from far left tabs to tab 0, when pressing right button, and vice-versa</li>
+<li>MFString elementsLabels - this is tabs labels</li>
+<li>MFString elementsIcons - this is tabs icons</li>
+<li>MFInt32 elementsStates - to set enable and disabled tabs: 0 is enable -1 is disabled</li>
+<li>MFColor elementsColors - to set text color for each tab</li>
+<li>SFInt32 nbElements - total number of element in the list (different of list.nbItems : number of elements shown with the current screenSize)</li>
+<li>SFFloat nbVisibleItems - number of on screen displayed tabs will automatically be set between 2 and 5</li>
+<li>SFBool animationEnable - is sliding animation enable</li>
+</ul>
+<br/>
+
+<h2>Events</h2>
+
+<ul>
+<li>SFInt32 update - update all elements, can bet to any value to set focus on this tab</li>
+<li>SFInt32 currentElement - returns the currently selected tab</li>
+<li>SFBool enable - disable proto</li>
+</ul>
+<br/>
+
+<h2>Styles</h2>
+
+<ul>
+<li>MFString style - Style for Tabs proto</li>
+<li>SFVec2f size - size of the tab proto</li>
+<li>SFVec2f textScale - textScale for text sizing</li>
+<li>SFTime repeatInterval - used by keysensor</li>
+<li>SFTime repeatDelay - used by keysensor</li>
+</ul>
+<br/>
+
+<h2>Left and right filler images</h2>
+
+<ul>
+<li>MFString fillerImage - pictures for left and right arrows background</li>
+<li>SFFloat  fillerImageRatio - filler is 28px wide when screen is 240px, 28/240 = 0.117 ratio</li>
+<li>MFString fillerLeftArrows - left arrow pictures</li>
+<li>MFString fillerRightArrows - right arrow pictures</li>
+<li>SFFloat  fillerArrowsRatio - filler arrow picture is 11px/21px = 0.524 ratio</li>
+</ul>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="10" cols="80" readonly="readonly" wrap="off">
+Tabs {
+  font-style: bold;
+  horizontal-align: middle;
+  vertical-align: middle;
+  font-size: 12;
+  color: #414141;
+  text-position: 0% 0%;
+  image-size: 84%; // image will be resized related to tab height
+  image-position: -25% 0%;
+}
+</textarea>
+<br/>
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO Tabs [] "Tabs.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+    
+    DEF TAB Tabs {
+      elementsLabels [
+        "Tab 1" "Tab 2" "Tab 3" "Tab 4"
+      ]
+      nbElements 4
+      
+      size 220 32
+    }
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+    
+    ROUTE SIZE_NOTIFIER.textScale  TO TAB.textScale
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

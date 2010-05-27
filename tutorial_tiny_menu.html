@@ -1,0 +1,210 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_tiny_menu";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">menu tutorial</h1>
+
+
+<p class="note warning">
+<b>Warning:</b><br/>
+This tutorial covers only Tiny Mobile Widgets versions.<br/>
+On Mobile Widgets, use <a href="prototype_menu.html">Menu</a> prototype.
+</p>
+
+
+<h1>Introduction</h1>
+
+<br/>
+This chapter present the Tiny Mobile Widgets Menu.<br/>
+Tiny Mobile Widgets provide a menu component. Developer can display this menu into widgets.<br/>
+<br/>
+<img alt="example" src="images/tutorials/tuto_tiny_menu_01.png" />
+<br/>
+<p class="note info">
+<b>Note:</b><br/>
+We use the <a href="tutorial_tiny_softkeys.html">softkeys tutorial</a> code to start this tutorial.
+</p>
+<br/>
+
+<h1>Display Tiny Mobile Widgets menu</h1>
+
+<p>
+Tiny Mobile Widgets menu is displayed via a <a href="development_node_Message.html">Message</a>
+on the <a href="tiny_message_board.html">"Board" channel</a>.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'MENU', title, lsk, rsk, item1, item2, ..., '');
+</textarea>
+<ul>
+<li>title: menu title</li>
+<li>lsk : the left softkey label</li>
+<li>rsk : the right softkey label</li>
+<li>item1: first item</li>
+<li>item2: second item</li>
+<li>...: other items</li>
+<li>'': empty string to flag the end of the items list</li>
+</ul>
+<br/>
+
+<p class="note info">
+<b>Note:</b><br/>
+List of items is ended by a empty string.<br/>
+Use <a href="widgets_development_i18n.html">internationalization</a> functions to define menu labels.
+</p>
+<br/>
+
+<p>
+We create a menu with 3 items: 'Item 1', 'Item 2' and 'Item 3'.<br/>
+When menu is closed :
+</p>
+<ul>
+<li>Left softkey open the menu.</li>
+<li>Right softkey close the widget.</li>
+</ul>
+<p>
+When menu is opened:
+</p>
+<ul>
+<li>Left softkey valid the selection.</li>
+<li>Right softkey close the menu without selection.</li>
+</ul>
+<br/>
+
+<p>
+Current widget code (see <a href="tutorial_tiny_softkeys.html">softkeys tutorial</a>
+for more information about this code):
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+    children [
+
+        # Node to read messages on "Board" channel
+        DEF MESSAGE Message { url "Board" }
+
+        # Script
+        DEF SCRIPT Script {
+            # Define 'data changed' event
+            eventIn MFString data_changed
+            url "
+            // Widget initialization
+            function initialize () {
+              // Initialize widget
+              Browser.sendMessage ('Board', 'INIT', 'My Widget', 'Menu', 'Quit');
+            }
+
+            //Function of 'data changed' event
+            function data_changed (val, time) {
+              //Read event key
+              var key = data_changed[0];
+              //Message data are stored in 'data_changed'
+              if (key == 'RSK') {
+                //Right softkey: Close widget
+                Browser.sendMessage ('Board', 'RESET');
+              } else if (key == 'LSK') {
+                //Left softkey: Open menu
+                Browser.sendMessage ('Board', 'MENU', 'My menu', 'Ok', 'Cancel', 'Item 1', 'Item 2', 'Item 3', '');
+              }
+            }
+            "
+        }
+
+        # Link "Board" channel and ~JavaScript event
+        ROUTE MESSAGE.data_changed TO SCRIPT.data_changed
+
+    ]
+}
+</textarea>
+<br/>
+
+<h1>Get the selected item</h1>
+
+<p>
+We can create a menu, but menu do nothing when user select an item...<br/>
+This part explains how to get selected item on the menu.
+</p>
+<p>
+<a href="tiny_manager.html">Manager</a> send message on
+<a href="tiny_message_board.html">"Board" channel</a> when user select an item.<br/>
+The process to read message on <a href="tiny_message_board.html">"Board" channel</a>
+is already defined (see <a href="tutorial_tiny_softkeys.html">softkeys tutorial</a>).
+</p>
+
+<p>
+We extend <b>data_changed(...)</b> function to process a new message: "ANSWER".<br/>
+See <a href="tiny_message_board.html">"Board" channel</a> chapter for more
+information about "ANSWER" message.
+</p>
+
+<p>
+New <b>data_changed(...)</b> function code:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+//Function of 'data changed' event
+function data_changed (val, time) {
+  //Read event key
+  var key = data_changed[0];
+  //Message data are stored in 'data_changed'
+  if (key == 'RSK') {
+     //Right softkey: Close widget
+     Browser.sendMessage ('Board', 'RESET');
+  } else if (key == 'LSK') {
+     //Left softkey: Open menu
+     Browser.sendMessage ('Board', 'MENU', 'My menu', 'Ok', 'Cancel', 'Item 1', 'Item 2', 'Item 3', '');
+  } else if (key == 'ANSWER') {
+    //Item selected in menu
+    var itemIndex = data_changed[1];
+    if (itemIndex == 'RSK') {
+      //Cancel button (right softkey)
+      Browser.print('Cancel');
+    } else {
+      //Item selected: Trace selection
+      Browser.print('Selected item index :' + itemIndex);
+    }
+  }
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_tiny_softkeys','tutorial_tiny_popup');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

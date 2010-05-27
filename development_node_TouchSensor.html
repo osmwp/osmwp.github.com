@@ -1,0 +1,163 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_TouchSensor";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">TouchSensor node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="8" cols="80">
+TouchSensor {
+    SFBool enabled TRUE
+    SFBool isActive FALSE
+    SFBool isOver FALSE
+    SFTime touchTime 0
+    SFVec3f hitPoint_changed 0 0 0
+    SFString mode "normal"
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Detects touch screen events on all Shapes included in the same
+<a href="development_node_Group.html">Group</a> in which the
+<a href="development_node_TouchSensor.html">TouchSensor</a> is declared.<br/>
+When the user touches a Shape's bounding box, <b>isActive</b>, <b>isOver</b>,
+<b>touchTime</b> and <b>hitPoint_changed</b> fields will emit signals until the
+user ends the touch.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFBool enabled TRUE</b> :<br/>
+Enabled by default, set enabled to FALSE to disable the TouchSensor.
+</p>
+<p>
+<b>SFBool isActive FALSE</b> :<br/>
+Will emit TRUE when user start touching a Shape, FALSE when user ends the touch
+(i.e. lifts its finger or stylus from the screen).
+</p>
+<p>
+<b>SFBool isOver FALSE</b> :<br/>
+During drag, <b>TRUE</b> when user is over the touched Shape, <b>FALSE</b> when
+user goes out of the touched Shape.
+</p>
+<p>
+<b>SFTime touchTime 0</b> :<br/>
+Emits the time when the user ends the touch.
+</p>
+<p>
+<b>SFVec3f hitPoint_changed 0 0 0</b> :<br/>
+Position of the touch relative to the touched Shape. Useful to track dragging
+events.
+</p>
+<p>
+<b>SFString mode "normal"</b> :<br/>
+Mode field supports several values:</p>
+<ul>
+<li><b>normal</b> : Default. Only the top TouchSensor will receive touch events
+    when multiple TouchSensors overlap in <b>normal</b> mode.</li>
+<li><b>grabAll</b> : TouchSensor will receive touch events independently of over
+    overlapping TouchSensors.</li>
+</ul>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+Group {
+  children [
+    DEF TS TouchSensor { enabled TRUE }
+    Shape {
+      appearance Appearance {
+        material Material2D { emissiveColor 0 0 1 }
+      }
+      geometry Rectangle { size 80 80 }
+    }
+ ]
+}
+
+DEF script Script {
+  eventIn SFBool tsIsActive
+  eventIn SFBool tsIsOver
+  eventIn SFTime tsTouchTime
+  eventIn SFVec3f tsHitPointChanged
+
+  url "javascript:
+
+    function tsIsActive (val) {
+      Browser.print('TS.isActive:'+val);
+    }
+
+    function tsIsOver (val) {
+      Browser.print('TS.isOver:'+val);
+    }
+
+    function tsTouchTime (val) {
+      Browser.print('TS.touchTime:'+val);
+      //tsHitPointChanged();
+    }
+
+    function tsHitPointChanged (p) {
+      Browser.print('TS.hitPoint_changed:'+p.x+' '+p.y+' '+p.z);
+    }
+  "
+}
+
+ROUTE TS.isActive TO script.tsIsActive
+ROUTE TS.isOver TO script.tsIsOver
+ROUTE TS.touchTime TO script.tsTouchTime
+ROUTE TS.hitPoint_changed TO script.tsHitPointChanged
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

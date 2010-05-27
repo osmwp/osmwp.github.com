@@ -1,0 +1,171 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_FontStyle";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">FontStyle node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="6" cols="80">
+FontStyle {
+  SFFloat size 12
+  SFString style ""
+  MFString justify ["LEFT" "TOP"]
+  MFString family ["SYSTEM"]
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Special attributes for <a href="development_node_Text.html">Text</a> and
+<a href="development_node_WrapText.html">WrapText</a> nodes.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFFloat size 12</b>:<br/>
+Size is limited by the tree internal Java fonts: small(size &lt; 10),
+large ( 10 &lt;= size &lt;= 16) and huge (size &gt; 16).
+</p>
+
+<p>
+<b>SFString style ""</b>:<br/>
+Text style, default is <b>plain</b> when string is empty. May be one of
+<b>plain</b>, <b>italic</b> or <b>bolditalic</b>.
+</p>
+
+<p>
+<b>MFString justify ["LEFT" "TOP"]</b>:<br/>
+Text alignment, default is <b>["LEFT" "TOP"]</b>.<br/>
+First string defines the horizontal alignment, one of <b>LEFT</b>, <b>MIDDLE</b>
+or <b>RIGHT</b>.<br/>
+The second string defines the vertical alignment, one of <b>TOP</b>,
+<b>MIDDLE</b>, <b>BOTTOM</b>, <b>BASELINE</b>.
+</p>
+
+<p>
+<b>MFString family ["SYSTEM"]</b>:<br/>
+Text font, default is <b>SYSTEM</b>. May be one of <b>SHERIF</b> (monospace),
+<b>SANS</b> (proportional) or <b>SYSTEM</b>. You can use additional families,
+see "Additional Font" paragraph.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+Shape {
+  appearance Appearance {
+    material Material2D { emissiveColor 0 0 0 } #black color
+  }
+  geometry Text {
+    string "My example"
+    fontStyle  FontStyle {
+      size 8
+      justify [ "MIDDLE" "MIDDLE" ]
+      style "bold"
+      family "SANS"
+    }
+  }
+}
+</textarea>
+<br/>
+
+<h1>Additional Font ttf</h1>
+
+<ul>
+<li>Copy the .ttf file of the font in directory <b>src</b>.</li>
+<li>Put the name of your font in <b>family</b> field of the FontStyle Node. Syntax:
+    <b>family "myFont/*"</b> (no extension ".ttf")</li>
+<li>The list of character A-Za-z0-9 + special characters is transformed into a
+    bitmap depending on the font size. For optimization, if you want a subset
+    of A-Za-z0-9, please replace "/*" after "myFont" by the list of character
+    you will use. (with text in example at end of the page, optimized
+    declaration would be <b>family "myFont/Myexample"</b> (case sensitive)</li>
+<li>Bitmap is used at runtime to display the font</li>
+</ul>
+<p class="note check">
+<b>Note:</b><br/>For each non native font, always configure the same font size
+(mandatory). It is advised to configure for each non native font the same color
+in emissiveColor field of Material associated with the Text Node.
+</p>
+<br/>
+
+<h1>Additional Font tfd</h1>
+
+<p>
+The tfd (textual font description) format is the text format of bitmap internal
+fonts.
+</p>
+
+<p>You should fill the following values:</p>
+<ul>
+<li>max width and height of characters</li>
+<li>total number of characters in the font</li>
+<li>line of characters. And for each character line :</li>
+<li class="lvl2">ASCII code</li>
+<li class="lvl2">position of top left in the bitmap</li>
+<li class="lvl2">size of the character (w, h)</li>
+<li class="lvl2">delta to draw current character</li>
+<li class="lvl2">delta to draw next character</li>
+</ul>
+<p>
+The tfd file is automatically generated from a TrueType file. It enable to build
+your own colored font from a bitmap. Then, you can manage graphisms with a Text
+node, it's more simple and light. Moreover it keep 100% compatibility with the
+player.<br/>
+Example: the Sudoku widget.
+</p>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

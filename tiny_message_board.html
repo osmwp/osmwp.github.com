@@ -1,0 +1,389 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tiny_message_board";
+beginPage();
+//-->
+</script>
+
+
+
+<h1 class="title">Tiny Mobile Widgets - Board channel</h1>
+
+
+<h1>Introduction</h1>
+
+An application can use different types of Messages for different events/features. The scene that shall receive the message set a key as url parameter of Message Node. In manager, the key is 'Board'. So, all scene that want to communicate with [Manager|ULManager] (matters of title, softkeys, popups, menu or loading scene) use the ['Board' channel/url | ULMessageBoard].<br/>
+<br/>
+This chapter describe "Board" channel and this message.<br/>
+<br/>
+
+<h1>Send message on the "Board" channel</h1>
+
+<h2>Send message</h2>
+
+<p>
+To send message on "Board" channel, we use the sendMessage(...) method of
+<a href="development_javascript_Browser.html">Browser</a> class.<br/>
+Example:
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+//Initialize widget title and soft key
+Browser.sendMessage ('Board', 'INIT', 'Mobile Widgets', 'Menu', 'Quit');
+</textarea>
+<br/>
+
+<h2>'INIT' message</h2>
+
+<p>
+'INIT' message is use to initialize title and soft keys.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'INIT', title, lsk, rsk, hasIcon);
+</textarea>
+<ul>
+<li>title: Widget title</li>
+<li>lsk: Left soft key label</li>
+<li>rsk: Right soft key label</li>
+<li>hasIcon: translate title if parameter is present</li>
+</ul>
+<br/>
+
+<p>
+Example:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'INIT', 'My Title', 'Option', 'Close', 1);
+</textarea>
+<br/>
+
+<h2>'LOAD' message</h2>
+
+<p>
+'LOAD' message is use to load another VRML page/file.
+</p>
+
+<p class="note info">
+<b>Note:</b><br/>
+<a href="development_node_Namespace.html">Namespace</a> is not changed.<br/>
+Use 'LOAD_WIDGET' to change the <a href="development_node_Namespace.html">Namespace</a>.
+</p>
+
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'LOAD', file);
+</textarea>
+<ul>
+<li>file: File of the new VRML page ('m4m' file).</li>
+</ul>
+<br/>
+
+<p>
+Example:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'LOAD', 'cache://catalog.m4m');
+</textarea>
+<br/>
+
+<h2>'LOAD_WIDGET' message</h2>
+
+<p>
+'LOAD_WIDGET' message is use to load another widget (load widget page and change
+the <a href="development_node_Namespace.html">Namespace</a>).
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'LOAD_WIDGET', file);
+</textarea>
+<ul>
+<li>file: File of the new VRML page ('m4m' file).</li>
+</ul>
+<br/>
+
+<p>
+Example:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'LOAD_WIDGET', 'cache://test.m4m');
+</textarea>
+<br/>
+
+<h2>'MENU' message</h2>
+
+<p>
+'MENU' message is use to display a menu.
+</p>
+<p class="note info">
+<b>Note:</b><br/>
+Catch the 'ANSWER' message to read user selection.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'MENU', title, lsk, rsk, items..., '');
+</textarea>
+<ul>
+<li>title: Widget title</li>
+<li>lsk: Left soft key label</li>
+<li>rsk: Right soft key label</li>
+<li>items...: Menu items</li>
+<li>'': Empty string to flag the end of the items list.</li>
+</ul>
+<p>
+<img alt"" src="images/tiny/ULTutoMenu.png"/>
+</p>
+
+<p>
+Example:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'MENU', 'My Menu', 'Ok', 'Cancel', 'Item1', 'Item2', 'Item3', '');
+</textarea>
+<p>
+See <a href="tutorial_tiny_menu.html">Menu tutorial</a>.
+</p>
+<br/>
+
+<h2>'POPUP' message</h2>
+
+<p>
+'POPUP' message is use to display a popup frame.
+</p>
+
+<p class="note info">
+<b>Note:</b><br/>
+Catch the 'ANSWER' message to read the popup result.
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'POPUP', title, msg, lsk, rsk, type);
+</textarea>
+<ul>
+<li>title: Widget title</li>
+<li>msg: Popup message</li>
+<li>lsk: Left soft key label</li>
+<li>rsk: Right soft key label</li>
+<li>type: Define the popup type</li>
+<li class="lvl2">'error': Error popup (display error icon)</li>
+<li class="lvl2">'warning': Warning popup (display warning icon)</li>
+<li class="lvl2">Other/nothing: Default popup</li>
+</ul>
+<p>
+<img alt"" src="images/tiny/ULTutoPopup.png"/>
+</p>
+
+<p>
+Example:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'POPUP', 'Quit', 'Quit the widget?', 'Yes', 'No');
+</textarea>
+<br/>
+<p>
+See <a href="tutorial_tiny_popup.html">Popup tutorial</a>.
+</p>
+<br/>
+
+<h2>'POPUP_AUTO_HIDE' message</h2>
+
+<p>
+'POPUP_AUTO_HIDE' message is use to hide the popup frame.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'POPUP_AUTO_HIDE');
+</textarea>
+<br/>
+<p>
+See <a href="tutorial_tiny_popup.html">Popup tutorial</a>.
+</p>
+<br/>
+
+<h2>'PROGRESS' message</h2>
+
+<p>
+'PROGRESS' message is use to display and update a progress bar into current popup frame.
+</p>
+<p class="note info">
+<b>Note:</b><br/>
+Progress require an opened popup.
+</p>
+
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'PROGRESS', progress);
+</textarea>
+<ul>
+<li>progress: Progress value (between 0 and 100).</li>
+</ul>
+<p>
+<img alt"" src="images/tiny/manager_progressbar.PNG"/>
+</p>
+
+<p>
+Example:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'PROGRESS', 10);
+</textarea>
+<br/>
+
+<h2>'RESET' message</h2>
+
+<p>
+'RESET' message is use to quit widget. Load carousel page and quit the widget
+<a href="development_node_Namespace.html">Namespace</a>.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'RESET');
+</textarea>
+<br/>
+
+<h2>'CATALOG_UPDATE' message</h2>
+
+<p>
+'CATALOG_UPDATE' message is use to update the catalog.
+</p>
+<p class="note info">
+<b>Note:</b><br/>
+Don't use this message. This message is only use by Catalog and Manager.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'CATALOG_UPDATE', param);
+</textarea>
+<ul>
+<li>param: Parameter used by Catalog and Manager.</li>
+</ul>
+
+<p>
+Example:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'CATALOG_UPDATE', 'REFRESH');
+</textarea>
+<br/>
+
+
+<h1>Receive message on the "Board" channel</h1>
+
+<h2>Receive message</h2>
+
+<p>
+To read messages on "Board" channel, we use a
+<a href="development_node_Message.html">Message</a>.
+</p>
+
+<p>
+1. Define the <a href="development_node_Message.html">Message</a> to read message.
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+# Node to read messages on "Board" channel
+DEF MESSAGE Message { url "Board" }
+</textarea>
+<br/>
+
+<p>
+2. Write a JavaScript function to read and process messages.
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+# Script
+DEF SCRIPT Script {
+  # Define 'data changed' event
+  eventIn MFString data_changed
+  url "
+    //Function to process 'data changed' event
+    function data_changed (val, time) {
+      //Test message
+      if (data_changed[0] == 'RSK') {
+        // Right softkey event
+        Browser.print('Right softkey pressed');
+      }
+    }
+  "
+}
+</textarea>
+<br/>
+
+<p>
+3. Link "Board" channel and data_changed(...) function.
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+# Link "Board" channel and JavaScript function
+ROUTE MESSAGE.data_changed TO SCRIPT.data_changed
+</textarea>
+<br/>
+
+<h2>'ANSWER' message</h2>
+
+<p>
+Message is send by <a href="tiny_manager.html">Manager</a>.<br/>
+This message is used to read menu or popup result.
+</p>
+<ul>
+<li>Popup result:</li>
+<li class="lvl2">message.set_data[0]: 'ANSWER'</li>
+<li class="lvl2">message.set_data[1]:<br/>
+    'LSK': left softkey is pressed<br/>
+    'RSK': right softkey is pressed</li>
+<li>Menu result:</li>
+<li class="lvl2">message.set_data[0]: 'ANSWER'</li>
+<li class="lvl2">message.set_data[1]: Index of the selected item (start by 0) or 'RSK' (on right softkey) </li>
+</ul>
+<p>
+See <a href="tutorial_tiny_menu.html">Menu</a> and <a href="tutorial_tiny_popup.html">Popup</a> tutorials.
+</p>
+<br/>
+
+<h2>'LSK' message</h2>
+
+<p>
+Message is send by <a href="tiny_manager.html">Manager</a> when left softkey is pressed.<br/>
+message.set_data[0]: 'LSK'
+</p>
+<p>
+See <a href="tutorial_tiny_softkeys.html">softkeys tutorial</a>.
+</p>
+<br/>
+
+<h2>'RSK' message</h2>
+
+<p>
+Message is send by <a href="tiny_manager.html">Manager</a> when right softkey is pressed.<br/>
+message.set_data[0]: 'RSK'
+</p>
+<p>
+See <a href="tutorial_tiny_softkeys.html">softkeys tutorial</a>.
+</p>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('','');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

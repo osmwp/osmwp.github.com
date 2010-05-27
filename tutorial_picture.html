@@ -1,0 +1,302 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "tutorial_picture";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">draw picture</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+Picture is define via the <a href="development_node_ImageTexture.html">ImageTexture</a> node.<br/>
+This tutorial present how to display picture, transform it and optimize resources.
+</p>
+<br/>
+
+<h1>Display picture</h1>
+
+<p>
+Basically, we display a picture with 2 nodes:
+</p>
+<ul>
+<li><a href="development_node_Bitmap.html">Bitmap</a>: Define a picture shape</li>
+<li><a href="development_node_ImageTexture.html">ImageTexture</a>: Define the picture file</li>
+</ul>
+<br/>
+
+<p class="note info">
+<b>Note:</b><br/>
+Picture file is in <b>"src"</b> folder.
+</p>
+<p>
+<img alt="Picture application" src="images/tutorials/tuto_appearance_02.jpg" />
+</p>
+<textarea rows="12" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Shape {
+      appearance Appearance {
+        texture ImageTexture {
+          url ["img_32x32.png"]
+        }
+      }
+      geometry Bitmap{ }
+    }
+  ]
+}
+</textarea>
+<br/>
+<p class="note info">
+<b>Note:</b><br/>
+We can use <a href="development_node_Rectangle.html">Rectangle</a> shape to
+display picture. Result is same than use <a href="development_node_Bitmap.html">Bitmap</a> shape.
+</p>
+<br/>
+
+<h1>Transform picture</h1>
+
+<h2>Resize picture</h2>
+
+<p>
+We can resize texture with :
+</p>
+<ul>
+<li><b>scale</b> field of <a href="development_node_Transform2D.html">Transform2D</a> node.</li>
+<li><b>scale</b> field of <a href="development_node_Bitmap.html">Bitmap</a> node.</li>
+<li><b>size</b> field of <a href="development_node_Rectangle.html">Rectangle</a> node.</li>
+<li><b>newSize</b> field of <a href="development_node_ImageTexture.html">ImageTexture</a> node.</li>
+</ul>
+<br/>
+
+<p class="note warning">
+<b>Warning:</b><br/>
+Prefer <b>newSize</b> field of <a href="development_node_ImageTexture.html">ImageTexture</a>
+node if texture size is fixed.<br/>
+Other resize method increases processing and memory consumption.
+</p>
+<p>
+<img alt="Example 2" src="images/tutorials/tuto_picture_02.jpg" />
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    #Default picture
+    Transform2D {
+      translation 0 0
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture { url ["img_32x32.png"] }
+          }
+          geometry Bitmap { }
+        }
+      ]
+    }
+    #Resize picture via Bitmap node
+    Transform2D {
+      translation -40 0
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture { url ["img_32x32.png"] }
+          }
+          geometry Bitmap { scale 1.25 1.25 }
+        }
+      ]
+    }
+    #Resize picture via Transform2D node
+    Transform2D {
+      translation 30 0
+      scale 0.75 0.75
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture { url ["img_32x32.png"] }
+          }
+          geometry Bitmap { }
+        }
+      ]
+    }
+    #Resize picture via Rectangle node
+    Transform2D {
+      translation 55 0
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture { url ["img_32x32.png"] }
+          }
+          geometry Rectangle { size 16 16 }
+        }
+      ]
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<h2>Rotate picture</h2>
+
+<p>
+When can rotate picture with the <b>rotationAngle</b> field of
+<a href="development_node_Transform2D.html">Transform2D</a> node.<br/>
+But arbitrary rotations may not be supported by pictures.<br/>
+Only 0°, 90°, 180° and 270° angle are supported.
+</p>
+
+<p class="note warning">
+<b>Warning:</b><br/>
+Rotation increases processing and memory consumption.
+</p>
+
+<p>
+Following example rotate picture to 180°.
+</p>
+<p class="note info">
+<b>Note:</b><br/><b>rotationAngle</b> field use radian value.<br/>
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Transform2D {
+      rotationAngle 3.1415 # == 180°
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture { url ["img_32x32.png"] }
+          }
+          geometry Bitmap { }
+        }
+      ]
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<p>
+Another example: Rotation of 90° and -90°
+</p>
+<p>
+<img alt="Example 2" src="images/tutorials/tuto_picture_03.jpg" />
+</p>
+<ul>
+<li>Left picture: rotationAngle = -1.57075 (-90° or 270°)</li>
+<li>Right picture: rotationAngle = 1.57075 (90°)</li>
+</ul>
+<br/>
+
+<h1>Optimization</h1>
+
+<p>
+To resize a picture, use the <b>newSize</b> field of
+<a href="development_node_ImageTexture.html">ImageTexture</a> node.<br/>
+With this field, only resized picture is stored in memory.
+</p>
+
+<p>
+To reuse an picture in same VRML scene, use DEF / USE instructions or "cache:" URL.<br/>
+Example 1: Picture is loaded and stored 2 times.
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Transform2D {
+      translation 20 0
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture { url ["img_32x32.png"] }
+          }
+          geometry Bitmap { }
+        }
+      ]
+    }
+    Transform2D {
+      translation -20 0
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture { url ["img_32x32.png"] }
+          }
+          geometry Bitmap { }
+        }
+      ]
+    }
+  ]
+}
+</textarea>
+<br/>
+<p>
+Example 2: Picture is loaded and stored 1 time.
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Transform2D {
+      translation 20 0
+      children [
+        Shape {
+          appearance DEF TEXTURE_APP Appearance {
+            texture ImageTexture { url ["img_32x32.png"] }
+          }
+          geometry Bitmap { }
+        }
+      ]
+    }
+    Transform2D {
+      translation -20 0
+      children [
+        Shape {
+          appearance USE TEXTURE_APP
+          geometry Bitmap { }
+        }
+      ]
+    }
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('tutorial_appearance','tutorial_text');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

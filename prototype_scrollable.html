@@ -1,0 +1,163 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_scrollable";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Scrollable prototype</h1>
+
+
+<h1>Introduction</h1>
+
+<p>
+Scrollable is a proto used to scroll generic content.<br/>
+It displays a scroll bar if the content is too long for its size.
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="10" cols="80" readonly="readonly" wrap="off">
+PROTO Scrollable [
+  # Data
+  field MFNode children []
+  field SFBool enabled TRUE
+  field	SFVec2f	size -1 -1 
+  field	SFVec2f	contentSize -1 -1
+  field	SFInt32	contentOffsetY 0
+  # Style
+  field MFString style ["Scrollable"]
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Fields</h2>
+
+<ul>
+<li>MFNode children - Content to be scrolled.be Mandatory field.</li>
+<li>SFVec2f size - Size of the scrollable proto. Mandatory field.</li>
+<li>SFVec2f contentSize - Size of the content to scroll. Mandatory field.</li>
+<li>SFBool enabled - If FALSE, key and touch events will be ignored. Default: TRUE.</li>
+</ul>
+<br/>
+
+<h2>Style</h2>
+
+<ul>
+<li>MFString style - Path to the CSS node associated to Scrollable proto</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+Scrollable {
+  horizontal-align: middle;
+  vertical-align: top;
+}
+</textarea>
+<br/>
+
+<h1>Extern proto(s)</h1>
+
+<p>
+<a href="prototype_scrollbar.html">ScrollBar</a>
+</p>
+<br/>
+
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+EXTERNPROTO Scrollable [] "Scrollable.wrl"
+
+Group {
+  children [
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance Appearance {
+        material Material2D {
+          emissiveColor 0.8 0.8 0.8
+        }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 0 0
+      }
+    }
+    
+    DEF SCROLLABLE Scrollable {
+      enabled TRUE
+      contentSize 500 500
+      children [
+        Shape {
+          appearance Appearance {
+            material Material2D {
+              emissiveColor 1.0 0.0 0.0
+            }
+          }
+          geometry Rectangle {
+            size 100 100
+          }
+        }
+      ]
+    }
+    
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+    ROUTE SIZE_NOTIFIER.screenSize TO SCROLLABLE.size
+    
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

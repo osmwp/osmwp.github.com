@@ -1,0 +1,141 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_CompositeTexture2D";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">CompositeTexture2D node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="4" cols="80">
+CompositeTexture2D {
+  MFNode children NULL
+  SFVec2f size 128 128
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+This texture acts as an image with its content resulting of the composition and
+rendering of the nodes contained in the <b>children</b> field.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFNode children NULL</b> :<br/>
+List of node to render as a texture.
+</p>
+<p>
+<b>SFVec2f size 128 128</b> :<br/>
+Size of the rendered texture.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<p>
+See the <a href="development_node_Rectangle.html">Rectangle</a> node definition
+for an example.
+</p>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+Shape {
+  appearance Appearance {
+    texture DEF MY_TEXTURE CompositeTexture2D {
+      size 100 100
+      children [
+        Transform2D {
+          translation -25 -25
+          children [
+            Shape {
+              appearance Appearance {
+                material Material2D { emissiveColor 1 0 0 }
+              }
+              geometry Rectangle { size  50 50 }
+            }
+          ]
+        }
+        Transform2D {
+          translation 25 25
+          children [
+            Shape {
+              appearance Appearance {
+                material Material2D { emissiveColor 0 1 0 }
+              }
+              geometry Rectangle { size 50 50 }
+            }
+          ]
+        }
+      ]
+    }
+  }
+  geometry Rectangle { size 50 50 }
+}
+
+Transform2D {
+  translation 75 0
+  children [
+    Shape {
+      appearance Appearance {
+        texture USE MY_TEXTURE
+      }
+      geometry Rectangle { size  100 100 }
+    }
+  ]
+}
+</textarea>
+<p>
+<img src="images/nodes/CompositeTexture2D_01.jpg" alt="CoordinateInterpolator2D example" />
+</p>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

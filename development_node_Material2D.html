@@ -1,0 +1,99 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Material2D";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Material2D node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+Material2D {
+  SFColor emissiveColor 1 1 1
+  SFFloat transparency 0
+  SFBool filled TRUE
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Specify the rendering attributes of the related 2D geometry within
+a <a href="development_node_Shape.html">Shape</a>.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>SFColor emissiveColor 1 1 1</b>:<br/>
+Color attribute.
+</p>
+
+<p>
+<b>SFFloat transparency 0</b>:<br/>
+Transparency attribute. Use 0 for fully opaque, 1 for fully transparent.
+</p>
+<p class="note warning">
+<b>Warning:</b><br/>Increases processing and memory consumption (except for 0 or 1 values).
+</p>
+
+<p>
+<b>SFBool filled TRUE</b>:<br/>
+Filling attribute. Used for <a href="development_node_Circle.html">Circle</a>
+and <a href="development_node_Rectangle.html">Rectangle</a> geometry nodes only.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<p>
+See <a href="development_node_Shape.html">Shape</a> node definition for an example.
+</p>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

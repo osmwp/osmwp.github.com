@@ -1,0 +1,105 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_OrderedGroup";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">OrderedGroup node</h1>
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="4" cols="80">
+OrderedGroup {
+  MFNode children NULL
+  MFFloat order
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Identical to <a href="development_node_Group.html">Group</a> but the drawing
+order can be changed using the <b>order</b> field.<br/>
+Each node of <b>children</b> must have a corresponding float value in order and
+the node that has the smallest value is drawn first.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFNode children NULL</b> :<br/>
+List of children to group
+</p>
+<p>
+<b>MFFloat order</b> :<br/>
+Float values for each node of the <b>children</b> field. The smallest value is
+drawn first (the most in background)
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+OrderedGroup {
+    order [ 2 1 ]
+    children [
+        Shape { # position 2
+            appearance DEF APPEARANCE Appearance {
+                material Material2D { emissiveColor 1 0.4 0 }
+            }
+            geometry Rectangle { size 50 50 }
+        }
+        Shape { # position 1
+            appearance USE APPEARANCE
+            geometry Circle { radius 25 }
+        }
+    ]
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

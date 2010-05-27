@@ -1,0 +1,292 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_Browser";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Browser Javascript library</h1>
+
+
+<h1>Description</h1>
+
+<p>
+The Browser class provides access to Browser level characteristics to
+functionality, like terminal size, debug output, cookies.
+</p>
+
+<h1>Methods</h1>
+
+<p>
+<b>int getWidth ()</b>:<br/>
+Returns the screen width
+</p>
+
+<p>
+<b>int getHeight ()</b>:<br/>
+Returns the screen height
+</p>
+
+<p>
+<b>void print (String message)</b>:<br/>
+Display message in the console
+</p>
+
+<p>
+<b>void exit ()</b>:<br/>
+Quit the player
+</p>
+
+<p>
+<b>void setCooky (String s1, String s2)</b>:<br/>
+Set an association between s1 and s2 in a temporary storage area (cleared at
+player exit)
+</p>
+
+<p>
+<b>String getCooky (String s)</b>:<br/>
+Returns the string associated with s.
+</p>
+
+<p>
+<b>String getIntCooky (String s)</b>:<br/>
+Same as getCooky but return the integer stored in the cooky string
+</p>
+
+<p>
+<b>int getNbMimeTypes ()</b>:<br/>
+Returns the number of MIME types supported by this JME platform.
+</p>
+
+<p>
+<b>String getMimeType (int i)</b>:<br/>
+Returns the MIME type at index i in the list of supported types.
+</p>
+
+<p>
+<b>int getFps ()</b>:<br/>
+Returns the number of rendered frames per second
+</p>
+
+<p>
+<b>int getIdle ()</b>:<br/>
+Returns the percentage of available CPU
+</p>
+
+<p>
+<b>void vibrate (float duration)</b>:<br/>
+Make the phone vibrate for duration seconds (A value of zero should stop
+vibrations)
+</p>
+
+<p>
+<b>String setRecord (String s1, String s2)</b>:<br/>
+Associate permanently the value s2 to the key s1 (persistent across sessions)
+</p>
+
+<p>
+<b>String getRecord (String s)</b>:<br/>
+Returns the permanent cooky associated with s
+</p>
+
+<p>
+<b>void deleteRecord (String s)</b>:<br/>
+Delete the persistent record matching the s string.
+</p>
+
+<p>
+<b>void deleteAllRecords ()</b>:<br/>
+Delete all the persistent records.
+</p>
+
+<p>
+<b>boolean hasRecord (String record)</b>:<br/>
+Return true if record exists.
+</p>
+
+<p>
+<b>String getVersion ()</b>:<br/>
+Returns the current version of the player.<br/>
+Ex: 1.0b4 for 1.0 beta 4, 1.0rc2 for 1.0 release candidate 2, 1.0 for final
+released version (so next one will be at least 1.1).<br/>
+</p>
+
+<p>
+<b>int getSessionTraffic ()</b>:<br/>
+Returns the HTTP traffic since startup of the application
+</p>
+
+<p>
+<b>int getTotalTraffic ()</b>:<br/>
+Returns the HTTP traffic since MIDlet deployment or last reset.
+</p>
+
+<p>
+<b>void resetTraffic ()</b>:<br/>
+Resets the total and session HTTP traffic counters
+</p>
+
+<p>
+<b>void sendMessage (String messageURL, String data1, ..., String dataN)</b>:<br/>
+Send multiple strings message to <a href="development_node_Message.html">Message nodes</a>
+matching messageURL.
+</p>
+
+<p>
+<b>void displayTextBox (String title, String text, int maxLength, int type,
+String okLabel, String cancelLabel, [...])</b>:<br/>
+Displays a native ~TextBox using the mobile phone's UI. This allows using T9
+input. <b>title</b> is the title of the native page displaying textbox. <b>text</b>
+is the text that should already be set into the textbox at initialization.<br/>
+For <b>type</b>, see <a href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/TextField.html" target="_blank">TextField documentation</a>
+(default = 0 / numeric = 2 / password = 65536 ...).<br/>
+<b>okLabel</b> and <b>cancelLabel</b> will be set as softkeys of the native
+window. You can set an additionnal parameter to have a callback function when
+textbox is cancelled.
+</p>
+
+<p>
+<b>void displayAlert (String title, String text)</b>:<br/>
+Displays a native Alert using the mobile phone's UI.
+</p>
+
+<p>
+<b>String getJadProperty (String key)</b>:<br/>
+Returns the JAD property associated to <b>key</b>.
+</p>
+
+<p>
+<b>String getProperty (String key)</b>:<br/>
+Returns the system property associated to <b>key</b>.
+<a href="http://developers.sun.com/mobility/midp/questions/properties/index.html" target="_blank">More informations...</a>
+</p>
+
+<p>
+<b>void setTimeout (Function callback, int time, [args...])</b>:<br/>
+Set a timer to call back a function with optional comma-separated arguments after a given time (in milliseconds).
+</p>
+
+<p>
+<b>void deleteStore (String storename)</b>:<br/>
+Delete all records of a given store.
+</p>
+
+<p>
+<b>void setStore (String storename)</b>:<br/>
+Use another place to store the records of setRecord/getRecord.
+</p>
+
+<p>
+<b>String getCountryCode ()</b>:<br/>
+Returns the two letters country code based on the SMS-C information.
+</p>
+
+<p>
+<b>String getLanguage ()</b>:<br/>
+Returns the two letters language used by the phone interface.
+</p>
+
+<p>
+<b>int getFreeMemory ()</b>:<br/>
+Returns the avaiable memory.
+</p>
+
+<p>
+<b>int getTotalMemory ()</b>:<br/>
+Returns the total memory. This value can changed dynamicaly on some phones.<br/>
+The garbage collector each time this function is called. Use carefully.
+</p>
+
+<p>
+<b>boolean forceBacklight (boolean force)</b>:<br/>
+Force the backlight on when force is true. Returns true if forcing backlight on is supported.
+</p>
+<br/>
+
+
+<h1>Examples</h1>
+
+<h2>Message Example</h2>
+
+<p>
+See <a href="development_node_Message.html">Message node</a> for an example.
+</p>
+<br/>
+
+<h2>Cookies Example</h2>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+function setMyCookies(){
+  Browser.setCooky('key','value');
+  Browser.setCooky('anotherKey','42');
+}
+
+function getMyCookies(){
+  var str = Browser.getCooky('key');
+  var i = Browser.getIntCooky('anotherKey');
+  Browser.print(str);
+  var iIsAnInt = i+3;
+  Browser.print(iIsAnInt);
+}
+</textarea>
+<br/>
+
+<h2>Records Example</h2>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+function setMyRecords(){
+  Browser.setRecord('permanentRecord','are you persistent ?');
+  Browser.setRecord('permanentRecord2','of Course I am !');
+}
+
+function getMyRecords(){
+  var strQuestion = Browser.getRecord('permanentRecord');
+  var strAnswer = Browser.getRecord('permanentRecord2');
+  Browser.print(strQuestion);
+  Browser.print(strAnswer);
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

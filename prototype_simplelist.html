@@ -1,0 +1,225 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_simplelist";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">SimpleList prototype</h1>
+
+<img class="right" alt="SimpleList" src="images/prototypes/proto_simplelist_01.jpg" />
+
+<h1>Introduction</h1>
+
+<p>
+Select an element in a list.<br/>
+Maximum 5 elements , non scrollable list.
+</p>
+<br/>
+
+<h1>Interface</h1>
+
+<textarea rows="15" cols="50" readonly="readonly" wrap="off">
+PROTO SimpleList [
+  # Events out
+  eventOut SFInt32 currentElement # Selected element
+  eventOut SFTime selection
+  
+  # Events in
+  eventIn SFInt32 update	# Update the list and position focus on the given element
+  eventIn SFInt32 goToElement
+  exposedField SFBool enable TRUE
+  exposedField SFBool enableCycle TRUE
+  
+  # Data
+  field MFString elementsLabels [""]
+  field MFInt32 elementsStates [0]
+  field MFInt32 elementsSeparators []
+  field SFInt32 nbElements 0
+  
+  # Style
+  field MFString focusbarStyle ["FocusBar"]
+  field MFString style ["SimpleList"]
+  field SFVec2f size -1 -1
+  field SFVec2f textScale 1 1
+  field MFString focusbarImages ["focusBarBg.png" "focusBarOver.png"]
+  field MFString images ["listSeparator.png"]
+
+  # Private fields (shared by items)
+  field SFVec2f separatorSize 0 0
+  field SFColor separatorColor 0 0 0
+  field SFVec2f labelPos 0 0
+  field SFNode labelFontstyle FontStyle {}
+  field MFString separatorImage []
+]
+</textarea>
+<br/>
+
+<h1>Fields description</h1>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>SFInt32 nbElements - Number of elements</li>
+<li>MFString elementsLabels - Elements labels</li>
+<li>MFInt32 elementsStates - Enable/disable elements. Enable&gt;=0; disable=-1</li>
+<li>MFInt32 elementsSeparators - Elements separators. 0 = separator; -1 = no separator</li>
+</ul>
+<br/>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>MFString focusbarStyle - Path to the CSS specific node associated to the FocusBar of SimpleList proto</li>
+<li>MFString style - Path to the CSS node associated to SimpleList proto</li>
+<li>SFVec2f size - Size of the area where the SimpleList proto is displayed</li>
+<li>SFVec2f textScale - Use for scaling text if necessary (phone with small fonts)1</li>
+<li>MFString focusbarImages - FocusBar background and reflect</li>
+<li>MFString images - Image separator</li>
+</ul>
+<p class="note warning">
+<b>Warning:</b><br/>Define style is required (we can use the default style - see
+<a href="development_node_Style.html">Style node</a>).
+</p>
+<br/>
+
+<h2>Exposed Fields</h2>
+
+<ul>
+<li>SFBool enable - Enable/disable SimpleList focus</li>
+<li>SFBool enableCycle</li>
+</ul>
+<br/>
+
+<h2>Event in</h2>
+
+<ul>
+<li>SFInt32 update - Update the list and position focus on the given element</li>
+<li>Call update is needed if Styles fields are modified</li>
+<li>SFInt32 goToElement - Force list to focus a given element</li>
+</ul>
+<br/>
+
+<h2>Event Out</h2>
+
+<ul>
+<li>SFInt32 currentElement - The selected element</li>
+<li>SFTime selection - The time when an item is selected</li>
+</ul>
+<br/>
+
+<h1>CSS</h1>
+
+<textarea rows="12" cols="80" readonly="readonly" wrap="off">
+SimpleList {
+  color: black;
+  disabled-color: gray;
+  border-width: 90%;
+  border-color: gray;
+  font-filter: true;  
+  font-size: 12;
+  font-style: bold;
+  horizontal-align: left;
+  vertical-align: middle;
+  text-position: -35.5% 0%;
+}
+</textarea>
+<br/>
+
+<h1>Extern proto(s)</h1>
+
+<p>
+<a href="prototype_list.html">List</a>,
+<a href="prototype_focusbar.html">FocusBar</a>
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+EXTERNPROTO SimpleList [] "SimpleList.wrl"
+EXTERNPROTO Slider [] "Slider.wrl"
+
+Group {
+  children [
+    Style {
+      url ["default.css"]
+    }
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance  Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+		
+    DEF LIST SimpleList {
+      elementsLabels [
+        "Element 1"
+        "Element 2"
+        "Element 3"
+        "Element 4"
+        "Element 5"
+      ]
+      nbElements 5
+          
+      focusbarStyle ["FocusBar" "Menu-FocusBar"]
+      images ["listSeparator.png"]
+          
+      enable TRUE
+      
+      size 100 200
+    }
+		
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

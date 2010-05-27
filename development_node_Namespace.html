@@ -1,0 +1,142 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_Namespace";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Namespace node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="5" cols="80">
+Namespace {
+    MFNode children NULL
+    MFString name []
+    MFString exception []
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Special node to sandbox VRML scenes and Javascript code for widgets.
+</p>
+
+<p>Features:</p>
+<ul>
+<li>Limits access to some Javascript classes or methods (eg deleting other
+    RecordStores, exit MeMo).</li>
+<li>Isolates RMS access (each namespace uses it own RecordStore) to prevent
+    collisions for caching and persistence.</li>
+<li>Prevents runtime errors of the protected nodes to impact the current scene.</li>
+<li>Multiple namespaces can be used at the same time or imbricated.</li>
+</ul>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>MFNode children NULL</b>:<br/>
+Children nodes to protect in the namespace.
+</p>
+
+<p>
+<b>MFString name []</b>:<br/>
+Name of the namespace (must be unique for each namespace).
+</p>
+
+<p>
+<b>MFString exception []</b>:<br/>
+If an exception during runtime occurs in the children nodes, an exception
+message will be emitted by this field.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+#VRML V2.0 utf8
+
+# the scene that is inlined and that uses this scene as a softkey/alert provider
+DEF NAMESPACE Namespace {
+   children [
+      DEF INLINE Inline { url "" }
+   ]
+}
+DEF SCRIPT Script {
+   eventIn MFString onException
+   field SFNode inline USE INLINE
+   field SFNode namespace USE NAMESPACE
+   url "javascript:
+
+      function quitApp() {
+         if (namespace.name[0] == '') {
+            inline.url[0] = 'jar://quit.m4m';
+         }
+      }
+      function loadWidget (widgetId) {
+         if (namespace.name[0] == '') { // only client namespace can load another client scene !
+            namespace.name[0] = widgetId; // set namespace for inline
+         }
+      }
+      function onException () {
+         Browser.print ('Manager: Exception in scene: '+inline.url[0]+': '+onException[0]);
+         if (String.endsWith (inline.url[0], 'main.m4m') == false) {
+            namespace.name[0] = '';
+            loadWidget ('main', false);
+         }
+      }
+      function quitWidget (widgetId) {
+         namespace.name[0] = '';
+         loadWidget ('main', false);
+      }
+   "
+}
+ROUTE NAMESPACE.exception TO SCRIPT.onException
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

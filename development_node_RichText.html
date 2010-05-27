@@ -1,0 +1,226 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_node_RichText";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">RichText node</h1>
+
+
+<h1>Interface</h1>
+
+<textarea wrap="off" readonly="readonly" rows="11" cols="80">
+RichText {
+  MFString string []
+  SFVec2f size 128 128
+  SFFloat height 0
+  SFFloat start 0
+  SFString style ""
+  SFFloat jump 0
+  SFVec2f position 0 0
+  SFTime selectTime 0
+  SFString linkSelected
+}
+</textarea>
+<br/>
+
+<h1>Description</h1>
+
+<p>
+Render XHTML content with CSS support.
+</p>
+
+<p class="note check">
+<b>Note:</b><br/>
+To ease the use of this node, use the MiniBrowser prototype that handles
+automatic scrolling (with touchscreen screen support) and scrollbar handling.
+</p>
+<br/>
+
+<h2>XHTML Tags support</h2>
+
+<ul>
+<li><b>html, header, title, body</b></li>
+<li><b>div, span, h1, h2, h3, h4, h5, h6, p</b></li>
+<li><b>font, style, center, b, u, i</b></li>
+<li><b>hr, br</b></li>
+<li><b>img, a</b></li>
+</ul>
+<br/>
+
+<h2>XHTML tag attributes</h2>
+
+<ul>
+<li>Common attributes: <b>class, style</b></li>
+<li><b>font</b> attributes: <b>color, size</b></li>
+<li><b>img</b> attributes: <b>src, width, height</b></li>
+<li><b>a</b> attribute: <b>href</b></li>
+<li><b>p</b> attribute: <b>align</b></li>
+</ul>
+<br/>
+
+<h2>CSS support</h2>
+
+<p>
+See <a href="widgets_development_css_language.html">CSS chapter</a> for a detailed list of attributes.
+</p>
+<ul>
+<li><b>Margin, Padding, Border</b></li>
+<li><b>Backgound</b></li>
+<li><b>Text, Font, Alignment</b></li>
+</ul>
+<br/>
+
+<h2>CSS pseudo class support</h2>
+
+<ul>
+<li><b>a</b> classes: <b>:link, :hover, :active, :visited</b>.</li>
+</ul>
+<p class="note check">
+<b>Note:</b><br/>
+Only <b>color</b> CSS property is supported for pseudo class on links for the moment.
+</p>
+<br/>
+
+<h2>Url support and navigation</h2>
+
+<p>
+To navigate from one URL to another, associate some CSS pseudo classes to the
+<b>a</b> tag using the <b>style</b> field.
+</p>
+
+<p>
+For example: <b>a:visited { color: purple; } a:hover { color: red; } a:active { color: green; }</b>.
+</p>
+
+<p>
+This ensures that the focused tag and visited tags are visible to the user.<br/>
+Use the <b>jump</b> field to jump from a link to another.
+</p>
+<br/>
+
+<h1>Fields</h1>
+
+<p>
+<b>exposedField MFString string []</b>:<br/>
+The concatenation of all items is use as the XHTML content to display.
+</p>
+
+<p>
+<b>exposedField SFVec2f size 128 128</b>:<br/>
+The size, in pixels, of the rendering box, similar to the
+<a href="development_node_Layer2D.html">Layer2D</a>.size field.
+</p>
+
+<p>
+<b>eventOut SFFloat height</b>:<br/>
+The real height, in pixels, of the whole rendered text.
+</p>
+
+<p>
+<b>eventIn SFFloat start 0</b>:<br/>
+The starting position, in pixels, of the displayed text.<br/>
+This is usefull to scroll the text when <b>height</b> field returns a value
+greater than the given <b>size</b>.y.<br/>
+Modifying this field, will trigger update of the <b>start_changed</b> field.
+</p>
+
+<p>
+<b>eventIn SFString style ""</b>:<br/>
+Specify a style sheet that will supersede the usual XHTML ones.
+</p>
+
+<p>
+<b>eventIn SFFloat jump 0</b>:<br/>
+Go to the next visible link (and mark it as focused) or scroll by the specified
+amount of pixels.<br/>
+When scrolling, the <b>start_changed</b> field will be update to the new position.
+</p>
+
+<p>
+<b>eventIn SFVec2f position 0 0</b>:<br/>
+The coordinates, in the node reference, of a "button press".<br/>
+This results in the output of a URL in the <b>linkSelected</b> field if a link
+is "under" the <b>position</b>.
+</p>
+
+<p>
+<b>eventIn SFTime selectTime 0</b>:<br/>
+The time at which a validation of the current link, if any, is required.<br/>
+This results in the output of a URL in the <b>linkSelected</b> field if a link
+is focused.
+</p>
+
+<p>
+<b>eventOut SFString linkSelected</b>:<br/>
+   Output the newly selected link, if any, by one of the above command.
+</p>
+
+<p>
+<b>enventOut SFVec2f start_changed</b>:<br/>
+Output the new position of the text after a <b>jump</b> lead to a scroll or when
+<b>start</b> field is changed.
+</p>
+<br/>
+
+<h1>Example</h1>
+
+<textarea wrap="off" readonly="readonly" rows="12" cols="80">
+#VRML V2.0 utf8
+
+RichText {
+        string "My Example"
+        style "a:visited {
+          color: purple;
+        } a:hover {
+          color: red;
+        } a:active {
+          color: green;
+        } p { text-align:right; }
+        "
+}
+</textarea>
+<br/>
+
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_nodes_ref', '');
+//-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

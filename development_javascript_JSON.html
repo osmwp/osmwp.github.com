@@ -1,0 +1,135 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_JSON";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">JSON Javascript library</h1>
+
+
+<h1>Description</h1>
+
+<p>
+Load and parse JSON data.
+</p>
+
+<h1>Methods</h1>
+
+<p>
+<b>int open (String buffer, int mode)</b>:<br/>
+Create a JSON DOM by parsing the provided buffer or url according to mode.<br/>
+The value returned must be used for all subsequent operations on this DOM.
+</p>
+
+<p>
+<b>void close (int id)</b>:<br/>
+Destroy the DOM and release any resources associated to <b>id</b>.
+</p>
+
+<p>
+<b>bool find (int id, String path)</b>:<br/>
+Set a pointer to an element defined by the path.<br/>
+The form of this path is nodeName1/nodeName2/...<br/>
+If the value of the node is an array and not an Object, then the form <b>index</b>
+can be used instead.<br/>
+Example: main/table*1/key points to the key element that is stored at the second
+position inside the array associated to table, child of main, like in:
+</p>
+<textarea wrap="off" readonly="readonly" rows="1" cols="80">
+{"main" : { "table" : [ { "id" : 1234}, {"key" : 2} ] }, "list" : [ 1, 2] }}
+</textarea>
+<p>
+This obviously implies that the structure is known in advance!
+</p>
+
+<p>
+<b>int/String getValue (int id)</b>:<br/>
+Returns the value located to the previous find command.<br/>
+This will return 0 for types other that string, number and constants (true, false and null).<br/>
+In the previous example, returns the number 2.
+</p>
+
+<p>
+<b>int getType (int id)</b>:<br/>
+Returns the type of the value located to the previous find command.<br/>
+In the previous example, returns <b>JSON.NUMBER</b>.
+</p>
+
+<p>
+<b>int getSize (int id)</b>:<br/>
+Returns the size of the value located to the previous find command.<br/>
+Returns always 1 except for arrays.
+</p>
+<br/>
+
+<h1>Constants</h1>
+
+<p>
+<b>NUMBER, STRING, OBJECT, ARRAY, TRUE, FALSE, NULL, ERROR</b>:<br/>
+Types returned by the <b>JSON.getType ()</b> method.
+</p>
+
+<p>
+<b>BUFFER, URL, KEEP_ALIVE, DEBUG, ASYNC</b>:<br/>
+Values that can be used for the <b>mode</b> argument of the <b>JSON.open()</b> method.
+</p>
+<br/>
+
+<h1>Examples</h1>
+
+<textarea wrap="off" readonly="readonly" rows="10" cols="80">
+function parseJson(){
+  // Quotes are not interpreted in the script thanks to the slashes
+  var jsondata = '{\"result\":\"myContent\",\"id\":1}'; // The corresponding Json string is: {"result":"myContent","id":1}
+  // Parse Json response, like the Xml parser
+  var id = JSON.open(jsondata , JSON.BUFFER);
+  JSON.find(id, '/result');
+  Browser.print('Result: '+JSON.getValue(id)); // Prints "Result: myContent"
+  JSON.close(id); // Free all resources associated to the DOM
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+	addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>
