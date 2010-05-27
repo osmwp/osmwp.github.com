@@ -77,14 +77,16 @@ There are two ways to create a new Mobile Widget Project:
 <h2>From the Toolbar</h2>
 
 <p>
-Click on the New Widget Project icon on the Toolbar (marked in red):
+Click on the New Widget Project icon on the Toolbar (marked in red):<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_01.jpg" />
 </p>
 
 <h2>From the New Project menu</h2>
 
 <p>
 Go to <b>File &gt; New &gt; Project</b> in the top menu bar. In the wizards list,
-go into the Mobile Widgets SDK folder and select Widget Project, then click on Next.
+go into the Mobile Widgets SDK folder and select Widget Project, then click on Next.<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_02.jpg" />
 </p>
 
 
@@ -93,7 +95,8 @@ go into the Mobile Widgets SDK folder and select Widget Project, then click on N
 <h2>The New Mobile Widget Wizard</h2>
 
 <p>
-The new project wizard page is then displayed:
+The new project wizard page is then displayed:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_03.jpg" />
 </p>
 
 <h3>Widget Type</h3>
@@ -136,7 +139,8 @@ functional and provide sample code. The VRML model to use is selected on the
 second page of the wizard. A short description and a screenshot of the selected
 item are displayed on the right.<br/>
 When a model is selected, the Widget project creation is completed. You can
-click on the Finish button.
+click on the Finish button.<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_04.jpg" />
 </p>
 
 <p>
@@ -151,7 +155,8 @@ as a starting point for another application, or just to provide code samples.
 The third page of the creation wizard is optional.<br/>
 The widget styles provide different pictures and allow the developer to
 customize the widget design. By default, the style of the new widget will be the
-style of the selected VRML model. However, this can be modified in this page.
+style of the selected VRML model. However, this can be modified in this page.<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_05.jpg" />
 </p>
 
 <p>
@@ -164,7 +169,8 @@ the developer to see how the selected style will look like.
 <h2>Project structure</h2>
 
 <p>
-A newly created project has the following structure:
+A newly created project has the following structure:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_06.jpg" />
 </p>
 <ul>
 <li>The doc folder contains a screenshot of the widget.</li>
@@ -188,7 +194,8 @@ as well as information that can be useful.
 
 <p>
 Depending on the selected widget type, the project icon in the Eclipse workspace
-is different: orange if it is a Mobile Widget, cyan if it is a Tiny Mobile Widget.
+is different: orange if it is a Mobile Widget, cyan if it is a Tiny Mobile Widget.<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_07.jpg" />
 </p>
 <br/>
 
@@ -204,167 +211,300 @@ signing of Applets and MIDlets.
 </p>
 
 <p>
-In order to generate the widgets' documentation (task Generate Documentation, see §7), you must provide the path where Perl is installed. Specify the path in the Perl bin directory field. By default, it is set to C:\Perl\bin.
+In order to generate the widgets' documentation, you must provide the path where
+Perl is installed. Specify the path in the Perl bin directory field. By default,
+it is set to C:\Perl\bin.
+</p>
 
-In order to sign Applets and MIDlets, you must provide a keystore and other data, as an alias, a storepass and a keypass. If the checkbox is checked and correct data are entered in the different fields, the Applets and/or the MIDlets will automatically be signed when created.
-
+<p>
+In order to sign Applets and MIDlets, you must provide a keystore and other
+data, as an alias, a storepass and a keypass. If the checkbox is checked and
+correct data are entered in the different fields, the Applets and/or the MIDlets
+will automatically be signed when created.<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_08.jpg" />
+</p>
+<br/>
 
 
 <h2>Project preferences (Properties)</h2>
-The project preferences page allows modifying the Widget version and the Widget style after the project creation.
-Right click on the Widget project and select Properties, then select Widget preferences.
 
+<p>
+The project preferences page allows modifying the Widget version and the Widget
+style after the project creation.<br/>
+Right click on the Widget project and select Properties, then select Widget
+preferences.<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_09.jpg" />
+</p>
 
-
-The version and the style of the selected project are displayed, and can be modified. When the OK button is pressed, the modification are submitted and taken in account by the project.
+<p>
+The version and the style of the selected project are displayed, and can be
+modified. When the OK button is pressed, the modification are submitted and
+taken in account by the project.
+</p>
+<br/>
 
 <h1>Running the Mobile Widget</h1>
 
+<p>
 There are three different ways to run the Mobile Widget:
--	If you are used to the Eclipse environment, you can run the widget in a standard way, from the Run Configurations dialog.
--	If you are new to Eclipse, you can configure and launch the widget from the Toolbar.
--	For a quick launch with default configuration, you can use the Run as… menu.
+</p>
+<ul>
+<li>If you are used to the Eclipse environment, you can run the widget in a
+    standard way, from the Run Configurations dialog.</li>
+<li>If you are new to Eclipse, you can configure and launch the widget from the
+    Toolbar.</li>
+<li>For a quick launch with default configuration, you can use the Run as… menu.</li>
+</ul>
+<br/>
 
 <h2>Run Configuration</h2>
 
-On the top menu, click on Run > Open Run Dialog…. The following window is displayed:
+<p>
+On the top menu, click on <b>Run &gt; Open Run Dialog...</b>. The following window is displayed:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_10.jpg" />
+</p>
 
+<p>
+In the configurations list, choose Mobile Widget Application. You can specify a
+name for this configuration, in the Name field. By default, it will be named
+New_configuration. Select a project on which the configuration will be applied
+by clicking on the Browse… button.
+</p>
 
-In the configurations list, choose Mobile Widget Application. You can specify a name for this configuration, in the Name field. By default, it will be named New_configuration. Select a project on which the configuration will be applied by clicking on the Browse… button.
+<p>
+In the Task group, select Compile and test. The Emulator group is enabled. There
+are three configuration items:
+</p>
+<ul>
+<li>Clean: check this box to clean the RMS entries on the emulator.</li>
+<li>Current Language: by clicking the Select language button on the right, you
+    can choose one of the available languages in the project (from the i18n folder).</li>
+<li>Current Resolution: choose a resolution by clicking the Select size button.</li>
+</ul>
 
-In the Task group, select Compile and test. The Emulator group is enabled. There are three configuration items:
--	Clean: check this box to clean the RMS entries on the emulator.
--	Current Language: by clicking the Select language button on the right, you can choose one of the available languages in the project (from the i18n folder).
--	Current Resolution: choose a resolution by clicking the Select size button.
-Click on the Apply button to save your configuration, and then on the Run button to launch it. The WRL sources are compiled for the current language and resolution, and the emulator is launched.
+<p>
+Click on the Apply button to save your configuration, and then on the Run button
+to launch it. The WRL sources are compiled for the current language and
+resolution, and the emulator is launched.
+</p>
+<br/>
 
 <h2>Run from the Toolbar</h2>
 
-The fourth button of the Toolbar allows configuring Run and Export for the selected widget:
+<p>
+The fourth button of the Toolbar allows configuring Run and Export for the selected widget:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_11.jpg" />
+</p>
 
+<p>
+In the Test with Emulator group, you can choose to wipe data by checking the box,
+and you can select the language and the resolution used when the emulator is launched:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_12.jpg" />
+</p>
 
-In the Test with Emulator group, you can choose to wipe data by checking the box, and you can select the language and the resolution used when the emulator is launched:
-
+<p>
 Once the setup is done, click on the Finish button to save it.
+</p>
 
-This configuration will be used when the second button of the Toolbar is clicked:
+<p>
+This configuration will be used when the second button of the Toolbar is clicked:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_13.jpg" />
+</p>
 
+<p>
 Then, the emulator is launched.
+</p>
+<br/>
 
 <h2>Launch shortcut</h2>
 
-For convenience, a launch shortcut is provided. To access it, right click on a Mobile Widget or a Tiny Mobile Project or on one of its elements, and select Run As > Mobile Widget.
+<p>
+For convenience, a launch shortcut is provided. To access it, right click on a
+Mobile Widget or a Tiny Mobile Project or on one of its elements, and select
+<b>Run As &gt; Mobile Widget</b>.<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_14.jpg" />
+</p>
 
-
-
-
+<p>
 This shortcut provides the following configuration:
--	It wipes the RMS data and runs the widget on the emulator.
--	The default language and the default resolution are the ones selected in the Toolbar configuration screen. 
-
+</p>
+<ul>
+<li>It wipes the RMS data and runs the widget on the emulator.</li>
+<li>The default language and the default resolution are the ones selected in the Toolbar configuration screen.</li>
+</ul> 
+<br/>
 
 
 <h1>Exporting the Mobile Widget</h1>
 
+<p>
 There are three different ways to export the Mobile Widget:
--	If you are used to the Eclipse environment, you can export the widget from the Run Configurations dialog.
--	If you are new to Eclipse, you can export the widget from the Toolbar.
--	For quick single exports, you can use the context menu.
+</p>
+<ul>
+<li>If you are used to the Eclipse environment, you can export the widget from the Run Configurations dialog.</li>
+<li>If you are new to Eclipse, you can export the widget from the Toolbar.</li>
+<li>For quick single exports, you can use the context menu.</li>
+</ul>
+<br/>
 
 <h2>Run Configuration</h2>
 
-On the top menu, click on Run > Open Run Dialog… to display the Run Configurations dialog:
+<p>
+On the top menu, click on <b>Run &gt; Open Run Dialog...</b> to display the Run Configurations dialog:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_15.jpg" />
+</p>
 
-
+<p>
 In the Task group, select Export Widget. The Package group is enabled: select one or several packages to create.
-§	Package Applet: generate JAR files (in the exports/applet directory) and launch the applet in browser.
-§	Package for Gallery: create a package (in exports/gallery) that can be uploaded on Djinngo Gallery.
-§	Package for Orange Widgets: create a package (in exports/mmp) for Orange Widgets.
-§	Package for AppShop: create JAR and JAD files (in exports/midlet) that can be uploaded on Orange AppShop.
-§	Package for Android Marketplace: create a package for Android (in exports/android) that can be uploaded on Android Marketplace and on Orange AppShop.
-§	Package for RIM AppWorld (BlackBerry): create a package for BlackBerry (in exports/blackberry) that can be uploaded on RIM App World and on Orange AppShop.
-§	Package for Ulight (available only for Tiny Mobile Widgets): create a package (in exports/ulight) for Ulight.
+</p>
+<ul>
+<li>Package Applet: generate JAR files (in the exports/applet directory) and launch the applet in browser.</li>
+<li>Package for Gallery: create a package (in exports/gallery) that can be uploaded on Djinngo Gallery.</li>
+<li>Package for Orange Widgets: create a package (in exports/mmp) for Orange Widgets.</li>
+<li>Package for AppShop: create JAR and JAD files (in exports/midlet) that can be uploaded on Orange AppShop.</li>
+<li>Package for Android Marketplace: create a package for Android (in exports/android) that can be uploaded on Android Marketplace and on Orange AppShop.</li>
+<li>Package for RIM AppWorld (BlackBerry): create a package for BlackBerry (in exports/blackberry) that can be uploaded on RIM App World and on Orange AppShop.</li>
+<li>Package for Ulight (available only for Tiny Mobile Widgets): create a package (in exports/ulight) for Ulight.</li>
+</ul>
 
+<p>
+Click on the Apply button to save your configuration, and then on the Run button
+to launch the export task(s).
+</p>
 
-Click on the Apply button to save your configuration, and then on the Run button to launch the export task(s).
-
-
-The Widget Project should contain a screenshot.png file, in a doc/img folder. If this file does not exist, a warning is displayed when the Package for Gallery task is selected:
-
-
+<p>
+The Widget Project should contain a screenshot.png file, in a doc/img folder. If
+this file does not exist, a warning is displayed when the Package for Gallery
+task is selected:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_16.jpg" />
+</p>
+<br/>
 
 
 <h2>Export from the Toolbar</h2>
 
-The fourth button of the Toolbar allows configuring Export for the selected widget:
+<p>
+The fourth button of the Toolbar allows configuring Export for the selected widget:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_17.jpg" />
+</p>
 
+<p>
+In the Export group, you can choose the packages to generate when the export
+task is launched:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_18.jpg" />
+</p>
 
-In the Export group, you can choose the packages to generate when the export task is launched:
+<p>
+The Package for Ulight option is only available for Tiny Mobile Widgets. For a
+full description of the different packages, see §6.1. Click on the Finish button
+to save the configuration.
+</p>
 
-
-The Package for Ulight option is only available for Tiny Mobile Widgets. For a full description of the different packages, see §6.1. Click on the Finish button to save the configuration.
-
-Once the setup is done, click on the third button of the Toolbar to launch the selected export tasks:
-
+<p>
+Once the setup is done, click on the third button of the Toolbar to launch the
+selected export tasks:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_19.jpg" />
+</p>
+<br/>
 
 <h2>Context Menu</h2>
 
-The context menu can be accessed by right-clicking on the project (or on one of its elements). It allows launching export tasks one by one:
+<p>
+The context menu can be accessed by right-clicking on the project (or on one of
+its elements). It allows launching export tasks one by one:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_20.jpg" />
+</p>
 
+<p>
+The Package for Ulight option is only available for Tiny Mobile Widgets.<br/>
+The Export widget option launches the packages tasks selected in the Toolbar
+configuration screen.
+</p>
+<br/>
 
-The Package for Ulight option is only available for Tiny Mobile Widgets. For a full description of the different packages, see §6.1.
-The Export widget option launches the packages tasks selected in the Toolbar configuration screen (see §6.2).
- 
 <h1>Generating documentation</h1>
 
-Documentation in HTML can be generated from the comments present in the VRML code of the widget.
+<p>
+Documentation in HTML can be generated from the comments present in the VRML
+code of the widget.
+</p>
+<br/>
 
 <h2>Run Configuration</h2>
 
-On the top menu, click on Run > Open Run Dialog… to display the Run Configurations dialog:
+<p>
+On the top menu, click on <b>Run &gt; Open Run Dialog...</b> to display the Run
+Configurations dialog:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_21.jpg" />
+</p>
 
-In the Task group, select Generate Documentation, and click on the Run button. The documentation is generated in the doc folder of the project, and open in a web browser.
+<p>
+In the Task group, select Generate Documentation, and click on the Run button.
+The documentation is generated in the doc folder of the project, and open in a
+web browser.
+</p>
+<br/>
 
 <h2>Context Menu</h2>
 
-The context menu can be accessed by right-clicking on the project (or on one of its elements). Click on the Generate documentation item.
+<p>
+The context menu can be accessed by right-clicking on the project (or on one of
+its elements). Click on the Generate documentation item.<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_22.jpg" />
+</p>
 
-
-The documentation is generated in the doc folder of the project, and open in a web browser.
-
+<p>
+The documentation is generated in the doc folder of the project, and open in a
+web browser.
+</p>
+<br/>
 
 <h1>Add/remove project nature</h1>
 
-A project obtained from repository check-out which contains all the mandatory elements may not have the required Mobile Widget nature. In this case, the options of the context menus, the Run Configuration and the Toolbar are not available for the project. To convert such a project in a Mobile Widget or a Tiny Mobile Widget project, use the Mobile Widgets SDK Tools:
+<p>
+A project obtained from repository check-out which contains all the mandatory
+elements may not have the required Mobile Widget nature. In this case, the
+options of the context menus, the Run Configuration and the Toolbar are not
+available for the project. To convert such a project in a Mobile Widget or a
+Tiny Mobile Widget project, use the Mobile Widgets SDK Tools:<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_23.jpg" />
+</p>
 
+<p>
+Once the project converted, the related actions become available, and the needed
+symbolic links are created. The project nature is indicated by the following
+icon:  for Mobile Widget Project,  for Tiny Mobile Widget Project.
+</p>
 
-
-Once the project converted, the related actions become available, and the needed symbolic links are created. The project nature is indicated by the following icon:  for Mobile Widget Project,  for Tiny Mobile Widget Project.
-
-If you convert a project that should not have been, the nature can always be removed by using the context menu (last item):
-
-
-
-
-
+<p>
+If you convert a project that should not have been, the nature can always be
+removed by using the context menu (last item):<br/>
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_24.jpg" />
+</p>
+<br/>
 
 
 <h1>Annex 1 – Micro Emulator proxy configuration</h1>
- 
+
+<p>
 Add these two lines on your Micro Emulator configuration file:
- 
-<system-property VALUE="{your proxy host}" NAME="http.proxyHost"/>
-<system-property VALUE="{your proxy name}" NAME="http.proxyPort"/>
- 
- 
+</p>
+<textarea rows="2" cols="80" readonly="readonly" wrap="off">
+&lt;system-property VALUE="{your proxy host}" NAME="http.proxyHost"/&gt;
+&lt;system-property VALUE="{your proxy name}" NAME="http.proxyPort"/&gt;
+</textarea>
+<br/>
+
+<p>
 The Micro Emulator configuration file is available here:
-·	Windows OS: C:\Documents and Settings\{user name}\.microemulator\config2.xml
-·	Linux OS: /home/{user name}/.microemulator/config2.xml
+</p>
+<ul>
+<li>Windows OS: C:\Documents and Settings\{user name}\.microemulator\config2.xml</li>
+<li>Linux OS: /home/{user name}/.microemulator/config2.xml</li>
+</ul>
+<br/>
 
 
-
-
-<!-- TODO add link with SDK documentation -->
 
 <script type="text/javascript">
 <!--
