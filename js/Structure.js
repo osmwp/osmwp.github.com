@@ -93,6 +93,7 @@ var structure = new Pages (	new Array (
 			new Page ( "widgets_development_guidelines_rules", "code conventions", new Array() ),
 			new Page ( "widgets_development_i18n", "internationalization", new Array() ),
 			new Page ( "widgets_development_scalability", "scalability guidelines", new Array() ),
+			new Page ( "widgets_development_scalability_tiny", "scalability guidelines (Tiny version)", new Array() ),
 			new Page ( "widgets_development_prototypes", "prototypes", new Array(
 				new Page ( "prototype_alert", "Alert prototype", new Array() ),
 				new Page ( "prototype_background", "Background prototype", new Array() ),

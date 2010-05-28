@@ -28,20 +28,25 @@ beginPage();
 
 <h1 class="title">scalability guidelines</h1>
 
+<p class="note warning">
+<b>Warning:</b><br/>
+This tutorial covers only Mobile Widgets versions.<br/>
+For a Tiny Mobile Widgets, use <a href="widgets_development_scalability_tiny.html">scalability guidelines for Tiny Mobile Widgets</a>.
+</p>
+
+
 <h1>Introduction</h1>
 
 <p>
-Working on mobile phones leads to work on different screen sizes.<br/>
-It would be heavy and restrictive to develop one application per screen
-resolution. So we have introduced the scalability feature into Tiny Mobile Widgets.<br/>
-Developers write the application code once and for all. Helped by using a
-<a href="development_node_Message.html">Message</a> node all VRML scenes can be
-aware of the size of the screen and calculate size and positions of graphical
-elements. And even better : it is a "screen size changed"
-<a href="development_node_Message.html">Message</a>.<br/>
-So that VRML scenes are aware of the screen size and also WHEN screen size
-changed (dynamic). This last ability is useful on mobile phones that can switch
-from portrait to landscape mode.
+Working on mobile phones leads to work on different screen sizes. It would be
+heavy and restrictive to develop one application per screen resolution. So we
+have introduced the scalability feature. Developers write the application code
+once and for all. Helped by using a <a href="development_node_Message.html">Message</a>
+node all VRML scenes can be aware of the size of the screen and calculate size
+and positions of graphical elements. And even better: it is a "screen size changed"
+<a href="development_node_Message.html">Message</a>. So that VRML scenes are
+aware of the screen size and also WHEN screen size changed (dynamic). This last
+ability is useful on mobile phones that can switch from portrait to landscape mode.
 </p>
 <br/>
 
@@ -51,47 +56,36 @@ from portrait to landscape mode.
 
 <p>
 Keep in mind this project targets low-end devices. Please limit size and
-position calculations to the bare essentials.<br/>
-You can add <b>filter TRUE</b> to each
-<a href="development_node_ImageTexture.html">ImageTexture node</a> which is
-bad rendered.<br/>
-But use it sparingly because it generates a lots of calculations in memory.
+position calculations to the bare essentials. You can add <b>filter TRUE</b> to
+each ImageTexture node which is bad rendered. But use it sparingly because it
+generates a lots of calculations in memory.
 </p>
 <br/>
 
 <h2>Default values</h2>
 
 <p>
-Our reference size is 128*128 or 128*176 (in pixels). It is called
-"the 128-mode" afterwards.<br/>
-128 mode devices are often those whith the worse CPU. So it is important to
-avoid useless calculations, that's why default sizes and translations are set
-for 128 mode. Calculations should be done only to manage other screen size.
+Our reference size is 240*320 (in pixels). it is important to avoid useless
+calculations on most of devices, that's why default sizes and translations are
+set for the 240*320 size. Calculations should be done only to manage other
+screen size.
 </p>
 <br/>
 
-<h2>Size informations storage</h2>
+<h2>Size informations</h2>
 
 <p>
-How does widget know the screen size? the size of the area where they can
-display ? The screen size can be accessed by the
-<a href="development_javascript_Browser javascript API.html">Browser javascript
-API</a>, method <b>Browser.getWidth()</b> and <b>Browser.getHeight()</b>.<br/>
-The widget size is stored into cookies: <b>Browser.getIntCooky('widgetWidth')</b>
-and <b>Browser.getIntCooky('widgetHeight')</b>.<br/>
-The following cooky can also be useful to position the widget icon into the
-title bar: <b>Browser.getIntCooky('iconSize')</b>.<br/>
-Each widget has to position its icon, the system doesn't do that.<br/>
-All these informations are automatically set by the system.
+The screen size can be accessed by the Browser JavaScript API, method
+<b>Browser.getWidth()</b> and <b>Browser.getHeight()</b>.
 </p>
 <br/>
 
 <h2>Size Changed event</h2>
 
 <p>
-The system can notify each VRML scene that the size changed (switch from portait
-to landscape mode for example). Therefore, the VRML scene has to contain the
-following <a href="development_node_Message.html">Message node</a>:
+The system can notify each VRML scene that the size changed (switch from
+portrait to landscape mode for example). Therefore, the VRML scene has to
+contain the following <a href="development_node_Message.html">Message</a> Node:
 </p>
 <textarea rows="3" cols="80" readonly="readonly" wrap="off">
 DEF SIZE_CHANGED Message {
@@ -125,61 +119,6 @@ Now, just add a new entry to the script in your VRML scene:
 </textarea>
 <br/>
 
-<h2>Two calculation modes</h2>
-
-<p>
-To avoid useless calculations, we decided to have two calculation modes:
-</p>
-<ul>
-<li>screen width &gt; 128 pixels: you have to do size and position calculations.
-    Put them into <b>updateScreenSize</b> method, inside the
-    <b>if(Browser.width() &gt; 128)</b> to do this calculations only if
-    necessary. You should limit calculations to the bare essentials.</li>
-<li>screen width == 128 pixels: no calculations needed because default values
-    are used for sizes and translations. Because we support 128*128 and 128*176
-    screen size in this mode, you may need some calculation depending on height.
-    Put them into <b>updateScreenSize</b> method, outside the
-    <b>if(Browser.width() &gt; 128)</b></li>
-</ul>
-<br/>
-
-
-<h2>Who does what?</h2>
-
-<p>
-First, identify both following cases:
-</p>
-<ul>
-<li>the size of the graphical element is in parameter because the graphical
-    element is skinable. For example a list can take all the area available for
-    widget or a smaller area if the window is composed of a list element and
-    another element. You don't do scalability but skins.</li>
-<li>the size of the graphical element is constant, do not need to be in
-    parameter : it will always be the same percentage of the screen size/widget
-    size. You just need to be notified of the size change. For example carousel
-    will always take the whole area available for widgets. You do scalability.</li>
-</ul>
-<p>
-If a prototype displays one (or more) graphical element(s) depending on the
-screen size, the position of the element in the screen must be set by its parent
-(the scene calling the prototype, has a
-<a href="development_node_Transform2D.html">Transform2D node</a> node with a
-translation one step over the prototype node).<br/>
-If the parent need the children's size to position it:
-</p>
-<ul>
-<li>the children has to put its size into an exposedField (to be accessed by the
-    parent).</li>
-<li>the parent's notification <b><a href="development_node_Message.html">Message</a></b>
-    (<a href="development_node_SizeNotifier.html">SizeNotifier</a> /
-    <a href="development_node_Message.html">Message</a>) must happen after the
-    children's notification =Message= i.e. the <b><a href="development_node_Message.html">Message</a></b>
-    Node (or <a href="development_node_SizeNotifier.html">SizeNotifier</a>) must
-    stand AFTER the children nodes into the parent scene.</li>
-</ul>
-<br/>
-
-
 <h2>Aspect ratio for images</h2>
 
 <p>
@@ -187,154 +126,119 @@ To avoid ugly stretches on images, don't forget to respect their aspect ratio.
 The image ratio is: imageWidth / imageHeight and vice versa. When you do
 scalability, you should calculate imageWidth or imageHeight and found the other
 helped by the ratio. It will keep the real aspect of the image. If it is bad
-rendered, you can use attribut <b>filter TRUE</b> inside the
-<a href="development_node_ImageTexture.html">ImageTexture node</a>. But
-<b>filter</b> uses a lot of CPU.
+rendered, you can use attribute <b>filter TRUE</b> inside the ImageTexture node.
+But <b>filter</b> uses a lot of CPU.
 </p>
-<br/>
 
 <p>
 To support landscape and portrait mode, sometimes you will have to use the
 minimum between screen width and height to be sure that the scalable area fit
 with the real screen size.
 </p>
+
+<h2>Size notifier prototype</h2>
+
+<p>
+The <a href="prototype_sizenotifier">SizeNotifier prototype</a> manages the
+screen size events. It uses the sizeHandler mechanism describes upper to get
+screen size value. The SizeNotifier prototype is used in many SDK prototypes.
+This is the <a href="prototype_sizenotifier">SizeNotifier prototype</a> interface:
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+PROTO SizeNotifier [
+  eventOut SFVec2f screenSize
+  eventOut SFVec2f textScale
+]
+</textarea>
+
+<p>
+screenSize and textScale events (eventOut) propagate the values. In many cases,
+screenSize value is used in the script to compute sizes and positions of scene
+items. <a href="development_node_Style.html">Style</a> is also useful to defines
+values and ratios.<br/>
+A good way to propagate the screen size is to defines each scene of a widget as
+a prototype. This tip eases the screenSize and the textScale use: it could be
+propagated with <b>"IS"</b> for script and for other protos.
+</p>
+
+<p>
+See <a href="prototype_sizenotifier">SizeNotifier prototype documentation</a> for
+more informations about this prototype.
+</p>
+
 <br/>
 
-<h1>Example</h1>
+
+<h1>Examples</h1>
+
+<h2>Aspect ratio</h2>
+
+<textarea rows="12" cols="80" readonly="readonly" wrap="off">
+function screenSize() {
+  var minScreenSize = screenSize.x ;
+  if(screenSize.x > screenSize.y) minScreenSize = screenSize.y;
+
+  // Scale bg to screen size
+  bgRec.size.x = screenSize.x;
+  bgRec.size.y = screenSize.y;
+
+  // Scale logo to screen size (respect aspect ratio)
+  logoRec.size.x = screenSize.x;
+  logoRec.size.y = screenSize.x;
+}
+</textarea>
+<br/>
+
+<h2>Size notifier</h2>
+
 <textarea rows="15" cols="80" readonly="readonly" wrap="off">
-       DEF SIZE_CHANGED Message { url "MEMOPLAYER" }
+#MyScene.wrl
 
-       #Part of code of carousel screen
-       DEF BANNER_TRS Transform2D {
-            translation 0 -46
-            children [
-                Shape {
-                    appearance Appearance {
-                        texture ImageTexture { url "banner.png" }
-                    }
-                    geometry DEF BANNER_REC Rectangle { size 128 40 }
-                }
-                DEF APPTITLE_TICKER Ticker {
-                    speed 1
-                    size 100 36
-                    translation 0 8
-                    textColor 0.2 0.2 0.2
-                    fontStyle FontStyle { size 12 justify ["MIDDLE" "MIDDLE"] }
-                }
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
 
-            # the left arrow
-            DEF LA_TRS Transform2D {
-                    translation -59 0
-                    children [
-                        Shape {
-                            appearance Appearance {
-                                texture DEF LA_TEX ImageTexture { filter TRUE url ["leftArrowOff.png" "leftArrowOff.png" "leftArrowOn.png" ] }
-                            }
-                            geometry DEF ARROW_REC Rectangle { size 6 10 }
-                        }
-                    ]
-                }
-                # the right arrow
-                DEF RA_TRS Transform2D {
-                    translation 59 0
-                    children [
-                        Shape {
-                            appearance Appearance {
-                                texture DEF RA_TEX ImageTexture { filter TRUE url ["rightArrowOff.png" "rightArrowOff.png" "rightArrowOn.png" ] }
-                            }
-                            geometry USE ARROW_REC
-                        }
-                    ]
-                }
-             ]
-         }
+PROTO MyScene [
+  # These nodes are defined here for to transmit their values with IS in MyScene
+  field SFVec2f screenSize 0 0
+  field SFVec2f textScale 0 0
+] {
 
-DEF SCRIPT Script {
-   eventIn MFString sizeHandler
-   field SFNode laTex USE LA_TEX
-   field SFNode laTrs USE LA_TRS
-   field SFNode raTex USE RA_TEX
-   field SFNode raTrs USE RA_TRS
-   field SFNode bannerTrs USE BANNER_TRS
-   field SFNode bannerRec USE BANNER_REC
-   field SFVec2f screenSize 0 0
-   field SFInt32 margin 2
-   field SFInt32 posX 0 #global variable to be calculate into updateScreenSize and re-used in other functions of the script
-   ...
-   url "javascript:
-            function initialize () {
-                updateScreenSize ();
-                loadWidgetsList ();
-                if (currentItem == -1) { currentItem = 0; }
-                else if (currentItem == -2) { currentItem = nbItems-1; }
-                Browser.sendMessage ('Board', 'INIT', loc.Title, loc.Menu, loc.Quit);
-            }
-            function sizeHandler () {
-                if (sizeHandler[0] == 'SIZE_CHANGED') {
-                    updateScreenSize ();
-                }
-            }
+  # The SizeNotifier provides screenSize and textScale values
+  SizeNotifier {
+    screenSize IS screenSize
+    textScale IS textScale
+  }
 
-            function updateScreenSize () { //all the calculations are done here
-              screenSize.x = Browser.getWidth();//here screen size is put into a global variable because it is used in other function of the script
-              screenSize.y = Browser.getHeight();// but it can also be put into a local variable (var h = ...)
+  # screenSize is transmit to the background prototype
+  Backgnd { screenSize IS screenSize }
 
-              if (screenSize.x &gt; 128) { //we enter into scalable mode, limit calculation as possible
+  # screenSize and textScale use in the script
+  Script {
+    field SFVec2f screenSize IS screenSize
+    field SFVec2f textScale IS textScale
+    url "javascript:
+      function screenSize() {
+        Browser.print('The current screen size is ' + screenSize.x + 'x' + screenSize.y);
+        Browser.print('The current text scale is ' + textScale.x + 'x' + textScale.y);
+      }
+    "
+  }
+}
+MyScene {} # when the file is loaded MyScene.wrl , MyScene proto is loaded
+</textarea>
+<br/>
 
-                var min = screenSize.x;
-                if (screenSize.y &lt; min) min = screenSize.y;
-                var offset = Math.floor(screenSize.x/10); //example for part 2°) of aspect ratio paragraph
-                var offsetY = Math.floor(screenSize.y/10);
-
-                offsetL[0] = offset; offsetL[1] = offset; offsetL[2] = offset;
-                offsetL[3] = 0; offsetL[4] = -offset; offsetL[5] = -offset; offsetL[0] = -offset;
-                offsetR[0] = offset; offsetR[1] = offset; offsetR[2] = 0; offsetR[3] = -offset;
-                offsetR[4] = -offset; offsetR[5] = -offset; offsetL[6] = -offset;
-                bannerRec.size.x = screenSize.x;
-                bannerRec.size.y = screenSize.y * 0.23;
-                bannerTrs.translation.y = offsetY + ((bannerRec.size.y - screenSize.y )/ 2); //height of softKeys + height/2 of carrousel banner
-                posX = Math.floor(screenSize.x/5);
-                arrowRec.size.x = Math.floor(min*0.05);
-                arrowRec.size.y = Math.floor(arrowRec.size.x*1.66); //example for part 1°) of aspect ratio paragraph
-                laTrs.translation.x = ((arrowRec.size.x - screenSize.x)/2) + margin;
-                raTrs.translation.x = ((screenSize.x - arrowRec.size.x)/2) - margin;
-                appTicker.size.x = screenSize.x - (2*(arrowRec.size.x+margin));
-                appTicker.size.y = bannerRec.size.y - (2*margin);
-                appTicker.translation.y = (offsetY/2);
-                counterTrs.translation.y = -appTicker.translation.y;
-              } else { //we enter into 128 width mode : put constants and some calculation depending on height
-                posX = 25;
-                bannerTrs.translation.y = (Browser.getHeight() / -2) + 36; //height of softKeys + height/2 of carrousel banner
-              }
-            }
-            function tick (val, time) { //a function for animation to navigate into the carousel
-                if (way == 1) {
-                    for (var i = 0; i &lt; 6; i++) {
-                        item = items[i];
-                        //item.translation.x = (84 - (42*val)) - (i*42);
-                        item.translation.x = (posX * ((3 - val) - i));
-                        item.translation.x += offsetR[i] ;
-                    }
-                } else if (way == -1) {
-                    for (var i = 0; i &lt; 6; i++) {
-                        item = items[i];
-                        //item.translation.x = (42 + (42*val)) - (i*42);
-                        item.translation.x = (posX * ((2 + val) - i));
-                        item.translation.x += offsetL[i] ;
-                    }
-                }
-             }
-            ...
-        "
-     }
-     ROUTE SIZE_CHANGED.data_changed TO SCRIPT.sizeHandler
+<p>
+The MyScene file could be loaded like this, from the main.wrl for example:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Inline { url [ "MyScene.m4m" ] }
 </textarea>
 <br/>
 
 
 <script type="text/javascript">
 <!--
-addBackPageNavigator ('widgets_development_guidelines');
+addBackPageNavigator ('widgets_development_guidelines', '');
 //-->
 </script>
 
