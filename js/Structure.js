@@ -13,7 +13,7 @@ var structure = new Pages (	new Array (
 	new Page ( "installation", "installation", new Array(
 		new Page ( "installation_java", "Java runtime installation", new Array() ),
 		new Page ( "installation_eclipse", "Eclipse installation", new Array() ),
-		new Page ( "installation_owsdk", "Mobile Widgets SDK installation", new Array() )
+		new Page ( "installation_sdk", "Mobile Widgets SDK installation", new Array() )
 	)),
 
 	new Page ( "first_project", "first project", new Array() ),

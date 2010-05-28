@@ -82,7 +82,7 @@ for 128 mode. Calculations should be done only to manage other screen size.
 <p>
 How does widget know the screen size? the size of the area where they can
 display ? The screen size can be accessed by the
-<a href="development_javascript_Browser javascript API.html">Browser javascript
+<a href="development_javascript_Browser.html">Browser javascript
 API</a>, method <b>Browser.getWidth()</b> and <b>Browser.getHeight()</b>.<br/>
 The widget size is stored into cookies: <b>Browser.getIntCooky('widgetWidth')</b>
 and <b>Browser.getIntCooky('widgetHeight')</b>.<br/>
@@ -178,10 +178,10 @@ If the parent need the children's size to position it:
 <li>the children has to put its size into an exposedField (to be accessed by the
     parent).</li>
 <li>the parent's notification <b><a href="development_node_Message.html">Message</a></b>
-    (<a href="development_node_SizeNotifier.html">SizeNotifier</a> /
+    (<a href="prototype_sizenotifier.html">SizeNotifier</a> /
     <a href="development_node_Message.html">Message</a>) must happen after the
     children's notification =Message= i.e. the <b><a href="development_node_Message.html">Message</a></b>
-    Node (or <a href="development_node_SizeNotifier.html">SizeNotifier</a>) must
+    Node (or <a href="prototype_sizenotifier.html">SizeNotifier</a>) must
     stand AFTER the children nodes into the parent scene.</li>
 </ul>
 <br/>

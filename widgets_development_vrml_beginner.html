@@ -340,8 +340,8 @@ VRLM designers wanted to keep VRML simple that's why they defined a single type
 for node: SFnode.<br/>
 But you will save a lot of time if you understand that nodes can be split in
 several, specialized, sub categories (for instance <a href="development_node_Rectangle.html">Rectangle</a>,
-<a href="development_node_Circle">Circle</a>, <a href="development_node_IndexedFaceSet.html">IndexedFaceSet</a>,
-<a href="development_node_Box.html">Box</a> are all geometry nodes).<br/>
+<a href="development_node_Circle.html">Circle</a>, <a href="development_node_IndexedFaceSet2D.html">IndexedFaceSet2D</a><!--,
+<a href="development_node_Box.html">Box</a>--> are all geometry nodes).<br/>
 This notion of node categories is mandatory to understand because the syntax
 would allow to set a SFNode with any node.
 </p>
@@ -504,7 +504,7 @@ Shape makes the association between an appearance and a geometry.
 An <a href="development_node_Appearance.html">Appearance</a> node can have two parts defined by corresponding fields, a
 <b>material</b> and a <b>texture</b>. You usually only define one at a time. The
 <b>material</b> field typically receives a <a href="development_node_Material2D.html">Material2D</a> node, the <b>texture</b> field can
-receives an <a href="development_node_ImageTexture">ImageTexture</a> or a <a href="development_node_MovieTexture.html">MovieTexture</a>.<br/>
+receives an <a href="development_node_ImageTexture.html">ImageTexture</a> or a <a href="development_node_MovieTexture.html">MovieTexture</a>.<br/>
 <a href="development_node_Material2D.html">Material2D</a> defines the shape color (emissiveColor), whether it is filled or
 hollow (filled) and the transparency level (transparency).
 </p>
@@ -516,6 +516,12 @@ hollow (filled) and the transparency level (transparency).
 the phone, but commonly image formats supported are JPEG, GIF and PNG. For movie
 clips, H263, MPEG-4 SP are very common with H264 starting to spread. the maximum
 movie format is usually 176x144 (some phones support 240x320 for MPEG-4 SP).
+</p>
+<p class="note info">
+<b>Note:</b><br/>
+For Tiny Mobile Widgets, use small images (which take less space). To do:
+- Remove alpha channel (transparency)<br/>
+- Go to indexed color (48 colors, but depends on the rendering)
 </p>
 <br/>
 
@@ -728,7 +734,7 @@ label1 to fieldName2 of node referenced by label2
 </p><br/>
 
 <p>
-For instance you can set a pipe between the radius of two circle by writing:
+For instance you can set a pipe between the radius of two circles by writing:
 </p>
 <textarea wrap="off" readonly="readonly" rows="1" cols="80">
 ROUTE CIRCLE1.radius TO CIRCLE2.radius
@@ -1081,12 +1087,12 @@ array. First node index is 0. <a href="development_node_Switch.html">Switch node
 doesn't display node if <b>whichChoice = -1</b>.<br/>
 <b>whichChoice</b> value is modifiable via script (Script node and javascript language).
 </p>
-<br/>
 
 <p>
 See <a href="development_node_Switch.html">Switch node documentation</a> for
 more information about Swith node and example.
 </p>
+<br/>
 
 
 <h2>Inlining mechanism</h2>
@@ -1198,8 +1204,9 @@ ROUTE KEY_E.releaseTime TO MON_SCRIPT.in
 </textarea>
 <br/>
 
+<!--
 <h2>Suicide and ancestor notification</h2>
-<!-- TODO Complete this part -->
+<!-- TODO Complete this part
 <br/>
 
 
@@ -1208,7 +1215,7 @@ ROUTE KEY_E.releaseTime TO MON_SCRIPT.in
 
 
 <h1>MeMo particularities</h1>
-<!-- TODO Complete this part -->
+<!-- TODO Complete this part
 
 <h2>Layer2D</h2>
 <h2>Per scenes parameters</h2>
@@ -1217,7 +1224,7 @@ ROUTE KEY_E.releaseTime TO MON_SCRIPT.in
 <h2>Scripting limitations</h2>
 <br/>
 
-
+-->
 
 
 

@@ -106,9 +106,88 @@ The <b>pause</b> field (de)activates pause.
 
 <h1>Example</h1>
 
-<textarea wrap="off" readonly="readonly" rows="15" cols="80"> <!-- TODO complete this example -->
-#VRML V2.0 utf8
-...
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+Group {
+  children [
+    # Background
+    Shape {
+      appearance Appearance {
+        material Material2D {
+          emissiveColor 1.0 1.0 1.0
+        }
+      }
+      geometry Rectangle { size 300 300}
+    }
+    # Video shape
+    Shape {
+      appearance Appearance {
+        texture MovieTexture {
+          url "http://localhost/arte.mpg"
+        }
+      }
+      geometry Rectangle { size 160 120}
+    }
+    # Video sensor
+    DEF MY_MEDIA_SENSOR MediaSensor {
+      url "http://localhost/arte.mpg"
+    }
+    # Video control
+    DEF MY_MEDIA_CONTROL MediaControl {
+      url "http://localhost/arte.mpg"
+      loop TRUE
+      volume 75
+    }
+    # Playing status
+    Transform2D {
+      translation 0 -70
+      children [
+        Shape {
+          appearance Appearance {
+            material Material2D {
+              emissiveColor 0.0 0.0 0.0
+            }
+          }
+          geometry DEF PROGRESS_TXT Text {
+            string [ "progression" ]
+            fontStyle FontStyle {
+              size size 16
+              style "italic"
+              justify ["MIDDLE" "MIDDLE"]
+            }
+          }
+        }
+      ]
+    }
+
+    DEF MY_SCRIPT Script {
+      eventIn SFTime updateMediaProgression
+      eventIn MFString updateMediaStatus
+
+      field SFNode mediaSensor USE MY_MEDIA_SENSOR
+      field SFNode progressText USE PROGRESS_TXT
+      url "
+      function updateMediaProgression () {
+        if (mediaSensor.mediaCurrentTime &lt;= 0) {
+          progressText.string [0] = ' - ';
+        } else {
+          var percent = mediaSensor.mediaCurrentTime / mediaSensor.mediaDuration;
+          if (percent &lt; 1.0) {
+            var roundPrecent = Math.ceil(percent * 100);
+            progressText.string [0] = roundPrecent + '%';
+          }
+        }
+
+      }
+      function updateMediaStatus () {
+        progressText.string [0] = updateMediaStatus [0];
+      }
+      "
+    }
+
+    ROUTE MY_MEDIA_SENSOR.mediaCurrentTime TO MY_SCRIPT.updateMediaProgression
+    ROUTE MY_MEDIA_SENSOR.status TO MY_SCRIPT.updateMediaStatus
+  ]
+}
 </textarea>
 <br/>
 
