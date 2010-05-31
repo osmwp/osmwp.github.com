@@ -40,8 +40,133 @@ with audio and video options.<br/>
 Supported formats (for audio and video) depend of mobile phone.<br/>
 </p>
 
-<!-- TODO complete this tutorial -->
+<p class="note info">
+<b>Note:</b><br/>
+Many MeMoPlayer versions does not support audio and video nodes.<br/>
+To change the MeMo Player, add following line in your <b>app.properties</b> file.<br/>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+player.name=OWP
+</textarea>
+<br/>
+<a href="development_node_RecordTexture.html">RecordTexture</a> node is not supported by MicroEmulator.<br/>
+<a href="install_sun_wtk.html">Install the Sun Wireless ToolKit</a>
+to test video on PC.
+</p>
+<br/>
 
+<h1>Define RecordTexture</h1>
+
+<p>
+We use <a href="development_node_RecordTexture.html">RecordTexture</a> to display
+and save picture/snapshot on mobile.<br/>
+See <a href="development_node_RecordTexture.html">RecordTexture documentation</a>.
+</p>
+<p>
+We define a <a href="development_node_RecordTexture.html">RecordTexture</a> node.<br/>
+We define, via the <b>fileUrl</b> property, the target file (where snapshot is saved). 
+</p>
+<textarea rows="4" cols="80" readonly="readonly" wrap="off">
+texture DEF recordImage RecordTexture {
+  fileUrl "file:///root1/capture.jpg"
+  singleShot TRUE
+}
+</textarea>
+<br/>
+
+<p class="note info">
+<b>Note:</b><br/>
+In example, we save snapshot in <b>root1</b> folder.<br/>
+On MS Windows, file is saved in <b>C:\Documents and Settings\&lt;user_login&gt;\j2mewtk\2.5.2\appdb\DefaultColorPhone\filesystem\root1</b> folder.
+</p>
+<br/>
+
+<h1>Take a photo</h1>
+
+<p>
+In first time, we define a key to take snapshot. We use the left softkey...
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+# Key sensor to catch left softkey event
+DEF KEY_SENSOR KeySensor { url "E" }
+
+DEF SCRIPT Script {
+
+  # Catch left softkey event
+  eventIn SFTime pressTime
+
+  url "
+    //Call when left softkey is pressed
+    function pressTime(time) {
+      //Here, take the photo.
+    }
+  "
+}
+#Route key sensor to script event/function
+ROUTE KEY_SENSOR.pressTime TO SCRIPT.pressTime
+</textarea>
+<br/>
+
+<p>
+After, we use the <b>startTime</b> field of RecordTexture to take the photo.<br/>
+</p>
+<textarea rows="10" cols="80" readonly="readonly" wrap="off">
+# Declare RecordTexture field in script
+field SFNode recordImage USE recordImage
+
+url "
+  //Call when left softkey is pressed
+  function pressTime(time) {
+    //Take the snapshot
+    recordImage.startTime = time;
+  }
+"
+</textarea>
+<br/>
+
+<h1>Complete source code</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    # Background
+    Shape {
+      appearance Appearance {
+        material Material2D { filled TRUE emissiveColor 1 1 1 }
+      }
+      geometry Rectangle { size 300 300 }
+    }
+    
+    # RecordTexture
+    Shape {
+      appearance Appearance {
+        texture DEF recordImage RecordTexture {
+          fileUrl "file:///root1/capture.jpg"
+          singleShot TRUE
+        }
+      }
+      geometry Rectangle { size 98 98 }
+    }
+
+    # Key sensor to catch left soft key 
+    DEF KEY_SENSOR KeySensor { url "E" }
+
+    DEF SCRIPT Script {
+
+        eventIn SFTime pressTime
+
+        field SFNode recordImage USE recordImage
+        
+        url "
+        function pressTime(time) {
+          recordImage.startTime = time;
+        }
+        "
+    }
+    
+    ROUTE KEY_SENSOR.pressTime TO SCRIPT.pressTime 
+  ]
+}
+</textarea>
 <br/>
 
 
