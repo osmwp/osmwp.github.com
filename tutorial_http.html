@@ -31,9 +31,225 @@ beginPage();
 
 <h1>Introduction</h1>
 
+<p>
+This tutorial present HTTP network connection via the
+<a href="development_javascript_Http.html">HTTP javascript library</a>.<br/>
+<a href="development_javascript_Http.html">HTTP javascript library</a> offers same
+functionality than <a href="http://en.wikipedia.org/wiki/XMLHttpRequest">XMLHttpRequest</a>.
+</p>
+<br/>
 
-<!-- TODO complete this tutorial -->
+<h1>First HTTP request</h1>
 
+<p>
+In fist time, we send a request to Google and we display result in console. 
+</p>
+<p>
+To send request, we use the <b>get</b> method (GET HTTP request).<br/>
+Get method : <b>void get (String url, Function callback, String encoding)</b><br/>
+<b>url</b> is the google URL (http://google.com).<br/>
+<b>callback</b> is a function to process request result.<br/>
+<b>encoding</b> is optional (by default UTF-8). We use the default value.
+</p>
+
+<p>
+First example code:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Script {
+      url "javascript:
+      	function initialize() {
+      	  Http.get ('http://google.com/', callback);
+      	}
+        //HTTP request response processing    
+        function callback(url, responseCode, responseData, now) {
+          Browser.print ( responseData );
+        }
+      "
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<h1>Process HTTP response</h1>
+
+<p>
+In previous example, we send a HTTP request and display the result.<br/>
+Detail of the callback function:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+function callback(url, responseCode, responseData, now)
+</textarea>
+<ul>
+<li><b>url</b>: Initial request URL</li>
+<li><b>responseCode</b>: The HTTP response.<br/>
+    Return 200 if result if OK, 40X if result is KO<br/>
+    See the <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">rfc 2616</a> to know all response code.
+</li>
+<li><b>responseData</b>: Data of the response (Web page, web service result, ...)</li>
+<li><b>now</b>: current time (MeMo time)</li>
+</ul>
+<br/>
+
+<p>
+In next example, with callback function, we verify the response: 
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Script {
+      url "javascript:
+      	function initialize() {
+      	  Http.get ('http://google.com/', callback);
+      	}
+        //HTTP request response processing    
+        function callback(url, responseCode, responseData, now) {
+          if ( responseCode == 200 ) {
+          	Browser.print ( responseData );
+          } else {
+            Browser.print ( 'HTTP error: ' + responseCode );
+          }
+        }
+      "
+    }
+  ]
+}
+</textarea>
+<br/>
+<p>
+Try to change URL to verify if you catch an error (example, use URL 'http://goolgle.com').
+</p>
+<br/>
+
+<h1>Optimization and cache</h1>
+
+<p>
+To optimize network access, MeMo offers cache features.<br/>
+See <a href="advanced_cache.html" >cache part, in advanced chapter</a>.
+</p>
+<br/>
+<p>
+Cache example:
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+Group {
+  children [
+    Script {
+      url "javascript:
+      	function initialize() {
+      	  //Load page in cache if page is already loaded.
+      	  //Else, at first access, load page on the web
+      	  Http.get ('cache://cachedpage.html,http://google.com/', callback);
+      	}
+        //HTTP request response processing    
+        function callback(url, responseCode, responseData, now) {
+          if ( responseCode == 200 ) {
+          	Browser.print ( responseData );
+          } else {
+            Browser.print ( 'HTTP error: ' + responseCode );
+          }
+        }
+      "
+    }
+  ]
+}
+</textarea>
+<br/>
+<br/>
+
+
+<h1>XML/JSON response</h1>
+
+<p>
+To process XML (web service, ...) or JSON responses, Mobile Widgets offers javascript libraries.<br/>
+See <a href="development_javascript_JSON.html">JSON library documentation</a> for process JSON result.<br/>
+See <a href="development_javascript_XML.html">XML library documentation</a> for process XML result.
+</p>
+
+<p>
+Example: Load JSON data and process JSON result:
+</p>
+<textarea rows="15" cols="80" wrap="off" readonly="readonly">
+Group {
+  children [
+    Script {
+      url "javascript:
+      	function initialize() {
+      	  Http.get ('http://my_json_service/', parseJson);
+      	}
+        //HTTP request response processing    
+        function parseJson(url, responseCode, responseData, now) {
+          // Parse Json response
+          var id = JSON.open(responseData , JSON.BUFFER);
+          JSON.find(id, '/result');
+          Browser.print('Result: '+JSON.getValue(id)); // Prints "Result: myContent"
+          JSON.close(id); // Free all resources associated
+        }
+      "
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<p>
+Example: Load XML data and process XML result:
+</p>
+<textarea rows="15" cols="80" wrap="off" readonly="readonly">
+Group {
+  children [
+    Script {
+      url "javascript:
+      	function initialize() {
+      	  Http.get ('http://my_xml_service/', parseXml);
+      	}
+        //HTTP request response processing    
+        function parseXml(url, responseCode, responseData, now) {
+          // Parse XML response, like JSON response
+          var id = XML.open(responseData , XML.BUFFER);
+          XML.find(id, '/result');
+          Browser.print('Result: '+XML.getValue(id)); // Prints "Result: myContent"
+          XML.close(id); // Free all resources associated to the DOM
+        }
+      "
+    }
+  ]
+}
+</textarea>
+<br/>
+
+<p>
+XML libary can load data without use HTTP library, via the <b>open</b> method.<br/> 
+Method: <b>XML.open (url, XML.URL, callback);</b><br/>
+Callback function: <b>parseXml(url, responseCode, id, now)</b><br/>
+With <b>id</b> the identity of XML result.
+</p>
+<p>
+Previous example without use HTTP library:
+</p>
+<textarea rows="15" cols="80" wrap="off" readonly="readonly">
+Group {
+  children [
+    Script {
+      url "javascript:
+      	function initialize() {
+      	  XML.open ('http://my_xml_service/', XML.URL, parseXml);
+      	}
+        //HTTP request response processing    
+        function parseXml(url, responseCode, id, now) {
+          XML.find(id, '/result');
+          Browser.print('Result: '+XML.getValue(id)); // Prints "Result: myContent"
+          XML.close(id); // Free all resources associated to the DOM
+        }
+      "
+    }
+  ]
+}
+</textarea>
+<br/>
 <br/>
 
 
