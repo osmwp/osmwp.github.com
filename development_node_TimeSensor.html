@@ -77,7 +77,8 @@ This field will generate linear values from 0 to 1.
 </p>
 <p>
 <b>SFBool  isActive FALSE</b> :<br/>
-Timer will be activated when this is set to <b>TRUE</b> (or 1).
+Set to TRUE when timer is active (<b>startTime != 0</b> and <b>startTime &lt; stopTime</b>),
+else FALSE (except when <b>loop</b> is activated).
 </p>
 <p>
 <b>SFTime  cycleTime 0</b> :<br/>
@@ -94,7 +95,7 @@ Example display a progress bar and close the widget after 5 seconds.<br/>
 Group {
     children [
         # Time sensor (timer cycle : 5 seconds)
-        DEF TIMER_HIDE TimeSensor { cycleInterval 5 isActive FALSE }
+        DEF TIMER_HIDE TimeSensor { cycleInterval 5 }
 
         # Script
         DEF SCRIPT Script {
@@ -112,8 +113,6 @@ Group {
               // Display popup
               Browser.sendMessage ('Board', 'POPUP', 'Progress popup', 'Progression', '', '');
               // Launch timer
-              // - Activate timer
-              TIMER_HIDE.isActive = true;
               // - Define start time
               TIMER_HIDE.startTime = now;
             }
