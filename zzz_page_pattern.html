@@ -16,9 +16,22 @@
 
 <body>
 
+<!--
+  TODO How to create a new page :
+  - Duplicate the page
+  - Define page ID (the file name without html)
+  - Define page name
+  - Complete "js/Structure.js" file with the page ID and the page name
+  - Complete this page
+  - Complete back page script with next/previous pages
+  - Remove help comment (TODO comment)
+-->
+
+
 <script type="text/javascript">
 <!--
-idCurrentPage = "TODO complete with page ID";
+//TODO Complete with pages ID. Page ID is the page name (file name) without '.html' extention.
+idCurrentPage = "current_page_id";
 beginPage();
 //-->
 </script>
@@ -26,35 +39,25 @@ beginPage();
 
 
 
-<h1 class="title"><!-- TODO complete this part --></h1>
+<h1 class="title"><!-- TODO complete with page name --></h1>
 
 
-<h1>Introduction</h1>
+
+<h1>Part 1</h1>
 
 <p>
 <!-- TODO complete this part -->
 </p>
 <br/>
 
-<h1>Interface</h1>
+<h1>Part 2</h1>
+
+<p>
+<!-- TODO complete this part -->
+</p>
 
 <textarea rows="4" cols="80" readonly="readonly" wrap="off">
-<!-- TODO complete this part -->
-</textarea>
-<br/>
-
-<h1>Fields description</h1>
-
-<!-- TODO complete this part -->
-<br/>
-
-
-<h1>Example</h1>
-
-<textarea rows="14" cols="80" readonly="readonly" wrap="off">
-
-<!-- TODO complete prototype example -->
-
+<!-- TODO Complete with code and change textarea rows numbers (max: 15 rows) -->
 </textarea>
 <br/>
 
@@ -62,7 +65,9 @@ beginPage();
 
 <script type="text/javascript">
 <!--
-addBackPageNavigator ('widgets_development_prototypes','');
+//Display navigation bar (bottom of page) with next/previous pages.
+//TODO Complete with pages ID. Use empty string ('') for ID if page has not next or previous page.
+addBackPageNavigator ('previous_page_id','next_page_id');
 //-->
 </script>
 

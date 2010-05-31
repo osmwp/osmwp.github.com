@@ -133,7 +133,8 @@ var structure = new Pages (	new Array (
 			new Page ( "advanced_inline", "inlining", new Array() ),
 			new Page ( "advanced_memory_tips", "memory tips", new Array() )
 		)),
-		new Page ( "widgets_development_limitations", "limitations", new Array() )
+		new Page ( "widgets_development_limitations", "limitations", new Array() ),
+		new Page ( "widgets_development_errors", "problems resolutions", new Array() )
 	)),
 
 	new Page ( "tutorials", "tutorials and examples", new Array(

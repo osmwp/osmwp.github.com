@@ -1,0 +1,117 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "widgets_development_errors";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">problems resolutions</h1>
+
+<!-- TODO complete with errors ! -->
+
+<h1>Introduction</h1>
+
+<p>
+This section lists the major errors that you may encounter.
+</p>
+<br/>
+
+<h1>Errors</h1>
+
+<h2>Launch application error</h2>
+
+<p>
+<span class="highlight">Error message:</span>
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Ant build C:/Documents and Settings/rmxc7111/Desktop/eclipse/configuration/org.eclipse.osgi/bundles/322/1/.cp/WidgetSDK/build.xml already in progress. Concurrent Ant builds are possible if you specify to build in a separate JRE.
+</textarea>
+<br/>
+<p>
+<span class="highlight">Solution:</span><br/>
+Emulator is already launched.<br/>
+Close the Emulator and relaunch you application.
+</p>
+<br/>
+
+<h2>MeMo Player doesn't support MovieTexture and AudioClip nodes</h2>
+
+<p>
+<span class="highlight">Error message:</span>
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+     [java] MyCanvas:run exception during scene start: java.lang.NullPointerException
+     [java] error MIDlet caught java.lang.NullPointerException
+     [java] java.lang.NullPointerException
+     [java] 	at memoplayer.Group.start(Unknown Source)
+     [java] 	at memoplayer.Scene.start(Unknown Source)
+     [java] 	at memoplayer.MyCanvas.play(Unknown Source)
+     [java] 	at memoplayer.MyCanvas.run(Unknown Source)
+     [java] 	at java.lang.Thread.run(Thread.java:619)
+     [java] 	at org.microemu.app.util.MIDletThread.run(MIDletThread.java:99)
+     [java] error MIDlet caught java.lang.NullPointerException
+     [java] java.lang.NullPointerException
+     [java] 	at memoplayer.Group.compose(Unknown Source)
+     [java] 	at memoplayer.Scene.innerCompose(Unknown Source)
+     [java] 	at memoplayer.Scene.compose(Unknown Source)
+     [java] 	at memoplayer.MyCanvas.play(Unknown Source)
+     [java] 	at memoplayer.MyCanvas.run(Unknown Source)
+     [java] 	at java.lang.Thread.run(Thread.java:619)
+     [java] 	at org.microemu.app.util.MIDletThread.run(MIDletThread.java:99)
+     [java] Main loop: Exception caught: java.lang.NullPointerException
+</textarea>
+<br/>
+<p>
+<span class="highlight">Solution:</span><br/>
+The current MeMo Player doesn't support MovieTexture and AudioClip nodes.<br/>
+Change the MeMoPlayer.<br/>
+To change the MeMo Player, add following line in your <b>app.properties</b> file.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+player.name=OWP
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_limitations','tutorials');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>
