@@ -48,11 +48,41 @@ Style {
   url ["default.css" "myStyle.css"]
 }
 </textarea>
+<p class="note info">
+<b>Note:</b><br/>
+<b>default.css</b> is the default style sheet.<br/>
+It is recommended to include it whenever if you use Mobile Widgets prototypes.
+</p>
 <p>
 See <a href="development_node_Style.html">Style node documentation</a> for more
 information about this node.
 </p>
 
+<p>
+Example of style sheet:
+</p>
+<textarea rows="5" cols="80" readonly="readonly" wrap="off">
+Alert {
+  background-color: red;
+  border-width: 1px;
+}
+</textarea>
+<br/>
+<p>
+This example redefine the background color and the border size of Alert prototype.<br/>
+</p>
+<table>
+<tr><td>
+<img alt="Alert" src="images/prototypes/proto_alert_01.jpg" />
+</td><td>
+<img alt="Alert" src="images/prototypes/proto_alert_02.jpg" /><br/>
+</td></tr>
+<tr><td>
+Alert prototype with <b>default.css</b> file.
+</td><td>
+Alert prototype with the previous custom CSS file.
+</td></tr>
+</table>
 <br/>
 
 
@@ -222,6 +252,11 @@ the Mobile Widgets application.
 
 <h1>Light Mode</h1>
 
+<p>
+Light mode allows you to make lighter widgets (memory, processor, ...).<br/>
+Light mode is only accessible for Mobile Widgets (not for Tiny Mobile Widgets).<br/>
+This mode is used by Mobile Widgets prototypes to remove some pictures and animations.
+</p>
 <p>
 We add a CSS node named "Common", light is an attribute of this CSS node and is
 global to one application (per style).<br/>

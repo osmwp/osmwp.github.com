@@ -44,13 +44,15 @@ beginPage();
     By default, main file is <b>main.wrl</b> (we can use the name of the application).
     <p class="note warning">
     <b>Warning:</b><br/>
-    For Tiny Mobile Widgets project, don't use <b>main.wrl</b> file name. <span class="highlight"><b>main.wrl</b> file name is reserved.</span> 
+    For Tiny Mobile Widgets project, don't use <b>main.wrl</b> file name.<br/>
+    <span class="highlight"><b>main.wrl</b> file name is reserved</span> (Tiny Widgets use a root scene).<br/>
+    By convention, we use two files for Tiny Widgets: <b>&lt;widget name&gt;.wrl</b> and <b>&lt;widget name&gt;Main.wrl</b>. 
 	</p>
 </li> 
 <li class="lvl2">And all other source files...</li> 
 <li><b>style</b> folder: Application style folder. It contains CSS files and pictures.</li>
-<li class="lvl2"><b>OWP</b> folder: OWP style folder. It contains pictures and CSS files for Mobile Widgets applications.</li>
-<li class="lvl2"><b>djinngo</b> folder: djinngo style folder. It contains pictures and CSS files for applications with a Djinngo style.</li>
+<li class="lvl2"><b>OWP</b> folder (optional): OWP style folder. It contains pictures and CSS files for Mobile Widgets applications.</li>
+<li class="lvl2"><b>djinngo</b> folder (optional): djinngo style folder. It contains pictures and CSS files for applications with a Djinngo style.</li>
 <li class="lvl2">And all other style (you can define your style).</li>
 </ul> 
 <br/>
@@ -67,7 +69,7 @@ present the MeMo application coding standards.
 <h1>Internationalization</h1>
 
 <p>
-Mobile Widgets offers a mechanism for internationalized your applications.<br/>
+Mobile Widgets offers a mechanism for the internationalization of your applications.<br/>
 See <a href="widgets_development_i18n.html">internationalization chapter</a>.
 </p>
 <br/>
