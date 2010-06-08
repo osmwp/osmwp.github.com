@@ -171,7 +171,7 @@ Shape has both a geometry and an appearance.
 For instance, to display an image, you first create a Texture node with its url
 field set to the name of an image file. Then you create a Rectangle with the
 appropriate size.<br/>
-Finally you associate Texture and Rectangle by using them a in Shape containing
+Finally you associate Texture and Rectangle by using them in a Shape containing
 a green color.<br/>
 Finally you and associate it to a rectangle. Field values can be numbers
 representing colors or transparency levels, strings for urls or other nodes. In
@@ -318,10 +318,10 @@ enclosed by square brackets ('[' and ']').
 	<tr><td>MFInt32		</td><td>array of integers				</td><td>[ 12, 4, 7 ]						</td></tr>
 	<tr class="odd"><td>SFFloat		</td><td>float							</td><td>3.1416								</td></tr>
 	<tr><td>MFFloat		</td><td>array of float					</td><td>[ 12.5 23.2 ]						</td></tr>
-	<tr class="odd"><td>SFVec2F		</td><td>couple of floats				</td><td>12.5 23.2							</td></tr>
-	<tr><td>MFVec2F		</td><td>array of couples				</td><td>[ 12.5 23.2, 0.7 11.9, 0 0 ]		</td></tr>
-	<tr class="odd"><td>SFVec3F		</td><td>triplet of floats				</td><td>12.1 23.5 0.4						</td></tr>
-	<tr><td>MFVec3F		</td><td>array of triplets				</td><td>[ 12.1 23.2 35.6, 0.7 0.11, 0.34 ]	</td></tr>
+	<tr class="odd"><td>SFVec2f		</td><td>couple of floats				</td><td>12.5 23.2							</td></tr>
+	<tr><td>MFVec2f		</td><td>array of couples				</td><td>[ 12.5 23.2, 0.7 11.9, 0 0 ]		</td></tr>
+	<tr class="odd"><td>SFVec3f		</td><td>triplet of floats				</td><td>12.1 23.5 0.4						</td></tr>
+	<tr><td>MFVec3f		</td><td>array of triplets				</td><td>[ 12.1 23.2 35.6, 0.7 0.11, 0.34 ]	</td></tr>
 	<tr class="odd"><td>SFNode		</td><td>node							</td><td>Transform { ... }					</td></tr>
 	<tr><td>MFNode		</td><td>array of node					</td><td>[ Shape { ... }, Group { ... } ]	</td></tr>
 	<tr class="odd"><td>SFColor		</td><td>triplet of floats,in [0..1]	</td><td>1 0.4 0.1							</td></tr>
@@ -988,9 +988,9 @@ piece of code that you want to modify, just wrap it with the proto definition li
 </p>
 <textarea wrap="off" readonly="readonly" rows="15" cols="80">
 PROTO MyText [
-    exposedField translation 0 0
-    exposedField string ""
-    exposedField color 1 1 1
+    exposedField SFVec2f translation 0 0
+    exposedField MFString string ""
+    exposedField SFColor color 1 1 1
 ] {
   Transform2D {
       translation IS translation
@@ -1042,9 +1042,9 @@ automatically extracted. So instead of writing this:
 </p>
 <textarea wrap="off" readonly="readonly" rows="5" cols="80">
 EXTERNPROTO MyText [
-    exposedField translation 0 0
-    exposedField string ""
-    exposedField color 1 1 1
+    exposedField SFVec2f translation 0 0
+    exposedField MFString string ""
+    exposedField SFColor color 1 1 1
 ] "MyText.wrl"
 </textarea>
 <br/>
@@ -1111,7 +1111,7 @@ Two nodes used for the implementation, <a href="development_node_Inline.html">In
 and <a href="development_node_Anchor.html">Anchor</a>.
 </p>
 <ul>
-<li><a href="development_node_Inline.html">Inline</a> shows a sub scene with na external reference</li>
+<li><a href="development_node_Inline.html">Inline</a> shows a sub scene with an external reference</li>
 <li><a href="development_node_Anchor.html">Anchor</a> replace the current scene (or sub scene)</li>
 </ul>
 <br/> 
@@ -1191,7 +1191,7 @@ Transform2D {
     DEF KEY_E KeySensor { url "E" }
     DEF MON_SCRIPT Script {
       eventIn SFTime in 
-      eventIn SFNode anchor USE ANCHOR
+      exposedField SFNode anchor USE ANCHOR
       url "javascript:
         function in (val) {
           anchor.activate = true;
