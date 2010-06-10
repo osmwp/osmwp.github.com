@@ -1,0 +1,114 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_Enumeration";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Enumeration Javascript library</h1>
+
+
+
+<h1>Description</h1>
+
+<p>
+The Enumeration API lets you iterate though all the items return by the
+Array.elements() and Array.keys().<br/>
+Each reference to an Enumeration <b>must</b> be freed after use as the number of
+references is limited (max. 32 concurrent references).
+</p>
+<p>
+This API is only supported on Mobile Widgets version of the MeMo, and should now
+only be used to support data provided by the Rpc API.<br/>
+It is not supproted by Tiny Mobile Widgets version.
+</p>
+<br/>
+
+<h1>Since</h1>
+
+<h2>1.4.1</h2>
+<br/>
+
+<h1>Methods</h1>
+
+<p>
+<b>void free (ref)</b>:<br/>
+Free the enumeration reference by ref.
+</p>
+
+<p>
+<b>boolean hasMoreElements (ref)</b>:<br/>
+Return true if the enumeration referenced by ref has more elements.
+</p>
+
+<p>
+<b>value nextElement (ref)</b>:<br/>
+Return the value representing the element in the Enumeration referenced by ref. The type of value can be a string, an integer, a float, or a reference to an array or collection of the Array API.
+</p>
+<br/>
+
+<h1>Examples</h1>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+function test () {
+  var c = Array.newCollection();
+  Array.setElement (c, 'dog', 'bark');
+  Array.setElement (c, 'cat', 'meow');
+  Array.setElement (c, 'human', 'speak');
+
+  var keys = Array.keys (c);
+  while (Enumeration.hasMoreElement (keys)) {
+    var animal = Enumeration.nextElement (keys));
+    var verb = Array.getElement (c, animal);
+    Browser.print ('A '+animal+' can '+verb);
+  }
+  Enumeration.free (keys);
+  Array.free (c);
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+//Display navigation bar (bottom of page) with next/previous pages.
+addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

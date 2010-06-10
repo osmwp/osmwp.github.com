@@ -1,0 +1,187 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Mobile Widgets</title>
+	<link rel="stylesheet" href="style/style.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="js/StructureElts.js"></script>
+	<script type="text/javascript" src="js/Structure.js"></script>
+	<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "development_javascript_Array";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Array Javascript library</h1>
+
+
+
+<h1>Description</h1>
+
+<p>
+This API allows the Javascript code to support arrays and collections using a
+"opaque" references.
+</p>
+<p>
+All references to a structure or a sub-part of a structure must be freed after
+use as the number of references is limited (max. 32 concurrent references).
+</p>
+<p>
+This API is only supported on Mobile Widgets version of the MeMo, and should now
+only be used to support data provided by the Rpc API.<br/>
+It is not supproted by Tiny Mobile Widgets version.
+</p>
+<br/>
+
+<h1>Since</h1>
+
+<h2>1.4.0</h2>
+<br/>
+
+<h1>Methods</h1>
+
+<p>
+<b>ref newArray ()</b>:<br/>
+Returns a reference ref to an empty array, or -1 on error.
+</p>
+
+<p>
+<b>ref newCollection ()</b>:<br/>
+Returns a reference ref to an empty collection, or -1 on error.
+</p>
+
+<p>
+<b>void free (ref)</b>:<br/>
+Free the reference to an array or collection.
+</p>
+
+<p>
+<b>void addElement (ref, value, [int at])</b>:<br/>
+Add a value to an array or collection. The type of value can be either be
+string, integer, float, boolean, or a reference to another array or collection.<br/>
+If the reference ref points to an array:
+</p>
+<ul>
+<li>the value is added to the end of the array,</li>
+<li>the optionnal at argument allows to insert the value at the defined position
+    instead of the end of the array.</li>
+</ul>
+<p>
+If the reference ref points to a collection:
+</p>
+<ul>
+<li>the value is added to the collection using its "hashcode" as key,</li>
+<li>the at argument is ignored.</li>
+</ul>
+
+<p>
+<b>key setElement (ref, key, value)</b>:<br/>
+Set a value in an array or collection and return key on success or -1 on error.
+The type of value can be either be string, integer, float, boolean, or a
+reference to another array or collection. If the reference ref points to an array:
+</p>
+<ul>
+<li>the key argument must be an integer and must point to a valid element of the
+    array (it must be greater or equal to zero and lower to the size of the array).</li>
+</ul>
+<p>
+If the reference ref points to a collection:
+</p>
+<ul>
+<li>The key argument can be either be a string, an integer or a float.</li>
+</ul>
+
+<p>
+<b>value getElement (ref, key)</b>:<br/>
+Return a value corresponding to key from the array or collection referenced by
+ref, or -1 on key is not found in ref. If the reference ref points to an array:
+</p>
+<ul>
+<li>the key argument must be an integer and must point to a valid element of the
+    array (it must be greater or equal to zero and lower to the size of the array).</li>
+</ul>
+<p>
+If the reference ref points to a collection:
+</p>
+<ul>
+<li>The key argument can be either be a string, an integer or a float and be a
+    key from the collection.</li>
+</ul>
+
+<p>
+<b>void removeElement (ref, key)</b>:<br/>
+Remove the element at key in ref.
+</p>
+
+<p>
+<b>boolean isArray (ref)</b>:<br/>
+Return true if reference ref points to an array.
+</p>
+
+<p>
+<b>boolean isCollection (ref)</b>:<br/>
+Return true if reference ref points to a collection.
+</p>
+
+<p>
+<b>int size (ref)</b>:<br/>
+Return the number of elements in the array or collection referenced by ref.
+</p>
+
+<p>
+<b>Enumeration elements (ref)</b>:<br/>
+Return a new reference to an enumeration for the elements of the array or
+collection referenced by ref, or -1 on error. To free this reference, you will
+need to call Enumeration.free(ref).
+</p>
+
+<p>
+<b>Enumeration key (ref)</b>:<br/>
+Return a new reference to an enumeration for the keys of the collection
+referenced by ref, or -1 on error (or if ref is an array). To free this
+reference, you will need to call Enumeration.free(ref).
+</p>
+
+<p>
+<b>void removeAllElements (ref)</b>:<br/>
+Empty completely the array or collection referenced by ref.
+</p>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+//Display navigation bar (bottom of page) with next/previous pages.
+addBackPageNavigator('widgets_development_javascript_ref', '');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

@@ -85,7 +85,11 @@ var structure = new Pages (	new Array (
 				new Page ( "development_javascript_Messaging", "Messaging", new Array() ),
 				new Page ( "development_javascript_String", "String", new Array() ),
 				new Page ( "development_javascript_Style", "Style", new Array() ),
-				new Page ( "development_javascript_XML", "XML", new Array() )
+				new Page ( "development_javascript_XML", "XML", new Array() ),				
+				new Page ( "development_javascript_Array", "Array Javascript library", new Array() ),
+				new Page ( "development_javascript_Rcp", "Rcp Javascript library", new Array() ),
+				new Page ( "development_javascript_Enumeration", "Enumeration Javascript library", new Array() ),
+				new Page ( "development_javascript_Persist", "Persist Javascript library", new Array() )
 			)),			
 			new Page ( "widgets_development_css_language", "CSS language", new Array() )
 		)),
