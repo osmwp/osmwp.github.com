@@ -394,6 +394,13 @@ div#document_block img.right {
 	display: block;
 }
 
+/**
+ * Index block
+ */
+div#document_block div#page_index_block {
+	border: 1px solid #CCCCCC;
+}
+
 /* List
  text					arial	 11px	#444444	no	 
  grey bullet point	 					#999999	 	 
@@ -423,6 +430,18 @@ div#document_block li.lvl2 {
 	padding-left: 30px;
 	background-image: url('../images/nav/grey_bullet.gif');
 	background-position: 17px 10px;
+}
+div#document_block li.lvl3 {
+	padding-left: 40px;
+	background-image: url('../images/nav/grey_bullet.gif');
+	background-position: 27px 10px;
+	font-size: 11px;
+}
+div#document_block li.lvl4 {
+	padding-left: 50px;
+	background-image: url('../images/nav/grey_bullet.gif');
+	background-position: 37px 10px;
+	font-size: 11px;
 }
 
 div#document_block p.note {

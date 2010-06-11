@@ -28,7 +28,15 @@ beginPage();
 
 <h1 class="title">Script node</h1>
 
-<h1>Interface</h1>
+<script type="text/javascript">
+<!--
+addIndex();
+//-->
+</script>
+
+
+
+<script type="text/javascript">addTitle("Interface", 1);</script>
 
 <textarea wrap="off" readonly="readonly" rows="3" cols="80">
 Script {
@@ -37,7 +45,7 @@ Script {
 </textarea>
 <br/>
 
-<h1>Description</h1>
+<script type="text/javascript">addTitle("Description", 1);</script>
 
 <p>
 Implements scripting facility with some limitations (see <a href="faq.html">FAQ</a>).
@@ -49,7 +57,7 @@ node of the scene from the script, based on a DOM system.
 </p>
 <br/>
 
-<h1>Principles</h1>
+<script type="text/javascript">addTitle("Principles", 1);</script>
 
 <ul>
 <li>define an internal field in Script node</li>
@@ -59,7 +67,7 @@ node of the scene from the script, based on a DOM system.
 </ul>
 <br/>
 
-<h1>Scope</h1>
+<script type="text/javascript">addTitle("Scope", 1);</script>
 
 <ul>
 <li>eventIn, exposedField : a function can be linked to the field</li>
@@ -75,7 +83,7 @@ field SFFloat  coefficient 3.5
 </textarea>
 <br/>
 
-<h1>Fields</h1>
+<script type="text/javascript">addTitle("Fields", 1);</script>
 
 <p>
 <b>SFString url ""</b> :<br/>
@@ -83,7 +91,7 @@ The content of the script.
 </p>
 <br/>
 
-<h1>Syntax</h1>
+<script type="text/javascript">addTitle("Syntax", 1);</script>
 
 <p>
 A function is written in javascript. You can use global or local variables. You
@@ -93,14 +101,14 @@ DOM access possible by positioning keyword <b>USE</b> after field. The node is
 accessible by pointed syntax.
 </p>
 
-<h1>Limitations</h1>
+<script type="text/javascript">addTitle("Limitations", 1);</script>
 <p>
 The script is compiled =&gt; everything should be known before execution.<br/>
 Our implementation doesn't include the "object" part of javascript BUT you can use protos and DOM.
 </p>
 <br/>
 
-<h1>Example</h1>
+<script type="text/javascript">addTitle("Example", 1);</script>
 
 <textarea wrap="off" readonly="readonly" rows="15" cols="80">
 #VRML V2.0 utf8

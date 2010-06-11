@@ -27,15 +27,23 @@ beginPage();
 
 <h1 class="title">Tiny Mobile Widgets - Board channel</h1>
 
+<script type="text/javascript">
+<!--
+addIndex();
+//-->
+</script>
 
-<h1>Introduction</h1>
+
+
+
+<script type="text/javascript">addTitle("Introduction", 1);</script>
 
 An application can use different types of Messages for different events/features. The scene that shall receive the message set a key as url parameter of Message Node. In manager, the key is 'Board'. So, all scene that want to communicate with [Manager|ULManager] (matters of title, softkeys, popups, menu or loading scene) use the ['Board' channel/url | ULMessageBoard].<br/>
 <br/>
 This chapter describe "Board" channel and this message.<br/>
 <br/>
 
-<h1>Send message on the "Board" channel</h1>
+<script type="text/javascript">addTitle("Send message on the "Board" channel", 1);</script>
 
 <h2>Send message</h2>
 
@@ -275,7 +283,7 @@ Browser.sendMessage ('Board', 'CATALOG_UPDATE', 'REFRESH');
 <br/>
 
 
-<h1>Receive message on the "Board" channel</h1>
+<script type="text/javascript">addTitle("Receive message on the "Board" channel", 1);</script>
 
 <h2>Receive message</h2>
 

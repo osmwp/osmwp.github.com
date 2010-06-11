@@ -28,15 +28,23 @@ beginPage();
 
 <h1 class="title">launch animation after user action</h1>
 
+<script type="text/javascript">
+<!--
+addIndex();
+//-->
+</script>
 
-<h1>Introduction</h1>
+
+
+
+<script type="text/javascript">addTitle("Introduction", 1);</script>
 
 <p>
 In this tutorial, we will animate a shape after a user action.<br/>
 We use a timer to animate the shape and a key sensor to capture user action.
 </p>
 
-<h1>Timer</h1>
+<script type="text/javascript">addTitle("Timer", 1);</script>
 
 <p>
 See <a href="tutorial_move_shape.html">Move shape tutorial</a> for example about this node.<br/>
@@ -66,7 +74,7 @@ We catch end of loop with <b>cycleTime</b> (SFTime - current time)
 </p>
 <br/>
 
-<h1>Key sensor</h1>
+<script type="text/javascript">addTitle("Key sensor", 1);</script>
 
 <p>
 <a href="development_node_KeySensor.html">KeySensor</a> node send event when user press a key.<br/>
@@ -98,7 +106,7 @@ ROUTE KEY_SENSOR.pressTime TO SCRIPT.keyPressed
 </textarea>
 <br/>
 
-<h1>Shape</h1>
+<script type="text/javascript">addTitle("Shape", 1);</script>
 
 <p>
 We define a shape (a simple rectangle).<br/>
@@ -118,7 +126,7 @@ DEF SHAPE_TRS Transform2D {
 </textarea>
 <br/>
 
-<h1>Shape animation</h1>
+<script type="text/javascript">addTitle("Shape animation", 1);</script>
 
 <p>
 To create animation, we use <a href="development_node_PositionInterpolator2D.html">PositionInterpolator2D</a> node.<br/>
@@ -148,7 +156,7 @@ ROUTE ANIMATION_PI.value_changed TO SHAPE_TRS.translation
 </textarea>
 <br/>
 
-<h1>First example code</h1>
+<script type="text/javascript">addTitle("First example code", 1);</script>
 
 <p>
 Final code for the first example:
@@ -207,7 +215,7 @@ Group {
 </textarea>
 <br/>
 
-<h1>Move shape via the mobile joypad</h1>
+<script type="text/javascript">addTitle("Move shape via the mobile joypad", 1);</script>
 
 <p>
 We want to move shape when user press joypad key.<br/>
@@ -287,7 +295,7 @@ ROUTE SCRIPT.posChanged TO SHAPE_TRS.translation
 </textarea>
 <br/>
 
-<h1>Second example code</h1>
+<script type="text/javascript">addTitle("Second example code", 1);</script>
 
 <p>
 Final code for the second example:

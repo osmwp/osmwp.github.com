@@ -28,14 +28,22 @@ beginPage();
 
 <h1 class="title">move shape</h1>
 
+<script type="text/javascript">
+<!--
+addIndex();
+//-->
+</script>
 
-<h1>Introduction</h1>
+
+
+
+<script type="text/javascript">addTitle("Introduction", 1);</script>
 <p>
 In this tutorial, we will move a shape.<br/>
 We use a timer to animate the shape.
 </p>
 
-<h1>Timer</h1>
+<script type="text/javascript">addTitle("Timer", 1);</script>
 
 <p>
 <a href="development_node_TimeSensor.html">TimeSensor</a> node generate periodic values.<br/>
@@ -69,7 +77,7 @@ We catch end of loop with <b>cycleTime</b> (SFTime - current time).
 </p>
 <br/>
 
-<h1>Shape</h1>
+<script type="text/javascript">addTitle("Shape", 1);</script>
 
 <p>
 We have the timer.<br/>
@@ -104,7 +112,7 @@ We have the timer, the shape... We will now animate the shape.
 </p>
 <br/>
 
-<h1>Shape animation via Interpolator node</h1>
+<script type="text/javascript">addTitle("Shape animation via Interpolator node", 1);</script>
 
 <p>
 To create animation, we can use <a href="development_node_Interpolators.html">Interpolators</a>
@@ -148,7 +156,7 @@ ROUTE ANIMATION_PI.value_changed TO MY_SHAPE_TRS.translation
 </textarea>
 <br/>
 
-<h1>First example code</h1>
+<script type="text/javascript">addTitle("First example code", 1);</script>
 
 <p>
 Final code for the first example:
@@ -185,7 +193,7 @@ Group {
 </textarea>
 <br/>
 
-<h1>Shape animation via Javascript</h1>
+<script type="text/javascript">addTitle("Shape animation via Javascript", 1);</script>
 
 <p>
 Interpolators node are easy to used. But for complex animation, we can use a
@@ -241,7 +249,7 @@ ROUTE ANIMATION_CIRCLE_SCRIPT.value_changed TO MY_SHAPE_TRS.translation
 </textarea>
 <br/>
 
-<h1>Second example code</h1>
+<script type="text/javascript">addTitle("Second example code", 1);</script>
 
 <p>
 Final code for the second example:

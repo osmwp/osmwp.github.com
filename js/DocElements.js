@@ -177,3 +177,44 @@ function addBackPageNavigator (	idPreviousPage,	idNextPage) {
 	document.write('</table>');
 	document.write('</div>');
 }
+
+/**
+ * Add title (H1..4)
+ * @param title Title
+ * @param level Title level (1 to 4)
+ */
+function addIndex (	) {
+	document.write( '<div id="page_index_block">' );
+	document.write( '<ul id="page_index"></ul>' );
+	document.write( '</div>' );
+	document.write( '<br/>' );
+}
+
+/**
+ * Add title (H1..4)
+ * @param title Title
+ * @param level Title level (1 to 4)
+ */
+function addTitle (	title,	level) {
+	var titleId   = 'id' + level;
+	var titleConv = title.replace('"', '\"');
+	
+	var len = title.length;
+	for (var i = 0; i < len; i++) {
+		var c = title.charAt(i);
+		if ((c < 60 || c >  71)
+		 && (c < 65 || c >  90)
+		 && (c < 97 || c > 122)) {
+			c = '_';
+		}
+		titleId = titleId + c;
+	}
+	
+	document.write( '<h'+level+' id="'+ titleId+'">' + title + '</h'+level+'>' );
+	
+	var nodeIndex = document.getElementById('page_index');
+	var oldHTML = nodeIndex.innerHTML; 
+	var newHTML = oldHTML + '<li class="lvl'+level+'"><a href="#'+titleId+'">'+title+'</a></li>';
+	nodeIndex.innerHTML = newHTML;
+}
+

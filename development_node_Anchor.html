@@ -28,7 +28,15 @@ beginPage();
 
 <h1 class="title">Anchor node</h1>
 
-<h1>Interface</h1>
+<script type="text/javascript">
+<!--
+addIndex();
+//-->
+</script>
+
+
+
+<script type="text/javascript">addTitle("Interface", 1);</script>
 
 <textarea wrap="off" readonly="readonly" rows="5" cols="80">
 Anchor {
@@ -39,7 +47,7 @@ Anchor {
 </textarea>
 <br/>
 
-<h1>Description</h1>
+<script type="text/javascript">addTitle("Description", 1);</script>
 
 <p>An anchor node can be activated only by setting the activate field to true (no geometry picking supported yet).<br/>
 The behavior then depends of the first item of <b>url</b> field:</p>
@@ -51,7 +59,7 @@ The behavior then depends of the first item of <b>url</b> field:</p>
 </ul>
 <br/>
 
-<h1>Fields</h1>
+<script type="text/javascript">addTitle("Fields", 1);</script>
 
 <p><b>MFString url ""</b> :<br/>
 The first item of the <b>url</b> field can be either:</p>
@@ -68,7 +76,7 @@ If this field contains "self", only the Inline part containing this Anchor is re
 Anchor will be activated when this is set to TRUE (or 1).</p>
 <br/>
 
-<h1>Example</h1>
+<script type="text/javascript">addTitle("Example", 1);</script>
 
 <p>This example shows how to exit a scene by sending a empty url to an Anchor node.</p>
 

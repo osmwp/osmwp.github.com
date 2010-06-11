@@ -27,8 +27,14 @@ beginPage();
 
 <h1 class="title">caching features</h1>
 
+<script type="text/javascript">
+<!--
+addIndex();
+//-->
+</script>
 
-<h1>Introduction</h1>
+
+<script type="text/javascript">addTitle("Introduction", 1);</script>
 
 <p>
 Cache used to store temporary data on mobile (RSS feed, news, ...). Data are
@@ -49,7 +55,7 @@ The lifetime of the data must be managed by the developer.
 </p>
 <br/>
 
-<h1>Cache access</h1>
+<script type="text/javascript">addTitle("Cache access", 1);</script>
 
 <p>
 The cache access is done through Javacript APIs.
@@ -85,7 +91,7 @@ XML.open ('cache://myXmlFile.xml,http://server/myXmlFile.xml', XML.URL, onXmlLoa
 </textarea>
 <br/>
 
-<h1>Cache scope</h1>
+<script type="text/javascript">addTitle("Cache scope", 1);</script>
 
 <p>
 The cache is dependent on the widget. A widget cannot read another widget cache.<br/>
