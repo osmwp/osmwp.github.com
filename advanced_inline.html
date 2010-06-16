@@ -67,6 +67,13 @@ MeMo extends <a href="development_node_Inline.html">Inline node</a> specificatio
 In addition, <a href="development_node_Inline.html">Inline node</a> gives you the opportunity to select a language pack for the
 scene that is inlined.
 </p>
+
+<p class="note warning">
+<b>Warning:</b><br/>
+For Inline node, only use <span class="highlight">M4M</span> files in URL field.<br/>
+Don't use <span class="highlight">WRL</span> files ( cause problems during the
+final M4M file creation).
+</p>
 <br/>
 
 <script type="text/javascript">addTitle("Anchor", 1);</script>
@@ -81,8 +88,16 @@ The <a href="development_node_Anchor.html">Anchor node</a> has two roles:
 </p>
 </li>
 <li>Open another VRML scene.<br/>
-<a href="development_node_Anchor.html">Anchor node</a> can change all the scene
-or only the Inline part containing the Anchor.</li>
+    <a href="development_node_Anchor.html">Anchor node</a> can change all the
+    scene or only the Inline part containing the Anchor.
+   <p class="note warning">
+   <b>Warning:</b><br/>
+   For Anchor node, to link scene with another scene, use <span class="highlight">M4M</span>
+   files in URL field.<br/>
+   Don't use <span class="highlight">WRL</span> files ( cause problems during the
+   final M4M file creation).
+   </p>
+</li>
 </ul>
 <br/>
 

@@ -64,7 +64,14 @@ The behavior then depends of the first item of <b>url</b> field:</p>
 <p><b>MFString url ""</b> :<br/>
 The first item of the <b>url</b> field can be either:</p>
 <ul>
-<li>an M4M file (eg 'myScene.m4m') to jump to this file.</li>
+<li>an M4M file (eg 'myScene.m4m') to jump to this file.<br/>
+    <p class="note warning">
+    <b>Warning:</b><br/>
+    To link a sub-scene, use <span class="highlight">M4M</span> files in URL.<br/>
+    Don't use <span class="highlight">WRL</span> files ( cause problems during the
+    final M4M file creation).
+    </p>
+</li>
 <li>an HTTP url (eg 'http://www.google.com') to invoke the browser on this page.</li>
 <li>an phone number with the "tel:" prefix (eg 'tel:336099034') to ask the user to make a call.</li>
 </ul>

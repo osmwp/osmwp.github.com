@@ -99,6 +99,14 @@ the url field of an ImageTexture.
 <li>a cached M4M file (eg cache://scene.m4m).</li>
 <li>a M4M file included in the JAR of the MeMo (eg. jar://scene.m4m).</li>
 </ul>
+<p class="note warning">
+<b>Warning:</b><br/>
+Only use <span class="highlight">M4M</span> files in URL.<br/>
+Don't use <span class="highlight">WRL</span> files ( cause problems during the
+final M4M file creation).
+</p>
+
+
 <p>
 <b>MFString languages []</b> :<br/>
 Couples of country code and language files to use. The lang file must be a copy of the generated default.lang. If the entires do not match, warnings are issued.<br/>
