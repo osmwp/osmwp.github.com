@@ -118,11 +118,15 @@ If the reference ref points to a collection:
 <p>
 <b>value getElement (ref, key)</b>:<br/>
 Return a value corresponding to key from the array or collection referenced by
-ref, or -1 on key is not found in ref. If the reference ref points to an array:
+ref, or -1 on key is not found in ref.<br/>
+The type of value can be either be string, integer, float, boolean, or a
+reference to another array or collection.<br/>
+If the reference ref points to an array:
 </p>
 <ul>
-<li>the key argument must be an integer and must point to a valid element of the
-    array (it must be greater or equal to zero and lower to the size of the array).</li>
+<li>the key argument <b>must</b> be an integer and <b>must</b> point to a valid
+    element of the array (it must be greater or equal to zero and lower to the
+    size of the array).</li>
 </ul>
 <p>
 If the reference ref points to a collection:
