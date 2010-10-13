@@ -368,6 +368,10 @@ div#document_block span.highlight {
 	/*font-weight: bold;*/
 }
 
+div#document_block span.redlight {
+	color: #FF0000;
+}
+
 /* Link => <a> tags
   state	font	size	colour	anti-alias	styling
   off	arial	= copy	#444444	no	underline
