@@ -329,7 +329,7 @@ div#document_block h1.title {
 /* header level 2 html	 arial	 14px	#444444 bold */
 div#document_block h2 {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
+	font-size: 20px;
 	color: #444444;
 	font-weight: bold;
 	text-align: left;
@@ -338,7 +338,7 @@ div#document_block h2 {
 /* header level 3 html	 arial	 11px	#333333 bold */
 div#document_block h3 {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11px;
+	font-size: 16px;
 	color: #333333;
 	font-weight: bold;
 	text-align: left;

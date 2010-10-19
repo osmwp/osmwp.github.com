@@ -38,61 +38,68 @@ addIndex();
 
 <script type="text/javascript">addTitle("The \"Hello world!\" project", 1);</script>
 
-<p>We start with a very simply project: The "Hello world!" project.</p>
-<p>"Hello world" project displays "Hello world" message.</p>
+<p>We start with a very simply project: the " <b>Hello world!</b> " project.</p>
+<p>" <b>Hello world!</b> " project displays " <i><b>My personnal Hello world!</b></i> " message.</p>
 <br/>
 
 <script type="text/javascript">addTitle("Creation project", 1);</script>
 
-<p>To create a new project on Eclipse, click on the <b>New Widget Project</b>
-icon on the Toolbar (marked in red):<br/>
-<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_01.jpg" />
-</p>
+<p>From <b>eclipse</b> folder, launch "<b> eclipse.exe </b>" file to open <b>Eclipse</b>.</p>
 
-<p>
-The new project wizard page is then displayed:<br/>
-<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_03.jpg" />
-</p>
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_01.png" /></p>
+<p>To create a new project on Eclipse, click on the " <b>New Mobile Widget</b> " icon on the Toolbar (marked in blue).</p>
 <br/>
 
-<p>Complete new project wizard.</p>
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_02.png" /></p>
+<p>"<b> New Mobile Widget Project - Create a new Mobile Widget Project </b>" dialog box is opened.<br/>
+<p>Complete all textfields for new Mobile Widget project by:
 <ul>
-<li>Project name: HelloWorld</li>
-<li>Widget name: HelloWorld</li>
-<li>Widget version: 1.0.0</li>
-<li>Widget category: Fun &amp; Game</li>
+<li>Project name: &nbsp;&nbsp; <b>MyWidgetHelloWorld</b> (for example)</li>
+<li>Widget name: &nbsp;&nbsp; <b>MyWidgetHelloWorld</b> (automatically completed)</li>
+<li>Widget version: &nbsp;&nbsp; <b>1.0.0</b></li>
+<li>Widget category: &nbsp;&nbsp; <b>Fun &amp; Game</b></li>
+<li>Widget description: &nbsp;&nbsp; <b><i>(optional)</i></b></li>
 </ul>
-<br/>
 
-<p>The next page is the selection of project models.<br/>
-Select "HelloWorld" model and click on the Finish button.<br/>
-<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_04.jpg" />
+Select "<b> <u>N</u>ext &gt; </b>" button to continue.</p>
 </p>
 <br/>
 
-<p>Your project is created.</p>
-<br/>
-
-
-
-
-<script type="text/javascript">addTitle("Launch project", 1);</script>
-
-<p>
-To launch project, right click on a <b>Mobile Widget</b>, and select <b>Run As &gt; Mobile Widget</b>.<br/>
-<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_14.jpg" />
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_03.png" /></p>
+<p>"<b> New Mobile Widget Project - Choose VRML Model </b>" dialog box is opened.<br/>
+Select an "<b> available models </b>" for the "<b> VRML Model </b>". A picture shows the Model. (Here for example " <b>Info</b> ").<br/>
+Select "<b> <u>N</u>ext &gt; </b>" button to continue.</p>
 </p>
-
-<p>Congratulation! Your project is launched.<br/>
-<img alt="Project is launched" src="images/first_project/first_project_launch_2.jpg" /></p>
 <br/>
 
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_04.png" /></p>
+<p>"<b> New Mobile Widget Project - Configure widget style </b>" dialog box is opened.<br/>
+Select a "<b> Widget Style: </b>" for the "<b> Style </b>". A picture shows the Model. (Here for example " <b>OWP</b> ").<br/>
+Select "<b> <u>N</u>ext &gt; </b>" button to continue.</p>
+</p>
+<br/>
+
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_05.png" /></p>
+<p>"<b> Open Associated Perspective? </b>" pop up is opened only the first time.<br/>
+Select "<b> <u>Y</u>es </b>" button to continue.</p>
+</p>
+<br/>
+
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_06.png" /></p>
+<p>Congratulations! Your project "<b> MyWidgetHelloWord </b>" is created.</p>
+<br/>
 
 
 <script type="text/javascript">addTitle("Modify project", 1);</script>
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_07.png" /></p>
+<p>Open "<b> main.wrl </b>" file (in " <b>src</b> " folder under " <b>MyWidgetHelloWorld</b> " folder).</p>
+<p>In Eclipse editor :<br/>
+<ul>
+<li>Select the contain of "<b> main.wrl </b>" file and delete it,</li>
+<li>Copy and paste following VRML code in "<b> main.wrl </b>" file .</li>
+</ul>
+</p>
 
-<p>Open <b>main.wrl</b> file (in <b>src</b> folder) and copy/paste following
-VRML code in Eclipse editor.</p>
 <textarea readonly="readonly" rows="13" cols="80">
 #VRML V2.0 utf8
 
@@ -104,17 +111,32 @@ Shape {
     }
   }
   geometry WrapText {
-    string [ "My personal hello world!" ]
+    string [ "My personal Hello World!" ]
   }
 }
 </textarea>
-<br/>
 
-<p>Save the <b>main.wrl</b> file (use <b>Ctrl + S</b> shortcut).</p>
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_08.png" /></p>
+<p>Save "<b> main.wrl </b>" file (use "<b> Ctrl + S </b>" shortcut).</p>
 <p>Launch the widget.</p>
 <br/>
 
 
+<script type="text/javascript">addTitle("Launch project", 1);</script>
+
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_09.png" /></p>
+<p>To launch the running of the project and MicroEmulator:
+<ul>
+<li>right click on a "<b> MyWidgetHelloWorld</b> ",</li>
+<li>select "<b> Run As </b>",</li>
+<li>select "<b> Mobile Widget </b>".</li>
+</ul>
+(Or use ("<b> Alt + Shift + X </b>" and " <b>W</b> ") shortcut to launch the running of the project and MicroEmulator).</p>
+<br/>
+ 
+<img alt="Widgets SKD" src="images/widgets_sdk/user_manual_10.png" />
+<p>Congratulations! Your project is launched.</p>
+<br/>
 
 
 <script type="text/javascript">
@@ -122,9 +144,6 @@ Shape {
 addBackPageNavigator ('installation_sdk', 'widgets_development');
 //-->
 </script>
-
-
-
 
 
 <script type="text/javascript">
