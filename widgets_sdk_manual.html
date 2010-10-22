@@ -77,15 +77,15 @@ the following requirements:
 
 <p>
 <p>From <b>eclipse</b> folder, launch "<b> eclipse.exe </b>" file to open <b>Eclipse</b>.<br/>
-There are three ways to create a new <b>Mobile Widget Project</b>: from the <b>Toolbar</b>, the <b>New Widget Project menu</b> or the <b>New Project... menu</b>. </p>
+There are four ways to create a new <b>Mobile Widget Project</b>: from the <b>Toolbar</b>, the <b>New Widget Project menu</b> or the <b>New Project... menu</b>. </p>
 
 
-<h2>From the Toolbar</h2>
+<h3>Launch " New Mobile Widget " from the Toolbar</h3>
 
 <p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_01.png" /></p>
 <p>Click on the " <b>New Mobile Widget</b> " icon on the Toolbar (marked in blue).</p>
 
-<h2>From the New Widget Project menu</h2>
+<h3>Launch " New Mobile Widget " from the New Widget Project menu</h3>
 
 <p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_12.png" /></p>
 <p>In top menu bar, 2 possibilities:
@@ -98,7 +98,12 @@ Or <br/>
 </ul>
 </p>
 
-<h2>From the New Project... menu</h2>
+<h3>Launch " New Project " from the Toolbar</h3>
+
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_22.png" /></p>
+<p>Click on the " <b>New</b> " icon on the Toolbar (marked in blue).</p>
+
+<h3>Launch " New Project " from the New Project... menu</h3>
 
 <p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_13.png" /></p>
 <p>In top menu bar, 2 possibilities:
@@ -115,119 +120,111 @@ Or <br/>
 <p>"<b> New Project - Select a wizard </b>" dialog box is opened.<br/>
 Select "<b> Widget Project </b>" under "<b> Mobile Widgets SDK </b>" folder.<br/>
 Select "<b> <u>N</u>ext &gt; </b>" button to continue.</p>
+<br/>
 
 <h2>The New Mobile Widget Wizard</h2>
 
 <p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_15.png" /></p>
-<p>"<b> New Mobile Widget Project - Create a new Mobile Widget Project </b>" dialog box is opened.<br/>
-
-
-
-
-
-
-
-
+<p>"<b> New Mobile Widget Project - Create a new Mobile Widget Project </b>" dialog box is opened.</p>
 
 
 <h3>Widget Type</h3>
 
 <p>
-The Widget Type is defined here. As indicated on the wizard page:
-</p>
+The Widget Type is defined here. As indicated on the wizard page, there is two choises:
 <ul>
-<li><b>Tiny Mobile Widgets</b> are generic widgets which can be deployed on the whole
+<li>" <b>Tiny Mobile Widgets</b> " are generic widgets which can be deployed on the whole
     range of handsets, in both widget and standalone modes.</li> 
-<li><b>Mobile Widgets</b> are also available in both widget and standalone modes. They
-    allow backward compatibility and have less memory constraints than <b>Tiny
-    Mobile Widgets</b>. As a result, they do not support low end handsets.</li>
+<li>" <b>Mobile Widgets</b> " are also available in both widget and standalone modes. They
+    allow backward compatibility and have less memory constraints than " <b>Tiny
+    Mobile Widgets</b> ". As a result, they do not support low end handsets.</li>
 </ul>
-<br/>
+</p>
+
 	
 <h3>Widget Configuration</h3>
 
 <p>
-First of all, the global parameters fields have to be filled in. Here is a short
-description of these parameters:
-</p>
+First of all, the global parameters fields have to be filled in. Here is a short description of these parameters:
 <ul>
-<li><b>Project name</b> (mandatory): The name of the project, as it will appear
-    in the workspace.</li>
-<li><b>Widget name</b> (mandatory): The name of the new created Mobile Widget.
-    It must begin with an upper-case alphabetic character, and can contain any
-    alphabetic character or decimal digit.</li>
-<li><b>Widget version</b> (mandatory): The version number of the Mobile Widget.
-    Default value: 1.0.0.</li>
-<li><b>Widget description</b> (optional): a short description of the widget.</li>
-<li><b>Widget category</b>: the widget category, selected in a list.</li>
+<li>" <b><u>P</u>roject name</b> " (mandatory): The name of the project, as it will appear in the workspace.</li>
+<li>" <b>Widget name</b> " (mandatory): The name of the new created Mobile Widget.<br/>
+    It must begin with an <b>upper-case</b> alphabetic character. <br/>
+    It can contain any alphabetic or digit character.</li>
+<li>" <b>Widget version</b> " (mandatory): The version number of the Mobile Widget.<br/>
+    Default value displayed is: 1.0.0.</li>
+<li>" <b>Widget description</b> " (optional): a short description of the widget.</li>
+<li>" <b>Widget category</b> "(mandatory): the widget category is selected in a list.<br/>
+    8 categories are purposed : "Fun & Game", "News & Feeds", "Communication", "Audio & Pics & Video", "Business", "Maps & Travel", "Shopping", "Tools & Utilities" and "Misc".</li>
 </ul>
+</p>
 <br/>
 
 <h3>VRML Model usage</h3>
-
-<p>
-The new Widget Project is built from an existing VRML model. These models are
-functional and provide sample code. The VRML model to use is selected on the
-second page of the wizard. A short description and a screenshot of the selected
-item are displayed on the right.<br/>
-When a model is selected, the Widget project creation is completed. You can
-click on the <b>Finish</b> button.<br/>
-<img alt="Widgets SDK Manual" src="images/widgets_sdk/user_manual_04.jpg" />
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_16.png" /></p>
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_17.png" /></p>
+<p>"<b> New Mobile Widget Project - Choose VRML Model </b>" dialog box is opened.</p>
+<p>The new Widget Project is built from an existing VRML model. <br/>
+These models are functional and provide sample code. <br/>
+The VRML model to use is selected on the second page of the wizard. <br/>
+A short description and a screenshot of the selected item are displayed on the right.<br/>
+When a model is selected, the Widget project creation is completed. <br/>
+You can click on the " <b><u>F</u>inish</b> " button.
 </p>
 
-<p>
-A complete Widget Project is created. It is fully functional, and can be run
-once created by using <b>Run As &gt; Mobile Widget</b>. Its sources can be used
-as a starting point for another application, or just to provide code samples.
-</p>
-
-<h3>Widget Style</h3>
-
-<p>
-The third page of the creation wizard is optional.<br/>
-The widget styles provide different pictures and allow the developer to
-customize the widget design. By default, the style of the new widget will be the
-style of the selected VRML model. However, this can be modified in this page.<br/>
-<img alt="Widgets SDK Manual" src="images/widgets_sdk/user_manual_05.jpg" />
-</p>
-
-<p>
-An existing style can be used, or a new style can be created. A new style can be
-derived from an existing style. A screenshot is displayed on this page, allowing
-the developer to see how the selected style will look like.
+<p>A complete Widget Project is created. <br/>
+It is fully functional and can be run once created by using 
+<a href="first_project.html#launch"><b>Run As &gt; Mobile Widget</b></a>
+. <br/>
+Its sources can be used as a starting point for another application or just to provide code samples.
 </p>
 <br/>
 
+<h3>Widget Style</h3>
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_04.png" /></p>
+<p>"<b> New Mobile Widget Project - Configure widget style </b>" dialog box is opened.</p>
+<p>The third page of the creation wizard is optional.<br/>
+The widget styles provides different pictures and allows the developer to customize the widget design. <br/>
+By default, the style of the new widget will be the style of the selected VRML model. <br/>
+However, this can be modified in this page.</p>
+
+<p>An existing style can be used or a new style can be created. <br/>
+A new style can be derived from an existing style. <br/>
+A screenshot is displayed on this page, allowing the developer to see how the selected style will look like.
+</p>
+<br/>
+
+
 <h2>Project structure</h2>
 
+<p>A newly created project has the following structure:<br/></p>
+<p><img alt="Widgets SDK Manual" src="images/widgets_sdk/user_manual_19.png" /></p>
 <p>
-A newly created project has the following structure:<br/>
-<img alt="Widgets SDK Manual" src="images/widgets_sdk/user_manual_06.jpg" />
-</p>
 <ul>
-<li>The <b>doc</b> folder contains a screenshot of the widget.</li>
-<li>The <b>exports</b> folder contains the files generated for different export
-    configurations. Each export has its own subfolder.</li>
-<li>The <b>i18n</b> folder contains languages files.</li>
-<li>The <b>SDK</b> folder contains two symbolic links, to the protos and the
-    styles bound to the selected widget type. It must not be modified (only by
-    advanced users).</li>
-<li>The <b>src</b> folder contains the project sources. All the project's source
-    files must be saved in this folder.</li>
-<li>The <b>styles</b> folder contains a subfolder named from the selected style
-    (OWP in our case).</li>
-<li>The <b>tmp</b> folder contains data generated during compilation.</li>
+<li>The " <b>doc</b> " folder contains a screenshot of the widget.</li>
+<li>The " <b>exports</b> " folder contains the files generated for different export configurations. <br/>
+Each export has its own subfolder.</li>
+<li>The " <b>i18n</b> " folder contains languages files.</li>
+<li>The " <b>SDK</b> " folder contains two symbolic links. <br/>
+" <b>protos</b> " and " <b>styles</b> " bound to the selected widget type. <br/>
+It must not be modified (reserved only by advanced users).</li>
+<li>The " <b>src</b> " folder contains the project sources. <br/>
+All the project's source files must be saved in this folder.</li>
+<li>The " <b>styles</b> " folder contains a subfolder named from the selected style (OWP in our case).</li>
+<li>The " <b>tmp</b> " folder contains data generated during compilation.</li>
 </ul>
 
-<p>
-Sometimes, a <b>README.txt</b> file is present. It contains a description of the
-model as well as information that can be useful.
+Sometimes, a " <b>README.txt</b> "file is present. <br/>
+It contains a description of the model as well as information that can be useful.
 </p>
-
+<br/>
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_18.png" /></p>
 <p>
-Depending on the selected widget type, the project icon in the Eclipse workspace
-is different: orange if it is a Mobile Widget, cyan if it is a Tiny Mobile Widget.<br/>
-<img alt="Widgets SDK Manual" src="images/widgets_sdk/user_manual_07.jpg" />
+Depending on the selected widget type, the project icon in the Eclipse workspace is different: 
+<ul>
+<li><b>orange</b> if it is a " <b>Mobile Widget</b>".</li>
+<li><b>cyan</b> if it is a " <b>Tiny Mobile Widget</b>".</li>
+</ul>
 </p>
 <br/>
 
@@ -236,30 +233,46 @@ is different: orange if it is a Mobile Widget, cyan if it is a Tiny Mobile Widge
 
 <h2>Global preferences</h2>
 
-<p>
-In the top menu, go into <b>Window &gt; Preferences...</b> and select <b>Mobile
-Widgets</b>. In this <b>Preferences</b> Page, you can configure the Perl path,
-and the signing of Applets and MIDlets.
-</p>
-
-<p>
-In order to generate the widgets documentation, you must provide the path where
-Perl is installed. Specify the path in the <b>Perl bin directory</b> field. By
-default, it is set to <b>C:\Perl\bin</b>.
-</p>
-
-<p>
-In order to sign Applets and MIDlets, you must provide a keystore and other
-data, as an alias, a storepass and a keypass. If the checkbox is checked and
-correct data are entered in the different fields, the Applets and/or the MIDlets
-will automatically be signed when created.<br/>
-<img alt="Widgets SDK Manual" src="images/widgets_sdk/user_manual_08.jpg" />
-</p>
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_20.png" /></p>
+<p>In top menu, select " <b>Window</b> " then " <b>Preferences</b>.</p>
 <br/>
+
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_21.png" /></p>
+<p>"<b> Preferences </b>" dialog box is opened.<br/>
+Select " <b>Mobile Widgets</b> ".<br/>
+You can configure :
+<ul>
+<li>the Perl path,</li>
+<li>the signing of Applets,</li>
+<li>the signing of MIDlets.</li>
+</ul>
+</p>
+
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_23.png" /></p>
+<p>In order to generate the widgets documentation, you must provide the path where Perl is installed.<br/>
+Specify the path in the " <b><u>P</u>erl bin directory:</b> " textfield.<br/>
+By default, this textfield is completed by <b>C:\Perl\bin</b>.
+</p>
+
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_24.png" /></p>
+<p>In order to sign Applets and MIDlets, you must provide a keystore and other data, as an alias, a storepass and a keypass.<br/>
+If the checkbox is checked and correct data are entered in the different textfields, the Applets and/or the MIDlets will automatically be signed when created.</p>
+<br/>
+
+
+
+
+
+
+
+
+
+
 
 
 <h2>Project preferences (Properties)</h2>
 
+<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_25.png" /></p>
 <p>
 The project preferences page allows modifying the Widget version and the Widget
 style after the project creation.<br/>
