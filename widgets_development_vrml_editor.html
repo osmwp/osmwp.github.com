@@ -36,7 +36,9 @@ addIndex();
 
 
 <script type="text/javascript">addTitle("Introduction", 1);</script>
-  This document aims to describe the Mobile Widgets SDK VRML Editor Plug-in. This plug-in, once integrated in the Eclipse platform, provides a complete VRML editor. The following functionalities are embedded in this plug-in:
+<p>This document aims to describe the Mobile Widgets SDK VRML Editor Plug-in.<br/>
+This plug-in, once integrated in the Eclipse platform, provides a complete VRML editor.<br/>
+The following functionalities are embedded in this plug-in:
   <ul>
     <li>Creation wizard,</li>
     <li>Syntax highlighting,</li>
@@ -59,47 +61,155 @@ addIndex();
 <script type="text/javascript">addTitle("VRML Editor functionalities", 1);</script>
 <p>
   <p>
-    The functionalities provided by the editor apply to .wrl files. They are detailed below.
+    The functionalities provided by the editor apply to " <b>.wrl</b> " files in " <b>src</b> " folder. They are detailed below.
   </p>
   
   <h2>Creation wizard</h2>
   <p>
-    Each file with the .wrl extension can be open with the VRML Editor plug-in. When the plug-in is installed, these files are represented by the following icon: 
+    Each file with the " <b>.wrl</b> " extension can be open with the VRML Editor plug-in.<br/>
+When the plug-in is installed, these files are represented by the following icon: 
     <img alt="vrml file icon" src="./images/vrml_editor/image001.png" />
-    <br/>
-    A .wrl file can be created with the creation wizard included in the VRML Editor plug-in. In the New wizard, select VRML File in the General category:
-    <br/>
-    <img alt="new file wizard" src="./images/vrml_editor/image002.png" />
-    <br/>
-    Then choose a location and a name for the file (the extension does not need to be specified):
-    <br/>
-    <img alt="set file name" src="./images/vrml_editor/image003.png" />
-    <br/>
-    The newly created file is displayed, and contains a VRML header:
-    <br/>
-    <img alt="newly file created" src="./images/vrml_editor/image004.png" />
-    <br/>
-    A .wrl file can also be created with a simple File creation wizard, but in that case the extension will have to be specified, and the header will not be present:
-    <br/>
-    <img alt="new wrl file by extension" src="./images/vrml_editor/image005.png" />
-    <br/>
-    However, it is a valid .wrl file that has all the features of the VRML Editor.
   </p>
+
+<p>A " <b>.wrl</b> " file can be created with the creation wizard included in the VRML Editor plug-in.<br/>
+
+<h3>Launch " New Other " from the Toolbar</h3>
+
+<p><img alt="Widgets SKD" src="images/vrml_editor/image045.png" /></p>
+<p></p>
+
+
+<p>In top menu bar, 2 possibilities:
+<ul>
+<li>Click on the arrow on the right of " <b>New</b> " button on the Toolbar (marked in blue).<br/>
+Select " <b>Other...</b> ".</li>
+</ul>
+Or <br/>
+<ul>
+<li>using ("<b> Ctrl + N </b>") shortcut.</li>
+</ul>
+</p>
+
+
+
+
+<h3>Launch " New Other " from the New Project... menu</h3>
+
+<p><img alt="Widgets SKD" src="images/vrml_editor/image044.png" /></p>
+<p>In top menu bar, 2 possibilities:
+<ul>
+<li>select " <b>File</b> " then " <b>New</b> " then " <b>Other...</b> ".</li>
+</ul>
+Or <br/>
+<ul>
+<li>using ("<b> Alt + Shift + N </b>") shortcut and select " <b>Other...</b> ".</li>
+</ul>
+</p>
+
+<p><img alt="new file wizard" src="./images/vrml_editor/image002.png" /></p>
+<p>"<b> New - Select a wizard </b>" dialog box is opened.<br/>
+Select "<b> VRML File </b>" under "<b> General </b>" folder.<br/>
+Select "<b> <u>N</u>ext &gt; </b>" button to continue.</p>
+<br/>
+
+<p><img alt="set file name" src="./images/vrml_editor/image003.png" /></p>
+<p>"<b> New VRML File - Create a new VRML File </b>" dialog box is opened.<br/>
+Choose a location by entering or Selecting the "<b> parent folder </b>" and "<b> src </b>" folder.<br/>
+Enter a name for this file in "<b> File name: </b>" textfield. (the extension does not need to be specified)<br/>
+Select "<b> Finish </b>" button to open the new file " <b>.wrl</b> ".</p>
+<br/>
+
+<p><img alt="newly file created" src="./images/vrml_editor/image004.png" /></p>
+<p>The newly created file (here " <b>new.wrl</b> ") is displayed and contains a VRML header.</p>
+<br/>
+
+<p class="note info">
+<b>Note:</b><br/>
+A "<b> .wrl</b> " file can also be created with a simple File creation wizard.<br/>
+But in that case, the extension "<b> .wrl</b> " will have to be specified in "<b> File name: </b>" textfield.<br/>
+The header will not be present.
+</p>
+<br/>
+
+<p><img alt="Widgets SKD" src="images/vrml_editor/image046.png" /></p>   
+<p>"<b> New - Select a wizard </b>" dialog box is opened.<br/>
+Select "<b> File </b>" under "<b> General </b>" folder.<br/>
+Select "<b> <u>N</u>ext &gt; </b>" button to continue.</p>
+
+<p><img alt="set file name" src="./images/vrml_editor/image047.png" /></p>
+<p>"<b> New VRML File - Create a new VRML File </b>" dialog box is opened.<br/>
+Choose a location by entering or Selecting the "<b> parent folder </b>" and "<b> src </b>" folder.<br/>
+Enter a name with the extension "<b> .wrl</b> " for this file in "<b> File name: </b>" textfield.<br/>
+Select "<b> Finish </b>" button to open the new file " <b>.wrl</b> ".</p>
+<br/>
+
+<p><img alt="newly file created" src="./images/vrml_editor/image005.png" /></p>
+<p>The newly created file (here " <b>empty.wrl</b> ") is displayed without contain a VRML header.<br/>
+However, it is a valid " <b>.wrl </b>" file that has all the features of the VRML Editor.</p>
+<br/>
+
+
   
   <h2>Syntax highlighting</h2>
   <p>
-    The VRML editor automatically provides a syntax highlighting, as shown below:
-    <br/>
-    <img alt="syntax highlighting" src="./images/vrml_editor/image011.png" />
-    <br/>
+    The VRML editor automatically provides a syntax highlighting, as shown below: <br/>
+    <p><img alt="syntax highlighting" src="./images/vrml_editor/image011.png" style="border:solid 1px #000000;" /></p>
+
     The syntax highlighting applies for VRML and JavaScript code.
   </p>
+
+<p><textarea readonly="readonly" rows="8" cols="80">
+#VRML V2.0 utf8
+
+  # Class: Animate example
+  Group {
+  children [
+  Shape {
+    appearance Appearance {
+    	material Material2D { emissiveColor 0 0 0 }
+    }
+    geometry Rectangle { size 240 320 }
+  }
+    
+  DEF myImage Transform2D {
+    translation 0 0
+    children [
+      Shape {
+        appearance Appearance {
+          material Material2D	{ }	  
+    		  texture	 ImageTexture { url "ball.png" }
+        }
+        geometry Bitmap {}
+      }
+    ]
+  }
+  ]
+}
+</textarea>
+</p>
+<br/>
   
   <h2>Refactoring</h2>
   <p>
-    If you select a VRML node name or a JavaScript function name and press Alt+Shift+R or reach Refactor > Rename... via the contextual menu, the Refactor window is displayed, providing the current item name:
-    <br/>
-    <img alt="Refactor Rename" src="./images/vrml_editor/image006.png" />
+    Select a <b>VRML node name</b> or a <b>JavaScript function name</b>.<br/>     
+    Then <br/>
+<ul>
+<li>Press " <b>Alt + Shift + R </b>" shortcut.</li>
+</ul>
+Or <br/>
+<ul>
+<li>via the contextual menu, select " <b>Refactor</b> " then " <b>Rename...</b> ".</li>
+</ul>
+"<b> Refactor - Enter new name: </b>" dialog box is opened.<br/>
+The current selection is displayed to the "<b> New name: </b>" textfield.<br/>
+
+
+
+
+
+
+
+    <p><img alt="Refactor Rename" src="./images/vrml_editor/image006.png" /></p>
     <br/>
     If you enter a new name and press Finish, all the occurrences of the item are replaced by this new name:
     <br/>
@@ -338,8 +448,6 @@ addIndex();
 	addBackPageNavigator ('widgets_sdk_manual','widgets_development_languages');
 //-->
 </script>
-
-
 
 
 <script type="text/javascript">
