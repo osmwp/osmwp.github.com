@@ -53,7 +53,7 @@ The following functionalities are embedded in this plug-in:
     <li>Outline view of VRML objects and JavaScript functions,</li>
     <li>Completion,</li>
     <li>Automatic code and comments insertion,</li>
-    <li>Preferences</li>
+    <li>Preferences.</li>
   </ul>
   All these functionalities will be detailed in the present document.
 
@@ -91,8 +91,6 @@ Or <br/>
 </p>
 
 
-
-
 <h3>Launch " New Other " from the New Project... menu</h3>
 
 <p><img alt="Widgets SKD" src="images/vrml_editor/image044.png" /></p>
@@ -109,7 +107,7 @@ Or <br/>
 <p><img alt="new file wizard" src="./images/vrml_editor/image002.png" /></p>
 <p>"<b> New - Select a wizard </b>" dialog box is opened.<br/>
 Select "<b> VRML File </b>" under "<b> General </b>" folder.<br/>
-Select "<b> <u>N</u>ext &gt; </b>" button to continue.</p>
+Select "<b> Next &gt; </b>" button to continue.</p>
 <br/>
 
 <p><img alt="set file name" src="./images/vrml_editor/image003.png" /></p>
@@ -137,7 +135,7 @@ Select "<b> File </b>" under "<b> General </b>" folder.<br/>
 Select "<b> <u>N</u>ext &gt; </b>" button to continue.</p>
 
 <p><img alt="set file name" src="./images/vrml_editor/image047.png" /></p>
-<p>"<b> New VRML File - Create a new VRML File </b>" dialog box is opened.<br/>
+<p>"<b> New VRML File - Creates a new VRML File </b>" dialog box is opened.<br/>
 Choose a location by entering or Selecting the "<b> parent folder </b>" and "<b> src </b>" folder.<br/>
 Enter a name with the extension "<b> .wrl</b> " for this file in "<b> File name: </b>" textfield.<br/>
 Select "<b> Finish </b>" button to open the new file " <b>.wrl</b> ".</p>
@@ -200,206 +198,328 @@ Or <br/>
 <ul>
 <li>via the contextual menu, select " <b>Refactor</b> " then " <b>Rename...</b> ".</li>
 </ul>
-"<b> Refactor - Enter new name: </b>" dialog box is opened.<br/>
-The current selection is displayed to the "<b> New name: </b>" textfield.<br/>
-
-
-
-
-
-
-
     <p><img alt="Refactor Rename" src="./images/vrml_editor/image006.png" /></p>
-    <br/>
-    If you enter a new name and press Finish, all the occurrences of the item are replaced by this new name:
-    <br/>
-    <img alt="occurrences replaced" src="./images/vrml_editor/image007.png" />
+<p>"<b> Refactor - Enter new name: </b>" dialog box is opened.<br/>
+The current selection is displayed to the "<b> New name: </b>" textfield.
+</p>
+<br/>
+<p><img alt="Refactor Rename" src="./images/vrml_editor/image048.png" /></p>
+
+    <p>If you enter a new name in the "<b> New name: </b>" textfield (here <b>image</b> for example) and press " <b><u>F</u>inish</b> " button, all the occurrences of the item are replaced by this new name.<br/>
+(For example, here all the occurrences <b>myImage</b> are replaced by <b>image</b>).
   </p>
+
+    <p><img alt="occurrences replaced" src="./images/vrml_editor/image007.png" /></p>
+<br/>
   
   <h2>Braces collapse</h2>
   <p>
-    The code blocks delimited by braces {} are signalled in the margin by a minus (-) sign:
+    The code blocks delimited by braces. " <b>{</b> " or " <b>}</b> " are signalled in the margin by a minus <img alt="Refactor Rename" src="./images/vrml_editor/image049.png" /> sign (marked in blue).
+    </p>
+    <p><img alt="not collapsed" src="./images/vrml_editor/image008.png" /></p>
     <br/>
-    <img alt="not collapsed" src="./images/vrml_editor/image008.png" />
-    <br/>
-    When one of these minus signs is clicked, the corresponding block is collapsed. A plus (+) sign appears in the margin, allowing expanding the block:
-    <br/>
-    <img alt="collapsed" src="./images/vrml_editor/image009.png" />
+    <p>When one of these minus signs is clicked, the corresponding block is collapsed. <br/>
+A plus <img alt="Refactor Rename" src="./images/vrml_editor/image050.png" /> sign (marked in blue) appears in the margin, allowing expanding the block.
+    </p>
+    <p><img alt="collapsed" src="./images/vrml_editor/image009.png" /></p>
   </p>
-  
+<br/> 
+ 
   <h2>Automatic selection of areas</h2>
   <p>
-    The areas delimited by braces {} or square brackets [] can be automatically selected by double-clicking at the beginning of the block (just after the first bracket) or at the end (just before the closing bracket), as shown below:
-    <br/>
-    <img alt="Automatic selection" src="./images/vrml_editor/image010.png" />
-  </p>
-  
+    The areas delimited by braces " <b>{</b>&nbsp; <b>}</b> " or square brackets " <b>[ &nbsp;  ]</b> " can be automatically selected.<br/>
+To have automatic selection of areas:
+<ul>
+<li>double-clicking at the beginning of the block (just after the first brace " <b>{</b> " or bracket " <b>[</b> " ).</li>
+</ul>
+or
+<ul>
+<li>double-clicking at the end of the block (just before the closing brace " <b>}</b> " or bracket " <b>]</b> " ).</li>
+</ul>
+</p>
+
+    <p><img alt="Automatic selection" src="./images/vrml_editor/image010.png" /></p>
+<br/>   
+
   <h2>Brackets highlighting</h2>
   <p>
-    When the cursor is positioned just after a brace or a square bracket (opening or closing), the associated bracket is highlighted with a little pink rectangle:
-    <br/>
-    <img alt="Brackets highlighting" src="./images/vrml_editor/image012.png" />
+    When the cursor is positioned just after a brace " <b>{</b> " or " <b>}</b> " or a square bracket " <b>[</b> " or " <b>]</b> " (opening or closing), the associated bracket is highlighted with a little pink rectangle <img alt="Refactor Rename" src="./images/vrml_editor/image051.png" /> (marked in blue).
   </p>
-  
+
+    <p><img alt="Brackets highlighting" src="./images/vrml_editor/image012.png" /></p>
+<br/>
+
+
   <h2>Nodes and functions occurrences highlighting</h2>
   <p>
-    When a node name or a function name is selected, all its occurrences in the current .wrl file are highlighted, and marks in the margin indicate where these occurrences are located:
-    <br/>
-    <img alt="occurrences highlighting" src="./images/vrml_editor/image013.png" />
+    When a node or a function name is selected in the current " <b>.wrl</b> " file (here " <b>main.wrl</b> "):<br/>
+
+<ul>
+<li>all its occurrences are highlighted (marked in blue oval shape).</li>
+<li>orange arrows in the margin indicate where these occurrences are located (marked in blue circle shape).</li>
+</ul>
   </p>
-  
-  <h2>Code formatting</h2>
+  <p><img alt="occurrences highlighting" src="./images/vrml_editor/image013.png" /></p>
+<br/>  
+
+<A NAME="Code formatting"></A>
+<h2>Code formatting</h2>
   <p>
     <h3>Line automatic formatting</h3>
-    <p>
-      The line automatic formatting can be configured in the VRML Editor preferences (Window > Preferences > VRML Editor). By default, the option Line auto formatting when typing } activated is not checked. If you activate it, when a closing brace } is typed, the current line is automatically formatted. For example, the following line is typed:
-      <br/>
-      <img alt="line not formatted" src="./images/vrml_editor/image014.png" />
-      <br/>
-      A closing brace is added at the end of the line, and it is automatically formatted:
-      <br/>
-      <img alt="line formatted" src="./images/vrml_editor/image015.png" />
-    </p>
+
+<p><img alt="occurrences highlighting" src="./images/vrml_editor/image052.png" /></p>
+<p>In top menu bar, select " <b>Window</b> " then " <b>Preferences</b> " then " <b>VRML Editor</b> ".</p>
+<p><img alt="occurrences highlighting" src="./images/vrml_editor/image053.png" /></p>
+<p>"<b> Preferences - VRML Editor </b>" dialog box is opened.<br/>
+
+      The <b>line automatic formatting</b> can be configured in the VRML Editor preferences.<br/>
+By default, the option " <b>Line auto formatting when typing } activated</b> " is not checked.</p>
+<p><img alt="occurrences highlighting" src="./images/vrml_editor/image054.png" /></p>
+<p> To activate this option, check " <b>Line auto formatting when typing } activated</b> ".<br/>
+Select " <b><u>A</u>pply</b> " button  and select " <b>OK</b> " button to save your preferences.<br/>
+<br/>
+ If you activate it, when a closing brace " <b>}</b> " is typed, the current line is automatically formatted.<br/>
+For example, the following line is typed:</p>
+      <p><img alt="line not formatted" src="./images/vrml_editor/image014.png" /></p>
+<p><textarea readonly="readonly" rows="1" cols="80">
+    DEF toto Shape{ geometry            Rectangle{   size  50     50       
+</textarea>
+</p>
+      <p>When a closing brace is added at the end of the line, the line is automatically formatted:</p>
+      <p><img alt="line formatted" src="./images/vrml_editor/image015.png" /></p>
+
+<br/>
+
     <h3>Code blocks formatting</h3>
     <p>
-      Code formatting can also be applied to blocks of code, by selecting the code to format and using the context menu (right click, Source > Format), or using the associated key binding (CTRL+SHIFT+F). If no code is selected, the whole document is formatted. For example, this is the block of code to format:
-      <br/>
-      <img alt="block not formatted" src="./images/vrml_editor/image016.png" />
-      <br/>
-      This code is selected, and the formatting action is called by the context menu:
-      <br/>
-      <img alt="formatting contextual menu" src="./images/vrml_editor/image017.png" />
-      <br/>
-      The block of code is now well-formatted (indentation is correct, there are carriage returns after each bracket...):
-      <br/>
-      <img alt="block formatted" src="./images/vrml_editor/image018.png" />
-    </p>
-  </p>
-  
+      <b>Code formatting</b> can also be applied to code blocks.<br/><br/>
+For example, a block of code to format:</p>
+<p><img alt="block not formatted" src="./images/vrml_editor/image016.png" /></p>
+<p><textarea readonly="readonly" rows="5" cols="80">
+Shape { geometry IndexedFaceSet { coord Coordinate {point [1 0 1, 0 2 0, -1 0 1, -1 0 -1,1 0 -1] }
+coordIndex[0 1 2 -1 1 4 3 -1         1 3 2 -1  0 4 1   -1 3 4 2 -1 4 0 2 -1
+  ] normalPerVertex FALSE
+} }    
+</textarea>
+</p>
+<p>Select the code to format.<br/>
+<p><img alt="block not formatted" src="./images/vrml_editor/image017.png" /></p>
+<p>Then, 2 possibilities:
+<ul>
+<li>from context menu by right click, select " <b>Source</b> " then " <b>Format</b> ".</li>
+</ul>
+Or
+<ul>
+<li>using (" <b>Ctrl + Shift + F</b> ") shorcut.</li>
+</ul>
+</p>
+<p><img alt="block formatted" src="./images/vrml_editor/image018.png" /></p>
+<p>The block of code is now well-formatted: 
+<ul>
+<li>indentation is correct,</li>
+<li>there are carriage returns after each bracket,</li>
+<li>...</li>
+</ul>
+</p>
+   
+<p class="note info">
+<b>Note:</b><br/>
+If <b>no</b> code is selected, the whole document is formatted.
+</p>
+<br/>
+
+
   <h2>Comment/Uncomment</h2>
   <p>
-    The VRML and JavaScript comment characters are different, but there is only one key binding to comment/uncomment code: CTRL+SHIFT+C.
-    <h3>VRML</h3>
+    The VRML and JavaScript comment characters are different.<br/>
+ But there is only one key binding to comment/uncomment code: (" <b>Ctrl + Shift + C</b> ") shortcut.</p>
+<br/>
+    <h3>Comment/Uncomment in <u>VRML</u></h3>
+<h4>Comment in VRML</h4>    
+<p>The comment character in VRML language is " <img alt="Refactor Rename" src="./images/vrml_editor/image064.png" /> ".<br/>
+To <b>comment</b> some code:<br/>
+<ul>
+<li>select one or several lines.</li>
+</ul>
+Or
+<ul> 
+<li>place the cursor in the line you want to comment.</li>
+</ul>
+</p>
+      <p><img alt="select to comment VRML" src="./images/vrml_editor/image019.png" /></p>
+
+      <p>When the code is selected, using (" <b>Ctrl + Shift + C</b> ") shorcut.</p>
+
+      <p><img alt="comment VRML" src="./images/vrml_editor/image020.png" /></p>
+<p>The selected lines are commented.</p>
+      <br/>      
+
+<h4>Uncomment in VRML</h4>    
+<p>To <b>uncomment</b> some code commented:<br/>
+<ul>
+<li>select one or several lines.</li>
+</ul>
+Or
+<ul> 
+<li>place the cursor in the line you want to uncomment.</li>
+</ul>
+When the code is selected, using (" <b>Ctrl + Shift + C</b> ") shorcut.</p>
+
+      <p><img alt="uncomment VRML" src="./images/vrml_editor/image021.png" /></p>
+<p>The selected lines are uncommented : the comment character " <img alt="Refactor Rename" src="./images/vrml_editor/image064.png" /> " is now not displayed.</p>
+   <br/> 
+
+
+    <h3>Comment/Uncomment in <u>JavaScript</u></h3>
     <p>
-      The comment character in VRML language is #. To comment some code, select one or several lines, or place the cursor in the line you want to comment:
-      <br/>
-      <img alt="select to comment VRML" src="./images/vrml_editor/image019.png" />
-      <br/>
-      When the code is selected, press simultaneously the CTRL+SHIFT+C keys: the selected lines are commented.
-      <br/>
-      <img alt="comment VRML" src="./images/vrml_editor/image020.png" />
-      <br/>
-      To uncomment the code, the keys combination is also CTRL+SHIFT+C:
-      <br/>
-      <img alt="uncomment VRML" src="./images/vrml_editor/image021.png" />
-    </p>
-    <h3>JavaScript</h3>
-    <p>
-      The comment character in JavaScript is //. To comment or uncomment a JavaScipt code block, press CTRL+SHIFT+C.
-      <br/>
-      <img alt="comment JavaScript" src="./images/vrml_editor/image022.png" />
-    </p>
-    <h3>Spell checking</h3>
-    <p>
-      When the Eclipse spell checking is activated (Window > Preferences > General > Editors > Text Editors > Spelling), the errors present in comments (VRML and JavaScript) are underlined:
-      <br/>
-      <img alt="spell checking on" src="./images/vrml_editor/image023.png" />
-      <br/>
-      If the error is fixed, the editor is updated and the word is no longer underlined:
-      <br/>
-      <img alt="spell checking off" src="./images/vrml_editor/image024.png" />
-    </p>
-  </p>
-  
+      The comment character in JavaScript is " <img alt="Refactor Rename" src="./images/vrml_editor/image065.png" /> ". 
+
+
+<p>To <b>comment</b> or <b>uncomment</b> some Javascript code:<br/>
+<ul>
+<li>select one or several lines.</li>
+</ul>
+Or
+<ul> 
+<li>place the cursor in the line you want to comment or uncomment.</li>
+</ul>
+When the code is selected, using (" <b>Ctrl + Shift + C</b> ") shorcut.</p>
+
+      <p><img alt="uncomment VRML" src="./images/vrml_editor/image022.png" /></p>
+<p>The selected lines are commented or uncommented.</p>
+<br/>
+
+
+    <h2>Spell checking</h2>
+<p>When the Eclipse <b>spell checking</b> is activated, the errors present in comments (VRML and JavaScript) are underlined.<br/>
+<img alt="spell checking on" src="./images/vrml_editor/image023.png" /></p>
+<p>If the error is fixed, the editor is updated and the word is no longer underlined.<br/>
+<img alt="spell checking off" src="./images/vrml_editor/image024.png" /></p>
+ <br/>
+<p><img alt="occurrences highlighting" src="./images/vrml_editor/image052.png" /></p>
+<p>In top menu bar, select " <b>Window</b> " then " <b>Preferences</b> " then " <b>General</b> " then " <b>Editors</b> " then " <b>Text Editors</b> " then " <b>Spelling</b> ".</p>
+<p><img alt="occurrences highlighting" src="./images/vrml_editor/image055.png" /></p>
+<p>"<b> Preferences - Spelling </b>" dialog box is opened.</p>
+<p><img alt="occurrences highlighting" src="./images/vrml_editor/image056.png" /></p>
+<p>To activate <b>spell checking</b>, check the option " <b><u>E</u>nable spell checking</b> ".<br/>
+Keep all options checked.<br/>
+Select " <b><u>A</u>pply</b> " button and select " <b>OK</b> " button to save your preferences.</p>
+<br/>
+
+
   <h2>Outline view</h2>
+<p><img alt="Outline" src="./images/vrml_editor/image025.png" /></p>
   <p>
-    The VRML Editor provides an outline view which shows the Protos contained in the file, and all the VRML objects defined in these Protos, as well as the JavaScript functions. When the VRML nodes or the JavaScript functions are not explicitly defined in a Proto, they are displayed under a Proto object whose name is the same as the file name.
-    <br/>
-    <img alt="Outline" src="./images/vrml_editor/image025.png" />
-    <br/>
-    This outline view allows reaching easily the Protos, the VRML objects and the JavaScript functions, just by clicking on their names. By default, the items (Protos, node definitions and JavaScript functions) are displayed by order of appearance in the file. They can be sorted alphabetically with the "a z" button on the outline menu bar.
-    <br/>
-    <img alt="Outline sorted" src="./images/vrml_editor/image026.png" />
-    <br/>
-    Items can also be hidden by type (VRML node definition or JavaScript function), by selecting the appropriate button in the outline menu bar:
-    <br/>
-    <img alt="Outline hidden" src="./images/vrml_editor/image027.png" />
-  </p>
-  
+    The VRML Editor provides an outline view which shows:<br/>
+<ul>
+<li>the Protos <img alt="occurrences highlighting" src="./images/vrml_editor/image057.png" /> contained in the file.</li>
+<li>all the VRML objects (node definition) <img alt="occurrences highlighting" src="./images/vrml_editor/image058.png" /> defined in these Protos.</li>
+<li>the JavaScript functions (like " function() " for example).</li>
+</ul>
+When the VRML nodes or the JavaScript functions are not explicitly defined in a Proto, they are displayed under a Proto object whose name is the same as the file name (" <b>.wrl</b> ").
+</p>
+
+<p>    This <b>outline view</b> allows reaching easily the Protos, the VRML objects (node definition) and the JavaScript functions, just by clicking on their names.<br/><br/>
+By default, the items (Protos, VRML objects (node definition) and JavaScript functions) are displayed by order of appearance in the file.<br/>
+They can be sorted in alphabetical order with the <img alt="Outline hidden" src="./images/vrml_editor/image060.png" /> button on the outline menu bar.
+</p>    
+<p><img alt="Outline sorted" src="./images/vrml_editor/image026.png" /></p>
+ 
+<p>Items can also be hidden by type (VRML objects (node definition) or JavaScript function).<br/>
+<ul>
+<li>To hide VRML objects (node definition), select the <img alt="Outline hidden" src="./images/vrml_editor/image061.png" /> button in outline menu bar.</li>
+<p><img alt="Outline hidden" src="./images/vrml_editor/image059.png" /></p>
+<li>To hide JavaScript function, select the <img alt="Outline hidden" src="./images/vrml_editor/image062.png" /> button in outline menu bar.</li>
+<p><img alt="Outline hidden" src="./images/vrml_editor/image027.png" /></p>
+</ul>
+</p>
+
   <h2>Completion</h2>
   <p>
-    The VRML Editor provides completion for VRML objects and for JavaScript functions. It is called by pressing simultaneously the CTRL+SPACE keys.
+    The VRML Editor provides completion for VRML attributes proposition, VRML objects (node definition) and for JavaScript functions. <br/>
+Completion called by (" <b>Ctrl + Space</b> ") shortcut.</p>
+
     <h3>VRML attributes proposition</h3>
     <p>
-      In a VRML object declaration, the completion can be called on order to display the arguments of the object:
-      <br/>
-      <img alt="VRML attributes proposition" src="./images/vrml_editor/image028.png" />
-    </p>
-    <h3>VRML Objects</h3>
+      In a VRML object declaration, the completion can be called on order to display the arguments of the object.<br/>
+Left click after the object and use (" <b>Ctrl + Space</b> ") shortcut to display the arguments applied to the object.</p>
+      <p><img alt="VRML attributes proposition" src="./images/vrml_editor/image028.png" /></p>
+    <br/>
+    <h3>VRML Objects (node definition)</h3>
     <p>
-      When a VRML object is defined in the current wrl file (by using DEF), completion is activated for this object. To use completion, write the object's name (SCRIPT in our example), followed by a dot. A list of available propositions is displayed.
-      <br/>
-      <img alt="VRML Objects" src="./images/vrml_editor/image029.png" />
-    </p>
+      When a VRML object is defined in the current " <b>.wrl</b> " file (by using " <b>DEF</b> "), completion is activated for this object.<br/><br/>
+To use completion, write the object's name (here  " SCRIPT " for example) followed by a dot.<br/>
+Left click after the dot and use (" <b>Ctrl + Space</b> ") shortcut to display the list of available propositions.</p>
+
+<p><img alt="VRML Objects" src="./images/vrml_editor/image029.png" /></p>
+ <br/>
+
     <h3>JavaScript functions</h3>
     <p>
-      The functions available in JavaScript can be displayed and selected the same way, with an additional help (in the yellow box):
+      The functions available in JavaScript can be displayed and selected the same way, with an additional help (in the yellow box).<br/><br/>
+To use completion, write the object's name (here  " SCRIPT " for example) followed by a dot.<br/>
+Left click after the dot and use (" <b>Ctrl + Space</b> ") shortcut to display the list of available propositions.</p>
+      <p><img alt="JavaScript functions" src="./images/vrml_editor/image030.png" /></p>
       <br/>
-      <img alt="JavaScript functions" src="./images/vrml_editor/image030.png" />
+      <p>Moreover, completion proposals also appear when no word has been typed within a function:</p>
+
+      <p><img alt="JavaScript functions typed" src="./images/vrml_editor/image031.png" /></p>
       <br/>
-      Moreover, completion proposals also appear when no word has been typed, within a function:
+      <p>When this list is displayed, typing one or several letters will reduce it to the appropriate entries:</p>
+
+      <p><img alt="JavaScript functions appropriate" src="./images/vrml_editor/image032.png" /></p>
       <br/>
-      <img alt="JavaScript functions typed" src="./images/vrml_editor/image031.png" />
-      <br/>
-      When this list is displayed, typing one or several letters will reduce it to the appropriate entries:
-      <br/>
-      <img alt="JavaScript functions appropriate" src="./images/vrml_editor/image032.png" />
-    </p>
+
+
     <h3>Function template</h3>
     <p>
-      When the completion is called within a script but outside JavaScript functions, a template function is created with a generic name:
-      <br/>
-      <img alt="Function template" src="./images/vrml_editor/image033.png" />
-    </p>
-  </p>
+      When the completion is called within a script but outside JavaScript functions, a template function is created with a generic name " <b>function name()</b> ":</p>
+      <p><img alt="Function template" src="./images/vrml_editor/image033.png" /></p>
   
+<p class="note warning">
+<b>Important:</b><br/>
+A first fonction must be existed before the space where the completion of function template is launched. <br/>
+Like " <b>function initialize() {}</b> " for example.</p>
+
+
   <h2>Code and comments auto-insertion</h2>
   <p>
-    The VRML Editor provides some code and comments auto-insertion functionalities.
+    The VRML Editor provides some code and comments auto-insertion functionalities.</p>
     <h3>Code auto-insertion</h3>
     <p>
-      The word Script followed by the Enter key is recognized by the editor, and the following code block is inserted:
+      The word " <b>Script</b> " followed by the " <b>Enter</b> " key clicked is recognized by the editor. The following code block is inserted:
       <br/>
       <img alt="Code auto-insertion" src="./images/vrml_editor/image034.png" />
     </p>
     <h3>Comments auto-insertion</h3>
     <p>
-      Comments are inserted automatically in three cases:
+      Comments are inserted automatically in three cases (before a root node, before a VRML node and before a JavaScript function):<br/><br/>
       <ul>
         <li>
-          <b>At the root node</b>
-          <br/>          
-          Before a root node, type a comment character (#) and then hit the Enter key:
-          <br/>
-          <img alt="At the root node" src="./images/vrml_editor/image035.png" />
-          <br/>
-          Comments are inserted before the node name:
-          <br/>
-          <img alt="At the root node inserted" src="./images/vrml_editor/image036.png" />
+          <b>Before a root node</b>
+          <p><img alt="At the root node" src="./images/vrml_editor/image035.png" /></p>
+          <p>Before a root node, type a comment character " <img alt="At the root node" src="./images/vrml_editor/image064.png" /> ".<br/>          
+Then click on " <b>Enter</b> " key.</p>
+
+          <p><img alt="At the root node" src="./images/vrml_editor/image036.png" /></p>
+<p>Comments are inserted before the root node.</p>
         </li>
+<br/> 
         <li>
           <b>Before a VRML node</b>
-          <br/>
-          Type a comment character (#) before a node definition, then type Enter:
-          <br/>          
-          <img alt="Before a VRML node" src="./images/vrml_editor/image037.png" />
+          <p>Before a VRML node, type a comment character " <img alt="At the root node" src="./images/vrml_editor/image064.png" /> ".<br/>          
+Then click on " <b>Enter</b> " key.</p>
+          <p><img alt="At the root node" src="./images/vrml_editor/image037.png" /></p>
+<p>Comments are inserted before the VRML node.</p>
         </li>
+<br/> 
         <li>
           <b>Before a JavaScript function</b>
-          <br/>
-          Type a JavaScript comment character (//) before a JavaScript function and then type Enter:
-          <br/>          
-          <img alt="Before a JavaScript function" src="./images/vrml_editor/image038.png" />
+          <p>Before a JavaScript function , type a comment character " <img alt="At the root node" src="./images/vrml_editor/image065.png" /> ".<br/>          
+Then click on " <b>Enter</b> " key.</p>
+          <p><img alt="At the root node" src="./images/vrml_editor/image038.png" /></p>
+<p>Comments are inserted before the JavaScript function.</p>
+  
         </li>
       </ul>
     </p>
@@ -408,39 +528,59 @@ The current selection is displayed to the "<b> New name: </b>" textfield.<br/>
   
   <h2>Generate field SFNodes within scripts</h2>
   <p>
-    The VRML Editor offers the possibility to automatically generate the "field SFNode" line for each node present in the document. This action can be called by pressing simultaneously the CTRL+SHIFT+S keys, or through the contextual menu Source > Generate Script SFNode fields. This option is very practical in cases of huge VRML files, because it avoids the user to search through the file which nodes exist and which ones have not yet been used in scripts.
+    The VRML Editor offers the possibility to automatically generate the <b>field SFNode</b> ( <b><u>S</u>ingle <u>F</u>ield <u>Node</u></b> ) line for each node present in the document.<br/>
+This option is very practical in cases of huge VRML files. <br/>
+It avoids the user to search through all the files:<br/>
+      <ul>
+        <li>which nodes exist.</li>
+        <li>which ones have not yet been used in scripts.</li>
+</ul>
+    </p>
+    <p>For example, the <b>MY_TIMER</b> node has not been used in the <b>SCRIPT</b> script: </p>
+    <p><img alt="Generate field" src="./images/vrml_editor/image039.png" /></p>
     <br/>
-    In this document, the MY_TIMER node has not been used in the SCRIPT script:
+
+<p><img alt="Generate field contextual" src="./images/vrml_editor/image040.png" /></p>
+<p>To access to <b>Generate field SFNodes</b>, 2 possibilities:<br/>
+<ul>
+<li>Right click to open contextual menu. Select " <b>Source</b> " then " <b>Generate script SFNode fields</b> ".</li>
+</ul>
+Or <br/>
+<ul>
+<li>using ("<b> Ctrl + Shift + S </b>") shortcut.</li>
+</ul>
+</p>
+<p><img alt="Generate field contextual" src="./images/vrml_editor/image041.png" /></p>
+<p>"<b> Generate field SFNodes </b>" dialog box is opened.<br/>
+This wizard contains only the nodes that have not been used in scripts.<br/>
+Use the checkboxes to indicate which SFNode fields have to be generated.<br/>
+Select " <b><u>F</u>inish</b> " button.</p>
+
+
+<p>For this example, " <b>MY_TIMER</b> " is checked.</p>
+<p><img alt="Generate field contextual" src="./images/vrml_editor/image063.png" /></p>
     <br/>
-    <img alt="Generate field" src="./images/vrml_editor/image039.png" />
-    <br/>
-    Access the contextual menu:
-    <br/>
-    <img alt="Generate field contextual" src="./images/vrml_editor/image040.png" />
-    <br/>
-    A wizard containing only the nodes that have not been used in scripts is displayed. Use the checkboxes to indicate which SFNode fields have to be generated:
-    <br/>
-    <img alt="Generate field wizard" src="./images/vrml_editor/image041.png" />
-    <br/>
-    Click Finish, and the selected nodes are added at the beginning of the script:
-    <br/>
-    <img alt="Generate field end" src="./images/vrml_editor/image042.png" />
-    <br/>
-    The field name is the node name in lowercase. Underscores are removed, and the letter that follows them is in uppercase.
-  </p>
+<p><img alt="Generate field contextual" src="./images/vrml_editor/image042.png" /></p>
+<p>The selected nodes are added at the beginning of the script.<br/>
+The field name is the node name in lowercase (myTimer).<br/>
+Underscores are removed and the letter that follows them is in uppercase.</p>
+<br/>
   
   <h2>Preferences</h2>
   <p>
-    By default, the character used for auto-indentation (when the text is formatted) is two spaces. This character can be modified in the Preferences menu (Window > Preferences > VRML Editor):
-    <br/>
-    <img alt="Preferences" src="./images/vrml_editor/image043.png" />
-    <br/>
-    The VRML Editor Preferences page also allows enabling or disabling the line auto formatting.
-  </p>
-  
-  
+    By default, the character used for auto-indentation (when the text is formatted) is two spaces. <br/>
+This character can be modified in the Preferences menu.</p>
 
+
+<p><img alt="occurrences highlighting" src="./images/vrml_editor/image052.png" /></p>
+<p>In top menu bar, select " <b>Window</b> " then " <b>Preferences</b> " then " <b>VRML Editor</b> ".</p>
+<p><img alt="occurrences highlighting" src="./images/vrml_editor/image043.png" /></p>
+<p>"<b> Preferences - VRML Editor </b>" dialog box is opened.<br/>
+Choose your " <b><u>A</u>uto indentation character </b>" by " <b>2 spaces</b> ", " <b>4 spaces</b> " or " <b>Tab character</b> ".<br/><br/>
+
+<A HREF="#Code formatting">The VRML Editor Preferences page also allows enabling or disabling the line auto formatting.</A>
 </p>
+ <br/>
 
 
 <script type="text/javascript">
