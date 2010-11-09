@@ -26,7 +26,7 @@ beginPage();
 
 
 
-<h1 class="title">Javascript language</h1>
+<h1 class="title">JavaScript language</h1>
 
 <script type="text/javascript">
 <!--
@@ -40,8 +40,8 @@ addIndex();
 <script type="text/javascript">addTitle("Introduction", 1);</script>
 
 <p>
-Javascript is used by VRML to add more interactivity in VRML scene.<br/>
-More information about Javascript language:
+JavaScript is used by VRML to add more interactivity in VRML scene.<br/>
+More information about JavaScript language:
 <a href="http://en.wikipedia.org/wiki/Javascript" target="_blank">http://en.wikipedia.org/wiki/Javascript</a>.
 </p>
 <br/>
@@ -49,8 +49,8 @@ More information about Javascript language:
 <script type="text/javascript">addTitle("Script node", 1);</script>
 
 <p>
-Javascript is supported by VRML via the <a href="development_node_Script.html">Script node</a>.<br/>
-The <b>url</b> property contains Javascript code.<br/>
+JavaScript is supported by VRML via the <a href="development_node_Script.html">Script node</a>.<br/>
+The <b>url</b> property contains JavaScript code.<br/>
 Script node interface:
 </p>
 <textarea wrap="off" readonly="readonly" rows="3" cols="80">
@@ -75,12 +75,12 @@ DEF script Script {
 
 <p class="note check">
 <b>Note:</b><br/>
-Javascript code starts by <b>javascript:</b> (but it is not required).
+JavaScript code starts by <b>javascript:</b> (but it is not required).
 </p>
 
 <p class="note warning">
 <b>Warning:</b><br/>
-Don't use <b>"</b> (quotation mark) character in Javascript part (functions, comments, ...).<br/>
+Don't use <b>"</b> (quotation mark) character in JavaScript part (functions, comments, ...).<br/>
 This character is used to close the <b>url</b> property of <b>Script</b> node.<br/>
 Example:<br/>
 <b>Browser.print("hello world");</b> <i>// Syntax error</i><br/>
@@ -92,7 +92,7 @@ Example:<br/>
 
 <p>Fields are used to:</p>
 <ul>
-<li>declare global variable (Javascript code cannot contain global variable).</li>
+<li>declare global variable (JavaScript code cannot contain global variable).</li>
 <li>access to scene node (access to scene node require a field).</li>
 </ul>
 <br/>
@@ -116,7 +116,7 @@ Field type (<b>SFString</b>, <b>MFString</b>, <b>SFInt32</b>, <b>MFInt32</b>,
 
 <p>
 <b>&lt;name&gt;</b>:<br/>
-Field name. This name is use in Javascript.
+Field name. This name is use in JavaScript.
 </p>
 
 <p>
@@ -127,7 +127,7 @@ Default field value. Default value is not required.
 <p>
 <b>&lt;node_name&gt;</b>:<br/>
 Node name (define by DEF &lt;node name&gt; in VRML scene).<br/>
-To use a VRML node in Javascript function.
+To use a VRML node in JavaScript function.
 </p>
 <br/>
 
@@ -151,7 +151,7 @@ DEF script Script {
 </textarea>
 <br/>
 
-<script type="text/javascript">addTitle("Javascript syntax", 1);</script>
+<script type="text/javascript">addTitle("JavaScript syntax", 1);</script>
 
 <h2>Comments</h2>
 
@@ -176,7 +176,7 @@ Comments are removed during M4M compilation. Feel free to comment your code!<br/
 <h2>Functions</h2>
 
 <p>
-MeMo use the same syntax than Javascript to declare and use a function.<br/>
+MeMo use the same syntax than JavaScript to declare and use a function.<br/>
 Use <b>return</b> keyword to return a value.<br/>
 Function declaration syntax:
 </p>
@@ -246,11 +246,11 @@ var &lt;var_name&gt; = &lt;value&gt;;
 </ul>
 <br/>
 
-<h2>Process events in Javascript</h2>
+<h2>Process events in JavaScript</h2>
 
 <p>
 VRML use <b>ROUTE</b> keyword to manage events.<br/>
-We can use Javascript to send an event or receive and process this event.<br/>
+We can use JavaScript to send an event or receive and process this event.<br/>
 Events declaration syntax is same than field declarations. We use <b>eventIn</b>
 and <b>eventOut</b> keyword to replace <b>field</b> keyword.
 </p>
@@ -308,15 +308,15 @@ ROUTE MYSCRIPT.myEvent TO OTHER.scriptIsInitialized
 </textarea>
 <br/>
 
-<h2>Javascript libraries</h2>
+<h2>JavaScript libraries</h2>
 
 <p>
-To advanced use, we can use Javascript libraries.<br/>
-See <a href="widgets_development_javascript_ref.html">Javascript reference</a> chapter.
+To advanced use, we can use JavaScript libraries.<br/>
+See <a href="widgets_development_javascript_ref.html">JavaScript reference</a> chapter.
 </p>
 <br/>
 
-<script type="text/javascript">addTitle("Javascript restrictions", 1);</script>
+<script type="text/javascript">addTitle("JavaScript restrictions", 1);</script>
 
 <h2>Class declarations</h2>
 
@@ -330,7 +330,7 @@ Solution: Use a VRML prototype.
 </p>
 <br/>
 
-<h2>Create a node with Javascript</h2>
+<h2>Create a node with JavaScript</h2>
 
 <p>
 We cannot create VRML nodes dynamically with MeMo.<br/>

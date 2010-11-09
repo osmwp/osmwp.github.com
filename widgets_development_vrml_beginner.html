@@ -38,47 +38,40 @@ addIndex();
 
 
 <script type="text/javascript">addTitle("Introduction", 1);</script>
-
+<p>
 This section describes the basic concepts of VRML and must be understood before
 going further in the content creation process.
 <br/>
 
-<p>The main concepts you have to learn are:</p>
+<p>The main concepts you have to learn are:<br/>
 <ul>
-<li>The VRML notion of scene graph, nodes and fields</li>
-<li>Notion of local axis and recursive geometric transformation</li>
-<li>Basic shape drawing with texturing</li>
-<li>Animation through timers and interpolators</li>
-<li>How to write scripts</li>
-<li>Why and how to create prototypes</li>
-<li>Which special features has MeMo to simplify your developer life</li>
+<li>The VRML notion of scene graph, nodes and fields.</li>
+<li>Notion of local axis and recursive geometric transformation.</li>
+<li>Basic shape drawing with texturing.</li>
+<li>Animation through timers and interpolators.</li>
+<li>How to write scripts.</li>
+<li>Why and how to create prototypes.</li>
+<li>Which special features has MeMo to simplify your developer life.</li>
 </ul>
 <br/>
 
 <p class="note warning">
-<b>Warning</b><br/> do not try to display 3D shapes at first. This is tempting
-because you can find a lot of examples over the Internet but this is misleading
-because MeMo is not a pure VRML browser, despite it is based on VRML you need a
-special way to declare 3D objects. This is a very simple process but this will
-come later in this document to keep things simple and avoid confusion.
+<b>Warning:</b><br/> Do not try to display 3D shapes at first.<br/>
+This is tempting because you can find a lot of examples with Internet.<br/>
+But this is misleading because MeMo is not a pure VRML browser, despite it is based on VRML.<br/>
+You need a special way to declare 3D objects.<br/>
+This is a very simple process but this will come later in this document to keep things simple and avoid confusion.
 </p><br/>
-
-
-
-
-
 
 
 <script type="text/javascript">addTitle("Your First Scene", 1);</script>
 
 <p>
-To write your first scene, just open your favorite text editor, enter (or copy)
-the sample code below and save it as a pure text file. Choose any name you want
-as long as you use a <span class="highlight">wrl</span> extension (like in
-<span class="highlight">example1.wrl</span>).
-</p>
-<br/>
-
+To write your first scene:<br/>
+<ul>
+<li><a href="widgets_sdk_manual.html#create_mobile_widget">Create a Tiny Mobile Widget</a>. ("info" VRML Model is choosen)</li>
+<li><a href="widgets_development_vrml_editor.html#simple_file">Create a new file</a>.</li>
+<li>Enter (or copy) the sample code below in the file.</li>
 <textarea wrap="off" readonly="readonly" rows="15" cols="80">
 Group {
     children [
@@ -95,75 +88,87 @@ Group {
     ]
 }
 </textarea>
-<br/>
-
-<p>
-Use M4MCompiler to compile and test this first scene as describe in the previous
-chapter.
+<li>Save it as a pure text file.</li>
+<li>Choose any name you want as long as you use a " <b>.wrl</b> " extension (like " <b>example1.wrl</b> ").</li>
+<li>Select this file like "<a href="widgets_sdk_manual.html#widget_entry_point"> Widget Entry Point </a>".</li>
+<li>Compile and test this first scene as describe by using <a href="first_project.html#launch">Run As &gt; Mobile Widget</a>.</li>
+</ul>
 </p>
 <p>
 You should have the following output:
 </p>
-<br/>
 
-<textarea wrap="off" readonly="readonly" rows="5" cols="80">
-MeMo Compiler v1.0b6
-compile examples -&lt; ./example1.m4m
-&gt;&gt; Compiling scene example1.wrl
-   ++ include tmpexample1.m4m.bin / example1.m4m size: 34 magic: AAAA]
-&lt;&lt; End of scene example1.wrl [34 B]
+<textarea wrap="off" readonly="readonly" rows="8" cols="80">
+compile:
+compile.adapter:
+    [mkdir] Created dir:{path of your the workspace where mobile project is}\tmp\psrc
+
+compile.scene:
+     [echo] execPath: /cygdrive/{path of your the workspace where eclipse folder is}/eclipse/configuration/org.eclipse.osgi/bundles/288/1/.cp/MemoSDK/tools/compiler/win
+
+Compile:
 </textarea>
 <br/>
 
 <p>
-If you run this scene, you should see a red, solid rectangle covering the whole
-screen. Do not go further until you can compile and run successfully this scene.
-</p>
-<br/>
-
-
-
-
-
-
+If you run this scene, you should see a red and solid rectangle covering the whole
+screen.</p>
+<img alt="Scene graph" src="images/widgets_development/beginner_guide_8.png" />
+<p class="note warning">
+<b>Warning:</b><br/> Do not go further until you can compile and run successfully this scene.<br/>
+</p><br/>
 
 
 <script type="text/javascript">addTitle("Scene graph", 1);</script>
 
 <p>
-VRML provides a simple formalism to describe a rich media, interactive, scene by
+VRML provides a simple formalism to describe a rich media interactive scene by
 giving a formal description of the graphical objects, animations and
-interactivity instead of providing a list of drawing instructions. In
-consequence a scene is a <b>graph</b> made of <b>nodes</b>, like the diagram on the right.
+interactivity instead of providing a list of drawing instructions.br/>
+In consequence a scene is a <b>graph</b> made of <b>nodes</b>, like the next diagram.
 </p>
 <br/>
-
-<img alt="Scene graph" src="images/widgets_development/beginner_guide_1.jpg" />
-<br/>
+<img alt="Scene graph" src="images/widgets_development/beginner_guide_1.png" />
+	
 
 <p>
-Each <b>node</b> represents a <b>functionality</b>, like drawing an object, specifying a
-color or an image, defining an animation or a geometric transformation,
-describing a complex interaction (script)...
+Each <b>node</b> represents a <b>functionality</b> like:<ul>
+<li>i>drawing an object,</li>
+<li>specifying a color,</li>
+<li>specifying an image,</li>
+<li>defining an animation,</li>
+<li>defining a geometric transformation,</li>
+<li>describing a complex interaction (script),</li>
+<li>...</li>
+</ul>
 </p>
-<br/>
 
 <p>
 By assembling nodes together you semantically combined nodes to create complex
-objects that can be drawn on the screen or that an effect on other objects
-(interactivity, animations, ...). There is a fixed number of predefined nodes
-because there is a fixed number of implemented functionality. You cannot create
-a brand new node with a brand new functionality. However you can group a
-combination of existing nodes under a new name and use it as a new node.<br/>
-Among the most commonly used nodes there are: <a href="development_node_Transform2D.html">Transform2D</a>,
-<a href="development_node_Shape.html">Shape</a>,
-<a href="development_node_Appearance.html">Appearance</a>,
-<a href="development_node_Material2D.html">Material2D</a>,
-<a href="development_node_Rectangle.html">Rectangle</a>,
-<a href="development_node_ImageTexture.html">ImageTexture</a>,
-<a href="development_node_TimeSensor.html">TimeSensor</a>, ...
+objects which:<br/>
+<ul>
+<li>can be drawn on the screen</li>
+</ul>
+or
+<ul>
+<li>have an effect on other objects (interactivity, animations,...).</li> 
+</ul>
+
+There is a fixed number of predefined nodes because there is a fixed number of implemented functionality.<br/>
+You cannot create a brand " new node " with a brand " new functionality ".<br/>
+However you can group a combination of existing nodes under a new name and use it as a new node.<br/>
+Among the most commonly used nodes there are:<br/>
+<ul>
+<li><a href="development_node_Transform2D.html">Transform2D</a>,</li>
+<li><a href="development_node_Shape.html">Shape</a>,</li>
+<li><a href="development_node_Appearance.html">Appearance</a>,</li>
+<li><a href="development_node_Material2D.html">Material2D</a>,</li>
+<li><a href="development_node_Rectangle.html">Rectangle</a>,</li>
+<li><a href="development_node_ImageTexture.html">ImageTexture</a>,</li>
+<li><a href="development_node_TimeSensor.html">TimeSensor</a>,</li>
+<li>...</li>
+</ul>
 </p>
-<br/>
 
 <p>
 The functionality achieved by a node can be usually changed or specialized using
@@ -461,7 +466,7 @@ scale fields of transform on a circle (centered 0, 0 and of constant radius)
 </p>
 <br/>
 
-<img alt="Geometric Transformations" src="images/widgets_development/beginner_guide_4.jpg" />
+<img alt="Geometric Transformations" src="images/widgets_development/beginner_guide_4.png" />
 <br/>
 
 
@@ -836,8 +841,8 @@ the corresponding keyValues and the distance between the fraction and the keys. 
 take the following example:
 </p>
 <br/>
+<img alt="Interpolation" src="images/widgets_development/beginner_guide_6.png" />
 
-<img alt="Interpolation" src="images/widgets_development/beginner_guide_6.jpg" />
 <br/>
 
 <p>
@@ -1251,8 +1256,6 @@ ROUTE KEY_E.releaseTime TO MON_SCRIPT.in
 For code example, see <a href="tutorials.html">tutorials chapter</a>.
 </p>
 <br/>
-
-
 
 
 <script type="text/javascript">

@@ -1,5 +1,5 @@
 // Node list generate with: development_node_(.*).html => new Page ( "development_node_$1", "$1 node", new Array() ),
-// Javascript list generate with: development_javascript_(.*).html => new Page ( "development_javascript_$1", "$1", new Array() ),
+// JavaScript list generate with: development_javascript_(.*).html => new Page ( "development_javascript_$1", "$1", new Array() ),
 				
 
 /**
@@ -73,8 +73,8 @@ var structure = new Pages (	new Array (
 				new Page ( "development_node_Transform2D", "Transform2D node", new Array() ),
 				new Page ( "development_node_WrapText", "WrapText node", new Array() )
 			)),
-			new Page ( "widgets_development_javascript_language", "Javascript language", new Array() ),
-			new Page ( "widgets_development_javascript_ref", "Javascript reference", new Array(
+			new Page ( "widgets_development_javascript_language", "JavaScript language", new Array() ),
+			new Page ( "widgets_development_javascript_ref", "JavaScript reference", new Array(
 				new Page ( "development_javascript_Browser", "Browser", new Array() ),
 				new Page ( "development_javascript_Contact", "Contact", new Array() ),
 				new Page ( "development_javascript_Date", "Date", new Array() ),
@@ -86,10 +86,10 @@ var structure = new Pages (	new Array (
 				new Page ( "development_javascript_String", "String", new Array() ),
 				new Page ( "development_javascript_Style", "Style", new Array() ),
 				new Page ( "development_javascript_XML", "XML", new Array() ),				
-				new Page ( "development_javascript_Array", "Array Javascript library", new Array() ),
-				new Page ( "development_javascript_Rcp", "Rcp Javascript library", new Array() ),
-				new Page ( "development_javascript_Enumeration", "Enumeration Javascript library", new Array() ),
-				new Page ( "development_javascript_Persist", "Persist Javascript library", new Array() )
+				new Page ( "development_javascript_Array", "Array JavaScript library", new Array() ),
+				new Page ( "development_javascript_Rcp", "Rcp JavaScript library", new Array() ),
+				new Page ( "development_javascript_Enumeration", "Enumeration JavaScript library", new Array() ),
+				new Page ( "development_javascript_Persist", "Persist JavaScript library", new Array() )
 			)),			
 			new Page ( "widgets_development_css_language", "CSS language", new Array() )
 		)),
