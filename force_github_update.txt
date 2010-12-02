@@ -1,0 +1,5 @@
+This file is just an empty file to force GitHub to rebuild its pages.
+Other commiters currently use the HTTP transport, which will not trigger rebuild of the pages on GitHub.
+So I use this file to force github to rebuild everything using push over the git protocol.
+
+Marc
