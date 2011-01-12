@@ -179,20 +179,6 @@ Its sources can be used as a starting point for another application or just to p
 </p>
 <br/>
 
-<h3>Widget Style</h3>
-<p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_04.png" /></p>
-<p>"<b> New Mobile Widget Project - Configure widget style </b>" dialog box is opened.</p>
-<p>The third page of the creation wizard is optional.<br/>
-The widget styles provides different pictures and allows the developer to customize the widget design. <br/>
-By default, the style of the new widget will be the style of the selected VRML model. <br/>
-However, this can be modified in this page.</p>
-
-<p>An existing style can be used or a new style can be created. <br/>
-A new style can be derived from an existing style. <br/>
-A screenshot is displayed on this page, allowing the developer to see how the selected style will look like.
-</p>
-<br/>
-
 
 <h2>Project structure</h2>
 
@@ -204,12 +190,12 @@ A screenshot is displayed on this page, allowing the developer to see how the se
 <li>The " <b>exports</b> " folder contains the files generated for different export configurations. <br/>
 Each export has its own subfolder.</li>
 <li>The " <b>i18n</b> " folder contains languages files.</li>
-<li>The " <b>SDK</b> " folder contains two symbolic links. <br/>
-" <b>protos</b> " and " <b>styles</b> " bound to the selected widget type. <br/>
-It must not be modified (reserved only by advanced users).</li>
+<li>The " <b>images</b> " folder contains the project's images.</li>
+<li>The " <b>lib</b> " folder is a symbolic link bound to the selected widget type and containing subfolders.<br/> 
+(images, protos, tests, ...). <br/>
+It must not be modified (only by advanced users).</li>
 <li>The " <b>src</b> " folder contains the project sources. <br/>
 All the project's source files must be saved in this folder.</li>
-<li>The " <b>styles</b> " folder contains a subfolder named from the selected style (OWP in our case).</li>
 <li>The " <b>tmp</b> " folder contains data generated during compilation.</li>
 </ul>
 
@@ -279,8 +265,9 @@ Or <br/>
 <p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_26.png" /></p>
 <p>"<b> Properties for MobileWidget - Widget preferences </b>" dialog box is opened.<br/>
 
-The "<b> version </b>" and the "<b> Style </b>" of the selected project are displayed.<br/> 
-They can be modified and taken in account by the project.</p>
+The "<b> version </b>" and the "<b> SDK </b>" of the selected project are displayed.<br/> 
+They can be modified and taken in account by the project.<br/>
+<b>WARNING:</b> Only advanced users should modify the SDK.</p>
 <br/>
 
 <script type="text/javascript">addTitle("Running the Mobile Widget", 1);</script>
@@ -354,7 +341,8 @@ Whereas in a " <b>Mobile Widget Project</b> ", the entry point <span class="high
 <p>Click on the " <b>Configuration for tests and export</b> " button on the Toolbar (marked in blue).</p>
 
 <p><img alt="Widgets SKD" src="images/widgets_sdk/user_manual_34.png" /></p>
-<p>"<b> Widget configuration - Parameters for test with emulator and export </b>" dialog box is opened.<br/>
+<p>"<b> Widget configuration - Parameters for test with emulator and export </b>" dialog box is opened.<br/><br/>
+The Widget Version can be modified in the " <b>Version</b> " group. <br/><br/>
 
 The " <b>Test with Emulator</b> " group is enabled. <br/>
 There are three configurations items:
@@ -455,7 +443,6 @@ There are seven " <b>Packages</b> " purposed:
 <ul>
 <li>" <b>Package Applet</b> ": generate " <b>JAR</b> " files (in the " <b>exports/applet</b> " folder) and launch the applet in browser.</li>
 <li>" <b>Package for AppShop</b> ": create " <b>JAR</b> " and " <b>JAD</b> " files (in " <b>exports/midlet </b>" folder) that can be uploaded on <b>Orange AppShop</b>.</li>
-<li>" <b>Package for Gallery</b> ": create a package (in " <b>exports/gallery </b>" folder) that can be uploaded on <b>Djinngo Gallery</b>.</li>
 <li>" <b>Package for Android Marketplace</b> ": create a package for <b>Android</b> (in " <b>exports/android</b> " folder) that can be uploaded on <b>Android Marketplace</b> and
     on <b>Orange AppShop</b>.</li>
 <li>" <b>Package for Orange Widgets</b> ": create a package (in " <b>exports/mmp</b> " folder) for
@@ -471,12 +458,6 @@ There are seven " <b>Packages</b> " purposed:
 Then click on the " <b><u>R</u>un</b> " button to launch the export task(s).
 </p>
 
-<p class="note warning">
-<b>Important:</b><br/>
-The Widget Project should contain a " <b>screenshot.png</b> " file, in a " <b>doc/img</b> " folder.<br/>
-If this file does not exist, a warning is displayed when the <b>Package for Gallery</b> task is selected:<br/><br/>
-<img alt="Widgets SDK Manual" src="images/widgets_sdk/user_manual_45.png" />
-</p>
 <br/>
 
 
