@@ -94,6 +94,11 @@ files in <b>languages</b> properties of <a href="development_node_Inline.html">I
 <b>languages</b> property contains an array of language prefix and language files for all supported languages.<br/>
 <b>use</b> property define the default language (if current language is not supported by widget).<br/>
 <b>url</b> property define the child scene. This child scene use the language preferences.<br/>
+
+<p class="note info">
+<b>Note:</b><br/>The scene that contains the Inline node with language information will not be internationalized itself. Only children scenes from this scene will be internationalized. That's why Inline node with language information should be the root scene of the project/widget.
+</p>
+
 Example:
 </p>
 <textarea wrap="off" readonly="readonly" rows="13" cols="80">
