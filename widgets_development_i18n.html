@@ -40,15 +40,15 @@ addIndex();
 <script type="text/javascript">addTitle("Internationalization", 1);</script>
 
 <p>
-Mobile Widgets offers a mechanism for internationalized your applications.
+Mobile Widgets offers a mechanism to internationalize your applications.
 </p>
 
 <script type="text/javascript">addTitle("Write language files", 1);</script>
 
 <p>
 Internationalization files are store in <b>i18n</b> folder.<br/>
-By convention, we use <b>&lt;language&gt;.lng</b> name for language files.<br/>
-Example: <b>english.lng</b>, <b>french.lng</b>, ...
+By convention, we use <b>&lt;language&gt;.lng</b> code for language files (it is a 2 character long code).<br/>
+Example: <b>en.lng</b>, <b>fr.lng</b>, ...
 </p>
 
 <p>
@@ -101,11 +101,11 @@ Example:
 Inline {
   #Scene file
   url "helloworld.m4m"
-  #For English, use the english.lng file
-  #For French, use the french.lng file
+  #For English, use the en.lng file
+  #For French, use the fr.lng file
   languages [
-    "EN" "english.lng"
-    "FR" "french.lng"
+    "EN" "en.lng"
+    "FR" "fr.lng"
   ]
   #By default, we use the English language
   use ["auto", "EN"]
