@@ -1,0 +1,141 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Tiny Mobile Widgets</title>
+<link rel="stylesheet" href="style/style.css" />
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<script type="text/javascript" src="js/StructureElts.js"></script>
+<script type="text/javascript" src="js/Structure.js"></script>
+<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_tiny_ticker";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">Ticker prototype for Tiny Mobile Widgets</h1>
+
+<script type="text/javascript">
+<!--
+addIndex();
+//-->
+</script>
+
+
+
+
+<img class="right" alt="Ticker" src="images/prototypes/proto_ticker_01.jpg" />
+
+<script type="text/javascript">addTitle("Introduction", 1);</script>
+
+<p>
+Text looping animation.<br/>
+Animation will only start if text is larger than the size of the Ticker.
+</p>
+
+
+<script type="text/javascript">addTitle("Interface", 1);</script>
+
+<textarea rows="10" cols="50" readonly="readonly" wrap="off">
+PROTO Ticker [
+  field SFVec2f translation 0 0
+  field SFVec2f size 10 20
+  field MFString string ""
+  field SFColor textColor 1 1 1
+  field SFInt32 margin 4
+  field SFNode fontStyle FontStyle { size 12  justify ["LEFT" "MIDDLE"] }
+  field SFFloat speed 2
+]
+</textarea>
+<br/>
+
+<script type="text/javascript">addTitle("Fields description", 1);</script>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>SFVec2f translation - Position of the ticker</li>
+<li>SFVec2f size - Size of the display area</li>
+<li>MFString string - The text to display</li>
+</ul>
+<br/>
+
+<h2>Style fields</h2>
+
+<ul>
+<li>SFColor textColor - Color of the text</li>
+<li>SFInt32 margin - Margin from the left side where to begin text</li>
+<li>SFNode fontStyle - Font of the text to display</li>
+</ul>
+<br/>
+
+<h2>Control fields</h2>
+
+<ul>
+<li>SFInt32 speed - Speed of animation (pixels per second). Animation can be stopped with a value less or equal to 0. Default: 2</li>
+</ul>
+<br/>
+
+<script type="text/javascript">addTitle("Example", 1);</script>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO TextField [] "Ticker.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+    
+    DEF TICKER Ticker {
+      size 100 24
+      string [ "Lorem ipsum dolor sit amet, consectetur adipiscing elit." ]
+    }
+
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

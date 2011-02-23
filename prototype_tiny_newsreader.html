@@ -1,0 +1,285 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Tiny Mobile Widgets</title>
+<link rel="stylesheet" href="style/style.css" />
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<script type="text/javascript" src="js/StructureElts.js"></script>
+<script type="text/javascript" src="js/Structure.js"></script>
+<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_tiny_newsreader";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">NewsReader prototype for Tiny Mobile Widgets</h1>
+
+<script type="text/javascript">
+<!--
+addIndex();
+//-->
+</script>
+
+
+
+
+<img class="right" alt="TextField" src="images/prototypes/proto_textfield_01.jpg" />
+
+<script type="text/javascript">addTitle("Introduction", 1);</script>
+
+<p>
+NewsReader is a complete source sample to display RSS-like content. It is composed of :
+</p>
+<ul>
+<li>a data downloader: download the RSS file and displays a progress bar during download</li>
+<li>a XML/BML parser: to manage the XML/BML tree in memory</li>
+<li>a list of text items to display the RSS titles</li>
+<li>a scrollable text to display the details of a selected item of the RSS</li>
+</ul>
+
+<p>
+The download of RSS data file is launched when feedUrl parameter is set.
+</p>
+
+<p>
+NewsReader is planned to receive BML or XML data from feedUrl, matching the RSS format. All mandatory meta data are handled.
+For more details see this tree example.
+</p>
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+<?xml version="1.0" encoding="iso-8859-1"?>
+<rss version="2.0">
+    <channel>
+        <item>
+            <title>Actu Number 1</title>
+            <description>This is my first actu</description>
+            <image>http://myImage.png</image>
+            <link>http://www.example.org/actu1</link>
+        </item>
+    </channel>
+</rss>
+</textarea>
+<br/>
+
+<p>
+A wap link can be proposed to user in the ScrollableText detailed view to know more on one item of the RSS feed. It uses the url contained in field link from XML data. It links to the RSS provider wap/web site. To enable/disable the link see goToSiteFlag parameter.
+</p>
+
+<p>
+NewsReader can display one image for each item of the feed in the ScrollableText detailed view. It uses the url contained in field image from XML data. This field is not mandatory.
+If an image is displayed, its URL is sent to CADAP to be resized to 60*60 pixel format.
+</p>
+
+<script type="text/javascript">addTitle("Interface", 1);</script>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+PROTO NewsReader [
+    exposedField MFString feedUrl ""
+    exposedField SFVec2f size 128 128
+    exposedField SFFloat itemHeight 16
+    exposedField SFColor textColor 0 0 0
+    exposedField SFColor cursorColor 1 0.4 0
+    exposedField MFString sepUrl ""
+    exposedField SFString titleLabel ""
+    exposedField SFInt32 cacheDelay 3600
+    exposedField SFString ident "rss"
+    exposedField SFBool goToSiteFlag FALSE
+    exposedField SFBool quitFlag FALSE
+    exposedField SFBool rtl FALSE
+] 
+</textarea>
+<br/>
+
+<script type="text/javascript">addTitle("Fields description", 1);</script>
+
+<h2>DataLoader Controls</h2>
+
+<ul>
+<li>MFString feedUrl - Url to access the RSS data file (set to path parameter of DataLoader prototype)</li>
+<li>SFInt32 cacheDelay - The delay NewsReader will use cached data, after that need to download fresh data (set to cacheDelay parameter of DataLoader prototype)</li>
+<li>SFString ident - Identifies the data record in cache (set to ident parameter of DataLoader prototype)</li>
+</ul>
+<br/>
+  
+<h2>Style parameters</h2>
+
+<ul>
+<li>SFFloat itemHeight - Height (in pixels) of each List item</li>
+<li>SFColor textColor - Text color in List and ScrollableText views</li>
+<li>SFColor cursorColor - Cursor color in List (to select current item)</li>
+<li>MFString sepUrl - Separator image url (horizontal line) used into List to separate each item from the others</li>
+</ul>
+<br/>
+  
+<h2>Display parameters</h2>
+
+<ul>
+<li>SFVec2f size - Size of list and scrollableText pages</li>
+<li>SFString titleLabel - Title of NewsReader pages (mainly RSS label)</li>
+<li>SFBool goToSiteFlag - Enable/Disable user to see more details on the RSS website (via Menu)</li>
+<li>SFBool rtl - Set text display from right to left (arabic)</li>
+</ul>
+<br/>
+  
+<h2>Navigation Control parameter</h2>
+
+<ul>
+<li>SFBool quitFlag - Indicates to parent scene if 'back' key was pressed into NewsReader to quit the proto</li>
+</ul>
+
+
+<script type="text/javascript">addTitle("Example", 1);</script>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">http://royvoyage.free.fr/royvoyage/spip.php?page=rss
+EXTERNPROTO NewsReader [] "NewsReader.wrl"
+
+DEF SIZE_CHANGED Message {
+    url "MEMOPLAYER"
+}
+DEF NEWS_READER NewsReader {
+    size 128 96
+    itemHeight 24
+    feedUrl ""
+    textColor 0 0 0
+    sepUrl "hSep.png" 
+    goToSiteFlag TRUE
+}
+DEF MESSAGE Message {
+    url "Board"
+}
+DEF SCRIPT Script {
+    eventIn MFString sizeHandler
+    eventIn MFString data_changed
+    field SFNode newsReader USE NEWS_READER
+    field MFString parameters []#feed url in parameter->must be already encoded
+    field MFString feeds []
+    field SFVec2f tmp 0 0
+    url "javascript:
+        function initialize () {
+            updateScreenSize ();
+            var now = Date.getTime ();
+            
+            // Purge old cached feeds to free cache space once a week            
+            var lastTimestamp = String.toInt (Browser.getRecord ('feedsList_lastPurge'));
+            if ((now - lastTimestamp) > Date.WEEK) {
+                Browser.setRecord ('feedsList_lastPurge', now);
+                var feedsList = '';
+                if( Browser.hasRecord('feedsList') ) {
+                    feedsList = Browser.getRecord ('feedsList');
+                }
+                String.split (feedsList, feeds, ',');
+                var size = feeds.length;
+                if (size > 0) {
+                    feedsList = '';
+                    for (var i=0; i<size; i++) {
+                        var feed = feeds[i];
+                        var lastTimestamp = String.toInt (Browser.getRecord (feed+'_lastTimestamp'));
+                        if (lastTimestamp > 0) {
+                            var delay = now - lastTimestamp;
+                            if (delay > Date.WEEK) {
+                                // Remove from cache
+                                Browser.print ('News: purge: removin old cache for RSS '+feed);
+                                Browser.deleteRecord (feed);
+                                Browser.deleteRecord (feed+'_lastTimestamp');
+                            } else {
+                                // Keep in cache
+                                Browser.print ('News: purge: keeping cache for RSS '+feed);
+                                if (feedsList != '') feedsList += ',';
+                                feedsList += feed;
+                            }
+                        }
+                    }                    
+                    if(feedsList != '') {
+                        Browser.setRecord ('feedsList', feedsList);
+                    }                    
+                }
+            }
+            var widget = 'roy';
+            // Add widget to list if not already listed
+            if (Browser.hasRecord (widget) == false) {
+                var feedsList = '';
+                if (Browser.hasRecord('feedsList')) {
+                    feedsList = Browser.getRecord ('feedsList');   
+                }
+                if (feedsList != '') feedsList += ',';
+                Browser.setRecord ('feedsList', feedsList + widget);
+                // Create an empty record (to prevent double add to the feedsList),
+                // this record will be populated later by DataLoader if request is sucessfull
+                Browser.setRecord (widget, 'DUMMY');
+            }
+        
+            // Launch rss reader
+            newsReader.ident = widget;
+            newsReader.titleLabel = 'Roy Voyage!';
+            
+            newsReader.rtl = 0;
+            newsReader.cacheDelay = 3600;
+            newsReader.goToSiteFlag = 1;
+            newsReader.feedUrl[0] = 'http://royvoyage.free.fr/royvoyage/spip.php?page=rss';
+        }
+
+        function sizeHandler () {
+            if (sizeHandler[0] == 'SIZE_CHANGED') {
+                updateScreenSize ();
+            }
+        }
+    
+        function updateScreenSize() {
+            if (Browser.getWidth() > 128) {
+                newsReader.size.x = Browser.getIntCooky('widgetWidth');
+                newsReader.size.y = Browser.getIntCooky('widgetHeight');
+                newsReader.itemHeight = Math.floor(newsReader.size.y / 5);
+            } else if (Browser.getHeight () > 128) { // for 128x160
+                newsReader.itemHeight = Math.floor (tmp.y / 5);
+                tmp.x = Browser.getWidth ();
+                tmp.y = Browser.getHeight () - 32;
+                newsReader.itemHeight = Math.floor (tmp.y / 5);
+                newsReader.size = tmp;
+            }
+        }
+
+        function data_changed () {
+            if ((data_changed[0] == 'RSK') && (newsReader.quitFlag)){ 
+                Browser.sendMessage('Board', 'RESET');
+            }
+        }
+    "
+}
+ROUTE SIZE_CHANGED.data_changed TO SCRIPT.sizeHandler
+ROUTE MESSAGE.data_changed TO SCRIPT.data_changed
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

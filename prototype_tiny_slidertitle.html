@@ -1,0 +1,222 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Tiny Mobile Widgets</title>
+<link rel="stylesheet" href="style/style.css" />
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<script type="text/javascript" src="js/StructureElts.js"></script>
+<script type="text/javascript" src="js/Structure.js"></script>
+<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_tiny_slidertitle";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">SliderTitle prototype for Tiny Mobile Widgets</h1>
+
+<script type="text/javascript">
+<!--
+addIndex();
+//-->
+</script>
+
+
+<script type="text/javascript">addTitle("Introduction", 1);</script>
+
+<p>
+Title which include arrows to slide content.
+Routed to SliderTitle, elements slide horizontally from one border of the screen to another. The content to slide horizontally should be declared in the parent scene (that declares SliderTitle).
+Translation animation is done in the parent scene thanks to eventOut parameters from SliderTitle : contentInPos and contentOutPos.
+</p>
+
+
+<script type="text/javascript">addTitle("Interface", 1);</script>
+
+<textarea rows="10" cols="50" readonly="readonly" wrap="off">
+PROTO SliderTitle [
+    field MFString title [""]
+    field SFVec2f offset 0 0
+    field SFBool loop TRUE
+    
+    exposedField SFInt32 nbElements 0
+    exposedField SFInt32 currentElement 0
+    exposedField SFBool enable TRUE
+    exposedField SFVec2f size 128 16
+    
+    eventOut SFVec2f contentInPos
+    eventOut SFVec2f contentOutPos
+    eventOut SFInt32 endMove
+    eventOut SFInt32 startMove
+] 
+</textarea>
+<br/>
+
+<script type="text/javascript">addTitle("Fields description", 1);</script>
+
+<h2>Data fields</h2>
+
+<ul>
+<li>SFVec2f offset - Position of the SliderTitle</li>
+<li>MFString title - The text to display</li>
+<li>SFBool loop - When slidertitle displays the last element : if user press right arrow goes to the first element (as a circle). Same for first element to last element with left key.</li>
+<li>SFInt32 nbElements - Number of elements (number of characters of the string)</li>
+<li>SFInt32 currentElement -  Current element (in the string)</li>
+<li>SFVec2f size - Size of the display area</li>
+</ul>
+<br/>
+
+<h2>Control fields</h2>
+
+<ul>
+<li>SFBool enable - Enable/disable slider</li>
+<li>SFVec2f contentInPos - Content which appears on screen (eventOut)/li>
+<li>SFVec2f contentOutPos - Content which disappear from the screen(eventOut)</li>
+<li>SFInt32 endMove - Finish animation event (eventOut)</li>
+<li>SFInt32 startMove - Start animation event (eventOut)</li>
+</ul>
+<br/>
+
+<script type="text/javascript">addTitle("Example", 1);</script>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO TextField [] "Ticker.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+    Shape {
+      appearance Appearance {
+        material Material2D { emissiveColor 1 1 1 }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 10 10
+      }
+    }
+	
+    DEF CONTENT_REF_TRS Transform2D {
+		translation 0 12
+		children [
+			#Main content
+			DEF CONTENT_TRS Transform2D {
+				children [
+					DEF CONTENT ScrollableText {
+						content ["monday"]
+						enabled TRUE
+						size 128 100
+					}
+				]
+			}
+        
+			#Main content clone, use to implement sliding effect for sliderTitle element. 
+			DEF TMPCONTENT_TRS Transform2D {
+				translation -128 0
+				children [
+					DEF TMPCONTENT ScrollableText {
+						content ["sunday"]
+						enabled TRUE
+						size 128 100
+					}
+				]
+			}
+		]
+	}
+    DEF SLIDERTITLE_TRS Transform2D {
+		translation 0 -48
+		children [
+			#Slider title definition, use to scroll left/right. Background size is 200% compare to original size
+			DEF SLIDERTITLE SliderTitle { size 128 24 }
+		]
+	}
+	DEF SCRIPT Script {
+		eventIn SFVec2f screenSize
+		eventIn SFInt32 setText
+        eventIn SFInt32 setTmpText
+		field SFNode sliderTitle USE SLIDERTITLE
+		field SFNode sliderTitleTrs USE SLIDERTITLE_TRS
+		field SFNode content USE CONTENT
+		field SFNode tmpContent USE TMPCONTENT
+		field MFString names[ "monday" "tuesday" "wednesday" "thursday" "friday" "saturday" "sunday"]
+	
+		url "javascript:
+		function initialize() {
+            Browser.sendMessage('Board', 'INIT', 'title', '', 'close');
+            screenSize ();
+			//Set number of elements displayed for sliderTitle
+            sliderTitle.nbElements = 7;
+            // changing slider title
+            setText(0);
+                
+            sliderTitle.currentElement = 0;
+            sliderTitle.enable = true;
+        }
+		
+		function screenSize () {
+            slidertitle.size.y = String.height(fs) * 2;
+            if (Browser.getWidth() > 128) {
+                slidertitle.size.x = Browser.getIntCooky('widgetWidth');
+            }
+            var h = Browser.getIntCooky('widgetHeight');
+            content.size.y = h - slidertitle.size.y;
+            sliderTitleTrs.translation.y = Math.floor(content.size.y/-2);
+        }
+		
+		//loading text data for main content
+        function setText(n) {
+            content.string[0] = tmpcontent.string[0];
+        }
+        
+        //Set temporary text for scrolling effect
+        function setTmpText(n) {
+            //Browser.print('setTmpText : '+names[n]);
+            tmpcontent.string[0] = names[n];
+        }
+	}
+	
+	ROUTE SLIDERTITLE.contentOutPos TO CONTENT_TRS.translation
+	ROUTE SLIDERTITLE.contentInPos TO TMPCONTENT_TRS.translation
+	ROUTE SLIDERTITLE.endMove TO SCRIPT.setText
+	ROUTE SLIDERTITLE.startMove TO SCRIPT.setTmpText
+
+	ROUTE SIZE_NOTIFIER.screenSize TO SCRIPT.screenSize
+    ROUTE SIZE_NOTIFIER.screenSize TO BACKGROUND.size
+  ]
+}
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>

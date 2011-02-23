@@ -1,0 +1,310 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Tiny Mobile Widgets</title>
+<link rel="stylesheet" href="style/style.css" />
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<script type="text/javascript" src="js/StructureElts.js"></script>
+<script type="text/javascript" src="js/Structure.js"></script>
+<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_tiny_scrollabletext";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">ScrollableText prototype for Tiny Mobile Widget</h1>
+
+<script type="text/javascript">
+<!--
+addIndex();
+//-->
+</script>
+
+
+<script type="text/javascript">addTitle("Introduction", 1);</script>
+
+<p>
+ScrollableText is composed of:
+</p>
+<ul>
+<li>two layers to do the scroll</li>
+<li>a title in the page: do not confuse with Title set by manager. Title can take some lines because it is a WrapText element</li>
+<li>an image: under the title, is not mandatory</li>
+<li>the text: under the image, can take some lines because its is a WrapText element</li>
+<li>a scrollbar at right of the page: cursor or the slide</li>
+</ul>
+<p>
+All these graphical elements constitutes the complete ScrollableText.
+</p>
+
+<p>
+Prototype provides 2 parameters to the calling scene :
+</p>
+<ul>
+<li>Size of complete Text Field (smaller rectangle all graphical elements of Text Field including background even if not displayed)</li>
+<li>Position of center of TextField</li>
+</ul>
+
+<p>
+Prototype can be activate/disable through 'isActiveTF' boolean field.
+</p>
+
+<p>
+The text displayed in text layer can be modified at anytime by the calling scene using 'inputText' eventIn.
+</p>
+
+<p>
+An output event ('outputTEXT') providing current value of text is generated each time prototype modify the text (either using text box or layer entering mode or setting a value to inputTEXT).
+</p>
+
+<p>
+Text can be hidden at any time by calling scene (only '****' displayed - for example in case of password) using 'field SFBool displayTEXT' boolean field.
+</p>
+
+<p>
+The native text box can be used to enter text - 2 modes are possible : 'automatic' or 'driven'.
+</p>
+<ul>
+<li>in automatic mode, native text box is automatically open by prototype each time user click on screen in TextField area ,
+   (Touch Sensor must be enabled ) text box is closed when user click on 'OK' or 'CANCEL' soft key, an eventOut is then generated ('backFromTextBox')
+   this mode can be activated/disabled using 'isActiveTextBox' boolean field</li>
+<li>in driven mode , native text box is open/closed by calling scene using 'openTEXTBOX' boolean field</li>
+</ul>
+
+<p>
+When launching prototype, only size (x, y) of layer and number max of char are provided by developer to prototype.<br/>
+Size and center position of complete Text Field is computed by prototype in initialize() from sizes and positions of each element.
+</p>
+
+<p>
+Following sizes and positions are provided as constants in script Node:
+</p>
+<ul>
+<li>mode window Width and X or Y delta/ Background border,</li>
+<li>letters tab Width and X or Y delta/Background border,</li>
+<li>X and Y margins of Background / Layer</li>
+</ul>
+
+<p>
+Height of elements 'mode window' and 'letters pad' are set to height of the used fonts (mode, letters) provided as parameters in proto interface,
+</p>
+
+<p>
+Concerning layerSize :
+</p>
+<ul>
+<li>if parameterized Y value is &lt; to the max of (text font height/cursor font height) Y value is automatically set to height of bigger of the 2 fonts</li>
+</ul>
+
+<p>
+TouchSensor can be activated /disabled using 'isActiveTouchSensor' boolean
+</p>
+<br/>
+
+<script type="text/javascript">addTitle("Interface", 1);</script>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+PROTO ScrollableText [
+ exposedField MFString title "" 
+ exposedField MFString content "" 
+ exposedField MFString image "" 
+ exposedField SFColor titleColor 1 0.4 0
+ exposedField SFColor textColor 0 0 0
+ exposedField SFVec2f size 128 100
+ exposedField SFBool enabled FALSE
+ exposedField SFBool rtl FALSE
+] 
+</textarea>
+<br/>
+
+<script type="text/javascript">addTitle("Fields description", 1);</script>
+
+<h2>Data Parameters</h2>
+
+<ul>
+<li>MFString title - Title set at top of the ScrollableText page (do not confuse with Title set by manager)</li>
+<li>MFString content - Title set at end of the ScrollableText page</li>
+<li>MFString image - Image displayed by ScrollableText between title and content</li>
+</ul>
+<br/>
+  
+<h2>Style parameters</h2>
+
+<ul>
+<li>SFColor textColor - Text color</li>
+<li>SFColor titleColor - Title color</li>
+</ul>
+<br/>
+  
+<h2>Display parameters</h2>
+
+<ul>
+<li>SFVec2f size - Size of list and scrollableText pages</li>
+<li>SFBool enabled - Enable/Disable user to scroll</li>
+<li>SFBool rtl - Set text display from right to left (arabic)</li>
+</ul>
+<br/>
+
+<script type="text/javascript">addTitle("Example", 1);</script>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+#VRML V2.0 utf8
+# File to test the scrollable text proto
+# component used to display long text, may also display a picture with the text
+EXTERNPROTO ScrollableText [] "ScrollableText.wrl"
+
+DEF SIZE_CHANGED Message {
+    url "MEMOPLAYER"
+}
+
+DEF EXIT Anchor {
+    url "" parameter "self"
+}
+
+Shape {
+    appearance Appearance {
+        material Material2D {
+            emissiveColor 1 1 1
+        }
+    } geometry DEF BG_REC Rectangle {
+        size 128 128
+    }
+}
+
+# the message to communicate with adapter scene
+DEF MESSAGE Message {
+    url "Board"
+}
+
+DEF TEXT ScrollableText {
+    enabled TRUE #enable scroll or not
+    size 128 100
+    title ["Gérard de Nerval - Les Chimères"]
+    image ["ebay.png"]
+    content [
+        "Je suis le Ténébreux, le Veuf, l'Inconsolé,
+        Le prince d'Aquitaine à la tour abolie :
+        Ma seule étoile est morte, et mon luth constellé
+        Porte le soleil noir de la Mélancolie.
+        
+        Dans la nuit du tombeau, toi qui m'as consolé,
+        Rends-moi le Pausilippe et la mer d'Italie,
+        La fleur qui plaisait tant à mon coeur désolé,
+        Et la treille où le pampre à la rose s'allie.
+        
+        Suis-je Amour ou Phébus ?... Lusignan ou Biron ?
+        Mon front est rouge encore du baiser de la reine ;
+        J'ai rêvé dans la grotte où nage la sirène...
+        
+        Et j'ai deux fois vainqueur traversé l'Achéron :
+        Modulant tour à tour sur la lyre d'Orphée
+        Les soupirs de la sainte et les cris de la fée."
+    ]
+}
+
+Shape {
+    appearance Appearance { 
+        material Material2D { 
+            emissiveColor 0 0 0 
+            filled FALSE
+        } 
+    } geometry DEF BORDER_REC Rectangle {
+        size 128 100 
+    }
+}
+
+DEF SCRIPT Script {
+    eventIn MFString data_changed
+    eventIn MFString sizeHandler
+    
+    field SFNode exit USE EXIT
+    field SFNode bgRec USE BG_REC
+    field SFNode text USE TEXT
+    field SFNode borderRec USE BORDER_REC
+    field SFVec2f tmpSize -1 -1
+    field SFString tmpImg ""
+    
+    url "javascript:
+        function initialize() {
+            tmpImg = text.image[0];
+            Browser.sendMessage ('Board', 'INIT', 'Test ScrollableText', 'Without image', 'Quit');
+            updateScreenSize();
+        }
+        
+        function sizeHandler () {
+            if (sizeHandler[0] == 'SIZE_CHANGED') {
+                updateScreenSize ();
+            }
+        }
+        
+        function updateScreenSize () {
+            if (Browser.getWidth() > 128) {
+                bgRec.size.x = Browser.getIntCooky('widgetWidth');
+                bgRec.size.y = Browser.getIntCooky('widgetHeight');
+                tmpSize.x = bgRec.size.x * 0.8;
+                tmpSize.y = bgRec.size.y * 0.8;
+                text.size = tmpSize;
+                borderRec.size = tmpSize;
+            }
+        }
+        
+        function data_changed (val, now) {
+            Browser.print ('test ScrollableText: new message: ' + String.join (data_changed));
+            if (data_changed[0] == 'RSK') {
+                Browser.print('Right SK clicked at '+now);
+                exit.activate = true;
+            } else if (data_changed[0] == 'LSK') {
+                if (String.length(text.image[0]) == 0) {
+                    Browser.print('Display image');
+                    text.image[0] = tmpImg;
+                    Browser.sendMessage ('Board', 'INIT', 'Test ScrollableText', 'Without image', 'Quit');
+                } else {
+                    Browser.print('Do not display image');
+                    text.image[0] = '';
+                    Browser.sendMessage ('Board', 'INIT', 'Test ScrollableText', 'With image', 'Quit');
+                }
+            }
+        }
+    "
+}
+ROUTE TEXT.size TO BORDER_REC.size
+ROUTE MESSAGE.data_changed TO SCRIPT.data_changed
+ROUTE SIZE_CHANGED.data_changed TO SCRIPT.sizeHandler
+
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>
