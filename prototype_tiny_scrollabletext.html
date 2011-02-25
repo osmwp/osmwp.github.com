@@ -52,66 +52,7 @@ All these graphical elements constitutes the complete ScrollableText.
 </p>
 
 <p>
-Prototype provides 2 parameters to the calling scene :
-</p>
-<ul>
-<li>Size of complete Text Field (smaller rectangle all graphical elements of Text Field including background even if not displayed)</li>
-<li>Position of center of TextField</li>
-</ul>
-
-<p>
-Prototype can be activate/disable through 'isActiveTF' boolean field.
-</p>
-
-<p>
-The text displayed in text layer can be modified at anytime by the calling scene using 'inputText' eventIn.
-</p>
-
-<p>
-An output event ('outputTEXT') providing current value of text is generated each time prototype modify the text (either using text box or layer entering mode or setting a value to inputTEXT).
-</p>
-
-<p>
-Text can be hidden at any time by calling scene (only '****' displayed - for example in case of password) using 'field SFBool displayTEXT' boolean field.
-</p>
-
-<p>
-The native text box can be used to enter text - 2 modes are possible : 'automatic' or 'driven'.
-</p>
-<ul>
-<li>in automatic mode, native text box is automatically open by prototype each time user click on screen in TextField area ,
-   (Touch Sensor must be enabled ) text box is closed when user click on 'OK' or 'CANCEL' soft key, an eventOut is then generated ('backFromTextBox')
-   this mode can be activated/disabled using 'isActiveTextBox' boolean field</li>
-<li>in driven mode , native text box is open/closed by calling scene using 'openTEXTBOX' boolean field</li>
-</ul>
-
-<p>
-When launching prototype, only size (x, y) of layer and number max of char are provided by developer to prototype.<br/>
-Size and center position of complete Text Field is computed by prototype in initialize() from sizes and positions of each element.
-</p>
-
-<p>
-Following sizes and positions are provided as constants in script Node:
-</p>
-<ul>
-<li>mode window Width and X or Y delta/ Background border,</li>
-<li>letters tab Width and X or Y delta/Background border,</li>
-<li>X and Y margins of Background / Layer</li>
-</ul>
-
-<p>
-Height of elements 'mode window' and 'letters pad' are set to height of the used fonts (mode, letters) provided as parameters in proto interface,
-</p>
-
-<p>
-Concerning layerSize :
-</p>
-<ul>
-<li>if parameterized Y value is &lt; to the max of (text font height/cursor font height) Y value is automatically set to height of bigger of the 2 fonts</li>
-</ul>
-
-<p>
-TouchSensor can be activated /disabled using 'isActiveTouchSensor' boolean
+Scrolling can be activated /disabled using 'enabled' boolean
 </p>
 <br/>
 
@@ -193,26 +134,26 @@ DEF MESSAGE Message {
 DEF TEXT ScrollableText {
     enabled TRUE #enable scroll or not
     size 128 100
-    title ["Gérard de Nerval - Les Chimères"]
+    title ["GÃ©rard de Nerval - Les ChimÃ¨res"]
     image ["ebay.png"]
     content [
-        "Je suis le Ténébreux, le Veuf, l'Inconsolé,
-        Le prince d'Aquitaine à la tour abolie :
-        Ma seule étoile est morte, et mon luth constellé
-        Porte le soleil noir de la Mélancolie.
+        "Je suis le TÃ©nÃ©breux, le Veuf, l'InconsolÃ©,
+        Le prince d'Aquitaine Ã  la tour abolie :
+        Ma seule Ã©toile est morte, et mon luth constellÃ©
+        Porte le soleil noir de la MÃ©lancolie.
         
-        Dans la nuit du tombeau, toi qui m'as consolé,
+        Dans la nuit du tombeau, toi qui m'as consolÃ©,
         Rends-moi le Pausilippe et la mer d'Italie,
-        La fleur qui plaisait tant à mon coeur désolé,
-        Et la treille où le pampre à la rose s'allie.
+        La fleur qui plaisait tant Ã  mon coeur dÃ©solÃ©,
+        Et la treille oÃ¹ le pampre Ã  la rose s'allie.
         
-        Suis-je Amour ou Phébus ?... Lusignan ou Biron ?
+        Suis-je Amour ou PhÃ©bus ?... Lusignan ou Biron ?
         Mon front est rouge encore du baiser de la reine ;
-        J'ai rêvé dans la grotte où nage la sirène...
+        J'ai rÃªvÃ© dans la grotte oÃ¹ nage la sirÃ¨ne...
         
-        Et j'ai deux fois vainqueur traversé l'Achéron :
-        Modulant tour à tour sur la lyre d'Orphée
-        Les soupirs de la sainte et les cris de la fée."
+        Et j'ai deux fois vainqueur traversÃ© l'AchÃ©ron :
+        Modulant tour Ã  tour sur la lyre d'OrphÃ©e
+        Les soupirs de la sainte et les cris de la fÃ©e."
     ]
 }
 
