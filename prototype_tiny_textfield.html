@@ -6,7 +6,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Mobile Widgets</title>
+<title>Tiny Mobile Widgets</title>
 <link rel="stylesheet" href="style/style.css" />
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 <script type="text/javascript" src="js/StructureElts.js"></script>
@@ -18,7 +18,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 
 <script type="text/javascript">
 <!--
-idCurrentPage = "prototype_textfield";
+idCurrentPage = "prototype_tiny_textfield";
 beginPage();
 //-->
 </script>
@@ -42,8 +42,162 @@ addIndex();
 <script type="text/javascript">addTitle("Introduction", 1);</script>
 
 <p>
-The textfield proto for tiny mobile widget just displays the empty text box (before call to native text box) and displays text box with text result after user validate the text he entered with native textbox. You can call the native text box from javascript function Browser.displayTextBox.
+Text Field is composed of :
 </p>
+<ul>
+<li>a text layer (displays blank before text input, and the entered text after text input)</li>
+<li>a background frame that can be displayed depending on 'backgndColor' field</li>
+<li>a window border (around text layer) that has the same size than the text layer</li>
+<li>a call to native window : displays the way of the device to enter text via keyboard (or virtual keyboard for touch screens)</li>
+</ul>
+
+<p>
+Prototype can be activated/disabled through 'activate' boolean field for keyboard devices and through 'enabled' boolean field for touch screen devices.
+</p>
+
+<p>
+The text displayed in text layer can be modified at anytime by user clicking into the textfield layer. It can also be modified from outside the prototype, by setting 'text' parameter.
+</p>
+
+<p>
+The 'text' parameter providing current value of text is generated each time prototype modifies the text and can be accessed from outside the prototype.
+</p>
+
+<script type="text/javascript">addTitle("Interface", 1);</script>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+PROTO TextField [
+ exposedField SFString text ""
+ exposedField SFInt32 maxChars 10
+ exposedField SFVec2f translation 0 0
+ exposedField SFVec2f size 64 16
+ exposedField SFColor borderColor 1 0.4 0
+ exposedField SFColor backgroundColor 1 1 1
+ exposedField SFColor textColor 0 0 0
+ exposedField SFBool activate TRUE #used for keysensor
+ exposedField SFBool enabled TRUE #used for touchsensor (in case of multiple textfields in the same scene)
+ 
+ # text labels used when displaying native text box
+ field SFString nativeTextBoxTitle "Enter your text"
+ field SFString nativeTextBoxOkLabel "OK"
+ field SFString nativeTextBoxCancelLabel "Cancel"
+]
+</textarea>
+<br/>
+
+<script type="text/javascript">addTitle("Fields description", 1);</script>
+
+<h2>Events</h2>
+
+<ul>
+<li>SFString text - enable to read or write text displayed in Text Field from outside the proto</li>
+<br/>
+
+<h2>Text Box parameters</h2>
+
+<ul>
+<li>SFInt32 maxChar - max number of characters, 0 for unlimited</li>
+<li>SFVec2f size - specify height and width of text layer</li>
+<li>SFVec2f translation - specify position of text layer</li>
+<li>SFColor borderColor - border color of the text box</li>
+<li>SFColor backgroundColor - background color into the textbox</li>
+<li>SFColor textColor - main text color</li>
+<li>SFBool activate - enable/disable Text field prototype</li>
+<li>SFNode textFont - main text font node, when using multiline, only use "TOP" "LEFT"</li>
+</ul>
+<br/>
+
+<h2>Touch parameter</h2>
+
+<ul>
+<li>SFBool enabled - if true Touch sensor is enabled</li>
+</ul>
+<br/>
+  
+<h2>Native text box management</h2>
+<h3>Text labels used when displaying native text box</h3>
+<ul>
+<li>SFString nativeTextBoxTitle</li>
+<li>SFString nativeTextBoxOkLabel</li>
+<li>SFString nativeTextBoxCancelLabel</li>
+</ul>
+<br/>
+
+
+<script type="text/javascript">addTitle("Example", 1);</script>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+EXTERNPROTO TextField [] "TextField.wrl"
+EXTERNPROTO SizeNotifier [] "SizeNotifier.wrl"
+
+Group {
+  children [
+    
+    DEF SIZE_NOTIFIER SizeNotifier {}
+    
+	#background
+    Shape {
+      appearance Appearance {
+        material Material2D {
+          emissiveColor 1 1 1
+        }
+      }
+      geometry DEF BACKGROUND Rectangle {
+        size 128 128
+      }
+    }
+
+    # type: TextField  
+    DEF TEXTFIELD TextField {
+        activate true
+        nativeTextBoxTitle "type here" 
+        nativeTextBoxOkLabel "ok"
+		nativeTextBoxCancelLabel "cancel"
+        maxChars 140   
+        textColor 0.3 0.3 0.3
+        size 123.8 38.4
+    }
+	
+	DEF SCRIPT Script {
+	    eventIn SFString text_modification
+	    field SFNode textField USE TEXTFIELD
+		field SFNode bgRec USE BACKGROUND
+		
+		url "javascript:
+		
+			function initialize() {
+				Browser.sendMessage ('Board', 'INIT', 'Test TextField', '', 'Quit');
+				updateScreenSize();
+			}
+			
+			function sizeHandler () {
+				if (sizeHandler[0] == 'SIZE_CHANGED') {
+					updateScreenSize ();
+				}
+			}
+			
+			function updateScreenSize () {
+				var w = Browser.getWidth();
+				var h = Browser.getHeight();
+				bgRec.size.y = h;
+				if (w > 128) {
+					bgRec.size.x = w;
+					textField.size.x = 0.9 * w;
+				}
+			}
+
+			function text_modification (t, val) {
+				Browser.print('testTextField::text_modification() text = '+textField.text);
+			}
+		"
+	}
+  ]
+  ROUTE TEXTFIELD.text TO SCRIPT.text_modification
+}
+</textarea>
+<br/>
+
+
 
 <script type="text/javascript">
 <!--
