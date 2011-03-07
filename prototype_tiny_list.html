@@ -1,0 +1,233 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Tiny Mobile Widgets</title>
+<link rel="stylesheet" href="style/style.css" />
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<script type="text/javascript" src="js/StructureElts.js"></script>
+<script type="text/javascript" src="js/Structure.js"></script>
+<script type="text/javascript" src="js/DocElements.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--
+idCurrentPage = "prototype_tiny_list";
+beginPage();
+//-->
+</script>
+
+
+
+
+<h1 class="title">List prototype for Tiny Mobile Widgets</h1>
+
+<script type="text/javascript">
+<!--
+addIndex();
+//-->
+</script>
+
+
+<script type="text/javascript">addTitle("Introduction", 1);</script>
+
+<p>
+Displays a scrolling list of similar items (image + text)
+</p>
+
+<script type="text/javascript">addTitle("Interface", 1);</script>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+PROTO List [
+ exposedField SFVec2f size 28 48
+ exposedField SFInt32 nbElements 0
+ exposedField MFString icons [ "" "" "" "" "" "" "" "" "" "" "" "" ]
+ exposedField MFString labels ["" "" "" "" "" "" "" "" "" "" "" "" ]
+ exposedField MFString sepUrl ""
+ exposedField SFFloat itemHeight 16
+ exposedField SFInt32 currentElement 0
+ exposedField SFInt32 selection 0
+ exposedField SFColor textColor 0 0 0
+ exposedField SFColor cursorColor 1 0.4 0
+ exposedField SFBool enabled TRUE
+ exposedField SFBool rtl FALSE
+ eventIn SFInt32 gotoElement
+]
+</textarea>
+<br/>
+
+<script type="text/javascript">addTitle("Fields description", 1);</script>
+
+<h2>Exposed Fields</h2>
+
+<ul>
+<li>SFVec2f size - size of the whole area where items will be displayed</li>
+<li>SFInt32 nbElements - number of items of the list</li>
+<li>MFString icons - list of urls of each item's icon</li>
+<li>MFString labels - list of labels of each item</li>
+<li>MFString sepUrl - url of the graphical element to be displayed at bottom of each item to separate it from other items, transmitted to ListItem</li>
+<li>SFFloat itemHeight - height of each item (in pixel)</li>
+<li>SFInt32 currentElement - item that has focus (read from outside)</li>
+<li>SFInt32 selection - item that has focus (write to outside)</li>
+<li>SFColor textColor - color of the text, transmitted to ListItem</li>
+<li>SFColor cursorColor - color of the focus rectangle</li>
+<li>SFBool enabled - enable/disable listening to touch or key sensors</li>
+<li>SFBool rtl - display text reading from right to left (arabic), transmitted to ListItem</li>
+</ul>
+<br/>
+  
+<h2>Input parameter</h2>
+
+<ul>
+<li>SFInt32 gotoElement - force the current element from outside the proto</li>
+</ul>
+<br/>
+
+<script type="text/javascript">addTitle("Example", 1);</script>
+
+<textarea rows="15" cols="80" readonly="readonly" wrap="off">
+#VRML V2.0 utf8
+# File to test the list proto
+EXTERNPROTO List [] "List.wrl"
+
+DEF SIZE_CHANGED Message {
+    url "MEMOPLAYER"
+}
+
+DEF EXIT Anchor {
+    url "" parameter "self"
+}
+
+Shape {
+    appearance Appearance {
+        material Material2D {
+            emissiveColor 1 1 1
+        }
+    } geometry DEF BG_REC Rectangle {
+        size 128 128
+    }
+}
+
+# the message to communicate with adapter scene
+DEF MESSAGE Message {
+    url "Board"
+}
+
+DEF LIST List {
+    sepUrl "hSep.png"
+    nbElements 10
+    itemHeight 64
+    size 128 100
+    labels [
+        "Item 1" "Item 2" "Item 3" "Item 4" "Item 5" "Item 6" "Item 7" "Item 8" "Item 9" "Item 10"
+    ]
+    currentElement 8
+}
+
+DEF INPUT KeySensor { url "0123456789" }
+
+DEF SCRIPT Script {
+    eventIn MFString data_changed
+    eventIn MFString sizeHandler
+    eventIn SFInt32 selection
+    eventIn SFString inputKey
+    
+    field SFNode exit USE EXIT
+    field SFNode bgRec USE BG_REC
+    field SFNode list USE LIST
+    field SFVec2f tmpSize -1 -1
+    
+    url "javascript:
+        function initialize() {
+            Browser.print ('Help: Use LSK to enable/disable list.');
+            Browser.print ('Help: Use UP/DOWN to focus an element.');
+            Browser.print ('Help: Use FIRE for selection.');
+            Browser.print ('Help: Use RSK to quit test.');
+            Browser.print ('Help: Use numeric keys to jump to a given position in list.');
+            Browser.sendMessage ('Board', 'INIT', 'Test List', 'Disable', 'Quit');
+            updateScreenSize();
+        }
+        
+        function sizeHandler () {
+            if (sizeHandler[0] == 'SIZE_CHANGED') {
+                updateScreenSize ();
+            }
+        }
+
+        function inputKey () {
+          var pos = String.toInt (inputKey);
+          Browser.print ('Goto: '+(pos));
+          if (pos == 0) pos = 100;
+          else pos -= 1;
+          list.gotoElement = pos;
+        }
+        
+        function updateScreenSize() {
+            Browser.print('test List updateScreenSize');
+            if (Browser.getWidth() > 128) {
+                tmpSize.x = Browser.getIntCooky('widgetWidth');
+                tmpSize.y = Browser.getIntCooky('widgetHeight');
+                bgRec.size = tmpSize;
+                list.size.x = tmpSize.x;
+            }
+            list.size.y = Browser.getIntCooky('widgetHeight');
+        }
+        
+        function selection () {
+            var i = list.currentElement;
+            Browser.print ('Selected: '+i+': '+list.labels[i]);
+        }
+        
+        function data_changed (val, now) {
+            Browser.print ('test List: new message: ' + String.join (data_changed));
+            if (data_changed[0] == 'RSK') {
+                Browser.print('Right SK clicked at '+now);
+                exit.activate = true;
+            } else if (data_changed[0] == 'LSK') {
+                if (list.enabled) {
+                    Browser.print('List is disabled');
+                    list.enabled = false;
+                    Browser.sendMessage ('Board', 'INIT', 'Test List', 'Enable', 'Quit');
+                } else {
+                    Browser.print('List is enabled');
+                    list.enabled = true;
+                    Browser.sendMessage ('Board', 'INIT', 'Test List', 'Disable', 'Quit');
+                }
+            }
+        }
+    "
+}
+ROUTE LIST.selection TO SCRIPT.selection
+ROUTE MESSAGE.data_changed TO SCRIPT.data_changed
+ROUTE SIZE_CHANGED.data_changed TO SCRIPT.sizeHandler
+ROUTE INPUT.activeKey TO SCRIPT.inputKey
+
+</textarea>
+<br/>
+
+
+
+<script type="text/javascript">
+<!--
+addBackPageNavigator ('widgets_development_prototypes','');
+//-->
+</script>
+
+
+
+
+<script type="text/javascript">
+<!--
+endPage();
+//-->
+</script>
+
+</body>
+
+</html>
