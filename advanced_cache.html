@@ -53,6 +53,14 @@ Advantages:
 The cache does not know whether the data are outdated.<br/>
 The lifetime of the data must be managed by the developer.
 </p>
+<p>
+Questions on the data to be registered in cache:
+<ul>
+<li>are the data often accessed by user? if not: registering the data in record store can be useless.</li>
+<li>quantity of data? if there is a lot of data: registering them in record store can slow the application.</li>
+<li>is the lifecycle of data short? if it is short: you should configure a short cache delay so cache may not be often used</li>
+</ul>
+</p>
 <br/>
 
 <script type="text/javascript">addTitle("Cache access", 1);</script>
