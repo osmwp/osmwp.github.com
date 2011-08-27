@@ -64,13 +64,17 @@ Browser.sendMessage ('Board', 'INIT', 'Mobile Widgets', 'Menu', 'Quit');
 'INIT' message is use to initialize title and soft keys.
 </p>
 <textarea rows="1" cols="80" readonly="readonly" wrap="off">
-Browser.sendMessage ('Board', 'INIT', title, lsk, rsk, hasIcon);
+Browser.sendMessage ('Board', 'INIT', title, lsk, rsk, iconOption);
 </textarea>
 <ul>
 <li>title: Widget title</li>
 <li>lsk: Left soft key label</li>
 <li>rsk: Right soft key label</li>
-<li>hasIcon: translate title if parameter is present</li>
+<li>iconOption: icon display and position option, authorized values:
+	<li> 0: no icon, title is left justified</li>
+	<li> 1: icon is displayed at left, title is left justified</li>
+	<li>-1: icon is displayed at right, title is right justified</li>
+</li>
 </ul>
 <br/>
 
