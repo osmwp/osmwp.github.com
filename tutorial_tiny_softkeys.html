@@ -64,11 +64,13 @@ Tiny Mobile Widgets softkeys are initialized via a <a href="development_node_Mes
 on the <a href="tiny_message_board.html">"Board" channel</a>.
 </p>
 <textarea rows="1" cols="80" readonly="readonly" wrap="off">
-Browser.sendMessage ('Board', 'INIT', 'My Widget', lsk, rsk);
+Browser.sendMessage ('Board', 'INIT', title, lsk, rsk, iconOption);
 </textarea>
 <ul>
+<li>title : the title of your scene.</li>
 <li>lsk : the left softkey label.</li>
 <li>rsk : the right softkey label.</li>
+<li>iconOption : icon display and position option.</li>
 </ul>
 <br/>
 
