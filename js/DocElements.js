@@ -13,8 +13,8 @@ function addHeader() {
 	document.write('	<div id="header_menu">');
 	document.write('		<ul>');
 	document.write('			<li class="nav_item_begin"><a href="introduction.html">Home</a></li>');
-	//document.write('			<li class="nav_item"><a href="#">About</a></li>');
-	//document.write('			<li class="nav_item_end"><a href="#">Help</a></li>');
+	document.write('			<li class="nav_item"><a href="http://github.com/osmwp/">Developer site</a></li>');
+	document.write('			<li class="nav_item_end"><a href="http://osmwp.shapado.com/">Q&amp;A Support</a></li>');
 	document.write('		</ul>');
 	document.write('	</div>');
 	document.write('	');
