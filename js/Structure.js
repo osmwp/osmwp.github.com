@@ -135,7 +135,8 @@ var structure = new Pages (	new Array (
 		new Page ( "widgets_development_advanced", "advanced features", new Array(
 			new Page ( "advanced_cache", "caching features", new Array() ),
 			new Page ( "advanced_inline", "inlining", new Array() ),
-			new Page ( "advanced_memory_tips", "memory tips", new Array() )
+			new Page ( "advanced_memory_tips", "memory tips", new Array() ),
+			new Page ( "advanced_capture", "photo capture", new Array() )
 		)),
 		new Page ( "widgets_development_limitations", "limitations", new Array() ),
 		new Page ( "widgets_development_errors", "problems resolutions", new Array() )
