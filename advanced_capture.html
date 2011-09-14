@@ -45,8 +45,10 @@ Browse the photo folder :
 <textarea rows="10" cols="80" readonly="readonly" wrap="off">
 // get the path of the photo folder 
 var photoDir = Browser.getProperty('fileconn.dir.photos');
+
 // number of files in the folder
 var nbFiles = File.list(photoDir);
+
 // list files
 for (var i=0; i<nbFiles; i++) {
 	var fileName = File.getName(i);
