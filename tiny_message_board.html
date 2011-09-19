@@ -289,6 +289,55 @@ Browser.sendMessage ('Board', 'CATALOG_UPDATE', 'REFRESH');
 <br/>
 
 
+<h2>'HIDE_BARS' message</h2>
+
+<p>
+Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to hide title and softkeys bar (canvas space optimization).<br/>
+message.set_data[0]: 'HIDE_BARS'
+</p>
+<p>
+You should hide bars only when it has sense: on small size resolution. You should always think of an action that will display the bars again and communicate this action to the user before hiding the bar (ex: "Press Fire button to show bars") so that user will never be blocked.
+</p>
+<br/>
+
+
+<h2>'SHOW_BARS' message</h2>
+
+<p>
+Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to show title and softkeys bar once they were hidden.<br/>
+message.set_data[0]: 'SHOW_BARS'
+</p>
+<p>
+SHOW_BARS shall be used only associated with the HIDE_BARS message. By default, bars are always displayed.
+	
+</p>
+<br/>
+
+<h2>'SHOW_WAIT' message</h2>
+
+<p>
+Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to show a loading hourglass.<br/>
+message.set_data[0]: 'SHOW_WAIT'
+</p>
+<p>
+You should hide the loading hourglass (by message HIDE_WAIT) when the data you wanted to load is loaded. This mechanism is complementary to the <a href="prototype_tiny_loader.html">Loader</a> prototype. This mechanism is used to display an unknown time loading whereas <a href="prototype_tiny_loader.html">Loader</a> is often used fo known time loading.
+</p>
+<br/>
+
+
+<h2>'HIDE_WAIT' message</h2>
+
+<p>
+Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to stop the showing of a loading hourglass.<br/>
+message.set_data[0]: 'HIDE_WAIT'
+</p>
+<p>
+HIDE_WAIT shall be used only associated with the SHOW_WAIT message.
+	
+</p>
+<br/>
+
+
 <script type="text/javascript">addTitle("Receive message on the "Board" channel", 1);</script>
 
 <h2>Receive message</h2>
@@ -378,30 +427,6 @@ message.set_data[0]: 'RSK'
 </p>
 <p>
 See <a href="tutorial_tiny_softkeys.html">softkeys tutorial</a>.
-</p>
-<br/>
-
-<h2>'HIDE_BARS' message</h2>
-
-<p>
-Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to hide title and softkeys bar (canvas space optimization).<br/>
-message.set_data[0]: 'HIDE_BARS'
-</p>
-<p>
-You should hide bars only when it has sense: on small size resolution. You should always think of an action that will display the bars again and communicate this action to the user before hiding the bar (ex: "Press Fire button to show bars") so that user will never be blocked.
-</p>
-<br/>
-
-
-<h2>'SHOW_BARS' message</h2>
-
-<p>
-Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to show title and softkeys bar once they were hidden.<br/>
-message.set_data[0]: 'SHOW_BARS'
-</p>
-<p>
-SHOW_BARS shall be used only associated with the HIDE_BARS message. By default, bars are always displayed.
-	
 </p>
 <br/>
 
