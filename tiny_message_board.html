@@ -175,7 +175,7 @@ See <a href="tutorial_tiny_menu.html">Menu tutorial</a>.
 <h2>'POPUP' message</h2>
 
 <p>
-'POPUP' message is use to display a popup frame.
+'POPUP' message is used to display a popup frame.
 </p>
 
 <p class="note info">
@@ -214,7 +214,7 @@ See <a href="tutorial_tiny_popup.html">Popup tutorial</a>.
 <h2>'POPUP_AUTO_HIDE' message</h2>
 
 <p>
-'POPUP_AUTO_HIDE' message is use to hide the popup frame.
+'POPUP_AUTO_HIDE' message is used to hide the popup frame.
 </p>
 <textarea rows="1" cols="80" readonly="readonly" wrap="off">
 Browser.sendMessage ('Board', 'POPUP_AUTO_HIDE');
@@ -228,7 +228,7 @@ See <a href="tutorial_tiny_popup.html">Popup tutorial</a>.
 <h2>'PROGRESS' message</h2>
 
 <p>
-'PROGRESS' message is use to display and update a progress bar into current popup frame.
+'PROGRESS' message is used to display and update a progress bar into current popup frame.
 </p>
 <p class="note info">
 <b>Note:</b><br/>
@@ -256,7 +256,7 @@ Browser.sendMessage ('Board', 'PROGRESS', 10);
 <h2>'RESET' message</h2>
 
 <p>
-'RESET' message is use to quit widget. Load carousel page and quit the widget
+'RESET' message is used to quit widget. Load carousel page and quit the widget
 <a href="development_node_Namespace.html">Namespace</a>.
 </p>
 <textarea rows="1" cols="80" readonly="readonly" wrap="off">
@@ -267,7 +267,7 @@ Browser.sendMessage ('Board', 'RESET');
 <h2>'CATALOG_UPDATE' message</h2>
 
 <p>
-'CATALOG_UPDATE' message is use to update the catalog.
+'CATALOG_UPDATE' message is used to update the catalog.
 </p>
 <p class="note info">
 <b>Note:</b><br/>
@@ -341,7 +341,7 @@ ROUTE MESSAGE.data_changed TO SCRIPT.data_changed
 <h2>'ANSWER' message</h2>
 
 <p>
-Message is send by <a href="tiny_manager.html">Manager</a>.<br/>
+Message is sent by <a href="tiny_manager.html">Manager</a>.<br/>
 This message is used to read menu or popup result.
 </p>
 <ul>
@@ -362,7 +362,7 @@ See <a href="tutorial_tiny_menu.html">Menu</a> and <a href="tutorial_tiny_popup.
 <h2>'LSK' message</h2>
 
 <p>
-Message is send by <a href="tiny_manager.html">Manager</a> when left softkey is pressed.<br/>
+Message is sent by <a href="tiny_manager.html">Manager</a> when left softkey is pressed.<br/>
 message.set_data[0]: 'LSK'
 </p>
 <p>
@@ -373,7 +373,7 @@ See <a href="tutorial_tiny_softkeys.html">softkeys tutorial</a>.
 <h2>'RSK' message</h2>
 
 <p>
-Message is send by <a href="tiny_manager.html">Manager</a> when right softkey is pressed.<br/>
+Message is sent by <a href="tiny_manager.html">Manager</a> when right softkey is pressed.<br/>
 message.set_data[0]: 'RSK'
 </p>
 <p>
@@ -381,7 +381,29 @@ See <a href="tutorial_tiny_softkeys.html">softkeys tutorial</a>.
 </p>
 <br/>
 
+<h2>'HIDE_BARS' message</h2>
 
+<p>
+Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to hide title and softkeys bar (canvas space optimization).<br/>
+message.set_data[0]: 'HIDE_BARS'
+</p>
+<p>
+You should hide bars only when it has sense: on small size resolution. You should always think of an action that will display the bars again and communicate this action to the user before hiding the bar (ex: "Press Fire button to show bars") so that user will never be blocked.
+</p>
+<br/>
+
+
+<h2>'SHOW_BARS' message</h2>
+
+<p>
+Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to show title and softkeys bar once they were hidden.<br/>
+message.set_data[0]: 'SHOW_BARS'
+</p>
+<p>
+SHOW_BARS shall be used only associated with the HIDE_BARS message. By default, bars are always displayed.
+	
+</p>
+<br/>
 
 
 <script type="text/javascript">
