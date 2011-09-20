@@ -45,7 +45,7 @@ This chapter describe "Board" channel and this message.<br/>
 
 <script type="text/javascript">addTitle("Send message on the \"Board\" channel", 1);</script>
 
-<h2>Send message</h2>
+<h3>Send message</h3>
 
 <p>
 To send message on "Board" channel, we use the sendMessage(...) method of
@@ -58,7 +58,7 @@ Browser.sendMessage ('Board', 'INIT', 'Mobile Widgets', 'Menu', 'Quit');
 </textarea>
 <br/>
 
-<h2>'INIT' message</h2>
+<h3>'INIT' message</h3>
 
 <p>
 'INIT' message is use to initialize title and soft keys.
@@ -88,7 +88,7 @@ Browser.sendMessage ('Board', 'INIT', 'My Title', 'Option', 'Close', 1);
 </textarea>
 <br/>
 
-<h2>'LOAD' message</h2>
+<h3>'LOAD' message</h3>
 
 <p>
 'LOAD' message is use to load another VRML page/file.
@@ -116,7 +116,7 @@ Browser.sendMessage ('Board', 'LOAD', 'cache://catalog.m4m');
 </textarea>
 <br/>
 
-<h2>'LOAD_WIDGET' message</h2>
+<h3>'LOAD_WIDGET' message</h3>
 
 <p>
 'LOAD_WIDGET' message is use to load another widget (load widget page and change
@@ -138,7 +138,7 @@ Browser.sendMessage ('Board', 'LOAD_WIDGET', 'cache://test.m4m');
 </textarea>
 <br/>
 
-<h2>'MENU' message</h2>
+<h3>'MENU' message</h3>
 
 <p>
 'MENU' message is use to display a menu.
@@ -172,7 +172,7 @@ See <a href="tutorial_tiny_menu.html">Menu tutorial</a>.
 </p>
 <br/>
 
-<h2>'POPUP' message</h2>
+<h3>'POPUP' message</h3>
 
 <p>
 'POPUP' message is used to display a popup frame.
@@ -211,7 +211,7 @@ See <a href="tutorial_tiny_popup.html">Popup tutorial</a>.
 </p>
 <br/>
 
-<h2>'POPUP_AUTO_HIDE' message</h2>
+<h3>'POPUP_AUTO_HIDE' message</h3>
 
 <p>
 'POPUP_AUTO_HIDE' message is used to hide the popup frame.
@@ -225,7 +225,7 @@ See <a href="tutorial_tiny_popup.html">Popup tutorial</a>.
 </p>
 <br/>
 
-<h2>'PROGRESS' message</h2>
+<h3>'PROGRESS' message</h3>
 
 <p>
 'PROGRESS' message is used to display and update a progress bar into current popup frame.
@@ -253,7 +253,7 @@ Browser.sendMessage ('Board', 'PROGRESS', 10);
 </textarea>
 <br/>
 
-<h2>'RESET' message</h2>
+<h3>'RESET' message</h3>
 
 <p>
 'RESET' message is used to quit widget. Load carousel page and quit the widget
@@ -264,7 +264,7 @@ Browser.sendMessage ('Board', 'RESET');
 </textarea>
 <br/>
 
-<h2>'CATALOG_UPDATE' message</h2>
+<h3>'CATALOG_UPDATE' message</h3>
 
 <p>
 'CATALOG_UPDATE' message is used to update the catalog.
@@ -289,7 +289,7 @@ Browser.sendMessage ('Board', 'CATALOG_UPDATE', 'REFRESH');
 <br/>
 
 
-<h2>'HIDE_BARS' message</h2>
+<h3>'HIDE_BARS' message</h3>
 
 <p>
 Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to hide title and softkeys bar (canvas space optimization).<br/>
@@ -301,7 +301,7 @@ You should hide bars only when it has sense: on small size resolution. You shoul
 <br/>
 
 
-<h2>'SHOW_BARS' message</h2>
+<h3>'SHOW_BARS' message</h3>
 
 <p>
 Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to show title and softkeys bar once they were hidden.<br/>
@@ -313,7 +313,7 @@ SHOW_BARS shall be used only associated with the HIDE_BARS message. By default, 
 </p>
 <br/>
 
-<h2>'SHOW_WAIT' message</h2>
+<h3>'SHOW_WAIT' message (available from SDK V2.3.0)</h3>
 
 <p>
 Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to show a loading hourglass.<br/>
@@ -325,7 +325,7 @@ You should hide the loading hourglass (by message HIDE_WAIT) when the data you w
 <br/>
 
 
-<h2>'HIDE_WAIT' message</h2>
+<h3>'HIDE_WAIT' message (available from SDK V2.3.0)</h3>
 
 <p>
 Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper want to stop the showing of a loading hourglass.<br/>
@@ -338,7 +338,7 @@ HIDE_WAIT shall be used only associated with the SHOW_WAIT message.
 <br/>
 
 
-<h2>'THEME' message (available from SDK V2.3.0)</h2>
+<h3>'THEME' message (available from SDK V2.3.0)</h3>
 
 <p>
 Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper wants to define some customization colors. Available color customization are background color, softkeys and title bar, background color of popup, focus color (list selection, text title colors, progressbar color). Manager always sets the current theme color values in 4 cookies: 'theme.bg', 'theme.bar', theme.alert' and 'theme.focus'. <br/>
@@ -359,12 +359,13 @@ Example:
 <textarea rows="1" cols="80" readonly="readonly" wrap="off">
 Browser.sendMessage ('Board', 'THEME', 'EEEEEE', '7E587E', '555A9A', '28903A');
 </textarea>
+<br/>
 <img alt="Screenshots with new color theme" src="images/tiny/theme_screenshots.png" />
 <br/>
 
 <script type="text/javascript">addTitle("Receive message on the \"Board\" channel", 1);</script>
 
-<h2>Receive message</h2>
+<h3>Receive message</h3>
 
 <p>
 To read messages on "Board" channel, we use a
@@ -411,7 +412,7 @@ ROUTE MESSAGE.data_changed TO SCRIPT.data_changed
 </textarea>
 <br/>
 
-<h2>'ANSWER' message</h2>
+<h3>'ANSWER' message</h3>
 
 <p>
 Message is sent by <a href="tiny_manager.html">Manager</a>.<br/>
@@ -432,7 +433,7 @@ See <a href="tutorial_tiny_menu.html">Menu</a> and <a href="tutorial_tiny_popup.
 </p>
 <br/>
 
-<h2>'LSK' message</h2>
+<h3>'LSK' message</h3>
 
 <p>
 Message is sent by <a href="tiny_manager.html">Manager</a> when left softkey is pressed.<br/>
@@ -443,7 +444,7 @@ See <a href="tutorial_tiny_softkeys.html">softkeys tutorial</a>.
 </p>
 <br/>
 
-<h2>'RSK' message</h2>
+<h3>'RSK' message</h3>
 
 <p>
 Message is sent by <a href="tiny_manager.html">Manager</a> when right softkey is pressed.<br/>
