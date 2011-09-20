@@ -338,6 +338,29 @@ HIDE_WAIT shall be used only associated with the SHOW_WAIT message.
 <br/>
 
 
+<h2>'THEME' message (available from SDK V2.3.0)</h2>
+
+<p>
+Message is sent by <a href="tiny_manager.html">Manager</a> when widget developper wants to define some customization colors. Available color customization are background color, softkeys and title bar, background color of popup, focus color (list selection, text title colors, progressbar color). Manager always sets the current theme color values in 4 cookies: 'theme.bg', 'theme.bar', theme.alert' and 'theme.focus'. <br/>
+Browser.sendMessage ('Board', 'THEME', bgColor, barsColor, popupColor, focusColor);
+</p>
+<p>
+Colors value are set in hexadecimal. Color of the scrollbar(grey), color of other texts (black in scrollable text content and in menu items, white otherwise), and color of the menu background (white) are not customizable yet.
+</p>
+<p>
+Default values are: 'FFFFFF' for background color, '3D3D3D' for title and softkeys bars color, '666666' for alert background color and 'FF6E00' for focus color. Those values are called "application theme values" and can change if the application is rebranded for partnership. When a widget defines a specific THEME, it will crush the application theme. 
+</p>
+<p>
+User can fall back to initial theme configuration by calling Browser.sendMessage ('Board', 'THEME'); It will reset theme to the application theme. Reseting theme to application's one is automatically done by manager when the widget is closed.
+</p>
+<p>
+Example:
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'THEME', 'EEEEEE', '7E587E', '555A9A', '28903A');
+</textarea>
+<br/>
+
 <script type="text/javascript">addTitle("Receive message on the "Board" channel", 1);</script>
 
 <h2>Receive message</h2>
