@@ -44,6 +44,7 @@ ImageTexture {
   SFVec2f newSize 0 0
   SFVec2f size_changed 0 0
   MFString alternateUrl []
+  SFBool filter FALSE
 }
 </textarea>
 <br/>
@@ -119,6 +120,12 @@ The two first items can be used to handle these two events separately (eg
 <b>alternateUrl ["loading.png" "error.png"]</b>).<br/>
 If only the first image is defined, it will be used for both loading and error
 cases.<br/>
+</p>
+<p>
+<b>SFBool filter FALSE</b> :<br/>
+The <b>filter</b> is used to smooth the image when it is scaled by <b>newSize</b>
+or by Transform2D.scale.<br/>
+Use this field sparingly as this process is quite CPU consumming on big images.<br/>
 </p>
 <p class="note check">
 <b>Note:</b><br/> the <b>alternateUrl</b> only supports "local" images available
