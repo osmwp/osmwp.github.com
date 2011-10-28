@@ -121,12 +121,12 @@ Returns the height (in pixels) of the string rendered using the specified <b>fon
 </p>
 
 <p>
-<b>int indexOf (String s, int char, int index)</b>:<br/>
+<b>int indexOf (String s, String char, int index)</b>:<br/>
 Returns the first position of <b>char</b> in <b>s</b>, starting at <b>index</b>.<br/>
 Example:
 </p>
 <textarea wrap="off" readonly="readonly" rows="1" cols="80">
-String.indexOf ("ABCDEFABCDEF", 65, 2); // 6  (65==A)
+String.indexOf ('ABCDEFABCDEF', 'A', 2); // 6
 </textarea>
 <br/>
 
@@ -139,11 +139,11 @@ Returns empty string on error.<br/>
 
 <p>
 <b>int lastIndexOf (String s, int char, int index)</b>:<br/>
-Returns the last position of <b>char</b> in <b>s</b>, starting (backward) at <b>index</b>.<br/>
+Returns the last position of <b>char</b> in <b>s</b>, starting at <b>index</b>.<br/>
 Example:
 </p>
 <textarea wrap="off" readonly="readonly" rows="1" cols="80">
-String.indexOf ("ABCDEFABCDEF", 70, 2); // 5  (70==F)
+String.lastIndexOf ('ABCDEFABCDEF', 'F', 10); // 5
 </textarea>
 <br/>
 
