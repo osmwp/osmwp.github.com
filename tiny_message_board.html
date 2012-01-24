@@ -363,6 +363,23 @@ Browser.sendMessage ('Board', 'THEME', 'EEEEEE', '7E587E', '555A9A', '28903A');
 <img alt="Screenshots with new color theme" src="images/tiny/theme_screenshots.png" />
 <br/>
 
+
+<h3>'SOCIAL' message (available from SDK V2.X.0)</h3>
+
+<p>
+'SOCIAL' message is use to load the 'social' Widget to allow Widgets to share content (text and URLs) to the users socials networks. For now, only Facebook and Twitter are available.  <br/>
+</p>
+<p class="note info">
+<b>Note:</b><br/>
+Catch the 'SOCIAL' message in your Widget to be aware of the end of the publication process.
+</p>
+<textarea rows="1" cols="80" readonly="readonly" wrap="off">
+Browser.sendMessage ('Board', 'SOCIAL', socialMsg, socialUrl);
+</textarea>
+<br/>
+<img alt="Screenshots of social Widget" src="images/tiny/todo.png" />
+<br/>
+
 <script type="text/javascript">addTitle("Receive message on the \"Board\" channel", 1);</script>
 
 <h3>Receive message</h3>
