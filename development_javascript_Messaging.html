@@ -44,6 +44,15 @@ The Messaging class provides means to send an SMS or an MMS with a picture.
 </p>
 <br/>
 
+<script type="text/javascript">addTitle("Since", 1);</script>
+
+<h2>1.4.8</h2>
+
+<p>
+New methods: <b>startListeningSMS()</b>, <b>stopListeningSMS()</b>, <b>isPushSMSAvailable ()</b>, <b>registerPushSMS ()</b>, <b>unregisterPushSMS ()</b> and <b>isRegisteredPushSMS()</b>.<br/>
+</p>
+<br/>
+
 <script type="text/javascript">addTitle("Methods", 1);</script>
 
 <p>
@@ -60,10 +69,47 @@ Send a SMS. Returns true if successful, false on error.
 <b>bool sendMMS (String phoneNumber, String subject, String message, String imageUrl)</b>:<br/>
 Send a MMS.
 </p>
+
+<p>
+<b>bool startListeningSMS (int port, String messageName)</b>:<br/>
+Waiting for incoming SMS on specified port through a Message node with url "messageName". The data_changed MFString field of the message node will be update as follow:
+<ul>
+<li>data_changed [0] : sender phone number</li>
+<li>data_changed [1] : reception port number</li>
+<li>data_changed [2] : content of the SMS</li>
+</ul>
+<b>Since 1.4.8</b>
+</p>
+
+<p>
+<b>bool stopListeningSMS (int port)</b>:<br/>
+Stop waiting for incoming SMS on specified port.
+</p>
+
+<p>
+<b>bool isPushSMSAvailable ()</b>:<br/>
+Check if memo player supports push SMS
+</p>
+
+<p>
+<b>bool registerPushSMS (int port)</b>:<br/>
+Register a port to wake up midlet on incoming SMS on specified port.
+</p>
+
+<p>
+<b>bool unregisterPushSMS (int port)</b>:<br/>
+Register previously registered port.
+</p>
+
+<p>
+<b>bool isRegisteredPushSMS (int port)</b>:<br/>
+Check if specified port is already registered.
+</p>
 <br/>
 
 <script type="text/javascript">addTitle("Example", 1);</script>
 
+<h2>Example sending SMS</h2>
 <textarea wrap="off" readonly="readonly" rows="15" cols="80">
 function test(phoneNumber, SMSContent) {
   //SMSContent = String.URLdecode(SMSContent); //check that no special character is send in SMS content
@@ -83,7 +129,28 @@ function test(phoneNumber, SMSContent) {
 </textarea>
 <br/>
 
-
+<h2>Example waiting incoming SMS</h2>
+<textarea wrap="off" readonly="readonly" rows="15" cols="80">
+DEF MSG_SMS Message { url "MY_SMS" }
+...
+DEF SCRIPT Script {
+    eventIn MFString smsHandler
+    ...
+    function initialize () {
+      if( Messaging.startListeningSMS(1000,'MY_SMS') == true ) {
+        Browser.print('started listening SMS on port 1000');
+      }
+    }
+    function smsHandler () {
+       var from = smsHandler[0];
+       var port = smsHandler[1];
+       var content = smsHandler[2];
+       Browser.print('received SMS: '+content+' , from: '+from+' on port: '+port);
+    }
+}
+ROUTE MSG_SMS.data_changed TO SCRIPT.smsHandler
+</textarea>
+<br/>
 
 <script type="text/javascript">
 <!--
